@@ -25,10 +25,10 @@ router.get('/:id', async(req, res, next) => {
 	})
     if (product){
         res.status(200)
-		res.json(product)
+		return res.json(product)
 	}else{
 		res.status(400)
-		res.send("that product cannot be find")
+		return res.send("that product cannot be find")
 	}
 });
 
