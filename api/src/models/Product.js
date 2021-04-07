@@ -14,7 +14,7 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     SKU: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: false
     },
     unitPrice: {
@@ -22,7 +22,7 @@ module.exports = (sequelize) => {
       allowNull: false
     },
     description: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(1000),
       allowNull: false
     },
     picture: {
