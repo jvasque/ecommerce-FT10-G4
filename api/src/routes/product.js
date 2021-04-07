@@ -1,14 +1,19 @@
 const router = require('express').Router();
 const { Product } = require('../db.js');
+const bodyParser = require("body-parser");
 
-router.get('/', (req, res, next) => {
-	/* Product.findAll()
-		.then(products => {
-			res.send(products);
-		})
-		.catch(next); */
+router.use(bodyParser.json())
 
-	res.json({product: 'Confirmado product'})
+router.get('/', async (req, res, next) => {
+
+	try{
+		let data = await Product.findAll();
+		return res.json({data})
+	} catch(err){
+		res.json(err)
+		return console.log(err)
+	}
+
 });
 
 router.get('/:id', async(req, res, next) => {
