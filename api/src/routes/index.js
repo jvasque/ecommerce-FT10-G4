@@ -1,6 +1,6 @@
 const { Router } = require('express');
 // import all routers;
-const productRouter = require('./product.js');
+//const productRouter = require('./product.js');
 
 
 const router = Router();
@@ -8,6 +8,15 @@ const router = Router();
 // load each router on a route
 // i.e: router.use('/auth', authRouter);
 // router.use('/auth', authRouter);
-router.use('/products', productRouter);
 
-module.exports = router;
+router.get('/', function(req, res) { // Aca tengo que hacer algo con el home, o no?
+  
+    res.json({prueba: 'estas en /'})
+  
+});
+
+
+module.exports = {
+    product: require('./product'),
+    index: router,
+};
