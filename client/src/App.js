@@ -1,7 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-var manco = "es que no tiene manos"
+
 
 function App() {
   return (
