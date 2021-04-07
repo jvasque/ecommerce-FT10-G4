@@ -1,25 +1,27 @@
 .ProductCard{
-    background: black;
-    height: 600px;
+    background: white;
+    height: 400px;
     width: 300px;
+    border-radius: 5%;
+
     .CardPicture{
-        height: 50%;
+        height: 60%;
         background: blue;
         img{
-            
+            height: 100%;
         }
     }
     .CardContent{
-        height: 50%;
+        height: 40%;
         .CardData{
-            height: 50%;
+            height: 25%;
             background: rgba(255, 255, 0, 0.4);
             flex-direction: row;
             .CardScore{
                 height: 100%;
                 width: 50%;
                 background: pink;
-                display: inline-block;
+                display: inline-block;               
             }
             .CardPrice{
                 height: 100%;
@@ -31,21 +33,40 @@
         }
         .CardText{
             background: rgba(172, 255, 47, 0.4);
-            height: 25%;
+            height: 50%;
         }
         .CardButtons{
             background: rgba(0, 128, 0, 0.4);
             width: 100%;
             height: 25%;
-            .WishlistButton{
+            flex-direction: row;
+            .wishlistButton{
                 width: 50%;
                 height: 100%;
+                display: inline-block;
             }
-            .AddCartButton{
+            .addCartButton{
                 width: 50%;
                 height: 100%;
+                display: inline-block;
             }
         }
-    }
-    
+    }    
 }
+
+.cardIcon{
+    flex-direction: row;
+    height: 100%;
+    width: 100%;
+    .icon{
+        display: inline-block;
+        height: 100%;
+        width: 20%;
+    }
+    .iconText{
+        display: inline-block;
+        height: 100%;
+        width: 80%;
+        margin: 0;
+    }
+} 
