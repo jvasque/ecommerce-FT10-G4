@@ -31,3 +31,5 @@ function Catalogo(){
         </div>
     )
 }
+
+export default Catalogo;
