@@ -3,6 +3,8 @@ import './scss/_App.scss';
 import Catalogo from './components/Catalogo/Catalogo.jsx'
 import SearchBar from './components/SearchBar/SearchBar.jsx'
 
+
+
 function App() {
   return (
     <div className="App">
