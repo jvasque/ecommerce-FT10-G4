@@ -1,16 +1,44 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import '../../scss/components/_SearchBar.scss'
+// import { useDispatch, useSelector } from "react-redux";
 import { BiSearch } from "react-icons/bi";
 
+// import { getProduct } from '../actions/index.js';
 
-function SearchBar(){
+// const dispatch = useDispatch();
+
+function SearchBar(props) {
+  const [find, setFind] = useState('');
+
+  const handleChange = (e) => {
+    setFind(e.target.value);
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // props.getProduct(find);
+  };
+
   return (
-    <form className='searchBarForm' onsubmit="event.preventDefault();" role="search">
-      <label for="search">Search for stuff</label>
-      <input id="search" type="search" placeholder="Search..." autofocus required />
-      <button type="submit"><BiSearch/></button>    
+    <form className='searchBarForm'
+      role="search"
+      onSubmit={(e) => handleSubmit(e)}
+    >
+      <input id="search"
+        type="search"
+        placeholder="Search..."
+        autofocus required
+        value={find}
+        onChange={(e) => handleChange(e)} />
+      <button type="submit"><BiSearch /></button>
     </form>
   )
 }
+// const products = useSelector(state => state.products)
 
-export default SearchBar
+// dispatch(getProduct())
+
+export default SearchBar;
+
+
+
+

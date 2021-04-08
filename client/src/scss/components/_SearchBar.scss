@@ -11,9 +11,6 @@
     --bez: cubic-bezier(0, 0, 0.43, 1.49);
   }
   
-
-  
-  // Main styles
 .searchBarForm {
   form {
     // display: flex;
@@ -31,7 +28,7 @@
   }
   input[type="search"] {
     // outline: 0; // <-- shold probably remove this for better accessibility, adding for demo aesthetics for now.
-    width: 100%;
+    width: 300px;
     background: var(--color-light);
     padding: 0 1.6rem;
     border-radius: var(--rad);
@@ -43,7 +40,7 @@
   }
   button {
     display: none; // prevent being able to tab to it
-    // position: absolute;
+    position: absolute;
     top: 0;
     right: 0;
     width: var(--btn-width);
@@ -55,17 +52,7 @@
     border-radius: var(--rad) 0 0 var(--rad);
     width: calc(100% - var(--btn-width));
     + button {
-      display: block;
+        display: block;
     }
   }
-  label {
-    // position: absolute;
-    clip: rect(1px, 1px, 1px, 1px);
-    padding: 0;
-    border: 0;
-    height: 1px;
-    width: 1px;
-    overflow: hidden;
-  }
-
 }
