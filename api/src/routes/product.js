@@ -69,7 +69,7 @@ router.post('/', async (req, res) => {
 })
 
 router.put('/:id', async(req, res, next) => {
-	let {name, SKU, unitPrice, description, unitsOnStock} = req.body;
+	let {name, SKU, unitPrice, description, unitsOnStock, picture} = req.body;
 	let code = req.params.id;
 	const product = await Product.findOne({
 		where:{
@@ -77,17 +77,35 @@ router.put('/:id', async(req, res, next) => {
 		}
 	})
     if (product){
-		if(name) await product.update({name: name})
-		if(SKU) await product.update({SKU: SKU})
-		if(unitPrice) await product.update({unitPrice: unitPrice})
-		if(description) await product.update({description: description})
-		if(unitsOnStock) await product.update({unitsOnStock: unitsOnStock})
+		if(name) await product.update({name: name});
+		if(SKU) await product.update({SKU: SKU});
+		if(unitPrice) await product.update({unitPrice: unitPrice});
+		if(description) await product.update({description: description});
+		if(unitsOnStock) await product.update({unitsOnStock: unitsOnStock});
+		if(picture) await product.update({picture: picture});
 
-        res.status(200)
-		return res.json(product)
+        res.status(200);
+		return res.json(product);
 	}else{
-		res.status(400)
-		return res.json({error: "that product cannot be find"})
+		res.status(400);
+		return res.json({error: "that product cannot be find"});
 	}
 });
+
+router.delete('/:id', async(req, res, next) => {
+	var code = req.params.id;
+	var product = await Product.findOne({
+		where:{
+			productId: code
+		}
+	})
+    if (product){
+        await product.destroy();
+		return res.json({suceffullyDelete:"product has been deleted"});
+	}else{
+		res.status(400)
+		return res.json({error: "that product cannot be find"});
+	}
+});
+
 module.exports = router;
