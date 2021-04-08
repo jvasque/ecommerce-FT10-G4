@@ -1,0 +1,23 @@
+.scoreIcon{
+    flex-direction: row;
+    height: 100%;
+    width: 100%;
+    .starContainer{
+        display: inline-block;
+        height: 75%;
+        width: 50%;
+        margin-top: 5%;
+        vertical-align: top;
+        .icon{
+            height: 100%;
+            width: 100%;
+        }
+    }
+    .scoreContainer{
+        display: inline-block;
+        width: 40%;
+        height: 100%;
+        margin-left: 10%;
+        font-size: 4vh;
+    }    
+}

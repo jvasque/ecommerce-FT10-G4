@@ -1,51 +1,54 @@
 import React from 'react'
 import '../../scss/components/_ProductCard.scss'
-import { BiStar, BiDollar, BiHeart, BiCartAlt } from "react-icons/bi";
+import DivText from './DivText.jsx'
+import ButtonIconText from './ButtonIconText';
+import ScoreIcon from './ScoreIcon';
 
-
-let imagen = 'https://argentina.agrofystatic.com/media/catalog/product/cache/1/image/850x600/0dc2d03fe217f8c83829496872af24a0/m/e/metolaclor-940x1024.jpg?usewebp=true'
-let price = 200
-let score = 5
+let product = {
+    image : 'https://argentina.agrofystatic.com/media/catalog/product/cache/1/image/850x600/0dc2d03fe217f8c83829496872af24a0/m/e/metolaclor-940x1024.jpg?usewebp=true',
+    price : 200,
+    score : 4.3,
+    name: 'Metolaclor 96 Summit Agro',
+    description: 'agua de rio con popo adsf sdf af dsaf as asdfasdgdgegr ertreyeryeryer gggggggg ryty gggggg 453534534534ggg ggggggg gggggggggend',
+}
 
 function ProductCard(){
     return (
-        <div className='ProductCard'>
-            <div className='CardPicture'>
-                <img src={imagen} alt='product'></img>
+        <div className='productCard'>
+            <div className='cardPicture'>
+                <img src={product.image} alt='product'></img>
             </div>
-            <div className='CardContent'>
-                <div className='CardData'>
-                    <div className='CardScore'>
-                        <div className='cardIcon'>
-                            <BiStar className='icon'/>
-                            <p className='iconText'>{score}</p>
-                        </div>  
-                    </div>
-                    <div className='CardPrice'>
-                        <div className='cardIcon'>
-                            <BiDollar className='icon'/>
-                            <p className='iconText'>{price}</p>
+            <div className='cardContent'>
+
+                <div className='cardData'>
+                    <div className='cardScore'>
+                        <div className='starIcon'>
+                            <ScoreIcon score={product.score}/>
                         </div>                        
+                     </div>
+                    <div className='cardPrice'>
+                        <DivText content={`USD$${product.price}`}/>
                     </div>
                 </div>
-                <div className='CardText'>
-                    <p>Texto aca</p>
+
+                <div className='cardText'>
+                    <p id='nameCard'><b>{product.name}</b></p>
+                    <p id='descriptionCard'>{product.description}</p>
                 </div>
-                <div className='CardButtons'>
-                    <button className='wishlistButton'>
+
+                <div className='cardButtons'>
+                    <div className='wishlistButton'>
                         <div className='cardIcon'>
-                            <BiHeart className='icon'/>
-                            <p className='iconText'>Add to wishlist</p>
+                            <ButtonIconText icon='Heart'/>
                         </div>
-                    </button>                     
-                    <button className='addCartButton'>   
+                    </div>                     
+                    <div className='addCartButton'>   
                         <div className='cardIcon'>
-                            <BiCartAlt className='icon'/>
-                            <p className='iconText'>Add to cart</p>
+                            <ButtonIconText/>
                         </div>
-                    </button>
-                     
+                    </div>                     
                 </div>
+
             </div>
         </div>
     )
