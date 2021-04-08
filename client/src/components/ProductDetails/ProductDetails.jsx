@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { GetDetail } from "../../reducers/actions/getDetail";
 
-import { loadDetail } from "../../reducers/details/detailsSlice";
+
 import "../../scss/components/_ProductDetails.scss";
 
 import bd from "./bd";
@@ -10,17 +11,18 @@ const ProductDetails = (props) => {
   let productId = props.match.params.id;
 
   const dispatch = useDispatch();
-  const { productDetail, loadingDetail } = useSelector(
+  const { productDetails, loading } = useSelector(
     (state) => state.details
   );
   useEffect(() => {
-    dispatch(loadDetail(productId));
+    dispatch(GetDetail(productId));
   }, []);
 
   return (
     <div>
+
    
-      {loadingDetail ? (
+      {loading ? (
         <div className="containerDetails">
           <div className="title">
             <h1>{bd.name}</h1>

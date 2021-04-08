@@ -1,9 +1,9 @@
-import {combineReducers} from '@reduxjs/toolkit'
-import detailsReducer from './details/detailsSlice'
+import {combineReducers} from 'redux'
+import detailReducer from './details/detail'
 
 
 
 export default combineReducers({
-  details: detailsReducer,
+  details: detailReducer,
   
 })
