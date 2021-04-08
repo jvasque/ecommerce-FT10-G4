@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import '../../scss/components/_SearchBar.scss'
 // import { useDispatch, useSelector } from "react-redux";
 import { BiSearch } from "react-icons/bi";
+import Catalogo from '../Catalogo/Catalogo.jsx'
 
 // import { getProduct } from '../actions/index.js';
 
@@ -19,8 +20,8 @@ function SearchBar(props) {
   };
 
   return (
+    <>
     <form className='searchBarForm'
-      role="search"
       onSubmit={(e) => handleSubmit(e)}
     >
       <input id="search"
@@ -29,8 +30,12 @@ function SearchBar(props) {
         autofocus required
         value={find}
         onChange={(e) => handleChange(e)} />
-      <button type="submit"><BiSearch /></button>
+      <button type="submit"><BiSearch/></button>
     </form>
+
+    <Catalogo/>
+
+  </>
   )
 }
 // const products = useSelector(state => state.products)
