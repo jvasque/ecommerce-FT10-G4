@@ -1,3 +1,4 @@
+
 .productCard{
     background: white;
     height: 400px;
@@ -28,14 +29,15 @@
                 width: 30%;  
                 height: 100%;
                 margin: 0 10%; 
-                border-radius: 10px;             
+                border-radius: 10px;   
+                -moz-border-radius: 10px;          
             }
             .cardPrice{
                 height: 100%;
                 width: 50%;
                 display: inline-block;
                 vertical-align: top;
-                font-size: 4vh;
+                font-size: 25px;
             }
             .starIcon{
                 flex-direction: row;
@@ -46,7 +48,7 @@
         .cardText{            
             height: 48%;
             margin-top: 2%;
-            font-size: 2vh;
+            font-size: 14px;
             text-align: justify;
         }
         .cardButtons{
