@@ -5,28 +5,24 @@ import PutCategory from "../formPutCategory/PutCategory";
 function Form() {
   const [categories, setCategories] = useState([]);
   const [categorySelect, setCategorySelect] = useState(
-    ""
+    "-Seleccione una Categoria-"
   );
   const [addCategory, setAddCategory] = useState("");
   const [put, setPut] = useState("true");
   const [reload, setReload] = useState("true");
-  const [empty, setEmpty] = useState("true");
-  console.log(empty)
+  
+  
   useEffect(() => {
-    test();
+    dataCategories();
   }, [!put, reload]);
 
-  async function test() {
+  async function  dataCategories() {
     let data = await axios.get(`http://localhost:3001/allCategories`);
-    console.log(data.data);
-
-    data.data.length !== 0 ? setCategories(data.data) : (() => { setEmpty(false); setCategories([{ name: "No hay categorías" }]) })()
-    data.data.length !== 0 && setCategorySelect(data.data[0].name)
+   setCategories(data.data) 
   }
 
   const handleDelete = async (e) => {
     e.preventDefault();
-    setPut(true);
     if (!categorySelect) {
       alert("Empty");
     } else {
@@ -35,10 +31,12 @@ function Form() {
       });
       alert("Deleted");
     }
+    dataCategories()
+    setCategorySelect("-Seleccione una Categoria-")
   };
 
   const handleAddCategory = async () => {
-    setPut(true);
+    
     if (!addCategory) {
       alert("Ingrese una categoria");
     } else {
@@ -47,30 +45,30 @@ function Form() {
       });
       alert("Categoria Creada");
     }
+    dataCategories()
+    setReload(!reload)
   };
 
   return (
     <div>
+      <form onSubmit={handleAddCategory}>
       <label>Agregar una nueva Categoria</label>
       <input
         value={addCategory}
         onChange={(e) => setAddCategory(e.target.value)}
       ></input>
       <button
-        onClick={() => {
-          handleAddCategory();
-          setReload(!reload);
-        }}
+        type="submit"
       >
         Agregar
       </button>
-      <h2 className="">CATEGORIES</h2>
+      </form>
 
-      {/* form start */}
-      <form className="">
-        <label className="">Categories (Categoria)</label>
+      <br></br>
+        <label className="">Categoria</label>
         <br />
         <select
+        
           className=""
           type="text"
           name=""
@@ -79,6 +77,7 @@ function Form() {
           required
           onChange={(e) => setCategorySelect(e.target.value)}
         >
+          <option defaultValue>-Seleccione una Categoria-</option>
           {categories?.map((x) => (
             <option key={x.name} value={x.name}>
               {x.name}
@@ -94,6 +93,8 @@ function Form() {
         </select>
         <br />
         <br />
+        {categorySelect === "-Seleccione una Categoria-" ? "" : <div>
+         
         <button
           onClick={(e) => {
             handleDelete(e);
@@ -102,6 +103,7 @@ function Form() {
         >
           Borrar
         </button>
+        {categories.length === 0 ? "" :
         <button
           onClick={(e) => {
             e.preventDefault();
@@ -110,11 +112,9 @@ function Form() {
         >
           Modificar
         </button>
-
+ }
+  </div>}
         <br />
-      </form>
-
-      {/* end of form */}
 
       <div>
         { put ? (
@@ -124,6 +124,7 @@ function Form() {
             categorySelect={categorySelect}
             setPut={setPut}
             put={put}
+            dataCategories={ dataCategories}
           />
         )}
       </div>
