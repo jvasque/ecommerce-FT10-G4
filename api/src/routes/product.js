@@ -16,6 +16,21 @@ router.get('/', async (req, res, next) => {
 
 });
 
+router.get('/:id', async(req, res, next) => {
+	var code = req.params.id;
+	var product = await Product.findOne({
+		where:{
+			productId: code
+		}
+	})
+    if (product){
+        res.status(200)
+		return res.json(product)
+	}else{
+		res.status(400)
+		return res.send("that product cannot be find")
+	}
+});
 
 router.post('/', async (req, res) => {
 
@@ -49,8 +64,5 @@ router.post('/', async (req, res) => {
 		console.log(err);
 		res.json({err: "an error occurred while loading the data"})
 	}
-	
-
 })
-
 module.exports = router;
