@@ -7,9 +7,11 @@ function Form (){
 
     }
 
+ 
+
     return(
         <div>
-            <h2 className="">CATEGORIES</h2>
+            <h2 className="">CATEGORIE</h2>
 
             {/* form start */}
             <form className="" onSubmit={handleSubmit}>
