@@ -16,4 +16,41 @@ router.get('/', async (req, res, next) => {
 
 });
 
+
+router.post('/', async (req, res) => {
+
+	let { name, SKU, unitPrice, description, picture, score } = req.body;
+
+	try{
+		const addProduct = await Product.findOrCreate({
+			where: {
+				name,
+				SKU,
+				unitPrice,
+				description,
+				picture,
+				score
+			}
+		})
+
+		const findProduct = await Product.findOne({
+			where: {
+				name,
+				SKU,
+				unitPrice,
+				description,
+				picture,
+				score
+			}
+		})
+	
+		return res.json(findProduct)
+	} catch(err){
+		console.log(err);
+		res.json({err: "an error occurred while loading the data"})
+	}
+	
+
+})
+
 module.exports = router;
