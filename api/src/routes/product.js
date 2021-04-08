@@ -3,6 +3,8 @@ const { Product } = require('../db.js');
 const bodyParser = require("body-parser");
 
 router.use(bodyParser.json())
+//agregar categorias?
+/* [[{nombre:"tomatini"}, {nombre:"plantita"}],{},{}] */
 
 router.get('/', async (req, res, next) => {
 
@@ -94,11 +96,16 @@ router.put('/:id', async(req, res, next) => {
 
 router.delete('/:id', async(req, res, next) => {
 	var code = req.params.id;
-	var product = await Product.findOne({
+	 var product = await Product.findOne({
 		where:{
 			productId: code
 		}
-	})
+	}) 
+	/* await Product.destroy({
+		where:{
+			productId: code
+		}
+	}) */
     if (product){
         await product.destroy();
 		return res.json({suceffullyDelete:"product has been deleted"});
