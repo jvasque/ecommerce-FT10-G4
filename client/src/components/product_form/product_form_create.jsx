@@ -3,13 +3,11 @@ import { NavLink } from "react-router-dom";
 
 function product_form_create(props) {
     return (
-        <div>
+        <div className = "cont-gral">
             <h1>Productos</h1>
-            <form
-        className="form-container" /* onSubmit={(e) => this.handleSubmit(e)} */
-      >
-        <div className="contenedor2">
-          <label className="label">Nombre de la actividad:</label>
+            <form>
+        <div className = "cont-1">
+          <label className="label">Nombre del producto:</label>
           <input
             type="text"
             id="name"
@@ -17,39 +15,56 @@ function product_form_create(props) {
             placeholder=" Nombre..."
             onChange={(e) => handleName(e)}
           />
-          <label className="label">Dificultad de la actividad:</label>
-          <select onChange={(e) => handleDificultad(e)}>
+          <label className="label">SKU:</label>
+          <input
+            type="text"
+            id="sku"
+            autoComplete="off"
+            placeholder=" SKU..."
+            onChange={(e) => handleName(e)}
+          />
+          
+          <label className="label">Precio por unidad:</label>
+          <input
+            type="text"
+            id="precio"
+            autoComplete="off"
+            placeholder=" Precio..."
+            onChange={(e) => handlePrecio(e)}
+          />
+          <label className="label">Description:</label>
+          {/**TEXT AREA */}
+          <label className="label">
+            Imagen:
+          </label>
+          <input
+            type="text"
+            id="img"
+            autoComplete="off"
+            placeholder=" Agregar url..."
+            /* aca usar dsp split */
+            onChange={(e) => handleImg(e)}
+          />
+          <label className="label">
+            Puntuación:
+          </label>
+          <select onChange={(e) => handleScore(e)}>
             <option value="1">*</option>
             <option value="2">**</option>
             <option value="3">***</option>
             <option value="4">****</option>
             <option value="5">*****</option>
           </select>
-          <label className="label">Duración de la actividad:</label>
-          <input
-            type="text"
-            id="duracion"
-            autoComplete="off"
-            placeholder=" Duración..."
-            onChange={(e) => handleDuracion(e)}
-          />
-          <label className="label">Temporada:</label>
-          <select onChange={(e) => handleTemporada(e)}>
-            <option value="verano">Verano</option>
-            <option value="invierno">Invierno</option>
-            <option value="otoño">Otoño</option>
-            <option value="primavera">Primavera</option>
-          </select>
           <label className="label">
-            {'Pais o paises (Sin espacios, separados por coma: ",")'}:
+            Stock:
           </label>
           <input
             type="text"
-            id="pais"
+            id="stock"
             autoComplete="off"
-            placeholder=" Agregar paises..."
+            placeholder=" Agregar stock..."
             /* aca usar dsp split */
-            onChange={(e) => handlePais(e)}
+            onChange={(e) => handleStock(e)}
           />
         </div>
         <button
