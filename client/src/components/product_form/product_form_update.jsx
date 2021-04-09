@@ -1,10 +1,10 @@
 import React from 'react';
 import { NavLink } from "react-router-dom";
 
-function product_form_create(props) {
+function product_form_update(props) {
     return (
         <div className = "cont-gral">
-            <h1>Agregar productos</h1>
+            <h1>Modificar productos</h1>
             <form>
         <div className = "cont-1">
           <label className="label">Nombre del producto:</label>
@@ -50,16 +50,7 @@ function product_form_create(props) {
             /* aca usar dsp split */
             /* onChange={(e) => handleImg(e)} */
           />
-          <label className="label">
-            Puntuación:
-          </label>
-          <select /* onChange={(e) => handleScore(e)} */>
-            <option value="1">*</option>
-            <option value="2">**</option>
-            <option value="3">***</option>
-            <option value="4">****</option>
-            <option value="5">*****</option>
-          </select>
+          
           <label className="label">
             Stock:
           </label>
@@ -75,7 +66,7 @@ function product_form_create(props) {
         <button
           onClick={() => {/*DESPACHAR LA ACCION CORRECTA*/}}
         >
-          Crear producto
+          Modificar producto
         </button>
       </form>
       <NavLink to="/admin/product/form">
@@ -85,4 +76,4 @@ function product_form_create(props) {
     );
 }
 
-export default product_form_create;
+export default product_form_update;
