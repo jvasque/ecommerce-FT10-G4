@@ -42,8 +42,8 @@ function SearchBar(props) {
 
       <div className='queryDisplay'>
         {
-          query && query.map((card) => {
-            return (                             
+          query && query.map((card,i) => {
+            return (                                  
               <ProductCard product={card}/>             
             )
           })
@@ -52,16 +52,6 @@ function SearchBar(props) {
     </>
   )
 }
-
-// const mapStateToProps = (state) => ({
-//   query: state.search.query,
-// })
-
-// const mapDispatchToProps = (dispatch) => ({
-//   getQuery: find => dispatch(getQuery(find))
-// })
-
-// export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);
 
 export default SearchBar;
 //busca del array loaded por titulo (ruta query por keyword de busqueda)
