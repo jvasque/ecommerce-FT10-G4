@@ -1,22 +1,20 @@
-const { Router } = require('express');
+const { Router } = require("express");
 // import all routers;
-//const productRouter = require('./product.js');
-
+const addCategory = require("./categories/addCategory");
+const allCategories = require("./categories/allCategories");
+const deleteCategory = require("./categories/deleteCategory");
+const info = require("./categories/info");
+const putCategory = require("./categories/putCategory");
 
 const router = Router();
 
 // load each router on a route
 // i.e: router.use('/auth', authRouter);
 // router.use('/auth', authRouter);
+router.use("/addCategory", addCategory);
+router.use("/deleteCategory", deleteCategory);
+router.use("/putCategory", putCategory);
+router.use("/allCategories", allCategories);
+router.use("/info", info);
 
-router.get('/', function(req, res) { // Aca tengo que hacer algo con el home, o no?
-  
-    res.json({prueba: 'estas en /'})
-  
-});
-
-
-module.exports = {
-    product: require('./product'),
-    index: router,
-};
+module.exports = router;
