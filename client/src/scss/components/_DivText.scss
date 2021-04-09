@@ -1,0 +1,26 @@
+.divText{
+    display: inline-block;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    .divContent{
+        width:100%;
+        min-height:90%; 
+        text-align:center;
+        display: table;
+        .pContent{
+            margin: 0;
+            padding:0;
+            vertical-align: middle;
+            display: table-cell;
+        }
+    }   
+}
+
+#iconText{
+    width: 80%;
+}
+
+.dataText{
+    font-size: 50px;
+}
