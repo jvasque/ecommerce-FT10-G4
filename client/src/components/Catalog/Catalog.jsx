@@ -1,34 +1,42 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import ProductCard from '../ProductCard/ProductCard.jsx'
+import { getQuery } from '../../redux/searchReducer/searchActions';
+import { getCatalog } from '../../redux/catalogReducer/catalogActions';
+import { useDispatch, useSelector} from "react-redux";
 import Pages from './Pages.jsx'
 import Filter from './Filter.jsx'
 import '../../scss/components/Catalog/_Catalog.scss'
 
-let prod = {
-    id: 1,
-    image : 'https://argentina.agrofystatic.com/media/catalog/product/cache/1/image/850x600/0dc2d03fe217f8c83829496872af24a0/m/e/metolaclor-940x1024.jpg?usewebp=true',
-    price : 200,
-    score : 4.3,
-    name: 'Metolaclor 96 Summit Agro',
-    description: 'agua de rio con popo adsf sdf af dsaf as asdfasdgdgegr ertreyeryeryer gggggggg ryty gggggg 453534534534ggg ggggggg gggggggggend',
-}
-
-let products = [prod, prod, prod, prod, prod, prod, prod]
-
 function Catalog(){
+    const query = useSelector(state => state.searchReducer.query)
+    const queryStatus = useSelector(state => state.searchReducer.queryStatus)
+    const products = useSelector(state => state.catalogReducer.products)
+    const dispatch = useDispatch();
+    let catalog = queryStatus ? query : products;
+
+    useEffect(() => {
+        dispatch(getCatalog())
+        return
+    },[queryStatus])
+
     return (
-        <div className='catalogScreen'>
-            <div className='catalogMatrix'>
-                {
-                    products.map((product, index) => {
-                        return (                             
-                            <ProductCard product={product}/>             
-                        )
-                    })
-                }
+        <div className='catalogContainer'>
+            <div className='filterScreen'>
+                <Filter/>
             </div>
-            <Pages/>
-        </div>
+            <div className='catalogScreen'>
+                <div className='catalogMatrix'>
+                    {
+                        catalog.map((product) => {
+                            return (                             
+                                <ProductCard product={product} key={product.productId}/>             
+                            )
+                        })
+                    }
+                </div>
+                <Pages/>
+            </div>
+        </div>        
     )
 }
 

@@ -1,5 +1,6 @@
 import axios from 'axios';
-export const GET_QUERY = 'GET_QUERY';
+export const GET_QUERY='GET_QUERY';
+export const RESET_QUERY='RESET_QUERY';
 
 export function getQuery(find) {
   return async function (dispatch) {
@@ -10,3 +11,12 @@ export function getQuery(find) {
     });
   };
 }
+
+export function resetQuery() {
+  return function(dispatch) {   
+    dispatch({
+      type: RESET_QUERY,
+    });
+  };
+};
+
