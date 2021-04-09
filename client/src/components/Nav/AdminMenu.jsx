@@ -10,7 +10,7 @@ export default function AdminMenu() {
         <div className="menu">
             <nav >
                 <Link className="test" to="/producto"><h2> <FaProductHunt/> Productos</h2></Link>
-                <Link className="test"to="/categorias"><h2><BiListPlus/> Categorias</h2></Link>
+                <Link className="test" to="/categorias"><h2><BiListPlus/> Categorias</h2></Link>
                 <Link className="test" to="/salir"><h2><BiLogOut/> Cerrar Sesion</h2></Link>
             </nav>
         </div>

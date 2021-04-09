@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import PutCategory from "../formPutCategory/PutCategory";
+import "../../scss/components/_Form.scss";
+
+
 
 function Form() {
   const [categories, setCategories] = useState([]);
@@ -50,30 +53,38 @@ function Form() {
   };
 
   return (
-    <div>
-      <form onSubmit={handleAddCategory}>
-      <label>Agregar una nueva Categoria</label>
-      <input
-        value={addCategory}
-        onChange={(e) => setAddCategory(e.target.value)}
-      ></input>
-      <button
-        type="submit"
-      >
-        Agregar
-      </button>
-      </form>
+    <div className="form-container">
 
-      <br></br>
-        <label className="">Categoria</label>
+      <div>
+        <h2 className="title">Categorias</h2>
+      </div>
+
+      <div className="containerform">
+        <form onSubmit={handleAddCategory}>
+          <label className="label-category">Agregar una nueva Categoria</label>
+          <br />
+          <br />
+          <input
+            className="input-category"
+            value={addCategory}
+            onChange={(e) => setAddCategory(e.target.value)}
+          ></input>
+          <br />
+          <br />
+          <button className="button-putcategory" type="submit">
+            Agregar
+          </button>
+        </form>
+      </div>
+
+      <form>
+        <br></br>
+        <label className="label-category">Categoria</label>
         <br />
         <select
-        
-          className=""
+          className="select-category"
           type="text"
           name=""
-          // value={categories}
-          // onChange={(e) => setCategories(e.target.value)}
           required
           onChange={(e) => setCategorySelect(e.target.value)}
         >
@@ -85,49 +96,57 @@ function Form() {
           ))}
         </select>
         <br />
-
-        <label className="">subCategories (SubCategorias) </label>
         <br />
-        <select className="" type="text" name="categorySelect">
+        <label className="label-category">subCategories (SubCategorias) </label>
+        <br />
+        <select className="select-category" type="text" name="categorySelect">
           <option value="">Escoja una subcategoria</option>
         </select>
         <br />
         <br />
-        {categorySelect === "-Seleccione una Categoria-" ? "" : <div>
-         
-        <button
-          onClick={(e) => {
-            handleDelete(e);
-            setReload(!reload);
-          }}
-        >
-          Borrar
-        </button>
-        {categories.length === 0 ? "" :
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            setPut(false);
-          }}
-        >
-          Modificar
-        </button>
- }
-  </div>}
-        <br />
-
-      <div>
-        { put ? (
+        {categorySelect === "-Seleccione una Categoria-" ? (
           ""
         ) : (
-          <PutCategory
-            categorySelect={categorySelect}
-            setPut={setPut}
-            put={put}
-            dataCategories={ dataCategories}
-          />
+          <div>
+            <button
+              className="button-putcategory"
+              onClick={(e) => {
+                handleDelete(e);
+                setReload(!reload);
+              }}
+            >
+              Borrar
+            </button>
+            {categories.length === 0 ? (
+              ""
+            ) : (
+              <button
+                className="button-putcategory"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setPut(false);
+                }}
+              >
+                Modificar
+              </button>
+            )}
+          </div>
         )}
-      </div>
+        <br />
+
+        <div>
+          {put ? (
+            ""
+          ) : (
+            <PutCategory
+              categorySelect={categorySelect}
+              setPut={setPut}
+              put={put}
+              dataCategories={dataCategories}
+            />
+          )}
+        </div>
+      </form>
     </div>
   );
 }
