@@ -5,6 +5,7 @@ const allCategories = require("./categories/allCategories");
 const deleteCategory = require("./categories/deleteCategory");
 const info = require("./categories/info");
 const putCategory = require("./categories/putCategory");
+const products = require('./product');
 
 const router = Router();
 
@@ -16,5 +17,6 @@ router.use("/deleteCategory", deleteCategory);
 router.use("/putCategory", putCategory);
 router.use("/allCategories", allCategories);
 router.use("/info", info);
+router.use('/products', products);
 
 module.exports = router;
