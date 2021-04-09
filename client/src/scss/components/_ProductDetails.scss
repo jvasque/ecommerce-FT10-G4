@@ -1,11 +1,13 @@
 .containerDetails {
+    height: 100%;
     float: left;
-    width: 70%;
-    padding: 20px;
+    width: 40%;
+    margin: 0;
+    padding: 20px 30px;
     img{
         width: 40%;
     }
     h1, h3, h4{
-        color: rgb(240, 47, 79);
+        color: rgb(15, 131, 40);
     }
 }
