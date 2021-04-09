@@ -5,7 +5,7 @@ const allCategories = require("./categories/allCategories");
 const deleteCategory = require("./categories/deleteCategory");
 const info = require("./categories/info");
 const putCategory = require("./categories/putCategory");
-const products = require('./product');
+const products = require('./products/product');
 
 const router = Router();
 
