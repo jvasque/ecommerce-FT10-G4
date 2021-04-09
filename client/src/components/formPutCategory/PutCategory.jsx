@@ -31,7 +31,8 @@ function PutCategory({ categorySelect, setPut, put, dataCategories }) {
                 placeholder="Inserte nuevo nombre..."
                 onChange={(e) => setInput(e.target.value)}
               />
-
+              <br />
+              <br />
               <button
                 className="button-putcategory"
                 type="submit"

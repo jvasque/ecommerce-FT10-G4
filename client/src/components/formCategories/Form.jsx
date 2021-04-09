@@ -53,100 +53,113 @@ function Form() {
   };
 
   return (
-    <div className="form-container">
-
+    <div className="container-form">
+      {/* Título */}
       <div>
         <h2 className="title">Categorias</h2>
       </div>
+      {/*Fin Título */}
 
-      <div className="containerform">
-        <form onSubmit={handleAddCategory}>
-          <label className="label-category">Agregar una nueva Categoria</label>
-          <br />
-          <br />
-          <input
-            className="input-category"
-            value={addCategory}
-            onChange={(e) => setAddCategory(e.target.value)}
-          ></input>
-          <br />
-          <br />
-          <button className="button-putcategory" type="submit">
-            Agregar
-          </button>
-        </form>
-      </div>
+      <div className="container-cards">
+        <div className="card">
+          <div>
+            <form onSubmit={handleAddCategory}>
+              <label className="label-category">
+                Agregar una nueva Categoria
+              </label>
+              <br />
 
-      <form>
-        <br></br>
-        <label className="label-category">Categoria</label>
-        <br />
-        <select
-          className="select-category"
-          type="text"
-          name=""
-          required
-          onChange={(e) => setCategorySelect(e.target.value)}
-        >
-          <option defaultValue>-Seleccione una Categoria-</option>
-          {categories?.map((x) => (
-            <option key={x.name} value={x.name}>
-              {x.name}
-            </option>
-          ))}
-        </select>
-        <br />
-        <br />
-        <label className="label-category">subCategories (SubCategorias) </label>
+              <input
+                className="input-category"
+                value={addCategory}
+                onChange={(e) => setAddCategory(e.target.value)}
+              ></input>
+              <br />
+              <br />
+              <button className="button-putcategory" type="submit">
+                Agregar
+              </button>
+            </form>
+          </div>
+
+          <form>
+            <br></br>
+            <label className="label-category">Categoria</label>
+            <br />
+            <select
+              className="select-category"
+              type="text"
+              name=""
+              required
+              onChange={(e) => setCategorySelect(e.target.value)}
+            >
+              <option defaultValue>-Seleccione una Categoria-</option>
+              {categories?.map((x) => (
+                <option key={x.name} value={x.name}>
+                  {x.name}
+                </option>
+              ))}
+            </select>
+            <br />
+            <br />
+
+            {/* Inicio Subcategoria */}
+
+            {/* <label className="label-category">subCategories (SubCategorias) </label>
         <br />
         <select className="select-category" type="text" name="categorySelect">
           <option value="">Escoja una subcategoria</option>
-        </select>
-        <br />
-        <br />
-        {categorySelect === "-Seleccione una Categoria-" ? (
-          ""
-        ) : (
-          <div>
-            <button
-              className="button-putcategory"
-              onClick={(e) => {
-                handleDelete(e);
-                setReload(!reload);
-              }}
-            >
-              Borrar
-            </button>
-            {categories.length === 0 ? (
+        </select> */}
+
+            {/* Fin Subcategoria */}
+
+            <br />
+            <br />
+            {categorySelect === "-Seleccione una Categoria-" ? (
               ""
             ) : (
-              <button
-                className="button-putcategory"
-                onClick={(e) => {
-                  e.preventDefault();
-                  setPut(false);
-                }}
-              >
-                Modificar
-              </button>
+              <div>
+                <button
+                  className="button-putcategory"
+                  onClick={(e) => {
+                    handleDelete(e);
+                    setReload(!reload);
+                  }}
+                >
+                  Borrar
+                </button>
+                {categories.length === 0 ? (
+                  ""
+                ) : (
+                  <button
+                    className="button-putcategory"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setPut(false);
+                    }}
+                  >
+                    Modificar
+                  </button>
+                )}
+              </div>
             )}
-          </div>
-        )}
-        <br />
+            <br />
 
-        <div>
-          {put ? (
-            ""
-          ) : (
-            <PutCategory
-              categorySelect={categorySelect}
-              setPut={setPut}
-              put={put}
-              dataCategories={dataCategories}
-            />
-          )}
+            <div>
+              {put ? (
+                ""
+              ) : (
+                <PutCategory
+                  categorySelect={categorySelect}
+                  setPut={setPut}
+                  put={put}
+                  dataCategories={dataCategories}
+                />
+              )}
+            </div>
+          </form>
         </div>
-      </form>
+      </div>
     </div>
   );
 }
