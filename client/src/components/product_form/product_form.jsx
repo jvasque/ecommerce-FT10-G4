@@ -1,9 +1,9 @@
 import React from 'react';
 import { NavLink } from "react-router-dom";
-
+import '../../scss/components/productsForm/_ProductForm.scss'
 function product_form(props) {
     return (
-        <div>
+        <div className = "containerProdForm">
             <h1>Productos</h1>
             <NavLink to="/admin/product/form/create">
                 <button>Crear</button>

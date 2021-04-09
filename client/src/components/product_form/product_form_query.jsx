@@ -1,9 +1,9 @@
 import React from 'react';
 import { NavLink } from "react-router-dom";
-
+import '../../scss/components/productsForm/_ProductFormQuery.scss'
 function product_form_query(props) {
     return (
-        <div className = "cont-gral">
+        <div className = "containerProdFormQuery">
             <h1>Consultar producto</h1>
             <form>
         <div className = "cont-1">

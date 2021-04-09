@@ -1,9 +1,9 @@
 import React from 'react';
 import { NavLink } from "react-router-dom";
-
+import '../../scss/components/productsForm/_ProductFormCreate.scss'
 function product_form_create(props) {
     return (
-        <div className = "cont-gral">
+        <div className = "containerProdFormCreate">
             <h1>Agregar productos</h1>
             <form>
         <div className = "cont-1">
