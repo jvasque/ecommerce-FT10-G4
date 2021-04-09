@@ -32,25 +32,18 @@ sequelize.models = Object.fromEntries(capsEntries);
 // Para relacionarlos hacemos un destructuring
 
 // Missing import: orderDetail, User, Review, Category
-const { Product } = sequelize.models;
+const { Product, Brand, Category, SubCategory, Types } = sequelize.models;
 
-// Here would come the relationships
+// Aca vendrian las relaciones
+// Product.hasMany(Reviews);
+Category.belongsTo(SubCategory, { through: "cat", timestamps: false });
+SubCategory.hasOne(Category, { through: "cat", timestamps: false });
 
-//FK: Product <==> orderDetail
-//Product.hasOne(orderDetail);
-//orderDetail.hasMany(Product);
+SubCategory.belongsToMany(Types, { through: "sub", timestamps: false });
+Types.belongsToMany(SubCategory, { through: "sub", timestamps: false });
 
-//FK: Product <==> User
-//Product.hasOne(User);
-//User.hasMany(Product);
-
-//FK: Product <==> Review
-//Product.hasMany(Review);
-//Review.hasOne(Product);
-
-//Intermediate-table: Product <==> Category
-//Product.belongsToMany(Category, {through: 'Product_Category'});
-//Category.belongsToMany(Product, {through: 'Product_Category'});
+Brand.belongsToMany(SubCategory, { through: "brand", timestamps: false });
+SubCategory.belongsToMany(Brand, { through: "brand", timestamps: false });
 
 
 module.exports = {
