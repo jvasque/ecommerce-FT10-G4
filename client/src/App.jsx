@@ -16,8 +16,8 @@ function App() {
         <Route path="/" render={() => <Nav />} />
         <Route exact path="/" component={Home} />
         <Switch>
-          {/* <Route exact path="/:id" component={ProductDetails} /> */}
           <Route path='/catalog' component={Catalog}/>
+          <Route path="/products/:id" component={ProductDetails} />
         </Switch>
         <Route path='/' component={ Footer }/>
       </Fragment>

@@ -17,6 +17,6 @@ router.use("/deleteCategory", deleteCategory);
 router.use("/putCategory", putCategory);
 router.use("/allCategories", allCategories);
 router.use("/info", info);
-router.use('/product', products)
+router.use('/products', products)
 
 module.exports = router;

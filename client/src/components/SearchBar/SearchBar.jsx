@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react'
 import '../../scss/components/_SearchBar.scss'
 import { useDispatch, useSelector} from "react-redux";
 import { BiSearch } from "react-icons/bi";
-import { getQuery } from '../../reducers/searchReducer/actionsSearch';
+import { getQuery } from '../../redux/searchReducer/searchActions';
 import ProductCard from '../ProductCard/ProductCard.jsx'
 
 function SearchBar(props) {
   const [find, setFind] = useState('');
   
-  const query = useSelector(state => state.search.query)
+  const query = useSelector(state => state.searchReducer.query)
   const dispatch = useDispatch();
 
 
