@@ -5,15 +5,17 @@ import DivText from './DivText.jsx'
 import ButtonIconText from './ButtonIconText';
 import ScoreIcon from './ScoreIcon';
 
-let product = {
-    image : 'https://argentina.agrofystatic.com/media/catalog/product/cache/1/image/850x600/0dc2d03fe217f8c83829496872af24a0/m/e/metolaclor-940x1024.jpg?usewebp=true',
-    price : 200,
-    score : 4.3,
-    name: 'Metolaclor 96 Summit Agro',
-    description: 'agua de rio con popo adsf sdf af dsaf as asdfasdgdgegr ertreyeryeryer gggggggg ryty gggggg 453534534534ggg ggggggg gggggggggend',
-}
+// let product = {
+//     picture : 'https://argentina.agrofystatic.com/media/catalog/product/cache/1/image/850x600/0dc2d03fe217f8c83829496872af24a0/m/e/metolaclor-940x1024.jpg?usewebp=true',
+//     price : 200,
+//     score : 4.3,
+//     name: 'Metolaclor 96 Summit Agro',
+//     description: 'agua de rio con popo adsf sdf af dsaf as asdfasdgdgegr ertreyeryeryer gggggggg ryty gggggg 453534534534ggg ggggggg gggggggggend',
+// }
 
-function ProductCard(){
+
+function ProductCard({product}){
+    
     return (
         <div className='productCard'>
             <Link className='cardLink' to={`/details/${product.id}`} key={product.id}>

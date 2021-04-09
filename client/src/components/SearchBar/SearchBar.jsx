@@ -1,23 +1,29 @@
 import React, { useState, useEffect } from 'react'
 import '../../scss/components/_SearchBar.scss'
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector} from "react-redux";
 import { BiSearch } from "react-icons/bi";
-import Catalogo from '../Catalogo/Catalogo.jsx'
-import { getQuery } from '../../redux/reducerSearch/actionsSearch';
+import { getQuery } from '../../reducers/searchReducer/actionsSearch';
+import ProductCard from '../ProductCard/ProductCard.jsx'
 
 function SearchBar(props) {
   const [find, setFind] = useState('');
-
-  const products = useSelector(state => state.query)
+  
+  const query = useSelector(state => state.search.query)
   const dispatch = useDispatch();
 
+
+  useEffect(() => {
+    console.log(query)    
+    return () => {
+    }
+  },[query])
 
   const handleChange = (e) => {
     setFind(e.target.value);
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(getQuery(find))
+    dispatch(getQuery(find));    
   };
 
   return (
@@ -34,14 +40,30 @@ function SearchBar(props) {
         <button type="submit"><BiSearch /></button>
       </form>
 
-      <Catalogo />
-
+      <div className='queryDisplay'>
+        {
+          query && query.map((card) => {
+            return (                             
+              <ProductCard product={card}/>             
+            )
+          })
+        }
+      </div>
     </>
   )
 }
 
-export default SearchBar;
+// const mapStateToProps = (state) => ({
+//   query: state.search.query,
+// })
 
+// const mapDispatchToProps = (dispatch) => ({
+//   getQuery: find => dispatch(getQuery(find))
+// })
+
+// export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);
+
+export default SearchBar;
 //busca del array loaded por titulo (ruta query por keyword de busqueda)
 
 
