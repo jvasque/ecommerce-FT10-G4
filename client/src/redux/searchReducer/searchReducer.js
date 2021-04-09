@@ -1,4 +1,4 @@
-import { GET_QUERY } from "./searchActions";
+import { GET_QUERY } from './searchActions';
 
 const initialState = {
   query: [],
@@ -12,7 +12,7 @@ export default (state = initialState, action) => {
         query: action.payload,
       };
     }
-  default:
-    return state;
+    default:
+      return state;
   }
 };

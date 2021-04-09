@@ -1,14 +1,12 @@
 import axios from 'axios';
-export const GET_QUERY='GET_QUERY';
+export const GET_QUERY = 'GET_QUERY';
 
 export function getQuery(find) {
-  return async function(dispatch) {
-    const info = await axios.get("http://localhost:3001/products")
+  return async function (dispatch) {
+    const info = await axios.get('http://localhost:3001/search?term=' + find);
     dispatch({
       type: GET_QUERY,
-      payload: info.data.data,
+      payload: info.data,
     });
   };
-};
-
-// "http://localhost:3001/search?query=" + find
+}
