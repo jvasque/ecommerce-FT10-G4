@@ -1,0 +1,21 @@
+.buttonIcon{
+    flex-direction: row;
+    height: 100%;
+    width: 100%;
+    .iconContainer{
+        display: inline-block;
+        height: 100%;
+        width: 20%;
+        margin-left: 5%;
+        .icon{
+            height: 100%;
+            width: 100%;
+        }
+    }
+    .textContainer{
+        display: inline-block;
+        width: 75%;
+        height: 100%;
+        font-size: 14px;
+    }
+}

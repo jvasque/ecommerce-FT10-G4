@@ -1,0 +1,28 @@
+.catalogScreen{
+    display: inline-block;
+    background-color:white;
+    width: 80%;
+    .catalogMatrix{
+        display: grid;
+        grid-template-rows: 425px 425px 425px;
+        grid-template-columns: 33.3% 33.3% 33.3%;
+    } 
+}
+
+@media (max-width: 1200px) {
+    .catalogScreen{
+        width: 80%;
+        .catalogMatrix{
+            grid-template-columns: 50% 50%;
+        } 
+    }
+}
+
+@media (max-width: 800px) {
+    .catalogScreen{
+        width: 80%;
+        .catalogMatrix{
+            grid-template-columns: 100%;
+        } 
+    }
+}
