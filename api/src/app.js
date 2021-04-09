@@ -24,7 +24,7 @@ server.use((req, res, next) => {
   next();
 });
 
-server.use("/", index);
+server.use("/", index); //Fixear
 
 // Error catching endware.
 server.use((err, req, res, next) => {

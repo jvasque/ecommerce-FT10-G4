@@ -2,6 +2,7 @@ import React from "react";
 import "../../scss/components/_Home.scss";
 import Footer from "../Footer/Footer.jsx"
 
+
 const Home = () => {
   return (
     <div className="container">
@@ -14,11 +15,12 @@ const Home = () => {
         <label for="clubs"> Fertilizantes</label><label for="hearts"> Insumos</label><label for="spades"> Categoria3</label><label for="diamonds"> Categoria4</label>
         <div class="keys">Use arrows to navigate</div>
       </form>
-
+      
 
      
     
     </div>
+    
   );
 };
 

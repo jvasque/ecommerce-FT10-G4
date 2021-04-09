@@ -1,0 +1,18 @@
+.menu {
+  display: flex;
+  border: 1px solid green;
+  min-width: 4rem;
+  float: right;
+  margin-right: 6px;
+  height: 19vh;
+  padding: 10px;
+
+  .test {
+    font-family: sans-serif;
+    color: #f7f7f7;
+    text-decoration: none;
+    :hover {
+      color: #85da6c;
+    }
+  }
+}
