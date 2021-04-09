@@ -1,6 +1,6 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
-import '../../scss/components/_ProductCard.scss'
+import '../../scss/components/ProductCard/_ProductCard.scss'
 import DivText from './DivText.jsx'
 import ButtonIconText from './ButtonIconText';
 import ScoreIcon from './ScoreIcon';

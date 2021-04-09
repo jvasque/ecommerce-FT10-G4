@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { GetDetail } from "../../reducers/actions/getDetail";
+import { getDetail } from "../../redux/detailReducer/detailActions";
 
 
 import "../../scss/components/_ProductDetails.scss";
@@ -15,7 +15,7 @@ const ProductDetails = (props) => {
     (state) => state.details
   );
   useEffect(() => {
-    dispatch(GetDetail(productId));
+    dispatch(getDetail(productId));
   }, []);
 
   return (

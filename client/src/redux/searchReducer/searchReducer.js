@@ -1,4 +1,4 @@
-import { GET_QUERY } from "./actionsSearch";
+import { GET_QUERY } from "./searchActions";
 
 const initialState = {
   query: [],

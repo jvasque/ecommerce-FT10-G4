@@ -1,4 +1,4 @@
-import { GETDETAIL } from "../actions/getDetail"
+import { GET_DETAIL } from "../detailReducer/detailActions"
 
 const initialState = {
   productDetail: {},
@@ -8,7 +8,7 @@ const initialState = {
  const detailReducer = (state=initialState, action) => {
 
   switch(action.type) {
-    case GETDETAIL:
+    case GET_DETAIL:
       return {
         ...state,
         productDetail: action.payload,

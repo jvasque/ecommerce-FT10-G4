@@ -1,5 +1,5 @@
 import React from 'react'
-import '../../scss/components/_ButtonIconText.scss'
+import '../../scss/components/ProductCard/_ButtonIconText.scss'
 import DivText from './DivText.jsx'
 import { BiHeart, BiCartAlt } from "react-icons/bi";
 

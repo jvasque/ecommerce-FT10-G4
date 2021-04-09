@@ -2,7 +2,7 @@ import React from 'react'
 import ProductCard from '../ProductCard/ProductCard.jsx'
 import Pages from './Pages.jsx'
 import Filter from './Filter.jsx'
-import '../../scss/components/_Catalogo.scss'
+import '../../scss/components/Catalog/_Catalog.scss'
 
 let prod = {
     id: 1,
@@ -15,7 +15,7 @@ let prod = {
 
 let products = [prod, prod, prod, prod, prod, prod, prod]
 
-function Catalogo(){
+function Catalog(){
     return (
         <div className='catalogScreen'>
             <div className='catalogMatrix'>
@@ -32,4 +32,4 @@ function Catalogo(){
     )
 }
 
-export default Catalogo;
+export default Catalog;

@@ -1,5 +1,5 @@
 import React from 'react'
-import '../../scss/components/_Pages.scss'
+import '../../scss/components/Catalog/_Pages.scss'
 
 function Pages(){
     return (
