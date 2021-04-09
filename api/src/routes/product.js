@@ -2,10 +2,6 @@ const router = require('express').Router();
 const { Product } = require('../db.js');
 // const bodyParser = require("body-parser"); // deprecated
 
-router.use(express.json());
-//agregar categorias?
-/* [[{nombre:"tomatini"}, {nombre:"plantita"}],{},{}] */
-
 router.get('/', async (req, res, next) => {
   try {
     let data = await Product.findAll();
