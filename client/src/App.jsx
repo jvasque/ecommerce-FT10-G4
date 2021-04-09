@@ -5,7 +5,7 @@ import Home from "./components/Home/Home";
 import Nav from "./components/Nav/Nav";
 import ProductDetails from "./components/ProductDetails/ProductDetails";
 
-import "./App.css";
+//import "./App.css";
 import "./scss/_App.scss";
 import Footer from "./components/Footer/Footer";
 
