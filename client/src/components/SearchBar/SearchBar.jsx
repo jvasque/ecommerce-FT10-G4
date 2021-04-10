@@ -11,7 +11,6 @@ function SearchBar(props) {
   const query = useSelector(state => state.searchReducer.query)
   const dispatch = useDispatch();
 
-
   useEffect(() => {  
     return
   },[query])
@@ -28,11 +27,12 @@ function SearchBar(props) {
   };
 
   return (
-    <>
-      <form className='searchBarForm'
+    <div className='searchBarForm'>
+      <form  
         onSubmit={handleSubmit}
       >
-        <input id="search"
+        <input  className= 'searchInput' 
+          id="search"
           type="search"
           placeholder="Search..."
           autoFocus required
@@ -41,7 +41,7 @@ function SearchBar(props) {
         <button type="submit"><BiSearch /></button>
       </form>
 
-    </>
+    </div>
   )
 }
 

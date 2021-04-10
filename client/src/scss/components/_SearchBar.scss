@@ -4,35 +4,40 @@
   --dur: 0.3s;
   --color-dark: #2f2f2f;
   --color-light: #fff;
-  --color-brand: #7cbd57;
+  --color-brand: #378A19;
   --font-fam: 'Lato', sans-serif;
-  --height: 5rem;
-  --btn-width: 6rem;
+  --height: 3rem;
+  --btn-width: 4rem;
   --bez: cubic-bezier(0, 0, 0.43, 1.49);
 }
-
 .searchBarForm {
+  margin-top: 20px;
+  display: flex; 
+  align-items: center; 
+  justify-content: center;
   form {
-    // display: flex;
     position: relative;
     width: 30rem;
     background: var(--color-brand);
     border-radius: var(--rad);
+    :hover {
+      background: #379e12
+    }
   }
-  input,
-  button {
+  input, button {
     height: var(--height);
     font-family: var(--font-fam);
     border: 0;
     color: var(--color-dark);
     font-size: 1.8rem;
   }
-  input[type='search'] {
-    width: 300px;
+  input[type="search"] {
+    width: 100%;
     background: var(--color-light);
     padding: 0 1.6rem;
     border-radius: var(--rad);
-    appearance: none;
+    outline: none;
+    appearance: none; //for iOS input[type="search"] roundedness issue. border-radius alone doesn't work
     transition: all var(--dur) var(--bez);
     transition-property: width, border-radius;
     z-index: 1;
@@ -52,13 +57,13 @@
     border-radius: var(--rad) 0 0 var(--rad);
     width: calc(100% - var(--btn-width));
     + button {
-      display: block;
+      outline: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    + button:hover{
+      color: whitesmoke;
     }
   }
-}
-
-.queryDisplay {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
 }
