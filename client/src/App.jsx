@@ -3,7 +3,8 @@ import { Route, Switch } from "react-router";
 
 import Home from "./components/Home/Home";
 import Nav from "./components/Nav/Nav";
-import ProductDetails from "./components/ProductDetails/ProductDetails";
+import Form from "./components/formCategories/Form"
+
 
 
 
@@ -19,9 +20,9 @@ function App() {
         <Route path="/" render={() => <Nav />} />
         <Route exact path="/" component={Home} />
         <Switch>
-          <Route exact path="/:id" component={ProductDetails} />
+          
         </Switch>
-
+         <Route path="/categorias" component ={Form}/>
         <Route path='/' component={ Footer }/>
         
         

@@ -1,7 +1,6 @@
-const add = require("express").Router();
 const { Category } = require("../../db.js");
 
-add.post("/", async (req, res, next) => {
+module.exports = async (req, res, next) => {
   const { name } = req.body;
   const findDuplicate = await Category.findAll({
     where: {
@@ -16,6 +15,4 @@ add.post("/", async (req, res, next) => {
     });
     res.send("Categoria Creada").status(200);
   }
-});
-
-module.exports = add;
+};

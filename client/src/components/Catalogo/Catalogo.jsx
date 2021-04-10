@@ -1,7 +1,7 @@
 import React from 'react'
-import ProductCard from '../ProductCard/ProductCard.jsx'
+
 import Pages from './Pages.jsx'
-import Filter from './Filter.jsx'
+
 import '../../scss/components/_Catalogo.scss'
 
 let prod = {

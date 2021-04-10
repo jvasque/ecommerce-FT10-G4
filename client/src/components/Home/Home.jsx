@@ -1,6 +1,6 @@
 import React from "react";
 import "../../scss/components/_Home.scss";
-import Footer from "../Footer/Footer.jsx"
+
 
 
 const Home = () => {
