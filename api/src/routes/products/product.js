@@ -5,6 +5,9 @@ const productGetId = require('./productGetId');
 const productPost = require('./productPost');
 const productPutId = require('./productPutId');
 const productDeleteID = require('./productDeleteId');
+const cors = require("cors");
+
+router.use(cors());
 
 router.use(bodyParser.json())
 

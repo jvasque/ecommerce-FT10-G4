@@ -5,8 +5,11 @@ const allCategories = require("./categories/allCategories");
 const deleteCategory = require("./categories/deleteCategory");
 const putCategory = require("./categories/putCategory");
 const products = require('./products/product');
+const cors = require("cors");
+
 
 const router = Router();
+router.use(cors());
 
 // load each router on a route
 // i.e: router.use('/auth', authRouter);

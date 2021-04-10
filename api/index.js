@@ -21,19 +21,55 @@ const server = require("./src/app.js");
 const { conn, Product, Category } = require("./src/db.js");
 const products = require("./src/data/products");
 const categories = require('./src/data/categories');
+const { Op } = require("sequelize");
 
 // Syncing all the models at once.
 conn.sync({ force: true }).then(() => {
   server.listen(3001, async function () {
     console.log("Server is listening on port 3001!");
-
-    for (let i = 0; i < products.length; i++) {
-      await Product.create(products[i]);
+    
+    for (let j = 0; j < categories.length; j++) {
+      await Category.create({
+        name: categories[j].name
+      }); 
     }
 
-    for (let j = 0; j < categories.length; j++) {
-      await Category.create(products[j]);
+    for (let i = 0; i < products.length; i++) {
       
+
+      const findCategory = await Category.findAll({
+        where:{
+          name: {
+            [Op.in]: products[i].categoryCategoryId
+          }
+        }
+      })
+      let score = products[i].score.toString()
+      
+      let myProduct = await Product.findOrCreate({
+        where:{
+        name: products[i].name ,
+        SKU:products[i].SKU  ,
+        unitPrice:products[i].unitPrice  ,
+        description:products[i].description  ,
+        picture:products[i].picture  ,
+        score:score  ,
+        unitsOnStock: products[i].unitsOnStock 
+        }
+      });
+      let findProduct = await Product.findOne({
+        where:{
+          name: products[i].name ,
+          SKU:products[i].SKU  ,
+          unitPrice:products[i].unitPrice  ,
+          description:products[i].description  ,
+          picture:products[i].picture  ,
+          score: score ,
+          unitsOnStock: products[i].unitsOnStock 
+          }
+      })
+     
+      await findProduct.setCategories(findCategory);
     }
 
     console.log("Products and categories pre charged");

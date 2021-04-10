@@ -9,6 +9,7 @@ module.exports = [
       "https://argentina.agrofystatic.com/media/catalog/product/cache/1/image/850x600/0dc2d03fe217f8c83829496872af24a0/g/l/gl_agrofy_piezas_seleccion_punto-35.jpg?usewebp=true",
     score: 3,
     unitsOnStock: 10,
+    categoryCategoryId: ["Proteccion de Cultivos", "Otros Insumos Agricolas"],
   },
   {
     name: "Herbicida Bayer Liberty",
@@ -20,6 +21,7 @@ module.exports = [
       "https://argentina.agrofystatic.com/media/catalog/product/cache/1/image/850x600/0dc2d03fe217f8c83829496872af24a0/l/o/logos-agrofy_liberty.jpg?usewebp=true",
     score: 5,
     unitsOnStock: 20,
+    categoryCategoryId: ["Proteccion de Cultivos"],
   },
 
   {
@@ -32,6 +34,7 @@ module.exports = [
       "https://argentina.agrofystatic.com/media/catalog/product/cache/1/image/850x600/0dc2d03fe217f8c83829496872af24a0/m/e/mezcla_granulada_50.jpg?usewebp=true",
     score: 1,
     unitsOnStock: 35,
+    categoryCategoryId: ["Fertilizantes"],
   },
 
   {
@@ -44,6 +47,7 @@ module.exports = [
       "https://argentina.agrofystatic.com/media/catalog/product/cache/1/image/850x600/0dc2d03fe217f8c83829496872af24a0/f/a/facebook-producto600x400--mantas.jpg?usewebp=true",
     score: 2,
     unitsOnStock: 17,
+    categoryCategoryId: ["Fertilizantes", "Otros Insumos Agricolas"],
   },
 
   {
@@ -56,6 +60,7 @@ module.exports = [
       "https://argentina.agrofystatic.com/media/catalog/product/cache/1/image/850x600/0dc2d03fe217f8c83829496872af24a0/b/o/bolsas_trigo_arg_algarrobo_300x300.jpg?usewebp=true",
     score: 4,
     unitsOnStock: 80,
+    categoryCategoryId: ["Semillas e Hibridos"],
   },
 
   {
@@ -68,5 +73,6 @@ module.exports = [
       "https://argentina.agrofystatic.com/media/catalog/product/cache/1/image/850x600/0dc2d03fe217f8c83829496872af24a0/f/e/fertilizante-razormin-agrofy-0-20200420185815.jpg?usewebp=true",
     score: 5,
     unitsOnStock: 12,
+    categoryCategoryId: ["Fertilizantes"],
   },
 ];
