@@ -1,5 +1,5 @@
 import React from 'react'
-import '../../scss/components/_DivText.scss'
+import '../../scss/components/ProductCard/_DivText.scss'
 
 
 function DivText(props){
