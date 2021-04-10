@@ -1,7 +1,7 @@
-require('dotenv').config();
-const { Sequelize } = require('sequelize');
-const fs = require('fs');
-const path = require('path');
+require("dotenv").config();
+const { Sequelize } = require("sequelize");
+const fs = require("fs");
+const path = require("path");
 const { DB_USER, DB_PASSWORD, DB_HOST } = process.env;
 
 const sequelize = new Sequelize(
@@ -16,13 +16,13 @@ const basename = path.basename(__filename);
 const modelDefiners = [];
 
 // Leemos todos los archivos de la carpeta Models, los requerimos y agregamos al arreglo modelDefiners
-fs.readdirSync(path.join(__dirname, '/models'))
+fs.readdirSync(path.join(__dirname, "/models"))
   .filter(
     (file) =>
-      file.indexOf('.') !== 0 && file !== basename && file.slice(-3) === '.js'
+      file.indexOf(".") !== 0 && file !== basename && file.slice(-3) === ".js"
   )
   .forEach((file) => {
-    modelDefiners.push(require(path.join(__dirname, '/models', file)));
+    modelDefiners.push(require(path.join(__dirname, "/models", file)));
   });
 
 // Injectamos la conexion (sequelize) a todos los modelos
@@ -43,18 +43,23 @@ const { Product, Brand, Category, SubCategory, Types } = sequelize.models;
 
 // Aca vendrian las relaciones
 // Product.hasMany(Reviews);
+Category.belongsTo(SubCategory, { through: "cat", timestamps: false });
+SubCategory.hasOne(Category, { through: "cat", timestamps: false });
 
-Product.belongsToMany(Category, {through: 'product_category'})
-Category.belongsToMany(Product, {through: 'product_category'})
+SubCategory.belongsToMany(Types, { through: "sub", timestamps: false });
+Types.belongsToMany(SubCategory, { through: "sub", timestamps: false });
 
-Category.belongsTo(SubCategory, { through: 'cat', timestamps: false });
-SubCategory.hasOne(Category, { through: 'cat', timestamps: false });
+Brand.belongsToMany(SubCategory, { through: "brand", timestamps: false });
+SubCategory.belongsToMany(Brand, { through: "brand", timestamps: false });
 
-SubCategory.belongsToMany(Types, { through: 'sub', timestamps: false });
-Types.belongsToMany(SubCategory, { through: 'sub', timestamps: false });
-
-Brand.belongsToMany(SubCategory, { through: 'brand', timestamps: false });
-SubCategory.belongsToMany(Brand, { through: 'brand', timestamps: false });
+Product.belongsToMany(Category, {
+  through: "product_category",
+  timestamps: false,
+});
+Category.belongsToMany(Product, {
+  through: "product_category",
+  timestamps: false,
+});
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
