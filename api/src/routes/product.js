@@ -1,11 +1,32 @@
 const router = require('express').Router();
-const { Product } = require('../db.js');
+const { Product, Category } = require('../db.js');
 // const bodyParser = require("body-parser"); // deprecated
 
 router.get('/', async (req, res, next) => {
   try {
     let data = await Product.findAll({include: {all: true}});
     return res.json({ data });
+  } catch (err) {
+    res.json(err);
+    return console.log(err);
+  }
+});
+
+router.get('/categoria/:nombreCat', async (req, res, next) => {
+  let nombreCat=req.params.nombreCat;
+  try {
+    let data = await Category.findAll({
+      where: {
+        name: nombreCat,
+      },
+      include: {
+        model: Product,
+        through: {
+          attributes: [],
+        },
+      },
+    });
+    return res.json( data[0].products );
   } catch (err) {
     res.json(err);
     return console.log(err);
@@ -24,7 +45,7 @@ router.get('/:id', async (req, res, next) => {
     return res.json(product);
   } else {
     res.status(400);
-    return res.json({ error: 'that product cannot be find' });
+    return res.json({ error: 'That product cannot be found' });
   }
 });
 
@@ -67,7 +88,7 @@ router.post('/', async (req, res) => {
     return res.json(findProduct);
   } catch (err) {
     console.log(err);
-    res.json({ error: 'an error occurred while loading the data' });
+    res.json({ error: 'An error occurred while loading the data' });
   }
 });
 
@@ -91,7 +112,7 @@ router.put('/:id', async (req, res, next) => {
     return res.json(product);
   } else {
     res.status(400);
-    return res.json({ error: 'that product cannot be find' });
+    return res.json({ error: 'That product cannot be found' });
   }
 });
 
@@ -112,7 +133,7 @@ router.delete('/:id', async (req, res, next) => {
     return res.json({ suceffullyDelete: 'product has been deleted' });
   } else {
     res.status(400);
-    return res.json({ error: 'that product cannot be find' });
+    return res.json({ error: 'That product cannot be found' });
   }
 });
 

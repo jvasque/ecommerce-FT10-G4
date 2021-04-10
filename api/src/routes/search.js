@@ -7,7 +7,9 @@ router.use(express.json());
 
 router.get('/', async (req, res, next) => {
   /// ROUTE search?term=
-  const query = req.query.term;
+
+  let first = req.query.term.toLowerCase();
+  const query = first[0].toUpperCase() + first.slice(1);
 
   try {
     let data = await Product.findAll({
