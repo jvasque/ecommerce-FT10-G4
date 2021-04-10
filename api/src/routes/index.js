@@ -3,7 +3,6 @@ const { Router } = require('express');
 const addCategory = require('./categories/addCategory');
 const allCategories = require('./categories/allCategories');
 const deleteCategory = require('./categories/deleteCategory');
-const info = require('./categories/info');
 const putCategory = require('./categories/putCategory');
 const products = require('./product');
 const search = require('./search');
@@ -17,7 +16,6 @@ router.use('/addCategory', addCategory);
 router.use('/deleteCategory', deleteCategory);
 router.use('/putCategory', putCategory);
 router.use('/allCategories', allCategories);
-router.use('/info', info);
 router.use('/products', products);
 router.use('/search', search);
 
