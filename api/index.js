@@ -3,93 +3,101 @@
 //                      88" . "88
 //                      (| -_- |)
 //                      0\  =  /0
-//                    ___/`---'\___
-//                  .' \\|     |// '.
-//                 / \\|||  :  |||// \
-//                / _||||| -:- |||||- \
-//               |   | \\\  -  /// |   |
-//               | \_|  ''\---/''  |_/ |
-//               \  .-\__  '-'  ___/-. /
-//             ___'. .'  /--.--\  `. .'___
-//          ."" '<  `.___\_<|>_/___.' >' "".
-//         | | :  `- \`.;`\ _ /`;.`/ - ` : | |
-//         \  \ `_.   \_ __\ /__ _/   .-` /  /
-//     =====`-.____`.___ \_____/___.-`___.-'=====
-//                       `=---='
-//     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-const server = require('./src/app.js');
-const { conn, Product } = require('./src/db.js');
+//                    ___/---'_
+//                  .' \|     |// '.
+//                 / \|  :  |// \
+//                / | -:- |- \
+//               |   | \\  -  /// |   |
+//               | _|  ''---/''  |/ |
+//               \  .-_  '-'  /-. /
+//             '. .'  /--.--\  . .'
+//          ."" '<  ._<|>/_.' >' "".
+//         | | :  - .;\ _ /;./ -  : | |
+//         \  \ _.   \_ __\ /__ _/   .- /  /
+//     =====-.____. ___/__.-___.-'=====
+//                       =---='
+//     ~~~~~~~~~~~
+const server = require("./src/app.js");
+const { conn, Product, Category } = require("./src/db.js");
+let products = require("./src/data/products");
+let categories = require("./src/data/categories");
 
 // Syncing all the models at once.
-conn.sync({ force: true }).then(() => {
-  server.listen(3001, function () {
-    console.log('Server is listening on port 3001!');
+conn.sync({ force: true }).then(async () => {
+  server.listen(3001, async function () {
+    console.log("Server is listening on port 3001!");
 
-  // Descomentar estas lineas:
-  
-  var product1 =  Product.create({
-    name: "Insecticida Gleba Punto 35",
-    SKU: 'CH1LE2018OUT',
-    unitPrice: 255.55,
-    description: 'PUNTO 35 es un insecticida sistémico que actúa por ingestión y contacto, específico para el control de insectos como pulgones, mosquita blanca, trips y otros, que afectan a cultivos de cereales, frutales de carozo, cítricos, tabaco, hortalizas y ornamentales. Se aplica vía tratamiento foliar, mediante aspersiones y radicular mediante riego por goteo.',
-    picture: 'https://argentina.agrofystatic.com/media/catalog/product/cache/1/image/850x600/0dc2d03fe217f8c83829496872af24a0/g/l/gl_agrofy_piezas_seleccion_punto-35.jpg?usewebp=true',
-    score: 3,
-    unitsOnStock: 10
-  });
-  
-  var product2 =  Product.create({
-    name: "Herbicida Bayer Liberty",
-    SKU: 'G4MM4F3VER',
-    unitPrice: 15.37,
-    description: 'El Herbicida LIBERTY® es un herbicida selectivo en maíces resistentes al Glufosinato de amonio (líneas Liberty Link). Sobre la acción de LIBERTY® influyen factores ambientales tales como temperatura inferior a 10°C y stress del cultivo y las malezas por falta de agua, lo cual disminuye la performance del herbicida',
-    picture: 'https://argentina.agrofystatic.com/media/catalog/product/cache/1/image/850x600/0dc2d03fe217f8c83829496872af24a0/l/o/logos-agrofy_liberty.jpg?usewebp=true',
-    score: 5,
-    unitsOnStock: 20
-  });
-  
-  var product3 =  Product.create({
-    name: "Fertilizante YPF Agro mezcla fisica granulada",
-    SKU: '4LF42021',
-    unitPrice: 80,
-    description: 'Responden a la necesidad de los cultivos de una nutrición balanceada para alcanzar su máximo rendimiento. Combinan nutrientes de distintas fuentes en la relación justa, según cada cada cultivo. Forma sólida.',
-    picture: 'https://argentina.agrofystatic.com/media/catalog/product/cache/1/image/850x600/0dc2d03fe217f8c83829496872af24a0/m/e/mezcla_granulada_50.jpg?usewebp=true',
-    score: 1,
-    unitsOnStock: 35
+    // for (let j = 0; j < categories.length; j++) {
+    //   await Category.create({
+    //     name: categories[j].name,
+    //   });
+    // }
+
+    // for (let i = 0; i < products.length; i++) {
+    //   let myProduct = await Product.create({
+    //     name: products[i].name,
+    //     SKU: products[i].SKU,
+    //     unitPrice: products[i].unitPrice,
+    //     description: products[i].description,
+    //     picture: products[i].picture,
+    //     score: products[i].score,
+    //     unitsOnStock: products[i].unitsOnStock,
+    //   });
+    //   const findCategory = await Category.findOne({
+    //     where: {
+    //       name: products[i].categoryCategoryId,
+    //     },
+    //   });
+    //   await myProduct.setCategory(findCategory);
+    // }
+
+    
+
   });
 
-  var product4 =  Product.create({
-    name: "Silo bolsa Plastar Manta Bicolor 12 Ancho x 50 Largo",
-    SKU: 'B3T4N0TF0UND',
-    unitPrice: 135,
-    description: 'Película de polietileno tricapa, bicolor (blanca y negra), fabricada por el sistema de coextrusión, logrando una película con mayor resistencia mecánica y duración a la intemperie.',
-    picture: 'https://argentina.agrofystatic.com/media/catalog/product/cache/1/image/850x600/0dc2d03fe217f8c83829496872af24a0/f/a/facebook-producto600x400--mantas.jpg?usewebp=true',
-    score: 2,
-    unitsOnStock: 17
-  });
-
-  var product5 =  Product.create({
-    name: "Semillas de Trigo DM ALGARROBO DonMario",
-    SKU: 'ARG0G3R1',
-    unitPrice: 80,
-    description: 'El Trigo DM Algarrobo es un Trigo de ciclo intermedio, de amplia adaptacion y potencial de rendimiento en todas las sub-regiones trigueras del país.',
-    picture: 'https://argentina.agrofystatic.com/media/catalog/product/cache/1/image/850x600/0dc2d03fe217f8c83829496872af24a0/b/o/bolsas_trigo_arg_algarrobo_300x300.jpg?usewebp=true',
-    score: 4,
-    unitsOnStock: 80
-  });
-
-  var product6 =  Product.create({
-    name: "Fertilizante Gleba Razormin",
-    SKU: 'BR41G3R7',
-    unitPrice: 57,
-    description: 'Razormin® es un fertilizante para aplicación foliar en diferentes cultivos que presenten carencias de nitrógeno, fósforo, potasio y micronutrientes, de acuerdo a las indicaciones del cuadro de recomendaciones de uso. Está indicado particularmente para el uso en hortícolas y frutales luego del trasplante.',
-    picture: 'https://argentina.agrofystatic.com/media/catalog/product/cache/1/image/850x600/0dc2d03fe217f8c83829496872af24a0/f/e/fertilizante-razormin-agrofy-0-20200420185815.jpg?usewebp=true',
-    score: 5,
-    unitsOnStock: 12
-  });
-  
-  Promise.all([product1, product2, product3, product4, product5, product6])
-    .then(res => {
-      console.log("Products pre charged");
+  categories = categories.map(category => {
+    return Category.create({
+          name: category.name,
     });
-});
+  })
+
+  categories = await Promise.all(categories)
+
+  let categoryProduct = products.map(result => result.categoryCategoryId)  
+
+  categoryProduct = await Promise.all(categoryProduct.map(async (arr) => {
+    return await Promise.all(arr.map(async (el) => {
+        let [createdCategory, created] = await Category.findOrCreate({
+          where: {name: el}
+        })                  
+        return createdCategory
+      }
+    ))
+  }))
+
+  products = products.map(product => {
+    return Product.create({
+      name: product.name,
+      SKU: product.SKU,
+      unitPrice: product.unitPrice,
+      description: product.description,
+      picture: product.picture,
+      score: product.score,
+      unitsOnStock: product.unitsOnStock,
+    })
+  })
+
+  products = await Promise.all(products)
+
+  await Promise.all(products.map(async (item, index) => {
+      await item.addCategories(categoryProduct[index])
+  }))
+
+  Promise.all([...categories])
+    .then(res => {
+      console.log("Cargados Productos y Categorias");
+    }).catch(err => {
+      console.log("Dietas y Tipos de platos ya precargados")
+  })
+
 });

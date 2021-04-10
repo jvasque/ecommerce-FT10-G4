@@ -4,7 +4,7 @@ const { Product } = require('../db.js');
 
 router.get('/', async (req, res, next) => {
   try {
-    let data = await Product.findAll();
+    let data = await Product.findAll({include: {all: true}});
     return res.json({ data });
   } catch (err) {
     res.json(err);
