@@ -32,7 +32,7 @@
     font-size: 1.8rem;
   }
   input[type="search"] {
-    width: 100%;
+    width: 300px;
     background: var(--color-light);
     padding: 0 1.6rem;
     border-radius: var(--rad);
@@ -45,7 +45,7 @@
   }
   button {
     display: none;
-    position: absolute;
+    // position: absolute;
     top: 0;
     right: 0;
     width: var(--btn-width);
@@ -55,12 +55,12 @@
   }
   input:not(:placeholder-shown) {
     border-radius: var(--rad) 0 0 var(--rad);
-    width: calc(100% - var(--btn-width));
+    width: calc(300px - var(--btn-width));
     + button {
       outline: none;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: block;
+      // align-items: center;
+      // justify-content: center;
     }
     + button:hover{
       color: whitesmoke;
