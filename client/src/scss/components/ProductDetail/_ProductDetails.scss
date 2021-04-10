@@ -1,0 +1,60 @@
+// verde principal: #378A19;
+// verde claro: #85DA6C;
+// gris principal: #EFEFEF;
+// gris claro: #F7F7F7;
+@mixin card() {
+    width: 100%;
+    height: 100%;
+    padding: 0px 10px;
+    margin: 5px 5px ;
+  border-radius: 8px;
+    box-shadow: 2px 2px 2px 2px rgba(0,0,0,0.2);
+    transition: 0.5s;
+    background-color: #F7F7F7;
+    text-decoration: none;
+    
+}
+
+.productDetails{
+    margin: 10px;
+   display: flex;
+   justify-content: center;
+}
+.firstCard, .description{
+@include card()
+}
+
+.description{
+    
+    width: 100%;
+    hr {
+        background-color: red;
+    }
+}
+.containerDetails {
+    height: 70%;
+    width: 85%;
+    margin: 0;
+  
+    display: flex;
+    flex-direction: column;
+    img{
+        width: 20%;
+    }
+    h2, h3, h4{
+        color: #378A19;
+    }
+    Typography{
+        color: #378A19
+    }
+    .detailTitle{
+        padding: 10px 5px;
+    }
+    .datos{
+        float: right;
+        width: 40%;
+      
+    }
+}
+
+
