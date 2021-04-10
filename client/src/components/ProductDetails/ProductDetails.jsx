@@ -1,41 +1,101 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+
+import Rating from "@material-ui/lab/Rating";
+import Typography from "@material-ui/core/Typography";
+import Box from "@material-ui/core/Box";
+
+import PropTypes from "prop-types";
+
+// import { Icon, InlineIcon } from '@iconify/react';
+// import tractorIcon from '@iconify-icons/fa-solid/tractor';
+
+
+
 import { useDispatch, useSelector } from "react-redux";
 import { GetDetail } from "../../reducers/actions/getDetail";
 
-import "../../scss/components/_ProductDetails.scss";
+import "../../scss/components/ProductDetail/_ProductDetails.scss";
 
-import bd from "./bd";
+import Carousel from "./Carousel";
+
+// npm install --save-dev @iconify/react @iconify-icons/la
+import { Icon, InlineIcon } from '@iconify/react';
+import tractorIcon from '@iconify-icons/la/tractor';
+
+
+const customIcons = {
+  1: {
+    icon: <Icon icon={tractorIcon}  />,
+    label: "Very Dissatisfied",
+  },
+  2: {
+    icon: <Icon icon={tractorIcon} />,
+    label: "Dissatisfied",
+  },
+  3: {
+    icon: <Icon icon={tractorIcon} />,
+    label: "Neutral",
+  },
+  4: {
+    icon: <Icon icon={tractorIcon} />,
+    label: "Satisfied",
+  },
+  5: {
+    icon: <Icon icon={tractorIcon} />,
+    label: "Very Satisfied",
+  },
+};
+function IconContainer(props) {
+  const { value, ...other } = props;
+  return <span {...other}>{customIcons[value].icon}</span>;
+}
+
+IconContainer.propTypes = {
+  value: PropTypes.number,
+};
 
 const ProductDetails = (props) => {
   let productId = props.match.params.id;
 
   const dispatch = useDispatch();
-  const { productDetails, loading } = useSelector((state) => state.details);
+  const { productDetail, loading } = useSelector((state) => state.details);
   useEffect(() => {
     dispatch(GetDetail(productId));
   }, []);
 
   return (
-    <div>
-      {loading && productId - 1 < bd.length ? (
+    <div className="productDetails">
+      {loading ? (
         <div className="containerDetails">
-          <div className="title">
-            <h1>{bd[productId - 1].name}</h1>
-            <img src={bd[productId - 1].picture} alt="nope" />
-          </div>
+          <div className='firstCard'>
+            <Carousel img={productDetail.picture} />
+            <div className="datos">
+              <div className="detailTitle">
+                <h2>{productDetail.name}</h2>
+              </div>
+              <h4>Precio: {productDetail.unitPrice} USD</h4>
 
-          <div className="price">
-            <h4>Precio: {bd[productId - 1].unitPrice} USD</h4>
+              <h4>Stock: {productDetail.unitsOnStock}</h4>
+
+              <div className="stars">
+                <Box component="div"  borderColor="transparent">
+                  <Typography component="legend"><h3>Score:</h3></Typography>
+                  <Rating
+                  size="large"
+                    name="customized-icons"
+                    value={productDetail.score}
+                    getLabelText={(value) => customIcons[value].label}
+                    IconContainerComponent={IconContainer}
+                    readOnly
+                  />
+                </Box>
+              </div>
+            </div>
           </div>
           <div className="description">
             <h3>Descripcion</h3>
-            <p>{bd[productId - 1].description}</p>
-          </div>
-          <div className="stock">
-            <h4>Stock: {bd[productId - 1].unitsOnStock}</h4>
-          </div>
-          <div className="score">
-            <h4>stars: {bd[productId - 1].score}</h4>
+            <hr/>
+            <p>{productDetail.description}</p>
           </div>
         </div>
       ) : (
@@ -46,4 +106,3 @@ const ProductDetails = (props) => {
 };
 
 export default ProductDetails;
-

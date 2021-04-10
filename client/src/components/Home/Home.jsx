@@ -4,7 +4,7 @@ import "../../scss/components/_Home.scss";
 
 const Home = () => {
   return (
-    <div className="container">
+    <div className="containerHome">
    
       <form>
         <input type="radio" name="fancy" autoFocus value="clubs" id="clubs" />

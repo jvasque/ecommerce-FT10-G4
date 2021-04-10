@@ -1,22 +1,13 @@
 const router = require('express').Router();
 const { Product } = require('../db.js');
 const bodyParser = require("body-parser");
+const getProduct = require('./products/getProduct.js');
 
 router.use(bodyParser.json())
 //agregar categorias?
 /* [[{nombre:"tomatini"}, {nombre:"plantita"}],{},{}] */
 
-router.get('/', async (req, res, next) => {
-
-	try{
-		let data = await Product.findAll();
-		return res.json({data})
-	} catch(err){
-		res.json(err)
-		return console.log(err)
-	}
-
-});
+router.get('/', getProduct);
 
 router.get('/:id', async(req, res, next) => {
 	var code = req.params.id;
