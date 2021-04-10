@@ -18,7 +18,7 @@ function Product_form_update(props) {
 
   var handleId = function (event) {
     event.preventDefault();
-    setName(event.target.value);
+    setId(event.target.value);
   };
   var handleName = function (event) {
     event.preventDefault();

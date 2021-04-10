@@ -1,8 +1,10 @@
 const { Product } = require('../../db.js');
 
 module.exports = async(req, res, next) => {
+	
 	let {name, SKU, unitPrice, description, unitsOnStock, picture} = req.body.params;
 	let code = req.params.id;
+	
 	const product = await Product.findOne({
 		where:{
 			productId: code
