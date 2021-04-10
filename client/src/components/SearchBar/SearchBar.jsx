@@ -23,6 +23,7 @@ function SearchBar(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(find)
     dispatch(getQuery(find));    
   };
 

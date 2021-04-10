@@ -6,8 +6,10 @@ import { Provider } from "react-redux";
 import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
-
+import { getCatalog } from './redux/catalogReducer/catalogActions';
 import store from "./redux/store";
+
+store.dispatch(getCatalog())
 
 ReactDOM.render(
   <React.StrictMode>

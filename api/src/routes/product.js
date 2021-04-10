@@ -14,6 +14,7 @@ router.get('/', async (req, res, next) => {
 
 router.get('/categoria/:nombreCat', async (req, res, next) => {
   let nombreCat=req.params.nombreCat;
+  console.log(nombreCat)
   try {
     let data = await Category.findAll({
       where: {
@@ -26,10 +27,13 @@ router.get('/categoria/:nombreCat', async (req, res, next) => {
         },
       },
     });
-    return res.json( data[0].products );
+    
+    console.log(data[0].category.products)
+    res.json( data );
+    //res.json( data );
   } catch (err) {
-    res.json(err);
-    return console.log(err);
+    console.log(err)
+    res.send(err);
   }
 });
 
@@ -73,19 +77,7 @@ router.post('/', async (req, res) => {
       },
     });
 
-    const findProduct = await Product.findOne({
-      where: {
-        name,
-        SKU,
-        unitPrice,
-        description,
-        picture,
-        score,
-        unitsOnStock,
-      },
-    });
-
-    return res.json(findProduct);
+    return res.json(addProduct);
   } catch (err) {
     console.log(err);
     res.json({ error: 'An error occurred while loading the data' });
