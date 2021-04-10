@@ -13,7 +13,7 @@ function App() {
   return (
     <div className="App">
       <Fragment>
-        <Route path="/" render={() => <Nav />} />
+        <Route path="/" render={() => <Nav />} />        
         <Route exact path="/" component={Home} />
         <Switch>
           <Route exact path="/:id" component={ProductDetails} />
