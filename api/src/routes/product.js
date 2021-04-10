@@ -20,19 +20,13 @@ router.get('/categoria/:nombreCat', async (req, res, next) => {
       where: {
         name: nombreCat,
       },
-      include: {
-        model: Product,
-        through: {
-          attributes: [],
-        },
-      },
+      include: {all: true},
     });
-    
     console.log(data[0].category.products)
     res.json( data );
     //res.json( data );
   } catch (err) {
-    console.log(err)
+    console.log('Try failed')
     res.send(err);
   }
 });

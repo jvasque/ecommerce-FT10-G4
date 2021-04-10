@@ -6,23 +6,12 @@ const { Product } = require('../db.js');
 router.use(express.json());
 
 router.get('/', async (req, res, next) => {
-  /// ROUTE search?term=
-
-  let first = req.query.term.toLowerCase();
-  let second = first.toUpperCase()
-  const query = first[0].toUpperCase() + first.slice(1);
-  console.log(first, second, query)
+  let query = req.query.term.toLowerCase();
   try {
     let data = await Product.findAll({
       where: {
-        name: { [Sequelize.Op.or]:{
-          [Sequelize.Op.like]: `%${query}%`,
-          [Sequelize.Op.like]: `%${first}%`,
-          [Sequelize.Op.like]: `%${second}%`,
-          [Sequelize.Op.substring]: `%${first}%`,
-          [Sequelize.Op.substring]: `%${second}%`,
-          [Sequelize.Op.substring]: `%${query}%`,
-         }
+        name: { 
+          [Sequelize.Op.iLike]: `%${query}%`,         
         },
       }, include: {all: true}
     });
