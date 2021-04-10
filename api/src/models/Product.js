@@ -36,8 +36,7 @@ module.exports = (sequelize) => {
     unitsOnStock:{
       type: DataTypes.INTEGER,
       allowNull: false
-    }
-
+    },
   });
 }; 
  

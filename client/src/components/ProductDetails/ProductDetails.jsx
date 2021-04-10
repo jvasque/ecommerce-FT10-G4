@@ -1,86 +1,102 @@
-import React, { useEffect } from "react";
+<<<<<<< HEAD
+import React, { useEffect, useState } from "react";
+
+import Rating from "@material-ui/lab/Rating";
+import Typography from "@material-ui/core/Typography";
+import Box from "@material-ui/core/Box";
+
+import PropTypes from "prop-types";
+
+// import { Icon, InlineIcon } from '@iconify/react';
+// import tractorIcon from '@iconify-icons/fa-solid/tractor';
+
+
+
 import { useDispatch, useSelector } from "react-redux";
 import { GetDetail } from "../../reducers/actions/getDetail";
 
+import "../../scss/components/ProductDetail/_ProductDetails.scss";
 
-import "../../scss/components/_ProductDetails.scss";
+import Carousel from "./Carousel";
 
-import bd from "./bd";
+// npm install --save-dev @iconify/react @iconify-icons/la
+import { Icon, InlineIcon } from '@iconify/react';
+import tractorIcon from '@iconify-icons/la/tractor';
+
+
+const customIcons = {
+  1: {
+    icon: <Icon icon={tractorIcon}  />,
+    label: "Very Dissatisfied",
+  },
+  2: {
+    icon: <Icon icon={tractorIcon} />,
+    label: "Dissatisfied",
+  },
+  3: {
+    icon: <Icon icon={tractorIcon} />,
+    label: "Neutral",
+  },
+  4: {
+    icon: <Icon icon={tractorIcon} />,
+    label: "Satisfied",
+  },
+  5: {
+    icon: <Icon icon={tractorIcon} />,
+    label: "Very Satisfied",
+  },
+};
+function IconContainer(props) {
+  const { value, ...other } = props;
+  return <span {...other}>{customIcons[value].icon}</span>;
+}
+
+IconContainer.propTypes = {
+  value: PropTypes.number,
+};
 
 const ProductDetails = (props) => {
   let productId = props.match.params.id;
 
   const dispatch = useDispatch();
-  const { productDetails, loading } = useSelector(
-    (state) => state.details
-  );
+  const { productDetail, loading } = useSelector((state) => state.details);
   useEffect(() => {
     dispatch(GetDetail(productId));
   }, []);
 
   return (
-    <div>
-
-   
+    <div className="productDetails">
       {loading ? (
         <div className="containerDetails">
-          <div className="title">
-            <h1>{bd.name}</h1>
-            <img src={bd.imagenes[0]} alt="nope" />
-            <img src={bd.imagenes[1]} alt="nope" />
-          </div>
-          <div className="elements">
-            <h3>Elementos</h3>
-            {bd.elementos.map((b) => (
-              <li key={bd.elementos.indexOf(b)}>{b}</li>
-            ))}
-          </div>
-          <div className="mezcla">
-            <h4>Tipo de Mezcla: {bd.tiposMezcla}</h4>
-          </div>
-          <div className="presentation">
-            <h3>Presentacion</h3>
-            {bd.presentacion.map((b) => (
-              <li key={bd.presentacion.indexOf(b)}>{b}</li>
-            ))}
+          <div className='firstCard'>
+            <Carousel img={productDetail.picture} />
+            <div className="datos">
+              <div className="detailTitle">
+                <h2>{productDetail.name}</h2>
+              </div>
+              <h4>Precio: {productDetail.unitPrice} USD</h4>
+
+              <h4>Stock: {productDetail.unitsOnStock}</h4>
+
+              <div className="stars">
+                <Box component="div"  borderColor="transparent">
+                  <Typography component="legend"><h3>Score:</h3></Typography>
+                  <Rating
+                  size="large"
+                    name="customized-icons"
+                    value={productDetail.score}
+                    getLabelText={(value) => customIcons[value].label}
+                    IconContainerComponent={IconContainer}
+                    readOnly
+                  />
+                </Box>
+              </div>
+            </div>
           </div>
           <div className="description">
             <h3>Descripcion</h3>
-            {bd.description.map((b) => (
-              <p key={bd.description.indexOf(b)}>{b}</p>
-            ))}
-          </div>
-          <div className="disminucion">
-            {bd.disminucion.map((b) => (
-              <p key={bd.disminucion.indexOf(b)}>{b}</p>
-            ))}
-          </div>
-          <div className="ventajas">
-            <h3>Ventajas</h3>
-            <ul>
-              {bd.ventajas.map((v) => (
-                <li key={bd.ventajas.indexOf(v)}>{v}</li>
-              ))}
-            </ul>
-          </div>
-          <div className="dosis">
-            <h3>Dosis</h3>
-            <ul>
-              {bd.dosis.map((v) => (
-                <li key={bd.dosis.indexOf(v)}>{v}</li>
-              ))}
-            </ul>
-          </div>
-          <div className="quality">
-            <h4>{bd.certificadoCal}</h4>
-          </div>
-          <div className="uso">
-            <h3>Cultivo/Uso</h3>
-            <ul>
-              {bd.cultivoUso.map((v) => (
-                <li key={bd.cultivoUso.indexOf(v)}>{v}</li>
-              ))}
-            </ul>
+            <hr/>
+            <p>{productDetail.description}</p>
           </div>
         </div>
       ) : (
@@ -91,18 +107,113 @@ const ProductDetails = (props) => {
 };
 
 export default ProductDetails;
+=======
+import React, { useEffect, useState } from "react";
 
-{
-  /*         
-          <div>
-            <div>
-              <h7>{productDetail.categoryId}</h7>
-              <h7>{productDetail.locationId}</h7>
-              <div>
-                <h5>{productDetail.vendorId}</h5>
-                <h5>{productDetail.score}</h5>
-              </div>
-              <h2>{productDetail.unitPrice}</h2>
-            </div>
-          </div> */
+import Rating from "@material-ui/lab/Rating";
+import Typography from "@material-ui/core/Typography";
+import Box from "@material-ui/core/Box";
+
+import PropTypes from "prop-types";
+
+// import { Icon, InlineIcon } from '@iconify/react';
+// import tractorIcon from '@iconify-icons/fa-solid/tractor';
+
+
+
+import { useDispatch, useSelector } from "react-redux";
+import { GetDetail } from "../../reducers/actions/getDetail";
+
+import "../../scss/components/ProductDetail/_ProductDetails.scss";
+
+import Carousel from "./Carousel";
+
+// npm install --save-dev @iconify/react @iconify-icons/la
+import { Icon, InlineIcon } from '@iconify/react';
+import tractorIcon from '@iconify-icons/la/tractor';
+
+
+const customIcons = {
+  1: {
+    icon: <Icon icon={tractorIcon}  />,
+    label: "Very Dissatisfied",
+  },
+  2: {
+    icon: <Icon icon={tractorIcon} />,
+    label: "Dissatisfied",
+  },
+  3: {
+    icon: <Icon icon={tractorIcon} />,
+    label: "Neutral",
+  },
+  4: {
+    icon: <Icon icon={tractorIcon} />,
+    label: "Satisfied",
+  },
+  5: {
+    icon: <Icon icon={tractorIcon} />,
+    label: "Very Satisfied",
+  },
+};
+function IconContainer(props) {
+  const { value, ...other } = props;
+  return <span {...other}>{customIcons[value].icon}</span>;
 }
+
+IconContainer.propTypes = {
+  value: PropTypes.number,
+};
+
+const ProductDetails = (props) => {
+  let productId = props.match.params.id;
+
+  const dispatch = useDispatch();
+  const { productDetail, loading } = useSelector((state) => state.details);
+  useEffect(() => {
+    dispatch(GetDetail(productId));
+  }, []);
+
+  return (
+    <div className="productDetails">
+      {loading ? (
+        <div className="containerDetails">
+          <div className='firstCard'>
+            <Carousel img={productDetail.picture} />
+            <div className="datos">
+              <div className="detailTitle">
+                <h2>{productDetail.name}</h2>
+              </div>
+              <h4>Precio: {productDetail.unitPrice} USD</h4>
+
+              <h4>Stock: {productDetail.unitsOnStock}</h4>
+
+              <div className="stars">
+                <Box component="div"  borderColor="transparent">
+                  <Typography component="legend"><h3>Score:</h3></Typography>
+                  <Rating
+                  size="large"
+                    name="customized-icons"
+                    value={productDetail.score}
+                    getLabelText={(value) => customIcons[value].label}
+                    IconContainerComponent={IconContainer}
+                    readOnly
+                  />
+                </Box>
+              </div>
+            </div>
+          </div>
+          <div className="description">
+            <h3>Descripcion</h3>
+            <hr/>
+            <p>{productDetail.description}</p>
+          </div>
+        </div>
+      ) : (
+        <div>loading...</div>
+      )}
+    </div>
+  );
+};
+
+export default ProductDetails;
+>>>>>>> Quality

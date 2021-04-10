@@ -1,5 +1,5 @@
 import React from 'react'
-import '../../scss/components/_ScoreIcon.scss'
+import '../../scss/components/ProductCard/_ScoreIcon.scss'
 import DivText from './DivText.jsx'
 import { BiStar } from "react-icons/bi";
 
