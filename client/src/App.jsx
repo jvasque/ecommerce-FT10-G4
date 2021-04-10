@@ -3,7 +3,7 @@ import { Route, Switch } from "react-router";
 
 import Home from "./components/Home/Home";
 import Nav from "./components/Nav/Nav";
-import ProductDetails from "./components/ProductDetails/ProductDetails";
+
 import Form from "./components/formCategories/Form";
 // import AdminMenu from "./components/Nav/AdminMenu";
 

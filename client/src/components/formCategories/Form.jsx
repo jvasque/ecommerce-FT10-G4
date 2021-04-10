@@ -38,12 +38,12 @@ function Form() {
     setCategorySelect("-Seleccione una Categoria-")
   };
 
-  const handleAddCategory = async () => {
-    
+  const handleAddCategory = async (e) => {
+   e.preventDefault()
     if (!addCategory) {
       alert("Ingrese una categoria");
     } else {
-      await axios.post("http://localhost:3001/addCategory", {
+    await axios.post("http://localhost:3001/addCategory", {
         name: addCategory,
       });
       alert("Categoria Creada");
@@ -76,7 +76,7 @@ function Form() {
               ></input>
               <br />
               <br />
-              <button className="button-putcategory" type="submit">
+              <button className="button-putcategory" type="submit" onClick={(e) =>handleAddCategory(e)}>
                 Agregar
               </button>
             </form>

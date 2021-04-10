@@ -43,12 +43,6 @@ conn.sync({ force: true }).then(() => {
         score: products[i].score,
         unitsOnStock: products[i].unitsOnStock,
       });
-      const findCategory = await Category.findOne({
-        where: {
-          name: products[i].categoryCategoryId,
-        },
-      });
-      await myProduct.setCategory(findCategory);
     }
   });
 });
