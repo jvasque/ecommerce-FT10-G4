@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react'
+import { useHistory } from "react-router";
 import '../../scss/components/_SearchBar.scss'
 import { useDispatch, useSelector} from "react-redux";
 import { BiSearch } from "react-icons/bi";
 import { getQuery, resetQuery } from '../../redux/searchReducer/searchActions';
 import ProductCard from '../ProductCard/ProductCard.jsx'
 
-function SearchBar(props) {
-  const [find, setFind] = useState('');
-  
+function SearchBar(props, ) {
+  const [find, setFind] = useState('');  
   const query = useSelector(state => state.searchReducer.query)
   const dispatch = useDispatch();
+  const history = useHistory();
 
   useEffect(() => {  
     return
@@ -22,17 +23,18 @@ function SearchBar(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(find)
-    dispatch(getQuery(find));    
+    dispatch(getQuery(find)); 
+    history.push({
+      pathname:  "/catalog",
+    })
   };
 
   return (
-    <div className='searchBarForm'>
-      <form  
+    <>
+      <form className='searchBarForm'
         onSubmit={handleSubmit}
       >
-        <input  className= 'searchInput' 
-          id="search"
+        <input id="search"
           type="search"
           placeholder="Search..."
           autoFocus required
@@ -41,7 +43,7 @@ function SearchBar(props) {
         <button type="submit"><BiSearch /></button>
       </form>
 
-    </div>
+    </>
   )
 }
 
