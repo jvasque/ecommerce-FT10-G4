@@ -6,12 +6,14 @@ const { Product } = require('../db.js');
 router.use(express.json());
 
 router.get('/', async (req, res, next) => {
-  let query = req.query.term.toLowerCase();
+  /// ROUTE search?term=
+  let query= req.query.term;
+
   try {
     let data = await Product.findAll({
       where: {
         name: { 
-          [Sequelize.Op.iLike]: `%${query}%`,         
+          [Sequelize.Op.iLike]: `%${query}%`,
         },
       }, include: {all: true}
     });
