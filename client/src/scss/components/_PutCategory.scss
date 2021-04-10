@@ -1,0 +1,20 @@
+
+
+.input-category {
+    border: none;
+    border-bottom: solid;
+    width: 250px;
+}
+
+.button-putcategory {
+    border-radius: 15px;
+    font-size: 15px;
+    transition-duration: 0.4s;
+    width: 100px;
+}
+
+.button-putcategory:hover {
+    background-color: #4CAF50;
+    /* Green */
+    color: white;
+}
