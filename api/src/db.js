@@ -51,8 +51,15 @@ Types.belongsToMany(SubCategory, { through: "sub", timestamps: false });
 
 Brand.belongsToMany(SubCategory, { through: "brand", timestamps: false });
 SubCategory.belongsToMany(Brand, { through: "brand", timestamps: false });
-Category.belongsTo(Product);
-Product.hasOne(Category);
+
+Product.belongsToMany(Category, {
+  through: "product_category",
+  timestamps: false,
+});
+Category.belongsToMany(Product, {
+  through: "product_category",
+  timestamps: false,
+});
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
