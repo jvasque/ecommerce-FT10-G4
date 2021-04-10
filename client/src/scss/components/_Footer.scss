@@ -5,12 +5,15 @@
 // gris principal: #EFEFEF;
 // gris claro: #F7F7F7;
 .footer {
+  
+  bottom: 0;
   *,
   *::before,
   *::after {
     margin: 0;
     padding: 0;
   }
+
 
   br {
     margin-bottom: 2%;
@@ -20,6 +23,7 @@
     width: 100%;
     height: 40vh;
     position: relative;
+    bottom: 0;
     display: grid;
     grid-template-rows: max-content 1fr;
     grid-template-columns: 1fr max-content;
@@ -79,7 +83,7 @@
 
   .aboutFooter {
     width: 100%;
-    height: 40vh;
+    height: 60vh;
     margin-top: -7rem;
     clip-path: polygon(0 27%, 100% 0, 100% 100%, 0 100%);
     background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="4" height="4" viewBox="0 0 4 4"%3E%3Cpath fill="%239C92AC" fill-opacity="0.4" d="M1 3h1v1H1V3zm2-2h1v1H3V1z"%3E%3C/path%3E%3C/svg%3E');
@@ -96,7 +100,7 @@
 
     &__text {
       width: 80%;
-      margin: 5% auto;
+      margin: 2% auto;
       color: #378a19;
 
       &--content {

@@ -22,19 +22,12 @@ const Footer = () => {
 
             <div className="aboutFooter">
             <div className="aboutFooter__title">
-                <h2 className="aboutFooter__title--text">Who we are?</h2>
+                <h2 className="aboutFooter__title--text">Quienes somos?</h2>
             </div>
             <div className="aboutFooter__text">
                 <p className="aboutFooter__text--content">
-                    Somos un grupo dedicado a la venta de insumos agropecuarios, siempre cuidando los intereses de nuestros clientes y del medio ambiente.
-                    
-                    <br/>
-                    
-                    Best team in the group is definetly Kappa, im sure everyone agrees!
-                    
-                    <br/>
-                    
-                    Hope everyone enjoys this Footer!
+                    Si estás buscando comprar Insumos Agrícolas, ¡llegaste al lugar indicado! En MercAgro tenemos la más amplia variedad de agro insumos que te acompañan desde la siembra hasta el cuidado y protección de tus cultivos, con productos de las mejores marcas y calidad. Vas a encontrar todo en protección de cultivos como herbicidas, insecticidas, fungicidas y coadyuvantes; semillas con las mejores propiedades; tratamiento de semillas, inoculantes y hasta silo bolsas para almacenar tus granos o forraje. En nuestro sitio encontrar lo que buscás es super sencillo, tenemos filtros que se ajustan a tu medida, donde vas a poder hacer de una búsqueda general una búsqueda minuciosa, ajustando el camino hasta llegar al producto que necesitas. MercAgro quiere que te sientas cómodo y por eso tenemos un rango de precios donde podés poner tu máximo que tenes para gastar e invertir en el campo, y también podes ordenar los listados por avisos más relevantes, menor o mayor precio; o llenando el formulario vas a poder contactarte con el vendedor y obtener tu cotización. Aprovechá las facilidades que te da Mercagro y ¡comprá ya los insumos para tu campo!
+                    <br/> 
                 </p>
             </div>
             </div>

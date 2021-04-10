@@ -8,7 +8,7 @@ import loginIcon from "@iconify-icons/mdi/login";
 const Nav = () => {
   return (
     <div className="Nav">
-      <Link>
+      <Link to='/'>
         <img
           id="logo"
           src="https://cdn.discordapp.com/attachments/828719452828860436/830295466481549332/logo-mercagro.png"
