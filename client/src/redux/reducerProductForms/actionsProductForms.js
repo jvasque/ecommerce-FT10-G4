@@ -44,3 +44,10 @@ export function putProduct(id, name, SKU, unitPrice, description, picture, score
         return dispatch({ type: PUT_PRODUCTS, payload: json.data })
     }
 }
+
+export function getProducts(id) {
+    return async function (dispatch) {
+        var json = await axios.get("http://localhost:3001/products/" + id);
+        return dispatch({ type: GET_PRODUCTS, payload: json.data })
+    }
+}
