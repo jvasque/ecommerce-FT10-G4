@@ -112,12 +112,13 @@ export default function Product_form_create(props) {
             placeholder=" Agregar stock..."
             onChange={(e) => handleStock(e)}
           />
-        </div>
-        <button
+          <button
           onClick={() => dispatch(postProduct(name, SKU, price, description, pic, score, stock))}
         >
           Crear producto
         </button>
+        </div>
+        
       </form>
       <NavLink to="/admin/product/form">
         <button>Volver</button>

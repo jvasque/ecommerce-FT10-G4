@@ -15,12 +15,13 @@ function product_form_query(props) {
             placeholder=" Id..."
             /* onChange={ (e) => handleId(e) } */
           />
-         </div> 
-        <button
+          <button
           onClick={() => {/*DESPACHAR LA ACCION CORRECTA*/}}
         >
           Consultar producto
         </button>
+         </div> 
+        
       </form>
       <NavLink to="/admin/product/form">
         <button>Volver</button>

@@ -5,6 +5,7 @@ function product_form(props) {
     return (
         <div className = "containerProdForm">
             <h1>Productos</h1>
+            <div className = "contBtnProdForm">
             <NavLink to="/admin/product/form/create">
                 <button>Crear</button>
             </NavLink>
@@ -17,6 +18,7 @@ function product_form(props) {
             <NavLink to="/admin/product/form/delete">
                 <button>Eliminar</button>
             </NavLink>
+            </div>
         </div>
     );
 }

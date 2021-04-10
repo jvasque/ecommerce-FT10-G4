@@ -117,12 +117,13 @@ function Product_form_update(props) {
 
             onChange={(e) => handleStock(e)}
           />
-        </div>
-        <button
+          <button
           onClick={() => dispatch(putProduct(id, name, SKU, price, description, pic, score, stock))}
         >
           Modificar producto
         </button>
+        </div>
+        
       </form>
       <NavLink to="/admin/product/form">
         <button>Volver</button>
