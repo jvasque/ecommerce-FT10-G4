@@ -9,7 +9,6 @@ import Form from "./components/formCategories/Form";
 import "./scss/_App.scss";
 import Footer from "./components/Footer/Footer";
 
-
 function App() {
   return (
     <div className="App">
