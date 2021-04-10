@@ -14,12 +14,12 @@ export function getCategories() {
 }
 
 export function filterCategory(category) {
-    return function (dispatch) {
-      dispatch({
-        type: FILTER_CATEGORY,
-        payload: category,
-      });
-    };
+  return function (dispatch) {
+    dispatch({
+      type: FILTER_CATEGORY,
+      payload: category,
+    });
+  };
 }
 
 export function getProductCategories(cat) {

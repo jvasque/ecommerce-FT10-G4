@@ -41,15 +41,6 @@ function SearchBar(props) {
         <button type="submit"><BiSearch /></button>
       </form>
 
-      {/* <div className='queryDisplay'>
-        {
-          query && query.map((card,i) => {
-            return (                                  
-              <ProductCard product={card}/>             
-            )
-          })
-        }
-      </div> */}
     </>
   )
 }
