@@ -19,7 +19,7 @@ function App() {
         <Route exact path="/categorias" component={Form} />
         <Switch>
           <Route path='/catalog' component={Catalog}/>
-          <Route path="/:id" component={ProductDetails} />
+          <Route exact path="/:id" component={ProductDetails} />
         </Switch>
         <Route path='/' component={ Footer }/>  
       </Fragment>
