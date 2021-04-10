@@ -22,7 +22,7 @@ const { conn, Product } = require('./src/db.js');
 
 // Syncing all the models at once.
 conn.sync({ force: true }).then(() => {
-  server.listen(3000, function () {
+  server.listen(3001, function () {
     console.log('Server is listening on port 3001!');
 
   // Descomentar estas lineas:

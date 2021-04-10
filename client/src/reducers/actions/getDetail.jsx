@@ -5,7 +5,7 @@ export const GETDETAIL = 'GET_DETAIL';
 export const GetDetail = (id) => {
     return function (dispatch) {
         axios
-          .get(`https://pokeapi.co/api/v2/pokemon/${id}`)
+          .get(`http://localhost:3001/products/${id}`)
           .then((r) => r.data)
           .then((data) => {
             dispatch({
