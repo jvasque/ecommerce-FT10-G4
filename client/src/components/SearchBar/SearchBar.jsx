@@ -4,18 +4,20 @@ import '../../scss/components/_SearchBar.scss'
 import { useDispatch, useSelector} from "react-redux";
 import { BiSearch } from "react-icons/bi";
 import { getQuery, resetQuery } from '../../redux/searchReducer/searchActions';
-import { getCategories, filterCategory } from '../../redux/categoryFilterReducer/categoryFilterActions';
-import ProductCard from '../ProductCard/ProductCard.jsx'
+import { filterCategory } from '../../redux/categoryFilterReducer/categoryFilterActions';
 
-function SearchBar(props, ) {
+
+function SearchBar() {
   const [find, setFind] = useState('');  
   const query = useSelector(state => state.searchReducer.query)
+  const findQuery = useSelector(state => state.searchReducer.findQuery)
   const dispatch = useDispatch();
   const history = useHistory();
   
   useEffect(() => {  
+    setFind(findQuery)
     return
-  },[dispatch, query])
+  },[dispatch, query, findQuery])
 
   const handleChange = (e) => {
     setFind(e.target.value);

@@ -1,7 +1,7 @@
 import React from 'react'
 import '../../scss/components/ProductCard/_ButtonIconText.scss'
 import DivText from './DivText.jsx'
-import { BiHeart, BiCartAlt } from "react-icons/bi";
+import { BiCartAlt } from "react-icons/bi";
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Favorite from '@material-ui/icons/Favorite';
