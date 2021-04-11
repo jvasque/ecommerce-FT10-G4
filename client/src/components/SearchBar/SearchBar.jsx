@@ -4,6 +4,7 @@ import '../../scss/components/_SearchBar.scss'
 import { useDispatch, useSelector} from "react-redux";
 import { BiSearch } from "react-icons/bi";
 import { getQuery, resetQuery } from '../../redux/searchReducer/searchActions';
+import { getCategories, filterCategory } from '../../redux/categoryFilterReducer/categoryFilterActions';
 import ProductCard from '../ProductCard/ProductCard.jsx'
 
 function SearchBar(props, ) {
@@ -11,10 +12,10 @@ function SearchBar(props, ) {
   const query = useSelector(state => state.searchReducer.query)
   const dispatch = useDispatch();
   const history = useHistory();
-
+  
   useEffect(() => {  
     return
-  },[query])
+  },[dispatch, query])
 
   const handleChange = (e) => {
     setFind(e.target.value);
@@ -23,6 +24,7 @@ function SearchBar(props, ) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    dispatch(filterCategory(''))
     dispatch(getQuery(find)); 
     history.push({
       pathname:  "/catalog",
