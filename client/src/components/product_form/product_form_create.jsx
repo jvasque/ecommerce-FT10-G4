@@ -1,18 +1,23 @@
 import React from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { NavLink } from "react-router-dom";
 import '../../scss/components/productsForm/_ProductFormCreate.scss';
 import { postProduct } from '../../redux/reducerProductForms/actionsProductForms'
-
+import axios from "axios"
 export default function Product_form_create(props) {
   const [name, setName] = useState("")
   const [SKU, setSKU] = useState("")
   const [price, setPrice] = useState("")
   const [description, setDescription] = useState("")
   const [pic, setPic] = useState("")
-  const [score, setScore] = useState("")
+  const [category, setCategory] = useState("")
   const [stock, setStock] = useState(0)
+
+  useEffect(async ()=>{
+   var cat = await axios.get("http://localhost:3001/allCategories")
+   setCategory(cat.data)
+  }, [])
 
   const dispatch = useDispatch();
 
@@ -37,10 +42,10 @@ export default function Product_form_create(props) {
     event.preventDefault();
     setPic(event.target.value);
   };
-  var handleScore = function (event) {
+   var handleCategory = function (event) {
     event.preventDefault();
-    setScore(event.target.value);
-  };
+    setCategory(event.target.value);
+  }; 
   var handleStock = function (event) {
     event.preventDefault();
     setStock(event.target.value);
@@ -92,16 +97,18 @@ export default function Product_form_create(props) {
             placeholder=" Agregar url..."
             onChange={(e) => handleImg(e)}
           />
-          <label className="label">
-            Puntuación:
-          </label>
-          <select onChange={(e) => handleScore(e)} >
-            <option value="1">*</option>
-            <option value="2">**</option>
-            <option value="3">***</option>
-            <option value="4">****</option>
-            <option value="5">*****</option>
-          </select>
+          <label className="label">Categoria:</label>
+           {category&&category.map((c)=>{
+             return(
+               <label>
+                <input type = "checkbox"/>
+                {c.name}
+               </label>
+               
+             )
+           })} 
+          
+          
           <label className="label">
             Stock:
           </label>
@@ -113,7 +120,7 @@ export default function Product_form_create(props) {
             onChange={(e) => handleStock(e)}
           />
           <button
-          onClick={() => dispatch(postProduct(name, SKU, price, description, pic, score, stock))}
+          onClick={() => dispatch(postProduct(name, SKU, price, description, pic, category, stock))}
         >
           Crear producto
         </button>

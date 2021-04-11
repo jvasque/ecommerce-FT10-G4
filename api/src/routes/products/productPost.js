@@ -2,8 +2,8 @@ const { Product } = require('../../db.js');
 
 module.exports =  async (req, res) => {
 
-	let { name, SKU, unitPrice, description, picture, score, unitsOnStock } = req.body.params;
-
+	let { name, SKU, unitPrice, description, picture, arrCategory, unitsOnStock } = req.body.params;
+    console.log("CATEGORIAAS VOO!", arrCategory)
 	try{
 		const addProduct = await Product.findOrCreate({
 			where: {
@@ -12,7 +12,7 @@ module.exports =  async (req, res) => {
 				unitPrice,
 				description,
 				picture,
-				score,
+				
 				unitsOnStock
 			}
 		})
@@ -24,7 +24,7 @@ module.exports =  async (req, res) => {
 				unitPrice,
 				description,
 				picture,
-				score,
+				
 				unitsOnStock
 			}
 		})
