@@ -30,8 +30,7 @@ module.exports = (sequelize) => {
       allowNull: false
     },
     score: {
-      type: DataTypes.ENUM("1", "2", "3", "4", "5"),
-      allowNull: false
+      type: DataTypes.ENUM("1", "2", "3", "4", "5")
     },
     unitsOnStock:{
       type: DataTypes.INTEGER,
