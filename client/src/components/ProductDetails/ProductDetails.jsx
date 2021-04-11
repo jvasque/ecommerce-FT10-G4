@@ -56,12 +56,12 @@ IconContainer.propTypes = {
 
 const ProductDetails = (props) => {
   let productId = props.match.params.id;
-
+console.log(productId)
   const dispatch = useDispatch();
   const { productDetail, loading } = useSelector((state) => state.detailReducer);
   useEffect(() => {
-    dispatch(getDetail(productId));
-  }, []);
+    dispatch(getDetail(parseInt(productId)));
+  }, [productId, dispatch]);
 
   return (
     <div className="productDetails">
@@ -96,7 +96,7 @@ const ProductDetails = (props) => {
           <div className="description">
             <h3>Descripcion</h3>
             <hr/>
-            <p>{productDetail.description}</p>
+            <p>{productDetail.data.description}</p>
           </div>
         </div>
       ) : (
