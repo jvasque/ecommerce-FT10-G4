@@ -1,48 +1,55 @@
 const { Product, Category } = require('../../db.js');
-const { Sequelize, Op } = require("sequelize");
+const { Sequelize, Op } = require('sequelize');
 
-module.exports =  async (req, res) => {
+module.exports = async (req, res) => {
+  let {
+    name,
+    SKU,
+    unitPrice,
+    description,
+    picture,
+    categoryCheck,
+    unitsOnStock,
+  } = req.body.params;
 
-	let { name, SKU, unitPrice, description, picture, categoryCheck, unitsOnStock } = req.body.params;
-    console.log("CATEGORIAAS VOO!", categoryCheck)
-	try{
-		const addProduct = await Product.findOrCreate({
-			where: {
-				name,
-				SKU,
-				unitPrice,
-				description,
-				picture,
-				
-				unitsOnStock
-			}
-		})
+  try {
+    const addProduct = await Product.findOrCreate({
+      where: {
+        name,
+        SKU,
+        unitPrice,
+        description,
+        picture,
 
-		const findProduct = await Product.findOne({
-			where: {
-				name,
-				SKU,
-				unitPrice,
-				description,
-				picture,
-				
-				unitsOnStock
-			}
-		})
+        unitsOnStock,
+      },
+    });
 
-		const findCategories = await Category.findAll({
-			where: {
-				name: {
-					[Op.in]: categoryCheck,
-				  }
-			}
-		})
+    const findProduct = await Product.findOne({
+      where: {
+        name,
+        SKU,
+        unitPrice,
+        description,
+        picture,
 
-		await findProduct.setCategories(findCategories);
-	
-		return res.json(findProduct)
-	} catch(err){
-		console.log(err);
-		res.json({error: "an error occurred while loading the data"})
-	}
-}
+        unitsOnStock,
+      },
+    });
+
+    const findCategories = await Category.findAll({
+      where: {
+        name: {
+          [Op.in]: categoryCheck,
+        },
+      },
+    });
+
+    await findProduct.setCategories(findCategories);
+
+    return res.json(findProduct);
+  } catch (err) {
+    console.log(err);
+    res.json({ error: 'an error occurred while loading the data' });
+  }
+};

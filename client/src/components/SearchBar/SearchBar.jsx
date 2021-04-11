@@ -43,6 +43,7 @@ function SearchBar() {
           placeholder="Search..."
           autoFocus required
           value={find}
+          autocomplete="off"
           onChange={handleChange} />
         <button type="submit"><BiSearch /></button>
       </form>
