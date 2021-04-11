@@ -49,6 +49,12 @@ function Product_form_update(props) {
     event.preventDefault();
     setStock(event.target.value);
   };
+
+  var handleClick = function (event) {
+    event.preventDefault();
+    dispatch(putProduct(id, name, SKU, price, description, pic, stock))
+  }
+
   return (
     <div className="containerProdFormUpdate">
       <h1>Modificar productos</h1>
@@ -126,10 +132,7 @@ function Product_form_update(props) {
             onChange={(e) => handleStock(e)}
           />
           <button
-          onClick={(e) => {
-            e.preventDefault()
-            dispatch(putProduct(id, name, SKU, price, description, pic, stock))
-            }}
+          onClick={(e) => handleClick(e)}
         >
           Modificar producto
         </button>
