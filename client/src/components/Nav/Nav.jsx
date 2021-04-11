@@ -1,41 +1,83 @@
-import React from "react";
+import React from 'react'
 import { Link } from "react-router-dom";
 import "../../scss/components/_Nav.scss";
+import { useHistory } from "react-router";
+import { useDispatch, useSelector} from "react-redux";
+import { filterCategory } from '../../redux/categoryFilterReducer/categoryFilterActions';
+import { resetQuery } from '../../redux/searchReducer/searchActions';
 // npm install --save-dev @iconify/react @iconify-icons/mdi
-import { Icon, InlineIcon } from "@iconify/react";
-import loginIcon from "@iconify-icons/mdi/login";
+//import { Icon, InlineIcon } from "@iconify/react";
+//import loginIcon from "@iconify-icons/mdi/login";
 import SearchBar from "../SearchBar/SearchBar";
+import AdminMenu from "../Nav/AdminMenu";
 
 const Nav = () => {
+  const categories = useSelector(state => state.categoryFilterReducer.categories)
+  const history = useHistory();
+  const dispatch = useDispatch();
+
+
+  function handleClick(cat){
+    dispatch(filterCategory(cat))
+    if(cat.length === 0){
+      dispatch(resetQuery())
+    }
+    history.push({
+      pathname:  "/catalog",
+    })
+  }
+
   return (
-    <div className="Nav">
-      <Link to='/'>
-        <img
-          id="logo"
-          src="https://cdn.discordapp.com/attachments/828719452828860436/830295466481549332/logo-mercagro.png"
-          alt=""
-        />
-      </Link>
+  <div className="Nav">
+    
+    <div className="header">
+      <div className="headerSection">
+        <div className="headerSection__bg"></div>
+          <div className="headerSection__logo">
+          <Link to='/'>
+            <img
+              id="logo"          
+              src="https://cdn.discordapp.com/attachments/803407061203025931/830813714487181382/AgroPlace-logo_png.png"
+              alt=""
+            />
+          </Link>
+            {/* <svg viewBox="0 0 24 24">                   
+            </svg> */}            
+          </div>    
+          <h1 className="headerSection__title">Sembremos futuro</h1>
+          {/* <div className="headerSection__log">
+             <svg className="headerSection__log--icon" width="24" height="24" viewBox="0 0 24 24">
+              FaInstagram, AiOutlineFacebook, AiOutlineTwitter
+            </svg> 
+          </div> */}
+        </div>
+      </div>
+    
+    <div className="navElements">
       <div className="dropdown">
         <ul className="hList">
-          
-            <a href="/catalog" className="menu">
-              <h2 className="menu-title">Productos</h2>
+            <div className="menu">
+              <h2 className="menu-title" onClick={() => handleClick('')}>Productos</h2>
               <ul className="menu-dropdown">
-                <li href="/catalog">Proteccion de Cultivos</li>
-                <li href="/catalog">Fertilizantes</li>
-                <li href="/catalog">Semillas e Hibridos</li>
-                <li href="/catalog">Otros Insumos Agricolas</li>                
+              {
+                categories.map((category, index) => {
+                    return (
+                        <div className='categoriesLoaded' key={index}  onClick={() => handleClick(category.name)}>   
+                          <li>{category.name}</li>                                              
+                        </div>
+                        )
+                })
+              }
               </ul>
-            </a>
-                    
+            </div>
         </ul>
       </div>
-      <SearchBar></SearchBar>
-      {/* <div>
-        <Icon icon={loginIcon} height="70" />
-      </div> */}
+      
+      <SearchBar />
+      
+      <AdminMenu />
     </div>
+  </div>
   );
 };
 

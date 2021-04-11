@@ -1,18 +1,17 @@
 .menu {
   display: flex;
-  box-shadow: 60px -16px #378a19;
+  // box-shadow: 60px -16px var(--color-brand);
   min-width: 4rem;
-  float: right;
   margin-right: 6px;
   height: 19vh;
   padding: 10px;
 
   .test {
     font-family: sans-serif;
-    color: #f7f7f7;
+    color: var(--color-gray-secondary);
     text-decoration: none;
     :hover {
-      color: #378a19;
+      color: var(--color-brand);
     }
   }
 }

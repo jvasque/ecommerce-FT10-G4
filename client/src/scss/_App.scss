@@ -1,8 +1,25 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway:400,400i,700');
+
 .App {
-  // text-align: center;
   width: 100%;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
+//Vars
+:root {
+  --rad: 0.7rem;
+  --dur: 4s;
+  --color-black: #2a2e2a;
+  --color-dark: #696868;
+  --color-light: #efefef;
+  --color-gray: #f7f7f7;
+  --color-brand: #378a19;
+  --color-brand-light: #85da6c;
+  --font-fam: 'Lato', sans-serif;
+  --font-main: 'Raleway', sans-serif;
+  --height: 3rem;
+  --btn-width: 4rem;
+  --bez: cubic-bezier(0, 0, 0.43, 1.49);
+}
