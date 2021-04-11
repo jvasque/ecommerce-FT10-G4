@@ -4,17 +4,22 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 //import { getProducts } from '../../redux/reducerProductForms/actionsProductForms'
 import '../../scss/components/productsForm/_ProductFormQuery.scss'
+import axios from 'axios';
+import ProductCard from '../ProductCard/ProductCard'
+
 function Product_form_query(props) {
   const [id, setId] = useState("");
+  const [product, setProduct] = useState([]);
 
-  const dispatch = useDispatch();
+  //const product = useSelector(state => state.products);
 
-  const product = useSelector(state => state.products)
-
-  var handleId = function (event) {
+  async function  handleQuery(id, event) {
     event.preventDefault();
-    setId(event.target.value);
-  };
+    if(!id) return alert('No lo se Rick, parece vacio')
+    let data = await axios.get("http://localhost:3001/products/" + id);
+    setProduct([data]) ;
+  }
+
     return (
         <div className = "containerProdFormQuery">
             <h1>Consultar producto</h1>
@@ -26,15 +31,21 @@ function Product_form_query(props) {
             id="name"
             autoComplete="off"
             placeholder=" Id..."
-            onChange={ (e) => handleId(e) }
+            onChange={ (e) => setId(e.target.value) }
           />
          </div> 
         <button
-          onClick={(e) => {e.preventDefault(); console.log(product)}}
+          onClick={(e) => {handleQuery(id, e)}}
         >
           Consultar producto
         </button>
-         
+         {product[0]?.data.name && product.map((prod)=> {
+           return (
+             <ProductCard product={prod.data}></ProductCard>
+           )
+         })}
+
+         {product && product[0]?.data.error && <h1>El producto solicitado no existe</h1>}
         
       </form>
       <NavLink to="/admin/product/form">
