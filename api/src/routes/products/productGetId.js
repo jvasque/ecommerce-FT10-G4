@@ -14,7 +14,7 @@ module.exports = async (req, res, next) => {
     res.status(200);
     return res.json(product);
   } else {
-    res.status(400);
-    return res.json({ error: "that product cannot be find" });
+    //res.status(404);
+    return res.json({ error: "that product cannot be find" }).status(404);
   }
 };

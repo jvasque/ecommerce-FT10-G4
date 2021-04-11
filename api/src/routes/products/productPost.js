@@ -1,9 +1,10 @@
-const { Product } = require('../../db.js');
+const { Product, Category } = require('../../db.js');
+const { Sequelize, Op } = require("sequelize");
 
 module.exports =  async (req, res) => {
 
-	let { name, SKU, unitPrice, description, picture, score, unitsOnStock } = req.body.params;
-
+	let { name, SKU, unitPrice, description, picture, categoryCheck, unitsOnStock } = req.body.params;
+    console.log("CATEGORIAAS VOO!", categoryCheck)
 	try{
 		const addProduct = await Product.findOrCreate({
 			where: {
@@ -12,7 +13,7 @@ module.exports =  async (req, res) => {
 				unitPrice,
 				description,
 				picture,
-				score,
+				
 				unitsOnStock
 			}
 		})
@@ -24,10 +25,20 @@ module.exports =  async (req, res) => {
 				unitPrice,
 				description,
 				picture,
-				score,
+				
 				unitsOnStock
 			}
 		})
+
+		const findCategories = await Category.findAll({
+			where: {
+				name: {
+					[Op.in]: categoryCheck,
+				  }
+			}
+		})
+
+		await findProduct.setCategories(findCategories);
 	
 		return res.json(findProduct)
 	} catch(err){

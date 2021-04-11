@@ -11,7 +11,7 @@ function Product_form_update(props) {
   const [price, setPrice] = useState("")
   const [description, setDescription] = useState("")
   const [pic, setPic] = useState("")
-  const [score, setScore] = useState("")
+  //const [category, setCategory] = useState("")
   const [stock, setStock] = useState(0)
 
   const dispatch = useDispatch();
@@ -41,10 +41,10 @@ function Product_form_update(props) {
     event.preventDefault();
     setPic(event.target.value);
   };
-  var handleScore = function (event) {
+  /* var handleCategory = function (event) {
     event.preventDefault();
-    setScore(event.target.value);
-  };
+    setCategory(event.target.value);
+  }; */
   var handleStock = function (event) {
     event.preventDefault();
     setStock(event.target.value);
@@ -105,6 +105,14 @@ function Product_form_update(props) {
 
             onChange={(e) => handleImg(e)}
           />
+          {/* <label className="label">Categoria:</label>
+          <input
+            type="text"
+            id="categoria"
+            autoComplete="off"
+            placeholder=" Precio..."
+            onChange={(e) => handleCategory(e)}
+          /> */}
 
           <label className="label">
             Stock:
@@ -118,7 +126,7 @@ function Product_form_update(props) {
             onChange={(e) => handleStock(e)}
           />
           <button
-          onClick={() => dispatch(putProduct(id, name, SKU, price, description, pic, score, stock))}
+          onClick={() => dispatch(putProduct(id, name, SKU, price, description, pic, stock))}
         >
           Modificar producto
         </button>

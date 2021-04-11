@@ -18,6 +18,9 @@ function product_form(props) {
             <NavLink to="/admin/product/form/delete">
                 <button>Eliminar</button>
             </NavLink>
+            <NavLink to="/">
+                <button>Volver</button>
+            </NavLink>
             </div>
         </div>
     );
