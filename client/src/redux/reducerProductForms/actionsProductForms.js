@@ -29,7 +29,7 @@ export function deleteProduct(id) {
     }
 }
 
-export function putProduct(id, name, SKU, unitPrice, description, picture, category, unitsOnStock) {
+export function putProduct(id, name, SKU, unitPrice, description, picture, unitsOnStock) {
     return async function (dispatch) {
         var json = await axios.put("http://localhost:3001/products/" + id, {
             params: {
@@ -38,7 +38,7 @@ export function putProduct(id, name, SKU, unitPrice, description, picture, categ
                 unitPrice,
                 description,
                 picture,
-                category,
+                
                 unitsOnStock
             }
         });

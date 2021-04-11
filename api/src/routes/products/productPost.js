@@ -1,4 +1,5 @@
-const { Product } = require('../../db.js');
+const { Product, Category } = require('../../db.js');
+const { Sequelize, Op } = require("sequelize");
 
 module.exports =  async (req, res) => {
 
@@ -28,6 +29,16 @@ module.exports =  async (req, res) => {
 				unitsOnStock
 			}
 		})
+
+		const findCategories = await Category.findAll({
+			where: {
+				name: {
+					[Op.in]: categoryCheck,
+				  }
+			}
+		})
+
+		await findProduct.setCategories(findCategories);
 	
 		return res.json(findProduct)
 	} catch(err){
