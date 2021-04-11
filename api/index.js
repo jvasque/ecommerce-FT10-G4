@@ -57,8 +57,20 @@ conn.sync({ force: true }).then(() => {
         unitsOnStock: products[i].unitsOnStock 
         }
       });
+
+      let findProduct = await Product.findOne({
+        where:{
+          name: products[i].name ,
+          SKU:products[i].SKU  ,
+          unitPrice:products[i].unitPrice  ,
+          description:products[i].description  ,
+          picture:products[i].picture  ,
+          score: score ,
+          unitsOnStock: products[i].unitsOnStock 
+          }
+      })
      
-      await myProduct.setCategories(findCategory);
+      await findProduct.setCategories(findCategory);
     }
 
     console.log("Products and categories pre charged");

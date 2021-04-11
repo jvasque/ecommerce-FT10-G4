@@ -32,7 +32,6 @@ function App() {
         <Route exact path="/admin/product/form/update" component={ProductFormUpdate} />
         <Route exact path="/admin/product/form/delete" component={ProductFormDelete} />        
         <Route path='/' component={ Footer }/>
-        <Route path='/' component={ Footer }/>  
       </Fragment>
     </div>
   );

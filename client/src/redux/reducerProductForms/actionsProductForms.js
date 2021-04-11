@@ -45,9 +45,9 @@ export function putProduct(id, name, SKU, unitPrice, description, picture, score
     }
 }
 
-export function getProducts(id) {
+/* export function getProducts(id) {
     return async function (dispatch) {
         var json = await axios.get("http://localhost:3001/products/" + id);
         return dispatch({ type: GET_PRODUCTS, payload: json.data })
     }
-}
+} */
