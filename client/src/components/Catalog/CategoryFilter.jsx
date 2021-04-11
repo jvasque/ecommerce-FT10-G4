@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import '../../scss/components/Catalog/_Filter.scss'
 import { useDispatch, useSelector} from "react-redux";
-import { getCategories, filterCategory, getProductCategories } from '../../redux/categoryFilterReducer/categoryFilterActions';
+import { getCategories, filterCategory } from '../../redux/categoryFilterReducer/categoryFilterActions';
 import DivText from '../ProductCard/DivText'
 
 
@@ -13,7 +13,7 @@ function CategoryFilter(){
     useEffect(() => {
         dispatch(getCategories())
         return
-    },[])
+    },[dispatch])
 
     function handleClick(cat){
         dispatch(filterCategory(cat))

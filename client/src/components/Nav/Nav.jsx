@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useEffect } from 'react'
 import { Link } from "react-router-dom";
 import "../../scss/components/_Nav.scss";
+import { useHistory } from "react-router";
+import { useDispatch, useSelector} from "react-redux";
+import { getCategories, filterCategory } from '../../redux/categoryFilterReducer/categoryFilterActions';
 // npm install --save-dev @iconify/react @iconify-icons/mdi
 import { Icon, InlineIcon } from "@iconify/react";
 import loginIcon from "@iconify-icons/mdi/login";
@@ -8,6 +11,23 @@ import SearchBar from "../SearchBar/SearchBar";
 import AdminMenu from "../Nav/AdminMenu";
 
 const Nav = () => {
+  const categories = useSelector(state => state.categoryFilterReducer.categories)
+  const categoryFiltered = useSelector(state => state.categoryFilterReducer.categoryFiltered)
+  const history = useHistory();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getCategories())
+    return
+  },[dispatch])
+
+  function handleClick(cat){
+    dispatch(filterCategory(cat))
+    history.push({
+      pathname:  "/catalog",
+    })
+  }
+
   return (
   <div className="Nav">
     
@@ -37,15 +57,24 @@ const Nav = () => {
     <div className="navElements">
       <div className="dropdown">
         <ul className="hList">
-            <a href="/catalog" className="menu">
-              <h2 className="menu-title">Productos</h2>
+            <div className="menu">
+              <h2 className="menu-title" onClick={() => handleClick('')}>Productos</h2>
               <ul className="menu-dropdown">
-                <li href="/catalog">Proteccion de Cultivos</li>
+              {
+                categories.map((category, index) => {
+                    return (
+                        <div className='categoriesLoaded' key={index}  onClick={() => handleClick(category.name)}>   
+                          <li>{category.name}</li>                                              
+                        </div>
+                        )
+                })
+             }
+                {/* <li href="/catalog">Proteccion de Cultivos</li>
                 <li href="/catalog">Fertilizantes</li>
                 <li href="/catalog">Semillas e Hibridos</li>
-                <li href="/catalog">Otros Insumos Agricolas</li>                
+                <li href="/catalog">Otros Insumos Agricolas</li>                 */}
               </ul>
-            </a>
+            </div>
         </ul>
       </div>
       
