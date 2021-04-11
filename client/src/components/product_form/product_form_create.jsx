@@ -11,13 +11,16 @@ export default function Product_form_create(props) {
   const [price, setPrice] = useState("")
   const [description, setDescription] = useState("")
   const [pic, setPic] = useState("")
-  const [category, setCategory] = useState("")
+  const [category, setCategory] = useState([])
+  const [categoryCheck, setCategoryCheck] = useState([])
+
   const [stock, setStock] = useState(0)
 
   useEffect(async ()=>{
    var cat = await axios.get("http://localhost:3001/allCategories")
    setCategory(cat.data)
   }, [])
+  
 
   const dispatch = useDispatch();
 
@@ -42,9 +45,16 @@ export default function Product_form_create(props) {
     event.preventDefault();
     setPic(event.target.value);
   };
-   var handleCategory = function (event) {
-    event.preventDefault();
-    setCategory(event.target.value);
+   var handleCategoryCheck = function (event) {
+    
+    if(event.target.checked){
+      setCategoryCheck([...categoryCheck, event.target.value]) 
+
+    }else{
+      setCategoryCheck(categoryCheck.filter((e)=> e != event.target.value))
+    }
+    console.log(categoryCheck, "CATEGORYYYYY")
+    
   }; 
   var handleStock = function (event) {
     event.preventDefault();
@@ -100,8 +110,10 @@ export default function Product_form_create(props) {
           <label className="label">Categoria:</label>
            {category&&category.map((c)=>{
              return(
-               <label>
-                <input type = "checkbox"/>
+               <label key={c.name}>
+                <input type = "checkbox"
+                value = {c.name}
+                onChange={(e) => handleCategoryCheck(e)}/>
                 {c.name}
                </label>
                
@@ -120,7 +132,7 @@ export default function Product_form_create(props) {
             onChange={(e) => handleStock(e)}
           />
           <button
-          onClick={() => dispatch(postProduct(name, SKU, price, description, pic, category, stock))}
+          onClick={() => dispatch(postProduct(name, SKU, price, description, pic, categoryCheck, stock))}
         >
           Crear producto
         </button>

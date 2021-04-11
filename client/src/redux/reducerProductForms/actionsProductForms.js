@@ -4,18 +4,8 @@ export const DELETE_PRODUCTS = "DELETE_PRODUCTS";
 export const PUT_PRODUCTS = "PUT_PRODUCTS";
 export const GET_PRODUCTS = "GET_PRODUCTS";
 
-export function postProduct(name, SKU, unitPrice, description, picture, category, unitsOnStock) {
-    if (category.includes(",")) {
-        var arr1 = category.split(",");
-        var arrCategory = []
-        for(var i = 0; i < arr1.length; i++){
-            arrCategory.push(arr1[i].trim())
-        }
-        
-      } else {
-        var arrCategory = [category];
-        
-      }
+export function postProduct(name, SKU, unitPrice, description, picture, categoryCheck, unitsOnStock) {
+    
     return async function (dispatch) {
         var json = await axios.post("http://localhost:3001/products", {
             params: {
@@ -24,7 +14,7 @@ export function postProduct(name, SKU, unitPrice, description, picture, category
                 unitPrice,
                 description,
                 picture,
-                arrCategory,
+                categoryCheck,
                 unitsOnStock
             }
         });
