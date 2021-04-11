@@ -1,56 +1,57 @@
-.catalogContainer{
-    display: flex;
-    flex-direction: row;
-    .filterScreen{
-        width: 20%;
-        display: inline-block;
-        vertical-align: top;
+.catalogContainer {
+  margin: 40px 0;
+  display: flex;
+  flex-direction: row;
+  .filterScreen {
+    width: 20%;
+    display: inline-block;
+    vertical-align: top;
+  }
+
+  .catalogScreen {
+    display: inline-block;
+    background-color: var(--color-gray);
+    width: 80%;
+    .catalogMatrix {
+      display: grid;
+      grid-auto-rows: 425px;
+      grid-template-columns: 25% 25% 25% 25%;
     }
-    .catalogScreen{
-        display: inline-block;
-        background-color:white;
-        width: 80%;
-        .catalogMatrix{
-            display: grid;
-            grid-auto-rows: 425px;
-            grid-template-columns: 25% 25% 25% 25%;
-        } 
-    }
+  }
 }
 
-
 @media (max-width: 1600px) {
-    .catalogContainer{
-        .catalogScreen{
-            width: 80%;
-            .catalogMatrix{
-                grid-template-columns: 33.3% 33.3% 33.3%;
-            } 
-        }
-    }    
+  .catalogContainer {
+    .catalogScreen {
+      width: 80%;
+      .catalogMatrix {
+        grid-template-columns: 33.3% 33.3% 33.3%;
+      }
+    }
+  }
 }
 
 @media (max-width: 1200px) {
-    .catalogContainer{
-        .catalogScreen{
-            width: 80%;
-            .catalogMatrix{
-                grid-template-columns: 50% 50%;
-            } 
-        }
-    }    
+  .catalogContainer {
+    .catalogScreen {
+      width: 80%;
+      .catalogMatrix {
+        grid-template-columns: 50% 50%;
+      }
+    }
+  }
 }
 
 @media (max-width: 800px) {
-    .catalogContainer{
-        .filterScreen{
-            width: 100%;
-        }
-        .catalogScreen{
-            width: 100%;
-            .catalogMatrix{
-                grid-template-columns: 100%;
-            } 
-        }
-    }    
+  .catalogContainer {
+    .filterScreen {
+      width: 100%;
+    }
+    .catalogScreen {
+      width: 100%;
+      .catalogMatrix {
+        grid-template-columns: 100%;
+      }
+    }
+  }
 }

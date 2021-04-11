@@ -30,7 +30,7 @@ function SearchBar(props, ) {
   };
 
   return (
-    <>
+    <div className='searchBar'>
       <form className='searchBarForm'
         onSubmit={handleSubmit}
       >
@@ -42,8 +42,7 @@ function SearchBar(props, ) {
           onChange={handleChange} />
         <button type="submit"><BiSearch /></button>
       </form>
-
-    </>
+    </div>
   )
 }
 

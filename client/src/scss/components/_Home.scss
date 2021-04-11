@@ -1,18 +1,9 @@
-@import "https://fonts.googleapis.com/css?family=Montserrat:400,700|Raleway:300,400";
-
-// verde principal: #378A19;
-// verde claro: #85DA6C;
-// gris principal: #EFEFEF;
-// gris claro: #F7F7F7;
+@import 'https://fonts.googleapis.com/css?family=Montserrat:400,700|Raleway:300,400';
 
 .containerHome {
-  /* colors */
-  $mainGreen: #378A19;
-  $red: #ff4a53;
-  $dark: #378a19;
+  margin: 40px 0;
 
-  $accent: $mainGreen;
-  $accent-inactive: desaturate($accent, 85%);
+  $accent-inactive: desaturate(#378a19, 85%);
   $secondary: $accent-inactive;
 
   /* tab setting */
@@ -27,9 +18,9 @@
   );
 
   /* selectors relative to radio inputs */
-  $label-selector: "~ ul > li";
-  $slider-selector: "~ .slider";
-  $content-selector: "~ .content > section";
+  $label-selector: '~ ul > li';
+  $slider-selector: '~ .slider';
+  $content-selector: '~ .content > section';
 
   @mixin tabs(
     $label-selector: $label-selector,
@@ -47,14 +38,14 @@
         }
 
         #{$content-selector}:nth-child(#{$i}) {
-          display: block;        
+          display: block;
         }
       }
     }
   }
 
-  title{
-    color: #378a19;
+  title {
+    color: var(--color-brand);
   }
   html {
     width: 100%;
@@ -62,14 +53,15 @@
   }
 
   body {
-    background: #efefef;
-    color: $mainGreen;
-    font-family: "Raleway";
+    margin-top: 20px;
+    background: var(--color-light);
+    color: var(--color-brand);
+    font-family: 'Raleway';
     height: 100%;
 
     h1 {
       text-align: center;
-      color: $accent;
+      color: var(--color-brand);
       font-weight: 300;
       padding: 40px 0 20px 0;
       margin: 0;
@@ -88,16 +80,16 @@
     box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
     border-radius: 5px;
     min-width: #{$tab-count * 60px};
-    input[name="tab-control"] {
+    input[name='tab-control'] {
       display: none;
     }
 
     content section h2,
     ul li label {
-      font-family: "Montserrat";
+      font-family: 'Montserrat';
       font-weight: bold;
       font-size: 18px;
-      color: $accent;
+      color: var(--color-brand);
     }
 
     ul {
@@ -165,7 +157,7 @@
         max-width: 100%;
         margin: 0 auto;
         height: $indicator-height;
-        background: $accent;
+        background: var(--color-brand);
         border-radius: 1px;
       }
     }
@@ -181,20 +173,25 @@
           duration: 0.3s;
           timing-function: ease-in-out;
           iteration-count: 1;
-          height: 250px
+          height: 250px;
         }
         line-height: 1.4;
 
+        img {
+          width: 300px;
+          height: 300px;
+        }
+
         h2 {
-          color: $accent;
+          color: var(--color-brand);
           display: none;
           &::after {
-            content: "";
+            content: '';
             position: relative;
             display: block;
             width: 30px;
             height: 3px;
-            background: $accent;
+            background: var(--color-brand);
             margin-top: 5px;
             left: 1px;
           }
@@ -202,14 +199,14 @@
       }
     }
 
-    input[name="tab-control"] {
+    input[name='tab-control'] {
       @include tabs {
         > label {
           cursor: default;
-          color: $accent;
+          color: var(--color-brand);
 
           svg {
-            fill: $accent;
+            fill: var(--color-brand);
           }
 
           @media (max-width: map-get($breakpoints, small)) {

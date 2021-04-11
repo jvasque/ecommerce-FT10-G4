@@ -15,6 +15,7 @@ const Home = () => {
               <br />
               <span>Proteccion de Cultivos</span>
             </label>
+              
           </li>
           <li title="Delivery Contents">
             <label htmlFor="tab2" role="button">
@@ -34,7 +35,7 @@ const Home = () => {
             <label htmlFor="tab4" role="button">
               
               <br />
-              <span>Otros Insumos Agricolas</span>
+              <span>Otros Insumos</span>
             </label>
           </li>
         </ul>
@@ -45,19 +46,23 @@ const Home = () => {
         <div className="content">
           <section>
             <h2>Proteccion de Cultivos</h2>
-            Renderizamos las catalogo de los productos de Prot de cultivos.
+            En nuestra página reunimos la mejor y más amplia variedad de protección de cultivos, pudiendo encontrar productos agroquímicos para diferentes necesidades, que van desde fungicidas hasta herbicidas y otros insumos.
+            <img src='https://argentina.agrofystatic.com/media/catalog/product/cache/1/image/850x600/0dc2d03fe217f8c83829496872af24a0/g/l/gl_agrofy_piezas_seleccion_punto-35.jpg?usewebp=true'></img>
           </section>
           <section>
             <h2>Fertilizantes</h2>
-            Renderizamos las catalogo de los productos de Fertilizantes.
+            En nuestra página vas a encontrar una inmensa variedad de insumos para fertilizar.
+            <img src='https://argentina.agrofystatic.com/media/catalog/product/cache/1/image/850x600/0dc2d03fe217f8c83829496872af24a0/m/e/mezcla_granulada_50.jpg?usewebp=true'></img>
           </section>
           <section>
             <h2>Semillas e Hibridos</h2>
-            Renderizamos las catalogo de los productos de Semillas e Hibridos.
+            Si estás buscando cultivar, ¡AgroPlace es el sitio indicado para vos!. Tenemos la más amplia variedad de semillas de las mejores marcas y calidad, para mejorar la producción extensiva de tu campo
+            <img src='https://argentina.agrofystatic.com/media/catalog/product/cache/1/image/850x600/0dc2d03fe217f8c83829496872af24a0/b/o/bolsas_trigo_arg_algarrobo_300x300.jpg?usewebp=true'></img>
           </section>
           <section>
             <h2>Otros Insumos Agricolas</h2>
-            Renderizamos las catalogo de los productos de otros Insumos Agricolas.
+            Variedad de insumos agrícolas desde silobolsas hasta tratamientos de semillas para mejorar y personalizar el cultivo de tu campo.
+            <img src='https://argentina.agrofystatic.com/media/catalog/product/cache/1/image/850x600/0dc2d03fe217f8c83829496872af24a0/f/a/facebook-producto600x400--mantas.jpg?usewebp=true'></img>
           </section>
         </div>
       </div>
