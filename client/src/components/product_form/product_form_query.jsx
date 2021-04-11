@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink } from "react-router-dom";
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getProducts } from '../../redux/reducerProductForms/actionsProductForms'
+//import { getProducts } from '../../redux/reducerProductForms/actionsProductForms'
 import '../../scss/components/productsForm/_ProductFormQuery.scss'
 function Product_form_query(props) {
   const [id, setId] = useState("");
@@ -30,7 +30,7 @@ function Product_form_query(props) {
           />
          </div> 
         <button
-          onClick={(e) => {e.preventDefault(); dispatch(getProducts(id)); console.log(product)}}
+          onClick={(e) => {e.preventDefault(); console.log(product)}}
         >
           Consultar producto
         </button>

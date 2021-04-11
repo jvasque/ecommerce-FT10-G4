@@ -4,6 +4,7 @@ import "../../scss/components/_Nav.scss";
 // npm install --save-dev @iconify/react @iconify-icons/mdi
 import { Icon, InlineIcon } from "@iconify/react";
 import loginIcon from "@iconify-icons/mdi/login";
+import SearchBar from "../SearchBar/SearchBar";
 
 const Nav = () => {
   return (
@@ -30,12 +31,7 @@ const Nav = () => {
                     
         </ul>
       </div>
-      <div className="search-box">
-        <form>
-          <input type="search" placeholder="Buscar..." />
-          <span className="searchspan"></span>
-        </form>
-      </div>
+      <SearchBar></SearchBar>
       {/* <div>
         <Icon icon={loginIcon} height="70" />
       </div> */}

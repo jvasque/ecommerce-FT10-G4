@@ -58,24 +58,25 @@ const ProductDetails = (props) => {
   let productId = props.match.params.id;
 
   const dispatch = useDispatch();
-  const { productDetail, loading } = useSelector((state) => state.detailReducer.productDetail);
+  const { productDetail, loading } = useSelector((state) => state.detailReducer);
   useEffect(() => {
     dispatch(getDetail(productId));
   }, []);
 
   return (
     <div className="productDetails">
+      {console.log(productDetail, "PRODUCT DETAIL" )}
       {loading ? (
         <div className="containerDetails">
           <div className='firstCard'>
-            <Carousel img={productDetail.picture} />
+            <Carousel img={productDetail.data.picture} />
             <div className="datos">
               <div className="detailTitle">
-                <h2>{productDetail.name}</h2>
+                <h2>{productDetail.data.name}</h2>
               </div>
-              <h4>Precio: {productDetail.unitPrice} USD</h4>
+              <h4>Precio: {productDetail.data.unitPrice} USD</h4>
 
-              <h4>Stock: {productDetail.unitsOnStock}</h4>
+              <h4>Stock: {productDetail.data.unitsOnStock}</h4>
 
               <div className="stars">
                 <Box component="div"  borderColor="transparent">
@@ -83,7 +84,7 @@ const ProductDetails = (props) => {
                   <Rating
                   size="large"
                     name="customized-icons"
-                    value={productDetail.score}
+                    value={productDetail.data.score}
                     getLabelText={(value) => customIcons[value].label}
                     IconContainerComponent={IconContainer}
                     readOnly

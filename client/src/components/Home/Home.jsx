@@ -4,7 +4,6 @@ import "../../scss/components/_Home.scss";
 const Home = () => {
   return (
     <div className="containerHome">
-      <h1 className='title'>Productos</h1>
       <div className="tabs">
         <input type="radio" id="tab1" name="tab-control" defaultChecked />
         <input type="radio" id="tab2" name="tab-control" />
