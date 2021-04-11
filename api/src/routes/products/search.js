@@ -1,7 +1,7 @@
 const express = require('express');
 const router = require('express').Router();
 const { Sequelize } = require('sequelize');
-const { Product } = require('../db.js');
+const { Product } = require('../../db.js');
 
 router.use(express.json());
 

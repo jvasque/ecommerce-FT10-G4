@@ -126,7 +126,10 @@ function Product_form_update(props) {
             onChange={(e) => handleStock(e)}
           />
           <button
-          onClick={() => dispatch(putProduct(id, name, SKU, price, description, pic, stock))}
+          onClick={(e) => {
+            e.preventDefault()
+            dispatch(putProduct(id, name, SKU, price, description, pic, stock))
+            }}
         >
           Modificar producto
         </button>
