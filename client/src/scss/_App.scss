@@ -10,7 +10,6 @@
 //Vars
 :root {
   --rad: 0.7rem;
-  --dur: 4s;
   --color-black: #2a2e2a;
   --color-dark: #696868;
   --color-light: #efefef;
@@ -21,5 +20,7 @@
   --font-main: 'Raleway', sans-serif;
   --height: 3rem;
   --btn-width: 4rem;
+  --dur: 0.8s;
   --bez: cubic-bezier(0, 0, 0.43, 1.49);
+  --bez-2: cubic-bezier(0.73, 0.32, 0.34, 1.5);
 }

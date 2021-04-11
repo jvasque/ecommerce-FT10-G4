@@ -22,7 +22,7 @@ function App() {
         <Route path="/" component={Nav} />
         <Switch>
           <Route exact path="/" component={Home} />
-          <Route exact path="/categorias" component={Form} />
+          <Route exact path="/admin/categories" component={Form} />
           <Route exact path="/catalog" component={Catalog} />
           <Route exact path="/:id" component={ProductDetails} />
           <Route exact path="/admin/product/form" component={ProductForm} />

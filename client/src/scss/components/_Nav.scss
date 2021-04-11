@@ -45,8 +45,8 @@ $polygon-image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" wi
       background-position: 100px -300px;
       background-size: cover;
       background-position: center;
-      filter: brightness(50%);
-      clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 25% 90%);
+      filter: brightness(45%);
+      clip-path: polygon(5% 0%, 100% 0%, 100% 100%, 25% 100%);
       position: absolute;
       top: 0;
       left: 0;
@@ -95,82 +95,8 @@ $polygon-image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" wi
   color: aliceblue;
   // background-blend-mode: lighten;
   // background-repeat: no-repeat;
-  // transition: 0.5s;
+  // transition: var(--dur);
 }
-
-// .search-box {
-//   border: solid 4px #85da6c;
-//   float: right;
-//   position: relative;
-//   border-radius: 50px;
-//   right: 200px;
-//   top: 2vh;
-//   ::placeholder {
-//     color: #378a19;
-//   }
-//   input {
-//     color: #378a19;
-//   }
-//   input[type='search'] {
-//     font-size: 20px;
-//     font-weight: bold;
-//     width: 50px;
-//     height: 50px;
-//     padding: 5px 40px 5px 10px;
-//     border: none;
-//     box-sizing: border-box;
-//     border-radius: 50px;
-//     transition: width 800ms cubic-bezier(0.5, -0.5, 0.5, 0.5) 600ms;
-//     &:focus {
-//       outline: none;
-//     }
-//     &:focus,
-//     &:not(:placeholder-shown) {
-//       width: 250px;
-//       transition: width 800ms cubic-bezier(0.5, -0.5, 0.5, 1.5);
-//       + span {
-//         bottom: 13px;
-//         right: 10px;
-//         transition: bottom 300ms ease-out 800ms, right 300ms ease-out 800ms;
-//       }
-//       + span:after {
-//         top: 0;
-//         right: 10px;
-//         opacity: 1;
-//         transition: top 300ms ease-out 1100ms, right 300ms ease-out 1100ms,
-//           opacity 300ms ease 1100ms;
-//       }
-//     }
-//   }
-
-//   .searchspan {
-//     width: 25px;
-//     height: 25px;
-//     display: flex;
-//     justify-content: center;
-//     align-items: center;
-//     position: absolute;
-//     bottom: -13px;
-//     right: -15px;
-//     transition: bottom 300ms ease-out 300ms, right 300ms ease-out 300ms;
-//     &:before,
-//     &:after {
-//       content: '';
-//       height: 25px;
-//       border-left: solid 4px #85da6c;
-//       position: absolute;
-//       transform: rotate(-45deg);
-//     }
-//     &:after {
-//       transform: rotate(45deg);
-//       opacity: 0;
-//       top: -20px;
-//       right: -10px;
-//       transition: top 300ms ease-out, right 300ms ease-out,
-//         opacity 300ms ease-out;
-//     }
-//   }
-// }
 
 .navElements {
   margin: 10px 3%;
@@ -199,6 +125,7 @@ $polygon-image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" wi
   }
 
   .menu-title {
+    margin-left: 11%;
     display: block;
     color: var(--color-brand);
     font-weight: bold;
@@ -273,7 +200,7 @@ $polygon-image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" wi
     position: absolute;
     background: var(--color-brand-light);
     z-index: 100;
-    transition: 0.5s padding, 0.5s;
+    transition: var(--dur) padding, var(--dur);
   }
 
   .menu-dropdown:after {
@@ -287,7 +214,7 @@ $polygon-image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" wi
     top: 100%;
     left: 0;
     z-index: 101;
-    transition: 0.5s border-top;
+    transition: all var(--dur) border-top;
   }
 
   .menu:not(:hover) > .menu-dropdown {
@@ -310,10 +237,9 @@ $polygon-image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" wi
     padding: 5px 10px;
     background: rgba(0, 0, 0, 0);
     white-space: nowrap;
-    transition: 0.5s height cubic-bezier(0.73, 0.32, 0.34, 1.5),
-      0.5s padding cubic-bezier(0.73, 0.32, 0.34, 1.5),
-      0.5s margin cubic-bezier(0.73, 0.32, 0.34, 1.5), 0.5s 0.2s color,
-      0.2s background-color;
+    transition: var(--dur) height var(--bez-2), var(--dur) padding var(--bez-2),
+      var(--dur) margin var(--bez-2), var(--dur) var(--dur -0.3s) color,
+      var(--dur - 0.3s) background-color;
   }
 
   .menu-dropdown > *:hover {
@@ -327,8 +253,8 @@ $polygon-image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" wi
     padding-bottom: 0;
     margin: 0;
     color: rgba(25, 25, 25, 0);
-    transition: 0.5s 0.1s height, 0.5s 0.1s padding, 0.5s 0.1s margin,
-      0.3s color, 0.6s visibility;
+    transition: var(--dur) 0.1s height, var(--dur) 0.1s padding,
+      var(--dur) 0.1s margin, 0.3s color, 0.6s visibility;
     z-index: 99;
   }
 

@@ -21,7 +21,7 @@
   }
   input[type='search'] {
     vertical-align: 3.5px;
-    width: 20rem;
+    width: 15rem;
     background: var(--color-light);
     padding: 0 1.6rem;
     border-radius: var(--rad);
@@ -44,7 +44,8 @@
   }
   input:not(:placeholder-shown) {
     border-radius: var(--rad) 0 0 var(--rad);
-    width: calc(300px - var(--btn-width));
+    width: 80%;
+    // width: calc(500px - var(--btn-width));
     + button {
       outline: none;
       display: inline-block;
