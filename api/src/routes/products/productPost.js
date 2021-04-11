@@ -6,19 +6,7 @@ module.exports =  async (req, res) => {
 	let { name, SKU, unitPrice, description, picture, categoryCheck, unitsOnStock } = req.body.params;
     console.log("CATEGORIAAS VOO!", categoryCheck)
 	try{
-		const addProduct = await Product.findOrCreate({
-			where: {
-				name,
-				SKU,
-				unitPrice,
-				description,
-				picture,
-				
-				unitsOnStock
-			}
-		})
-
-		const findProduct = await Product.findOne({
+		const [addProduct, created] = await Product.findOrCreate({
 			where: {
 				name,
 				SKU,
@@ -38,9 +26,9 @@ module.exports =  async (req, res) => {
 			}
 		})
 
-		await findProduct.setCategories(findCategories);
+		await addProduct.setCategories(findCategories);
 	
-		return res.json(findProduct)
+		return res.json(addProduct)
 	} catch(err){
 		console.log(err);
 		res.json({error: "an error occurred while loading the data"})
