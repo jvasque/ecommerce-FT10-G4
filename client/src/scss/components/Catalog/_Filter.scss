@@ -1,0 +1,17 @@
+.containerFilter{
+    background: green;
+    height: 100%;
+    .categoriesFilter{
+        background: rgb(0, 71, 0);
+        color: white;
+        height: 50px;
+    }
+    .categoriesLoaded{
+        color: white;
+        height: 50px;
+        border: 2px rgb(0, 90, 0);      
+    }   
+    .categoriesLoaded:hover{
+        background: rgb(0, 71, 0);
+    } 
+}

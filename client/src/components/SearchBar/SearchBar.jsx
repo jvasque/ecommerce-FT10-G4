@@ -1,47 +1,53 @@
 import React, { useState, useEffect } from 'react'
+import { useHistory } from "react-router";
 import '../../scss/components/_SearchBar.scss'
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector} from "react-redux";
 import { BiSearch } from "react-icons/bi";
-import Catalogo from '../Catalogo/Catalogo.jsx'
-import { getQuery } from '../../redux/reducerSearch/actionsSearch';
+import { getQuery, resetQuery } from '../../redux/searchReducer/searchActions';
+import ProductCard from '../ProductCard/ProductCard.jsx'
 
-function SearchBar(props) {
-  const [find, setFind] = useState('');
-
-  const products = useSelector(state => state.query)
+function SearchBar(props, ) {
+  const [find, setFind] = useState('');  
+  const query = useSelector(state => state.searchReducer.query)
   const dispatch = useDispatch();
+  const history = useHistory();
 
+  useEffect(() => {  
+    return
+  },[query])
 
   const handleChange = (e) => {
     setFind(e.target.value);
+    if(e.target.value === '') dispatch(resetQuery())    
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(getQuery(find))
+    dispatch(getQuery(find)); 
+    history.push({
+      pathname:  "/catalog",
+    })
   };
 
   return (
     <>
       <form className='searchBarForm'
-        onSubmit={(e) => handleSubmit(e)}
+        onSubmit={handleSubmit}
       >
         <input id="search"
           type="search"
           placeholder="Search..."
-          autofocus required
+          autoFocus required
           value={find}
-          onChange={(e) => handleChange(e)} />
+          onChange={handleChange} />
         <button type="submit"><BiSearch /></button>
       </form>
-
-      <Catalogo />
 
     </>
   )
 }
 
 export default SearchBar;
-
 //busca del array loaded por titulo (ruta query por keyword de busqueda)
 
 
