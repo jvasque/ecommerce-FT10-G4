@@ -48,7 +48,7 @@ function Catalog(){
             <div className='catalogScreen'>
                 <div className='catalogMatrix'>                    
                     {
-                        catalog.map((product) => {
+                        catalog?.map((product) => {
                             return (                             
                                 <ProductCard product={product} key={product.productId}/>             
                             )
