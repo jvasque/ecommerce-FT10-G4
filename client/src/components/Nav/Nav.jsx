@@ -19,9 +19,7 @@ const Nav = () => {
 
   function handleClick(cat){
     dispatch(filterCategory(cat))
-    if(cat.length === 0){
-      dispatch(resetQuery())
-    }
+    dispatch(resetQuery())
     history.push({
       pathname:  "/catalog",
     })
