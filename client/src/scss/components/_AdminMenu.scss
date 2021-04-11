@@ -15,10 +15,10 @@
 
   .test {
     font-family: sans-serif;
-    color: var(--color-gray-secondary);
+    color: var(--color-brand);
     text-decoration: none;
     :hover {
-      color: var(--color-brand);
+      color: var(--color-brand-light);
     }
   }
 }

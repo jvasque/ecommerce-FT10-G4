@@ -130,17 +130,18 @@ export default function Product_form_create(props) {
             onChange={(e) => handleImg(e)}
           />
           <label className="label">Categoria:</label>
+          <div className="categoryBoxes">
            {category&&category.map((c)=>{
              return(
-               <label key={c.name}>
+               <div key={c.name}>
+                <label>{c.name}</label>                
                 <input type = "checkbox"
                 value = {c.name}
                 onChange={(e) => handleCategoryCheck(e)}/>
-                {c.name}
-               </label>
-               
+              </div>
              )
-           })} 
+            })} 
+          </div>
           
           
           <label className="label">
