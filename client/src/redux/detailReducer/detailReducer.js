@@ -1,4 +1,4 @@
-import { GET_DETAIL } from "../detailReducer/detailActions"
+import { GET_DETAIL } from "./detailActions"
 
 const initialState = {
   productDetail: {},

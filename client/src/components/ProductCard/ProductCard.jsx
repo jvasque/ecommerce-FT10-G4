@@ -6,7 +6,7 @@ import ButtonIconText from './ButtonIconText';
 import ScoreIcon from './ScoreIcon';
 
 function ProductCard({product}){
-    
+
     return (
         <div className='productCard'>
             <Link className='cardLink' to={`/${product.productId}`}>
