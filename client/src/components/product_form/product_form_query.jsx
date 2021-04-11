@@ -13,12 +13,11 @@ function Product_form_query(props) {
 
   //const product = useSelector(state => state.products);
 
-  async function  handleQuery(id) {
+  async function  handleQuery(id, event) {
+    event.preventDefault();
     if(!id) return alert('No lo se Rick, parece vacio')
     let data = await axios.get("http://localhost:3001/products/" + id);
     setProduct([data]) ;
-    console.log(product, "MY PRODUCT");
-    console.log(data, "MY DATA");
   }
 
     return (
@@ -36,12 +35,11 @@ function Product_form_query(props) {
           />
          </div> 
         <button
-          onClick={(e) => {e.preventDefault();console.log(id); handleQuery(id)}}
+          onClick={(e) => {handleQuery(id, e)}}
         >
           Consultar producto
         </button>
          {product[0]?.data.name && product.map((prod)=> {
-           console.log(prod, "MAP PRODUCT")
            return (
              <ProductCard product={prod.data}></ProductCard>
            )
