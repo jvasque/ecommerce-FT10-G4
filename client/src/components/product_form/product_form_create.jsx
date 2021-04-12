@@ -38,7 +38,7 @@ export default function Product_form_create(props) {
     } else {
       setInput({
         ...input,
-        categoryCheck: categoryCheck.filter((category)=> category !== e.target.value)
+        categoryCheck: input.categoryCheck.filter((category)=> category !== e.target.value)
       })
     }
   }; 
@@ -52,6 +52,8 @@ export default function Product_form_create(props) {
       dispatch(postProduct(
         input.name, input.SKU, input.price, input.description, 
         input.pic, input.categoryCheck, input.stock));
+        
+        alert(`El producto ${input.name} ha sido creado`);
 
       setInput({
         name: "",
@@ -66,7 +68,6 @@ export default function Product_form_create(props) {
       inputs.forEach((item) => {
         item.checked = false;
       });
-      alert(`El producto ${input.name} creado`);
     }
   }
   
@@ -147,9 +148,7 @@ export default function Product_form_create(props) {
             })} 
           </div>       
           
-          <label className="label">
-            Stock:
-          </label>
+          <label className="label">Stock:</label>
           <input
             type="number"
             min="1"
