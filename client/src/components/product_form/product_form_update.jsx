@@ -1,7 +1,14 @@
+<<<<<<< Updated upstream
+import React from 'react';
+import axios from "axios"
+import { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+=======
 import axios from 'axios';
 import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+>>>>>>> Stashed changes
 import { NavLink } from "react-router-dom";
 import { putProduct } from '../../redux/reducerProductForms/actionsProductForms'
 import '../../scss/components/productsForm/_ProductFormUpdate.scss'
@@ -12,14 +19,15 @@ function Product_form_update(props) {
   const [price, setPrice] = useState("")
   const [description, setDescription] = useState("")
   const [pic, setPic] = useState("")
-
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
   const [score, setScore] = useState("")
-
+=======
   const [category, setCategory] = useState([])
-
+>>>>>>> Stashed changes
   const [stock, setStock] = useState(0)
   const [selectCategory, setSelectCategory] = useState("")
-
+=======
   const [category, setCategory] = useState([])
   const [selectCategory, setSelectCategory] = useState("")
   const [stock, setStock] = useState(0)
@@ -28,7 +36,8 @@ function Product_form_update(props) {
   
   const product = useSelector(state => state.reducerProductForms.product)
  
-
+ 
+>>>>>>> Stashed changes
 
   const dispatch = useDispatch();
 
@@ -73,13 +82,14 @@ function Product_form_update(props) {
     event.preventDefault();
     setStock(event.target.value);
   };
-
+<<<<<<< Updated upstream
+=======
 
   var handleClick = async function (event) {
     event.preventDefault();
     dispatch(putProduct(id, name, SKU, price, description, pic, stock))
     await axios.post(`http://localhost:3001/products/${id}/${selectCategory}`, {
-
+<<<<<<< Updated upstream
       categoryId: selectCategory,
       id: id
     } )
@@ -89,7 +99,12 @@ function Product_form_update(props) {
     
   
 
-  
+>>>>>>> Stashed changes
+=======
+      id: id,
+      categoryId: selectCategory
+    })
+  }
 
   useEffect(() => {
     async function categories() {
@@ -116,7 +131,7 @@ function Product_form_update(props) {
 
   
 
-
+>>>>>>> Stashed changes
   return (
     <div className="containerProdFormUpdate">
       <h1>Modificar productos</h1>
@@ -178,6 +193,14 @@ function Product_form_update(props) {
             placeholder=" Agregar stock..."
 
             onChange={(e) => handleStock(e)}
+<<<<<<< Updated upstream
+          />
+             {modifProduct?.map(x => <label>{x.name}<button value={x.categoryId} onClick={(e) => deleteCategory(e)}>x</button></label>)}
+             <select onChange={(e) => addCategory(e)} >{category.map(x => <option  key= {x.name} value={x.categoryId} >{x.name}</option> )} </select>
+          <button
+          onClick={() => dispatch(putProduct(id, name, SKU, price, description, pic, score, stock))}
+        >
+=======
           />   
            <select onChange={(e) => setSelectCategory(e.target.value)}>
           {category.map(x => <option key={x.name} value={x.categoryId}>{x.name}</option>)}
@@ -185,6 +208,7 @@ function Product_form_update(props) {
           <button 
           onClick={(e) => handleClick(e)}
         >   
+>>>>>>> Stashed changes
           Modificar producto
         </button>
         </div>
