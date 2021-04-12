@@ -4,144 +4,143 @@ import { useDispatch } from 'react-redux';
 import { NavLink } from "react-router-dom";
 import { putProduct } from '../../redux/reducerProductForms/actionsProductForms'
 import '../../scss/components/productsForm/_ProductFormUpdate.scss'
+
 function Product_form_update(props) {
-  const [id, setId] = useState("")
-  const [name, setName] = useState("")
-  const [SKU, setSKU] = useState("")
-  const [price, setPrice] = useState("")
-  const [description, setDescription] = useState("")
-  const [pic, setPic] = useState("")
-  //const [category, setCategory] = useState("")
-  const [stock, setStock] = useState(0)
+  
+  const [input, setInput] = useState({
+    id: "",
+    name: "",
+    SKU: "",
+    price: "",
+    description: "",
+    pic: "",
+    stock: "",
+  });
 
   const dispatch = useDispatch();
 
-  var handleId = function (event) {
-    event.preventDefault();
-    setId(event.target.value);
-  };
-  var handleName = function (event) {
-    event.preventDefault();
-    setName(event.target.value);
-  };
-  var handleSku = function (event) {
-    event.preventDefault();
-    setSKU(event.target.value);
-  };
-  var handlePrecio = function (event) {
-    event.preventDefault();
-    setPrice(event.target.value);
-  };
-  var handleDescripcion = function (event) {
-    event.preventDefault();
-    setDescription(event.target.value);
-  };
+  const handleChange = (e) => {
+    setInput({
+      ...input,
+      [e.target.name]: e.target.value
+    });
+  }
 
-  var handleImg = function (event) {
+  const handleSubmit = function (event) {
     event.preventDefault();
-    setPic(event.target.value);
-  };
-  /* var handleCategory = function (event) {
-    event.preventDefault();
-    setCategory(event.target.value);
-  }; */
-  var handleStock = function (event) {
-    event.preventDefault();
-    setStock(event.target.value);
-  };
 
-  var handleClick = function (event) {
-    event.preventDefault();
-    dispatch(putProduct(id, name, SKU, price, description, pic, stock))
+    dispatch(putProduct(
+      input.id,
+      input.name,
+      input.SKU,
+      input.price,
+      input.description,
+      input.pic,
+      input.stock)
+      );
+
+      alert(`El producto ${input.name} ha sido modificado`);
+
+      setInput({
+        id: "",
+        name: "",
+        SKU: "",
+        price: "",
+        description: "",
+        pic: "",
+        stock: "",
+      })
   }
 
   return (
     <div className="containerProdFormUpdate">
       <h1>Modificar productos</h1>
-      <form>
+      <form onSubmit={(e) => handleSubmit(e)}>
         <div className="cont-1">
           <label className="label">Id del producto:</label>
           <input
-            type="text"
-            id="id"
+            type="number"
+            name="id"
+            min="1"            
             autoComplete="off"
             placeholder=" Id..."
-            onChange={(e) => handleId(e)}
+            value={input.id}
+            required
+            onChange={handleChange}            
           />
+
           <label className="label">Nombre del producto:</label>
           <input
             type="text"
-            id="name"
+            name="name"
             autoComplete="off"
             placeholder=" Nombre..."
-            onChange={(e) => handleName(e)}
+            value={input.name}
+            required
+            onChange={handleChange}
           />
+
           <label className="label">SKU:</label>
           <input
             type="text"
-            id="sku"
+            name="SKU"
             autoComplete="off"
             placeholder=" SKU..."
-            onChange={(e) => handleSku(e)}
+            value={input.SKU}
+            required
+            onChange={handleChange}
           />
 
           <label className="label">Precio por unidad:</label>
           <input
-            type="text"
-            id="precio"
+            type="number"
+            name="price"
             autoComplete="off"
             placeholder=" Precio..."
-            onChange={(e) => handlePrecio(e)}
+            value={input.price}
+            required
+            onChange={handleChange}            
           />
+
           <label className="label">Descripción:</label>
           <textarea
-            id="descripcion"
-            onChange={(e) => handleDescripcion(e)} >
+            name="description"
+            value={input.description}
+            required
+            onChange={handleChange}
+          />         
 
-          </textarea>
-
-          <label className="label">
-            Imagen:
-          </label>
+          <label className="label">Imagen:</label>
           <input
             type="text"
-            id="img"
+            name="pic"
             autoComplete="off"
             placeholder=" Agregar url..."
+            value={input.pic}
+            required
+            onChange={handleChange}
+          />          
 
-            onChange={(e) => handleImg(e)}
-          />
-          {/* <label className="label">Categoria:</label>
+          <label className="label">Stock:</label>
           <input
-            type="text"
-            id="categoria"
-            autoComplete="off"
-            placeholder=" Precio..."
-            onChange={(e) => handleCategory(e)}
-          /> */}
-
-          <label className="label">
-            Stock:
-          </label>
-          <input
-            type="text"
-            id="stock"
+            type="number"
+            name="stock"
             autoComplete="off"
             placeholder=" Agregar stock..."
-
-            onChange={(e) => handleStock(e)}
+            value={input.stock}
+            required
+            onChange={handleChange}
           />
-          <button
-          onClick={(e) => handleClick(e)}
-        >
-          Modificar producto
-        </button>
-        </div>
-        
+
+          <button type="submit">Modificar producto</button>
+
+        </div>        
       </form>
+
       <NavLink to="/admin/product/form">
         <button>Volver</button>
       </NavLink>
+
     </div>
   );
 }
