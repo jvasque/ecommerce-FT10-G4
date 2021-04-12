@@ -11,6 +11,11 @@
     height: 50px;
     border: 2px rgb(0, 90, 0);
   }
+
+  .activeCategory{
+    background: #e2d8d8;
+  }
+
   .categoriesLoaded:hover {
     background: #e2d8d8;
   }
