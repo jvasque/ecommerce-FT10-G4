@@ -18,8 +18,7 @@ export default function Product_form_create(props) {
     categoryCheck: [],
     stock: "",
   })
-  const [categoryCheck, setCategoryCheck] = useState([]);
-    
+      
   const dispatch = useDispatch();
   const category = useSelector(state => state.categoryFilterReducer.categories);
   
@@ -28,13 +27,6 @@ export default function Product_form_create(props) {
       ...input,
       [e.target.name]: e.target.value
     });
-
-    // setErrors(
-    //   validate({
-    //     ...input,
-    //     [e.target.name]: e.target.value,
-    //   })
-    // );
   }
 
   const handleCategoryCheck = function (e) {
@@ -55,20 +47,12 @@ export default function Product_form_create(props) {
     event.preventDefault();
     if(input.categoryCheck.length === 0) {
       alert("Se requiere al menos UNA categoría")
-    } else {
-
-      /// CHECK ERRORS ---------------------------------------------
+    } else {     
 
       dispatch(postProduct(
         input.name, input.SKU, input.price, input.description, 
         input.pic, input.categoryCheck, input.stock));
-      // setName("");
-      // setSKU("");
-      // setPrice("");
-      // setDescription("");
-      // setPic("");
-      // setCategoryCheck([]);
-      // setStock("");
+
       setInput({
         name: "",
         SKU: "",
@@ -190,56 +174,3 @@ export default function Product_form_create(props) {
     </div>
   );
 }
-
-// export function validate(input) {
-//   let errors = {};
-
-//   if (!input.title) {
-//     errors.title = 'Title is required';
-//     errors.status = false;
-//   } else {
-//     errors.status = true;
-//   }
-//   // else if (!/\S+@\S+\.\S+/.test(input.title)) {
-//   //   errors.title = 'Username is invalid';
-//   // }
-
-//   if (!input.summary) {
-//     errors.summary = 'Summary is required';
-//     errors.status = false;
-//   } else if (!input.title) {
-//     errors.status = false;
-//   } else {
-//     errors.status = true;
-//   }
-
-//   // Checking if score is between 1 and 99
-//   if (!input.score) {
-//     errors.score = 'Score is required ';
-//     errors.status = false;
-//   } else if (!/^(?!0)[0-9]{1,2}$/.test(input.score)) {
-//     errors.score = 'Score must be a number from 1 to 99';
-//     errors.status = false;
-//   } else if (!input.title || !input.summary) {
-//     errors.status = false;
-//   } else {
-//     errors.status = true;
-//   }
-
-//   // Checking if health is between 1 and 99
-//   if (!input.health) {
-//     errors.health = 'Health score is required ';
-//     errors.status = false;
-//   } else if (!/^(?!0)[0-9]{1,2}$/.test(input.health)) {
-//     errors.health = 'Health score must be a number from 1 to 99';
-//     errors.status = false;
-//   } else if (!input.title || !input.summary) {
-//     errors.status = false;
-//   } else if (!input.score || !/^(?!0)[0-9]{1,2}$/.test(input.score)) {
-//     errors.status = false;
-//   } else {
-//     errors.status = true;
-//   }
-
-//   return errors;
-// }
