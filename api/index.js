@@ -46,7 +46,7 @@ conn.sync({ force: true }).then(() => {
       })
       let score = products[i].score.toString()
       
-      let myProduct = await Product.findOrCreate({
+      let [myProduct, created] = await Product.findOrCreate({
         where:{
         name: products[i].name ,
         SKU:products[i].SKU  ,
@@ -57,20 +57,8 @@ conn.sync({ force: true }).then(() => {
         unitsOnStock: products[i].unitsOnStock 
         }
       });
-
-      let findProduct = await Product.findOne({
-        where:{
-          name: products[i].name ,
-          SKU:products[i].SKU  ,
-          unitPrice:products[i].unitPrice  ,
-          description:products[i].description  ,
-          picture:products[i].picture  ,
-          score: score ,
-          unitsOnStock: products[i].unitsOnStock 
-          }
-      })
      
-      await findProduct.setCategories(findCategory);
+      await myProduct.setCategories(findCategory);
     }
 
     console.log("Products and categories pre charged");

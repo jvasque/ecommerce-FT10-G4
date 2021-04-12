@@ -4,7 +4,8 @@ export const DELETE_PRODUCTS = "DELETE_PRODUCTS";
 export const PUT_PRODUCTS = "PUT_PRODUCTS";
 export const GET_PRODUCTS = "GET_PRODUCTS";
 
-export function postProduct(name, SKU, unitPrice, description, picture, score, unitsOnStock) {
+export function postProduct(name, SKU, unitPrice, description, picture, categoryCheck, unitsOnStock) {
+    
     return async function (dispatch) {
         var json = await axios.post("http://localhost:3001/products", {
             params: {
@@ -13,7 +14,7 @@ export function postProduct(name, SKU, unitPrice, description, picture, score, u
                 unitPrice,
                 description,
                 picture,
-                score,
+                categoryCheck,
                 unitsOnStock
             }
         });
@@ -28,7 +29,7 @@ export function deleteProduct(id) {
     }
 }
 
-export function putProduct(id, name, SKU, unitPrice, description, picture, score, unitsOnStock) {
+export function putProduct(id, name, SKU, unitPrice, description, picture, unitsOnStock) {
     return async function (dispatch) {
         var json = await axios.put("http://localhost:3001/products/" + id, {
             params: {
@@ -37,7 +38,7 @@ export function putProduct(id, name, SKU, unitPrice, description, picture, score
                 unitPrice,
                 description,
                 picture,
-                score,
+                
                 unitsOnStock
             }
         });

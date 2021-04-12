@@ -1,17 +1,22 @@
-.containerFilter{
-    background: green;
-    height: 100%;
-    .categoriesFilter{
-        background: rgb(0, 71, 0);
-        color: white;
-        height: 50px;
-    }
-    .categoriesLoaded{
-        color: white;
-        height: 50px;
-        border: 2px rgb(0, 90, 0);      
-    }   
-    .categoriesLoaded:hover{
-        background: rgb(0, 71, 0);
-    } 
+.containerFilter {
+  background-color: var(--color-light);
+  height: 100%;
+  .categoriesFilter {
+    background: #d1c9c9;
+    color: var(--color-brand);
+    height: 50px;
+  }
+  .categoriesLoaded {
+    color: var(--color-brand);
+    height: 50px;
+    border: 2px rgb(0, 90, 0);
+  }
+
+  .activeCategory{
+    background: #e2d8d8;
+  }
+
+  .categoriesLoaded:hover {
+    background: #e2d8d8;
+  }
 }
