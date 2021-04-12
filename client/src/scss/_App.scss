@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,200;0,400;0,600;0,800;1,200;1,400;1,600&display=swap');
+
+.App {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-main);
+  font-weight: 500;
+}
+
+//Vars
+:root {
+  --rad: 0.7rem;
+  --color-black: #2a2e2a;
+  --color-dark: #696868;
+  --color-light: #efefef;
+  --color-gray: #f7f7f7;
+  --color-brand: #378a19;
+  --color-brand-light: #85da6c;
+  --color-sun: rgba(243, 208, 11, 0.87);
+  --font-main: 'Raleway', sans-serif;
+  --font-fam: 'Lato', sans-serif;
+  --height: 3rem;
+  --btn-width: 4rem;
+  --dur: 0.8s;
+  --bez: cubic-bezier(0, 0, 0.43, 1.49);
+  --bez-2: cubic-bezier(0.73, 0.32, 0.34, 1.5);
+}
