@@ -1,12 +1,10 @@
 import React from 'react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from "react-router-dom";
 import '../../scss/components/productsForm/_ProductFormCreate.scss';
 import { postProduct } from '../../redux/reducerProductForms/actionsProductForms';
-import { getCategories } from '../../redux/categoryFilterReducer/categoryFilterActions'
-import { getCatalog } from '../../redux/catalogReducer/catalogActions';
-import axios from "axios";
+
 
 export default function Product_form_create(props) {
   const [input, setInput] = useState({

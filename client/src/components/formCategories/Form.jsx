@@ -14,7 +14,7 @@ function Form() {
 
   useEffect(() => {
     dataCategories();
-  }, [!put, reload]);
+  }, [put, reload]);
 
   async function dataCategories() {
     let data = await axios.get(`http://localhost:3001/allCategories`);

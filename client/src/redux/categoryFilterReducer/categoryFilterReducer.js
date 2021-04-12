@@ -1,4 +1,4 @@
-import { GET_CATEGORIES, FILTER_CATEGORY, PRODUCT_CATEGORY } from "./categoryFilterActions";
+import { GET_CATEGORIES, FILTER_CATEGORY } from "./categoryFilterActions";
 
 const initialState = {
   categories: [],

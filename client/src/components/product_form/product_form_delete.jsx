@@ -6,14 +6,11 @@ import axios from 'axios';
 
 function Product_form_delete(props) {
   const [id, setId] = useState("");
-  const [res, setRes] = useState("");
 
   async function handleId (id, event) {
     event.preventDefault();
-    setRes('');
     if(!id) return alert('No lo se Rick, parece vacio');
     var data = await axios.delete("http://localhost:3001/products/" + id, { data: id });
-    setRes([data]);
     if(data.data.error) return alert("No existe ese ID");
     if(data.data.suceffullyDelete) return alert("Producto borrado con exito");
 

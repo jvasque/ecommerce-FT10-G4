@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import ProductCard from '../ProductCard/ProductCard.jsx'
-import { useDispatch, useSelector} from "react-redux";
+import { useSelector} from "react-redux";
 import Pages from './Pages.jsx'
 import CategoryFilter from './CategoryFilter.jsx'
 import '../../scss/components/Catalog/_Catalog.scss'

@@ -39,7 +39,7 @@ const Footer = () => {
             <div className="col-md-8 col-sm-6 col-xs-12 elements">
               <p className="copyright-text">
                 Copyright &copy; 2021 Todos los derechos reservados por
-                <a href="#"> Web-FT10-04</a>.
+                <div> Web-FT10-04</div>.
               </p>
             </div>
 
