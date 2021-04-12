@@ -84,6 +84,7 @@ export default function Product_form_create(props) {
             autoComplete="off"
             placeholder=" Nombre..."
             value={name}
+            required
             onChange={(e) => handleName(e)}
           />
           <label className="label">SKU:</label>
@@ -93,6 +94,7 @@ export default function Product_form_create(props) {
             autoComplete="off"
             placeholder=" SKU..."
             value={SKU}
+            required
             onChange={(e) => handleSku(e)}
           />
 
@@ -103,12 +105,14 @@ export default function Product_form_create(props) {
             autoComplete="off"
             placeholder=" Precio..."
             value={price}
+            required
             onChange={(e) => handlePrecio(e)}
           />
           <label className="label">Descripción:</label>
           <textarea
             id="descripcion"
             value={description}
+            required
             onChange={(e) => handleDescripcion(e)} />                   
 
           <label className="label">
@@ -120,6 +124,7 @@ export default function Product_form_create(props) {
             autoComplete="off"
             placeholder=" Agregar url..."
             value={pic}
+            required="false"
             onChange={(e) => handleImg(e)}
           />
           <label className="label">Categoria:</label>
@@ -129,7 +134,7 @@ export default function Product_form_create(props) {
                <div key={c.name}>
                 <label>{c.name}</label>                
                 <input type = "checkbox"
-                value = {c.name}
+                value = {c.name}                
                 onChange={(e) => handleCategoryCheck(e)}/>
               </div>
              )
