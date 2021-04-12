@@ -3,8 +3,6 @@ import axios from "axios";
 import PutCategory from "../formPutCategory/PutCategory";
 import "../../scss/components/_Form.scss";
 
-
-
 function Form() {
   const [categories, setCategories] = useState([]);
   const [categorySelect, setCategorySelect] = useState(
@@ -13,15 +11,14 @@ function Form() {
   const [addCategory, setAddCategory] = useState("");
   const [put, setPut] = useState("true");
   const [reload, setReload] = useState("true");
-  
-  
+
   useEffect(() => {
     dataCategories();
   }, [!put, reload]);
 
-  async function  dataCategories() {
+  async function dataCategories() {
     let data = await axios.get(`http://localhost:3001/allCategories`);
-   setCategories(data.data) 
+    setCategories(data.data);
   }
 
   const handleDelete = async (e) => {
@@ -34,35 +31,30 @@ function Form() {
       });
       alert("Deleted");
     }
-    dataCategories()
-    setCategorySelect("-Seleccione una Categoria-")
+    dataCategories();
+    setCategorySelect("-Seleccione una Categoria-");
   };
 
   const handleAddCategory = async (e) => {
-   e.preventDefault()
+    e.preventDefault();
     if (!addCategory) {
       alert("Ingrese una categoria");
     } else {
-    await axios.post("http://localhost:3001/addCategory", {
+      await axios.post("http://localhost:3001/addCategory", {
         name: addCategory,
       });
       alert("Categoria Creada");
     }
-    dataCategories()
-    setReload(!reload)
+    dataCategories();
+    setReload(!reload);
   };
 
   return (
     <div className="container-form">
-      {/* Título */}
-      <div>
-        <h2 className="title">Categorias</h2>
-      </div>
-      {/*Fin Título */}
+      <div className="box-form">
+        <h3>Categorias</h3>
+          <div className="box-options">          
 
-      <div className="container-cards">
-        <div className="card">
-          <div>
             <form onSubmit={handleAddCategory}>
               <label className="label-category">
                 Agregar una nueva Categoria
@@ -76,49 +68,38 @@ function Form() {
               ></input>
               <br />
               <br />
-              <button className="button-putcategory" type="submit" onClick={(e) =>handleAddCategory(e)}>
+              <button
+                className="button-putcategory"
+                type="submit"
+                onClick={(e) => handleAddCategory(e)}
+              >
                 Agregar
               </button>
             </form>
-          </div>
 
-          <form>
-            <br></br>
-            <label className="label-category">Categoria</label>
-            <br />
-            <select
-              className="select-category"
-              type="text"
-              name=""
-              required
-              onChange={(e) => setCategorySelect(e.target.value)}
-            >
-              <option defaultValue>-Seleccione una Categoria-</option>
-              {categories?.map((x) => (
-                <option key={x.name} value={x.name}>
-                  {x.name}
-                </option>
-              ))}
-            </select>
-            <br />
-            <br />
+            <form>
+              <br />
+              <label className="label-category">Categoria</label>
+              <br />
+              <select
+                className="select-category"
+                type="text"
+                name=""
+                required
+                onChange={(e) => setCategorySelect(e.target.value)}
+              >
+                <option defaultValue>-Seleccione una Categoria-</option>
+                {categories?.map((x) => (
+                  <option key={x.name} value={x.name}>
+                    {x.name}
+                  </option>
+                ))}
+              </select>
 
-            {/* Inicio Subcategoria */}
-
-            {/* <label className="label-category">subCategories (SubCategorias) </label>
-        <br />
-        <select className="select-category" type="text" name="categorySelect">
-          <option value="">Escoja una subcategoria</option>
-        </select> */}
-
-            {/* Fin Subcategoria */}
-
-            <br />
-            <br />
             {categorySelect === "-Seleccione una Categoria-" ? (
               ""
             ) : (
-              <div>
+              <div className="buttons-put">
                 <button
                   className="button-putcategory"
                   onClick={(e) => {
@@ -158,6 +139,7 @@ function Form() {
               )}
             </div>
           </form>
+          
         </div>
       </div>
     </div>

@@ -20,13 +20,6 @@ export default function Product_form_create(props) {
   const dispatch = useDispatch();
   const category = useSelector(state => state.categoryFilterReducer.categories);
   
-  // useEffect(()=>{
-  //   dispatch(getCategories());
-  //   dispatch(getCatalog());
-  //   // var cat = await axios.get("http://localhost:3001/allCategories");
-  // //  setCategory(categories);
-  // }, [dispatch])
-  
   var handleName = function (event) {
     event.preventDefault();
     setName(event.target.value);
