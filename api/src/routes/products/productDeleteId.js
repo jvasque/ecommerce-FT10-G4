@@ -16,7 +16,6 @@ module.exports = async (req, res, next) => {
     await product.destroy();
     return res.json({ suceffullyDelete: "product has been deleted" });
   } else {
-    res.status(400);
-    return res.json({ error: "that product cannot be find" });
+    return res.json({ error: "that product cannot be find" }).status(400);
   }
 };

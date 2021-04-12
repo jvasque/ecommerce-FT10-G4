@@ -84,7 +84,7 @@ console.log(productId)
                   <Rating
                   size="large"
                     name="customized-icons"
-                    value={productDetail.data.score}
+                    value={productDetail.data.score ? productDetail.data.score : 1}
                     getLabelText={(value) => customIcons[value].label}
                     IconContainerComponent={IconContainer}
                     readOnly

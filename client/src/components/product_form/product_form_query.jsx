@@ -2,32 +2,28 @@ import React from 'react';
 import { NavLink } from "react-router-dom";
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-
+//import { getProducts } from '../../redux/reducerProductForms/actionsProductForms'
 import '../../scss/components/productsForm/_ProductFormQuery.scss'
+import axios from 'axios';
+import ProductCard from '../ProductCard/ProductCard'
+import swal from 'sweetalert';
+
 function Product_form_query(props) {
   const [id, setId] = useState("");
+  const [product, setProduct] = useState([]);
 
-<<<<<<< Updated upstream
-  const dispatch = useDispatch();
-
-  const product = useSelector(state => state.products)
-=======
   //const product = useSelector(state => state.products);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   async function  handleQuery(id, event) {
     event.preventDefault();
-    if(!id) return alert('No lo se Rick, parece vacio')
+    if(!id) return swal("Advertencia",'No lo se Rick, parece vacio', "warning")
     let data = await axios.get("http://localhost:3001/products/" + id);
-    setProduct([data]) ;
-    dispatch({type:"GET_PRODUCTS", payload:data.data})
+    setProduct([data]);
+    if(data.data.error) return swal("Oops!","No existe ese ID", "error");
+    dispatch({type: "GET_PRODUCTS", payload: data.data})
   }
->>>>>>> Stashed changes
 
-  var handleId = function (event) {
-    event.preventDefault();
-    setId(event.target.value);
-  };
     return (
         <div className = "containerProdFormQuery">
             <h1>Consultar producto</h1>
@@ -39,20 +35,17 @@ function Product_form_query(props) {
             id="name"
             autoComplete="off"
             placeholder=" Id..."
-            onChange={ (e) => handleId(e) }
+            onChange={ (e) => setId(e.target.value) }
           />
          </div> 
         <button
-          onClick={(e) => {e.preventDefault(); console.log(product)}}
+          onClick={(e) => {handleQuery(id, e)}}
         >
           Consultar producto
         </button>
-<<<<<<< Updated upstream
-         
-=======
         <NavLink to="/admin/product/form/update">
-                    <button >Modificar</button>
-                </NavLink>
+            <button >Modificar</button>
+        </NavLink>
          {product[0]?.data.name && product.map((prod)=> {
            return (
              <ProductCard product={prod.data}></ProductCard>
@@ -60,7 +53,6 @@ function Product_form_query(props) {
          })}
 
          {product && product[0]?.data.error && <h1>El producto solicitado no existe</h1>}
->>>>>>> Stashed changes
         
       </form>
       <NavLink to="/admin/product/form">

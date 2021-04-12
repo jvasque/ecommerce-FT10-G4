@@ -1,22 +1,20 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import '../../scss/components/Catalog/_Filter.scss'
 import { useDispatch, useSelector} from "react-redux";
-import { getCategories, filterCategory, getProductCategories } from '../../redux/categoryFilterReducer/categoryFilterActions';
+import { filterCategory } from '../../redux/categoryFilterReducer/categoryFilterActions';
+import { resetQuery } from '../../redux/searchReducer/searchActions';
 import DivText from '../ProductCard/DivText'
 
 
 function CategoryFilter(){
     const categories = useSelector(state => state.categoryFilterReducer.categories)
-    const categoryFiltered = useSelector(state => state.categoryFilterReducer.categoryFiltered)
     const dispatch = useDispatch();
-
-    useEffect(() => {
-        dispatch(getCategories())
-        return
-    },[])
 
     function handleClick(cat){
         dispatch(filterCategory(cat))
+        if(cat.length === 0){
+            dispatch(resetQuery())
+        }
     }
 
     return (

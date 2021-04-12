@@ -1,21 +1,32 @@
 import React from 'react';
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from "react-router-dom";
 import '../../scss/components/productsForm/_ProductFormCreate.scss';
-import { postProduct } from '../../redux/reducerProductForms/actionsProductForms'
+import { postProduct } from '../../redux/reducerProductForms/actionsProductForms';
+import { getCategories } from '../../redux/categoryFilterReducer/categoryFilterActions'
+import { getCatalog } from '../../redux/catalogReducer/catalogActions';
+import axios from "axios";
 
 export default function Product_form_create(props) {
-  const [name, setName] = useState("")
-  const [SKU, setSKU] = useState("")
-  const [price, setPrice] = useState("")
-  const [description, setDescription] = useState("")
-  const [pic, setPic] = useState("")
-  const [score, setScore] = useState("")
-  const [stock, setStock] = useState(0)
-
+  const [name, setName] = useState(""); 
+  const [SKU, setSKU] = useState("");
+  const [price, setPrice] = useState("");
+  const [description, setDescription] = useState("");
+  const [pic, setPic] = useState("");
+  const [categoryCheck, setCategoryCheck] = useState([]);
+  const [stock, setStock] = useState(0);
+  
   const dispatch = useDispatch();
-
+  const category = useSelector(state => state.categoryFilterReducer.categories);
+  
+  // useEffect(()=>{
+  //   dispatch(getCategories());
+  //   dispatch(getCatalog());
+  //   // var cat = await axios.get("http://localhost:3001/allCategories");
+  // //  setCategory(categories);
+  // }, [dispatch])
+  
   var handleName = function (event) {
     event.preventDefault();
     setName(event.target.value);
@@ -37,14 +48,37 @@ export default function Product_form_create(props) {
     event.preventDefault();
     setPic(event.target.value);
   };
-  var handleScore = function (event) {
-    event.preventDefault();
-    setScore(event.target.value);
-  };
+   var handleCategoryCheck = function (event) {
+    
+    if(event.target.checked){
+      setCategoryCheck([...categoryCheck, event.target.value]) 
+
+    }else{
+      setCategoryCheck(categoryCheck.filter((e)=> e != event.target.value))
+    }
+
+  }; 
   var handleStock = function (event) {
     event.preventDefault();
     setStock(event.target.value);
   };
+
+  var handleClick = function (event) {
+    event.preventDefault();
+    dispatch(postProduct(name, SKU, price, description, pic, categoryCheck, stock));
+    setName("");
+    setSKU("");
+    setPrice("");
+    setDescription("");
+    setPic("");
+    setCategoryCheck([]);
+    setStock("");
+    let inputs = document.querySelectorAll('input[type=checkbox]');
+    inputs.forEach((item) => {
+      item.checked = false;
+    });
+  }
+  
   return (
     <div className="containerProdFormCreate">
       <h1>Agregar productos</h1>
@@ -56,6 +90,7 @@ export default function Product_form_create(props) {
             id="name"
             autoComplete="off"
             placeholder=" Nombre..."
+            value={name}
             onChange={(e) => handleName(e)}
           />
           <label className="label">SKU:</label>
@@ -64,6 +99,7 @@ export default function Product_form_create(props) {
             id="sku"
             autoComplete="off"
             placeholder=" SKU..."
+            value={SKU}
             onChange={(e) => handleSku(e)}
           />
 
@@ -73,14 +109,14 @@ export default function Product_form_create(props) {
             id="precio"
             autoComplete="off"
             placeholder=" Precio..."
+            value={price}
             onChange={(e) => handlePrecio(e)}
           />
           <label className="label">Descripción:</label>
           <textarea
             id="descripcion"
-            onChange={(e) => handleDescripcion(e)} >
-
-          </textarea>
+            value={description}
+            onChange={(e) => handleDescripcion(e)} />                   
 
           <label className="label">
             Imagen:
@@ -90,30 +126,37 @@ export default function Product_form_create(props) {
             id="img"
             autoComplete="off"
             placeholder=" Agregar url..."
+            value={pic}
             onChange={(e) => handleImg(e)}
           />
-          <label className="label">
-            Puntuación:
-          </label>
-          <select onChange={(e) => handleScore(e)} >
-            <option value="1">*</option>
-            <option value="2">**</option>
-            <option value="3">***</option>
-            <option value="4">****</option>
-            <option value="5">*****</option>
-          </select>
+          <label className="label">Categoria:</label>
+          <div className="categoryBoxes">
+           {category&&category.map((c)=>{
+             return(
+               <div key={c.name}>
+                <label>{c.name}</label>                
+                <input type = "checkbox"
+                value = {c.name}
+                onChange={(e) => handleCategoryCheck(e)}/>
+              </div>
+             )
+            })} 
+          </div>
+          
+          
           <label className="label">
             Stock:
           </label>
           <input
             type="text"
             id="stock"
-            autoComplete="off"
+            autoComplete="off"            
             placeholder=" Agregar stock..."
+            value={stock}
             onChange={(e) => handleStock(e)}
           />
           <button
-          onClick={() => dispatch(postProduct(name, SKU, price, description, pic, score, stock))}
+          onClick={(e) => handleClick(e)}
         >
           Crear producto
         </button>

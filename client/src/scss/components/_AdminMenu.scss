@@ -1,18 +1,24 @@
-.menu {
+.adminMenu {
   display: flex;
-  box-shadow: 60px -16px #378a19;
-  min-width: 4rem;
-  float: right;
+  align-items: center;
   margin-right: 6px;
-  height: 19vh;
-  padding: 10px;
+
+  ul {
+    font-size: 40px;
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+    li {
+      margin: 0 12px;
+    }
+  }
 
   .test {
     font-family: sans-serif;
-    color: #f7f7f7;
+    color: var(--color-brand);
     text-decoration: none;
     :hover {
-      color: #378a19;
+      color: var(--color-brand-light);
     }
   }
 }
