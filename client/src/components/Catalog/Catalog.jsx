@@ -5,6 +5,7 @@ import Pages from './Pages.jsx'
 import CategoryFilter from './CategoryFilter.jsx'
 import '../../scss/components/Catalog/_Catalog.scss'
 
+
 function Catalog(){
     const query = useSelector(state => state.searchReducer.query)
     const queryStatus = useSelector(state => state.searchReducer.queryStatus)
@@ -12,8 +13,8 @@ function Catalog(){
     const categoryFiltered = useSelector(state => state.categoryFilterReducer.categoryFiltered)
     const categories = useSelector(state => state.categoryFilterReducer.categories)
     const [catalog, setCatalog] = useState(queryStatus ? query : products)
- 
-    useEffect(() => { 
+
+    useEffect(() => {     
         if(queryStatus){
             if(categoryFiltered.length > 0 && query.length > 0){
                 let filteredCatalog = query.filter(product => {
@@ -35,7 +36,7 @@ function Catalog(){
             setCatalog(products) 
         }     
         return
-    },[categoryFiltered, categories, queryStatus, query])
+    },[categoryFiltered, queryStatus, query, products, categories])
 
     return (
         <div className='catalogContainer'>

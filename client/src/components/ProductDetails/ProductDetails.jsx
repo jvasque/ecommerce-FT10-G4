@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 
 import Rating from "@material-ui/lab/Rating";
 import Typography from "@material-ui/core/Typography";
@@ -19,7 +19,7 @@ import "../../scss/components/ProductDetail/_ProductDetails.scss";
 import Carousel from "./Carousel";
 
 // npm install --save-dev @iconify/react @iconify-icons/la
-import { Icon, InlineIcon } from '@iconify/react';
+import { Icon } from '@iconify/react';
 import tractorIcon from '@iconify-icons/la/tractor';
 
 

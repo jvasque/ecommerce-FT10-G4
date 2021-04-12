@@ -1,10 +1,12 @@
-@import url('https://fonts.googleapis.com/css?family=Raleway:400,400i,700');
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,200;0,400;0,600;0,800;1,200;1,400;1,600&display=swap');
 
 .App {
   width: 100%;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  font-family: var(--font-main);
+  font-weight: 500;
 }
 
 //Vars
@@ -17,8 +19,8 @@
   --color-brand: #378a19;
   --color-brand-light: #85da6c;
   --color-sun: rgba(243, 208, 11, 0.87);
-  --font-fam: 'Lato', sans-serif;
   --font-main: 'Raleway', sans-serif;
+  --font-fam: 'Lato', sans-serif;
   --height: 3rem;
   --btn-width: 4rem;
   --dur: 0.8s;
