@@ -1,5 +1,6 @@
 import React from 'react';
-import { useState } from 'react';
+import axios from "axios"
+import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { NavLink } from "react-router-dom";
 import { putProduct } from '../../redux/reducerProductForms/actionsProductForms'
@@ -11,10 +12,23 @@ function Product_form_update(props) {
   const [price, setPrice] = useState("")
   const [description, setDescription] = useState("")
   const [pic, setPic] = useState("")
+<<<<<<< Updated upstream
   const [score, setScore] = useState("")
+=======
+  const [category, setCategory] = useState([])
+>>>>>>> Stashed changes
   const [stock, setStock] = useState(0)
+  const [selectCategory, setSelectCategory] = useState("")
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    async function categories () {
+     const data =await axios.get("http://localhost:3001/allCategories")
+     setCategory(data.data)
+    }
+    categories()
+  },[])
 
   var handleId = function (event) {
     event.preventDefault();
@@ -49,6 +63,23 @@ function Product_form_update(props) {
     event.preventDefault();
     setStock(event.target.value);
   };
+<<<<<<< Updated upstream
+=======
+
+  var handleClick = async function (event) {
+    event.preventDefault();
+    dispatch(putProduct(id, name, SKU, price, description, pic, stock))
+    await axios.post(`http://localhost:3001/products/${id}/${selectCategory}`, {
+      categoryId: selectCategory,
+      id: id
+    } )
+    }
+
+     
+    
+  
+
+>>>>>>> Stashed changes
   return (
     <div className="containerProdFormUpdate">
       <h1>Modificar productos</h1>
@@ -109,6 +140,7 @@ function Product_form_update(props) {
           <label className="label">
             Stock:
           </label>
+
           <input
             type="text"
             id="stock"
@@ -116,10 +148,20 @@ function Product_form_update(props) {
             placeholder=" Agregar stock..."
 
             onChange={(e) => handleStock(e)}
+<<<<<<< Updated upstream
           />
           <button
           onClick={() => dispatch(putProduct(id, name, SKU, price, description, pic, score, stock))}
         >
+=======
+          />   
+           <select onChange={(e) => setSelectCategory(e.target.value)}>
+          {category.map(x => <option key={x.name} value={x.categoryId}>{x.name}</option>)}
+          </select> 
+          <button 
+          onClick={(e) => handleClick(e)}
+        >   
+>>>>>>> Stashed changes
           Modificar producto
         </button>
         </div>
