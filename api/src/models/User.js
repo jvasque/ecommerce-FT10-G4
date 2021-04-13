@@ -6,8 +6,8 @@ module.exports = (sequelize) => {
  
 const User = sequelize.define("user", {
     userId: {
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV1,
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
         primaryKey: true,
     },
     // vendorId: {
@@ -43,8 +43,7 @@ const User = sequelize.define("user", {
     type: {
         type: DataTypes.ENUM("admin", "user", "guest"),
         defaultValue: "user"
-    },
-    
+    },    
     companyName: {
         type: DataTypes.STRING,
         allowNull: true,
