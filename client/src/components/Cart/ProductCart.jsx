@@ -8,7 +8,7 @@ import {useDispatch}  from "react-redux"
 import {deleteProduct} from "../../redux/cartReducer/cartActions"
 
 function ProductCard({product}){
-
+    
     const dispath = useDispatch()
     return (
         <div className='productCart'>

@@ -3,8 +3,8 @@ export const DELETE_PRODUCT = "DELETE_PRODUCT";
 export const TOTAL = "TOTAL";
 
 export function addProduct(product) {
-  return function (dispath) {
-    dispath({
+  return function (dispatch) {
+    dispatch({
       type: "ADD_PRODUCT",
       payload: product,
     });
@@ -12,8 +12,8 @@ export function addProduct(product) {
 }
 
 export function deleteProduct(product) {
-  return function (dispath) {
-    dispath({
+  return function (dispatch) {
+    dispatch({
       type: "DELETE_PRODUCT",
       payload: product,
     });
@@ -21,8 +21,8 @@ export function deleteProduct(product) {
 }
 
 export function totalPrice() {
-  return function (dispath) {
-    dispath({
+  return function (dispatch) {
+    dispatch({
       type: "TOTAL",
     });
   };
