@@ -3,6 +3,7 @@ import {useSelector, useDispatch } from "react-redux"
 import ProductCart from "./ProductCart"
 import '../../scss/components/Cart/_Cart.scss'
 import {totalPrice} from "../../redux/cartReducer/cartActions"
+import { Button } from "@material-ui/core";
 
 
 
@@ -19,11 +20,17 @@ function Cart() {
 
 
   return (
-    <div className="cart">
+    <div className="cart-container">
+ <div className="cart">
       {products ? products?.map(product => <ProductCart product={product} key={product.productId}/>) : <h1>No hay elementos en el carrito</h1>}
-       {total ? <h1>Total:{total}</h1>: "" }
+       
     </div>
-    
+    <div className="total" > 
+    {total ? <h1>Total:{total}</h1>: "" }
+    <Button>Continar compra</Button>
+    </div>
+    </div>
+   
   )
  
 }
