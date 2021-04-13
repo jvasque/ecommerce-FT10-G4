@@ -10,11 +10,6 @@ const User = sequelize.define("user", {
         autoIncrement: true,
         primaryKey: true,
     },
-    // vendorId: {
-    //     type: DataTypes.INTEGER,
-    //     allowNull: true,
-    //     secondaryKey: true,
-    // },
     firstName: {
         type: DataTypes.STRING,
         allowNull: false,

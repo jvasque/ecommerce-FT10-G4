@@ -6,12 +6,11 @@ import ButtonIconText from './ButtonIconText';
 import ScoreIcon from './ScoreIcon';
 
 function ProductCard({product}){
-
     return (
         <div className='productCard'>
             <Link className='cardLink' to={`/${product.productId}`}>
                 <div className='cardPicture'>
-                    <img src={product.picture} alt='product'></img>
+                    <img src={JSON.parse(product.picture)[0]} alt='product'></img>
                 </div>
                 <div className='cardContent'>
 

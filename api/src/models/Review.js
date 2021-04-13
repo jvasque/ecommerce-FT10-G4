@@ -3,15 +3,17 @@ const { DataTypes } = require("sequelize");
 // Luego le injectamos la conexion a sequelize.
 module.exports = (sequelize) => {
   // defino el modelo
-  sequelize.define("subCategory", {
-    subCategoryId: {
+  sequelize.define("review", {
+    reviewId: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
     },
-    name: {
+    score: {
+        type: DataTypes.ENUM("0", "1", "2", "3", "4", "5"),        
+    },
+    content: {
       type: DataTypes.STRING,
-      allowNull: false,
     },
   });
 };
