@@ -26,11 +26,11 @@ module.exports = (sequelize) => {
       allowNull: false
     },
     picture: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(1000),
       allowNull: false
     },
     score: {
-      type: DataTypes.ENUM("1", "2", "3", "4", "5"),
+      type: DataTypes.ENUM("0", "1", "2", "3", "4", "5"),
       
     },
     unitsOnStock:{

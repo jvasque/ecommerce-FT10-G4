@@ -35,29 +35,25 @@ conn.sync({ force: true }).then(() => {
     }
 
     for (let i = 0; i < products.length; i++) {
-      
-
       const findCategory = await Category.findAll({
         where:{
-          name: {
+          categoryId: {
             [Op.in]: products[i].categoryCategoryId
           }
         }
       })
-      let score = products[i].score.toString()
-      
+      let score = products[i].score.toString()   
       let [myProduct, created] = await Product.findOrCreate({
         where:{
         name: products[i].name ,
         SKU:products[i].SKU  ,
         unitPrice:products[i].unitPrice  ,
         description:products[i].description  ,
-        picture:products[i].picture  ,
+        picture:JSON.stringify(products[i].picture)  ,
         score:score  ,
         unitsOnStock: products[i].unitsOnStock 
         }
-      });
-     
+      });     
       await myProduct.setCategories(findCategory);
     }
 
