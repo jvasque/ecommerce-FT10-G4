@@ -36,14 +36,18 @@ function SearchBar() {
     dispatch(getQuery(find)); 
     history.push({
       pathname:  "/catalog",
-    })
+    });
   };
 
   const handleClick = (name, e) => {
     e.preventDefault();
-    setFind(name)
-    dispatch(getQuery(name)); 
-  }
+    setFind('');
+    dispatch(getQuery(name));
+    dispatch(resetOptions());
+    history.push({
+      pathname:  "/catalog",
+    });
+  };
 
   return (
     <div>
