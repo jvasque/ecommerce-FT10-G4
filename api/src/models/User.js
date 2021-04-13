@@ -15,6 +15,14 @@ const User = sequelize.define("user", {
     //     allowNull: true,
     //     secondaryKey: true,
     // },
+    firstName: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    lastName: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
     email: {
         type: DataTypes.STRING,
         unique:true,
@@ -36,14 +44,7 @@ const User = sequelize.define("user", {
         type: DataTypes.ENUM("admin", "user", "guest"),
         defaultValue: "user"
     },
-    firstName: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
-    lastName: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
+    
     companyName: {
         type: DataTypes.STRING,
         allowNull: true,
