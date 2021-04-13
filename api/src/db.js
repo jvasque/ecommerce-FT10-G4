@@ -46,6 +46,9 @@ const {
   SubCategory,
   Types,
   Order,
+  OrderDetail,
+  PaymentMethod,
+  User
 } = sequelize.models;
 
 // Aca vendrian las relaciones
@@ -68,8 +71,13 @@ Category.belongsToMany(Product, {
   timestamps: false,
 });
 
-Product.belongsToMany(Order, { through: "orderDetail", timestamps: false });
-Order.belongsToMany(Product, { through: "orderDetail", timestamps: false });
+Product.belongsToMany(Order, { through: OrderDetail, timestamps: false });
+Order.belongsToMany(Product, { through: OrderDetail, timestamps: false });
+
+//Relación como comprador
+User.belongsToMany(Order, { through: "payment", timestamps: false });
+Order.hasOne(User, { through: "payment", timestamps: false });
+
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
