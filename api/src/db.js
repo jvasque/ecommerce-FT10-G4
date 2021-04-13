@@ -39,6 +39,7 @@ sequelize.models = Object.fromEntries(capsEntries);
 // Para relacionarlos hacemos un destructuring
 
 // Missing import: orderDetail, User, Review, Category
+
 const { Brand, Category, Favorite, Location,
         NewsletterOption, Order, OrderDetail, 
         PaymentMethod, Product, Review,

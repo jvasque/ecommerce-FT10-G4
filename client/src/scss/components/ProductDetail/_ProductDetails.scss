@@ -2,59 +2,161 @@
 // verde claro: #85DA6C;
 // gris principal: #EFEFEF;
 // gris claro: #F7F7F7;
+
+$colors: (
+  fill: #378a19,
+);
+@each $button, $color in $colors {
+  .#{$button} {
+    --color: #{$color};
+    --hover: #{adjust-hue($color, 45deg)};
+  }
+}
+
 @mixin card() {
-    width: 100%;
-    height: 100%;
-    padding: 0px 10px;
-    margin: 5px 5px ;
+  width: 100%;
+  height: 100%;
+  padding: 0px 10px;
+  margin: 5px 5px;
   border-radius: 8px;
-    box-shadow: 2px 2px 2px 2px rgba(0,0,0,0.2);
-    transition: 0.5s;
-    background-color: #F7F7F7;
-    text-decoration: none;
-    
+  box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.2);
+  transition: 0.5s;
+  background-color: #f7f7f7;
+  text-decoration: none;
 }
 
-.productDetails{
-    margin: 10px;
-   display: flex;
-   justify-content: center;
+.productDetails {
+  margin: 10px;
+  display: flex;
+  justify-content: center;
+  h4 {
+    margin-block-start: 0.6em;
+    margin-block-end: 0.6em;
+  }
 }
-.firstCard, .description{
-@include card()
+.firstCard,
+.description {
+  @include card();
 }
 
-.description{
-    
-    width: 100%;
-    hr {
-        background-color: red;
-    }
+.description {
+  width: 100%;
+  p {
+    font-size: 15px;
+    padding: 0.5em 1em 0.8em 1em;
+  }
+  h3{
+      padding-left: 0.8em;
+  }
 }
 .containerDetails {
-    height: 70%;
-    width: 85%;
-    margin: 0;
+  height: 70%;
+  width: 90%;
+  margin: 0;
+
+  display: flex;
+  flex-direction: column;
+  img {
+    width: 20%;
+  }
+  h2,
+  h3,
+  h4 {
+    color: #378a19;
+  }
+  Typography {
+    color: #378a19;
+  }
+  .detailTitle {
+    padding: 10px 5px;
+  }
+
+
+
+
+  .datos {
+    float: right;
+    width: 40%;
+   
+    .FavCart {
+      width: 100%;
+      height: 10%;
+      flex-direction: row;
   
-    display: flex;
-    flex-direction: column;
-    img{
-        width: 20%;
-    }
-    h2, h3, h4{
-        color: #378A19;
-    }
-    Typography{
-        color: #378A19
-    }
-    .detailTitle{
-        padding: 10px 5px;
-    }
-    .datos{
-        float: right;
-        width: 40%;
+      .wishlistButton {
+        border-radius: 0.1em;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        background: gray;
+        width: 50%;
+        height: 100%;
+        border: none;
+        outline: none;
+       
+      }
+      .addCartButton {
+        margin-top: 0.1em;
+        border-radius: 0.1em;
+        background: green;
+        color: white;
+        width: 50%;
+        height: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        border: none;
+        outline: none;
+      }
+      .icon, .text {
+        width: 50%;
+        span{
+          left: 100%;
+        }
+      }
+      .text{
+        padding:  0.8em 0 0.5em 0.8em;
+        font-size: 0.95em;
+      }
       
+      
+    
     }
+  }
 }
 
+.categroy-details {
+  // justify-content: center;
 
+  align-content: center;
+
+  text-align: center;
+  //   min-height: 100vh;
+  display: flex;
+  flex-wrap: wrap;
+  button {
+    width: fit-content;
+    background: none;
+    border: 2px solid;
+    // font: inherit;
+    line-height: 1;
+    margin-bottom: 0.15em;
+    margin-right: 0.18em;
+    padding: 0.5em 0.6em;
+    border-radius: 0.3em;
+  }
+  .fill:hover,
+  .fill:focus {
+    box-shadow: inset 0 -3.25em 0 0 var(--hover);
+  }
+  button {
+    color: var(--color);
+    transition: 0.7s;
+
+    &:hover,
+    &:focus {
+      border-color: var(--hover);
+      color: #fff;
+    }
+  }
+}

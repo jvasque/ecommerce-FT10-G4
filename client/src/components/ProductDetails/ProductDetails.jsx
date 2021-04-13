@@ -1,31 +1,49 @@
 import React, { useEffect } from "react";
-
 import Rating from "@material-ui/lab/Rating";
-import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
-
 import PropTypes from "prop-types";
-
-// import { Icon, InlineIcon } from '@iconify/react';
-// import tractorIcon from '@iconify-icons/fa-solid/tractor';
-
-
-
 import { useDispatch, useSelector } from "react-redux";
 import { getDetail } from "../../redux/detailReducer/detailActions";
-
 import "../../scss/components/ProductDetail/_ProductDetails.scss";
-
 import Carousel from "./Carousel";
+import { Icon } from "@iconify/react";
+import tractorIcon from "@iconify-icons/la/tractor";
+import { useHistory } from "react-router";
+import { resetQuery } from "../../redux/searchReducer/searchActions";
+import { filterCategory } from "../../redux/categoryFilterReducer/categoryFilterActions";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
+import Favorite from "@material-ui/icons/Favorite";
+import FavoriteBorder from "@material-ui/icons/FavoriteBorder";
+import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
+import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
 
-// npm install --save-dev @iconify/react @iconify-icons/la
-import { Icon } from '@iconify/react';
-import tractorIcon from '@iconify-icons/la/tractor';
+const Wish = (
+  <FormControlLabel
+    control={
+      <Checkbox
+        icon={<FavoriteBorder />}
+        checkedIcon={<Favorite />}
+        name="checkedH"
+      />
+    }
+  />
+);
 
-
+const Cart = (
+  <FormControlLabel
+    control={
+      <Checkbox
+        icon={<ShoppingCartOutlinedIcon />}
+        checkedIcon={<ShoppingCartIcon style={{ color: "white" }} />}
+        name="checkedC"
+      />
+    }
+  />
+);
 const customIcons = {
   1: {
-    icon: <Icon icon={tractorIcon}  />,
+    icon: <Icon icon={tractorIcon} />,
     label: "Very Dissatisfied",
   },
   2: {
@@ -56,47 +74,79 @@ IconContainer.propTypes = {
 
 const ProductDetails = (props) => {
   let productId = props.match.params.id;
-console.log(productId)
+  const history = useHistory();
   const dispatch = useDispatch();
-  const { productDetail, loading } = useSelector((state) => state.detailReducer);
+
+  const { productDetail, loading } = useSelector(
+    (state) => state.detailReducer
+  );
   useEffect(() => {
     dispatch(getDetail(parseInt(productId)));
   }, [productId, dispatch]);
 
+  const handleClick = (cat) => {
+    dispatch(filterCategory(cat));
+    dispatch(resetQuery());
+    history.push({
+      pathname: "/catalog",
+    });
+  };
+
   return (
     <div className="productDetails">
-      {console.log(productDetail, "PRODUCT DETAIL" )}
       {loading ? (
         <div className="containerDetails">
           <div className='firstCard'>
             <Carousel img={JSON.parse(productDetail.data.picture)[0]} />
             <div className="datos">
               <div className="detailTitle">
-                <h2>{productDetail.data.name}</h2>
+                <h2>{productDetail.name}</h2>
+                <div className="stars">
+                  <Box component="div" borderColor="transparent">
+                    <Rating
+                      size="large"
+                      name="customized-icons"
+                      value={productDetail.score ? productDetail.score : 1}
+                      getLabelText={(value) => customIcons[value].label}
+                      IconContainerComponent={IconContainer}
+                      readOnly
+                    />
+                  </Box>
+                </div>
               </div>
-              <h4>Precio: {productDetail.data.unitPrice} USD</h4>
-
-              <h4>Stock: {productDetail.data.unitsOnStock}</h4>
-
-              <div className="stars">
-                <Box component="div"  borderColor="transparent">
-                  <Typography component="legend"><h3>Score:</h3></Typography>
-                  <Rating
-                  size="large"
-                    name="customized-icons"
-                    value={productDetail.data.score ? productDetail.data.score : 1}
-                    getLabelText={(value) => customIcons[value].label}
-                    IconContainerComponent={IconContainer}
-                    readOnly
-                  />
-                </Box>
+              <h4>SKU: {productDetail.SKU}</h4>
+              <h4>Precio: {productDetail.unitPrice} USD</h4>
+              <h4>Stock: {productDetail.unitsOnStock}</h4>
+              <div className="categroy-details">
+                {productDetail.categories
+                  ? productDetail.categories.map((c) => (
+                      <button
+                        className="fill"
+                        key={productDetail.categories.indexOf(c)}
+                        onClick={() => handleClick(c.name)}
+                      >
+                        {c.name}
+                      </button>
+                    ))
+                  : ""}
+              </div>
+              <hr />
+              <div className="FavCart">
+                <div className="wishlistButton">
+                  <div className='text'>Wishlist</div>
+                  <div className='icon'>{Wish}</div> 
+                </div>
+                <div className="addCartButton">
+                  <div className='text'>Add Cart</div>
+                  <div className='icon'> {Cart}</div> 
+                </div>
               </div>
             </div>
           </div>
           <div className="description">
             <h3>Descripcion</h3>
-            <hr/>
-            <p>{productDetail.data.description}</p>
+            <hr />
+            <p>{productDetail.description}</p>
           </div>
         </div>
       ) : (
