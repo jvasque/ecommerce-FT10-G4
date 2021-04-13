@@ -1,18 +1,18 @@
 module.exports = [
     {
-      categoryId: 1,
       name: "Proteccion de Cultivos",
+      subcategorySubcategoryId: [1, 2, 3, 4],
     },
     {
-      categoryId: 2,
       name: "Fertilizantes",
+      subcategorySubcategoryId: [5, 6, 7, 8],
     },
     {
-      categoryId: 3,
       name: "Otros Insumos Agricolas",
+      subcategorySubcategoryId: [9, 10],
     },
     {
-      categoryId: 4,
       name: "Semillas e Hibridos",
+      subcategorySubcategoryId: [11, 12, 13, 14, 15],
     },
   ]

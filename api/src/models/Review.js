@@ -3,23 +3,17 @@ const { DataTypes } = require("sequelize");
 // Luego le injectamos la conexion a sequelize.
 module.exports = (sequelize) => {
   // defino el modelo
-  sequelize.define("order", {
-    orderId: {
+  sequelize.define("review", {
+    reviewId: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
     },
-    status: {
+    score: {
+        type: DataTypes.ENUM("0", "1", "2", "3", "4", "5"),        
+    },
+    content: {
       type: DataTypes.STRING,
-    },
-    creationDate: {
-        type: DataTypes.STRING,
-    },
-    paymentDate: {
-        type: DataTypes.STRING,
-    },
-    totalPrice: {
-        type: DataTypes.FLOAT,
     },
   });
 };

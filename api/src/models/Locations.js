@@ -3,23 +3,29 @@ const { DataTypes } = require("sequelize");
 // Luego le injectamos la conexion a sequelize.
 module.exports = (sequelize) => {
   // defino el modelo
-  sequelize.define("order", {
-    orderId: {
+  sequelize.define("location", {
+    locationId: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
     },
-    status: {
+    name: {
       type: DataTypes.STRING,
     },
-    creationDate: {
+    address: {
         type: DataTypes.STRING,
     },
-    paymentDate: {
+    city: {
         type: DataTypes.STRING,
     },
-    totalPrice: {
-        type: DataTypes.FLOAT,
+    country: {
+        type: DataTypes.STRING,
+    },
+    latitud: {
+        type: DataTypes.STRING,
+    },
+    longitud: {
+        type: DataTypes.STRING,
     },
   });
 };
