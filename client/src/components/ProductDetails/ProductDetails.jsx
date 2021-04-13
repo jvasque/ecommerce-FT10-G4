@@ -97,7 +97,7 @@ const ProductDetails = (props) => {
       {loading ? (
         <div className="containerDetails">
           <div className='firstCard'>
-            <Carousel img={JSON.parse(productDetail.data.picture)[0]} />
+            <Carousel img={JSON.parse(productDetail.picture)[0]} />
             <div className="datos">
               <div className="detailTitle">
                 <h2>{productDetail.name}</h2>
