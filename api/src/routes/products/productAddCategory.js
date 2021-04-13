@@ -1,11 +1,6 @@
 const { Product, Category } = require("../../db.js");
 module.exports = async (req, res) => {
   const { id, categoryId } = req.body;
-<<<<<<< Updated upstream
-  console.log(req.body, "bodyyyyyy");
-
-=======
->>>>>>> Stashed changes
   try {
     const product = await Product.findOne({
       where: {

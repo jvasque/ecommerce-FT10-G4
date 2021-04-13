@@ -6,6 +6,7 @@ import '../../scss/components/productsForm/_ProductFormQuery.scss'
 import axios from 'axios';
 import ProductCard from '../ProductCard/ProductCard'
 import swal from 'sweetalert';
+import {useDispatch} from 'react-redux'
 
 function Product_form_query(props) {
   const [id, setId] = useState("");

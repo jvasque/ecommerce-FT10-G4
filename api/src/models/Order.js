@@ -9,16 +9,16 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
     },
     productAmount: {
-      type: DataTypes.NUMBER,
+      type: DataTypes.INTEGER,
     },
     productName: {
       type: DataTypes.STRING,
     },
     productId: {
-      type: DataTypes.NUMBER,
+      type: DataTypes.INTEGER,
     },
     quantity: {
-      type: DataTypes.NUMBER,
+      type: DataTypes.INTEGER,
     },
     paymentMethod: {
       type: DataTypes.STRING,
