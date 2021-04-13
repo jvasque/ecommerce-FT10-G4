@@ -4,17 +4,20 @@ import '../../scss/components/_SearchBar.scss'
 import { useDispatch, useSelector} from "react-redux";
 import { BiSearch } from "react-icons/bi";
 import { getQuery, resetQuery } from '../../redux/searchReducer/searchActions';
-import ProductCard from '../ProductCard/ProductCard.jsx'
+import { filterCategory } from '../../redux/categoryFilterReducer/categoryFilterActions';
 
-function SearchBar(props, ) {
+
+function SearchBar() {
   const [find, setFind] = useState('');  
   const query = useSelector(state => state.searchReducer.query)
+  const findQuery = useSelector(state => state.searchReducer.findQuery)
   const dispatch = useDispatch();
   const history = useHistory();
-
+  
   useEffect(() => {  
+    setFind(findQuery)
     return
-  },[query])
+  },[dispatch, query, findQuery])
 
   const handleChange = (e) => {
     setFind(e.target.value);
@@ -23,6 +26,7 @@ function SearchBar(props, ) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    dispatch(filterCategory(''))
     dispatch(getQuery(find)); 
     history.push({
       pathname:  "/catalog",
@@ -30,7 +34,7 @@ function SearchBar(props, ) {
   };
 
   return (
-    <>
+    <div className='searchBar'>
       <form className='searchBarForm'
         onSubmit={handleSubmit}
       >
@@ -39,11 +43,11 @@ function SearchBar(props, ) {
           placeholder="Search..."
           autoFocus required
           value={find}
+          autocomplete="off"
           onChange={handleChange} />
         <button type="submit"><BiSearch /></button>
       </form>
-
-    </>
+    </div>
   )
 }
 

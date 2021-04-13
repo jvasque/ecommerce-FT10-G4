@@ -1,40 +1,77 @@
-import React from 'react'
-import '../../scss/components/_Footer.scss'
-// import { FaInstagram, AiOutlineFacebook, AiOutlineTwitter } from "react-icons/bi";
+import React from "react";
+import "../../scss/components/_Footer.scss";
+import { FaFacebookF, FaLinkedinIn, FaTwitter, FaInstagram } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
-    return (
-        <div className="footer">
-            <div className="headerFooter">
-            <div className="headerFooter__bg"></div>
-            <div className="headerFooter__logo">
-                <svg viewBox="0 0 24 24">                   
-                </svg>
-            </div>
-            <h1 className="headerFooter__title">Crece con nosotros.</h1>
-            <div className="headerFooter__log">
-                <svg className="headerFooter__log--icon" width="24" height="24" viewBox="0 0 24 24">
-                {/* FaInstagram, AiOutlineFacebook, AiOutlineTwitter */}
-                </svg>
-                
-            </div>
+  return (
+    <div className="foot">
+      <footer className="site-footer">
+        <div className="row">
+          <div className="about">
+            <h6>Quienes somos</h6>
+            <p className="text-justify">
+              A través de los años formamos una red de distribución que facilita
+              la llegada de nuestros productos a las diferentes zonas de Latino
+              America y el mundo. Nuestro compromiso es tener la más rápida
+              respuesta para que los productos llegue en tiempo y forma a
+              nuestros clientes.
+            </p>
+          </div>
+          <div className="linksrap">
+            <h6>Links rapidos</h6>
+            <ul className="footer-links">
+              <li>
+                <Link to="/">Pagina Principal</Link>
+              </li>
+              <li>
+                <Link to="/catalog">Catalogo</Link>
+              </li>
+              <li>
+                <Link to="/">Politica de Privacidad</Link>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <hr />
+        <div className="container-footer">
+          <div className="row">
+            <div className="col-md-8 col-sm-6 col-xs-12 elements">
+              <p className="copyright-text">
+                Copyright &copy; 2021 Todos los derechos reservados por
+                <div> Web-FT10-04</div>.
+              </p>
             </div>
 
-            <div className="aboutFooter">
-            <div className="aboutFooter__title">
-                <h2 className="aboutFooter__title--text">Quienes somos?</h2>
+            <div className="social-links">
+              <ul className="social-icons">
+                <li>
+                  <a className="facebook" href="https://www.facebook.com/soyhenryok/">
+                    <FaFacebookF />
+                  </a>
+                </li>
+                <li>
+                  <a className="instagram" href="https://www.instagram.com/soyhenry_ok/">
+                    <FaInstagram/>
+                  </a>
+                </li>
+                <li>
+                  <a className="twitter"  href="https://twitter.com/soyhenry_ok">
+                    <FaTwitter />
+                  </a>
+                </li>
+                <li>
+                  <a className="linkedin"  href="https://www.linkedin.com/school/soyhenry/">
+                    <FaLinkedinIn />
+                  </a>
+                </li>
+              </ul>
             </div>
-            <div className="aboutFooter__text">
-                <p className="aboutFooter__text--content">
-                    Si estás buscando comprar Insumos Agrícolas, ¡llegaste al lugar indicado! En MercAgro tenemos la más amplia variedad de agro insumos que te acompañan desde la siembra hasta el cuidado y protección de tus cultivos, con productos de las mejores marcas y calidad. Vas a encontrar todo en protección de cultivos como herbicidas, insecticidas, fungicidas y coadyuvantes; semillas con las mejores propiedades; tratamiento de semillas, inoculantes y hasta silo bolsas para almacenar tus granos o forraje. En nuestro sitio encontrar lo que buscás es super sencillo, tenemos filtros que se ajustan a tu medida, donde vas a poder hacer de una búsqueda general una búsqueda minuciosa, ajustando el camino hasta llegar al producto que necesitas. MercAgro quiere que te sientas cómodo y por eso tenemos un rango de precios donde podés poner tu máximo que tenes para gastar e invertir en el campo, y también podes ordenar los listados por avisos más relevantes, menor o mayor precio; o llenando el formulario vas a poder contactarte con el vendedor y obtener tu cotización. Aprovechá las facilidades que te da Mercagro y ¡comprá ya los insumos para tu campo!
-                    <br/> 
-                </p>
-            </div>
-            </div>
+          </div>
         </div>
-    )
-}
+      </footer>
+    </div>
+  );
+};
 
 export default Footer;
-
-
