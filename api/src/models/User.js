@@ -36,7 +36,7 @@ const User = sequelize.define("user", {
         }
     },    
     type: {
-        type: DataTypes.ENUM("admin", "user", "guest"),
+        type: DataTypes.ENUM("superadmin", "admin", "user", "guest"),
         defaultValue: "user"
     },    
     companyName: {
@@ -53,7 +53,6 @@ const User = sequelize.define("user", {
     },
     city: {
         type: DataTypes.STRING,
-        allowNull: false,
     },    
     googleId: {
         type: DataTypes.STRING,
