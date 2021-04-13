@@ -15,23 +15,43 @@ import Catalog from "./components/Catalog/Catalog.jsx";
 import Form from "./components/formCategories/Form";
 import "./scss/_App.scss";
 import Footer from "./components/Footer/Footer";
+import CartProduct from "./components/Cart/CartProduct";
 
 function App() {
+  let products = [{ quantity: 1, productName: "hi", price: 50 }];
+
   return (
     <div className="App">
-        <Route path="/" component={Nav} />
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <Route exact path="/admin/categories" component={Form} />
-          <Route exact path="/catalog" component={Catalog} />
-          <Route exact path="/:id" component={ProductDetails} />
-          <Route exact path="/admin/product/form" component={ProductForm} />
-          <Route exact path="/admin/product/form/create" component={ProductFormCreate} />
-          <Route exact path="/admin/product/form/query" component={ProductFormQuery} />
-          <Route exact path="/admin/product/form/update" component={ProductFormUpdate} />
-          <Route exact path="/admin/product/form/delete" component={ProductFormDelete} />
-        </Switch>
-        <Route path="/" component={Footer} />
+      <Route path="/" component={Nav} />
+      <CartProduct products={products} />
+      <Switch>
+        <Route exact path="/" component={Home} />
+        <Route exact path="/admin/categories" component={Form} />
+        <Route exact path="/catalog" component={Catalog} />
+        <Route exact path="/:id" component={ProductDetails} />
+        <Route exact path="/admin/product/form" component={ProductForm} />
+        <Route
+          exact
+          path="/admin/product/form/create"
+          component={ProductFormCreate}
+        />
+        <Route
+          exact
+          path="/admin/product/form/query"
+          component={ProductFormQuery}
+        />
+        <Route
+          exact
+          path="/admin/product/form/update"
+          component={ProductFormUpdate}
+        />
+        <Route
+          exact
+          path="/admin/product/form/delete"
+          component={ProductFormDelete}
+        />
+      </Switch>
+      <Route path="/" component={Footer} />
     </div>
   );
 }

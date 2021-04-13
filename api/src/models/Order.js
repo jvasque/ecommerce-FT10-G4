@@ -8,6 +8,9 @@ module.exports = (sequelize) => {
     lastName: {
       type: DataTypes.STRING,
     },
+    price: {
+      type: DataTypes.INTEGER,
+    },
     productAmount: {
       type: DataTypes.INTEGER,
     },
