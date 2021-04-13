@@ -4,6 +4,7 @@ import Rating from "@material-ui/lab/Rating";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 
+
 import PropTypes from "prop-types";
 
 // import { Icon, InlineIcon } from '@iconify/react';
@@ -73,6 +74,7 @@ console.log(productId)
             <div className="datos">
               <div className="detailTitle">
                 <h2>{productDetail.data.name}</h2>
+              
               </div>
               <h4>Precio: {productDetail.data.unitPrice} USD</h4>
 
