@@ -48,7 +48,7 @@ function Catalog(){
                     {
                         catalog?.map((product) => {
                             return (                             
-                                <ProductCard product={product} key={product.productId}/>             
+                                <ProductCard product={product} key={product.product}/>             
                             )
                         })
                     }

@@ -16,12 +16,15 @@ import Form from "./components/formCategories/Form";
 import "./scss/_App.scss";
 import Footer from "./components/Footer/Footer";
 import Signup from "./components/Signup/Signup";
+import Cart from "./components/Cart/Cart"
 
 function App() {
   return (
     <div className="App">
+
         <Route path="/" component={Nav} />
         <Switch>
+          <Route exact path="/product/cart" component={Cart}/>
           <Route exact path="/" component={Home} />
           <Route exact path="/admin/categories" component={Form} />
           <Route exact path="/catalog" component={Catalog} />

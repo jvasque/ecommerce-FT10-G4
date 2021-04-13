@@ -1,20 +1,20 @@
-import {GET_PRODUCTS} from './actionsProductForms'; 
+import { GET_PRODUCTS } from "./actionsProductForms";
 
 const initialState = {
-    products: []
+  product: [],
 };
 
 const productFormsReducer = (state = initialState, action) => {
-    switch (action.type) {
-        case GET_PRODUCTS:
-            return {
-                ...state,
-                products: action.payload
-            }
-    
-        default:
-            return state;
-    }
-}
+  switch (action.type) {
+    case GET_PRODUCTS:
+      return {
+        ...state,
+        product: [action.payload],
+      };
+
+    default:
+      return state;
+  }
+};
 
 export default productFormsReducer;

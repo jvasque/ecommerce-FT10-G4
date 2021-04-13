@@ -1,22 +1,28 @@
 import React from 'react';
 import { NavLink } from "react-router-dom";
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 //import { getProducts } from '../../redux/reducerProductForms/actionsProductForms'
 import '../../scss/components/productsForm/_ProductFormQuery.scss'
 import axios from 'axios';
 import ProductCard from '../ProductCard/ProductCard'
+import swal from 'sweetalert';
+
 
 function Product_form_query(props) {
   const [id, setId] = useState("");
   const [product, setProduct] = useState([]);
 
   //const product = useSelector(state => state.products);
+  const dispatch = useDispatch();
 
   async function  handleQuery(id, event) {
     event.preventDefault();
-    if(!id) return alert('No lo se Rick, parece vacio')
+    if(!id) return swal("Advertencia",'No lo se Rick, parece vacio', "warning")
     let data = await axios.get("http://localhost:3001/products/" + id);
-    setProduct([data]) ;
+    setProduct([data]);
+    if(data.data.error) return swal("Oops!","No existe ese ID", "error");
+    dispatch({type: "GET_PRODUCTS", payload: data.data})
   }
 
     return (
@@ -38,6 +44,9 @@ function Product_form_query(props) {
         >
           Consultar producto
         </button>
+        <NavLink to="/admin/product/form/update">
+            <button >Modificar</button>
+        </NavLink>
          {product[0]?.data.name && product.map((prod)=> {
            return (
              <ProductCard product={prod.data}></ProductCard>
