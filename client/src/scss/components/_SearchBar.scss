@@ -57,3 +57,16 @@
     }
   }
 }
+
+.displayOptions {
+  color: var(--color-black);
+  background-color: var(--color-light);
+  width: 80%;
+  .optionsLi {
+    padding: 5px;
+    list-style-type: none;
+  }
+  .optionsLi:hover {
+    font-weight: 600;
+  }
+}
