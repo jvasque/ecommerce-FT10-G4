@@ -43,7 +43,7 @@ const { Brand, Category, Favorite, Location,
         NewsletterOption, Order, OrderDetail, 
         PaymentMethod, Product, Review,
         SubCategory, Type, UnitsOnLocation, User, Wishlist } = sequelize.models;
-console.log(sequelize.models)
+//console.log(sequelize.models)
 // Aca vendrian las relaciones
 //roduct.hasMany(Reviews);
 
