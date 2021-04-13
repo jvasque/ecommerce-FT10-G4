@@ -15,15 +15,14 @@ import Catalog from "./components/Catalog/Catalog.jsx";
 import Form from "./components/formCategories/Form";
 import "./scss/_App.scss";
 import Footer from "./components/Footer/Footer";
-import CartProduct from "./components/Cart/CartProduct";
+import Cart from "./components/Cart/Cart"
 
 function App() {
-  let products = [{ quantity: 1, productName: "hi", price: 50 }];
 
   return (
     <div className="App">
       <Route path="/" component={Nav} />
-      <CartProduct products={products} />
+      
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/admin/categories" component={Form} />
@@ -35,6 +34,7 @@ function App() {
           path="/admin/product/form/create"
           component={ProductFormCreate}
         />
+        <Route exact path="/product/cart" component={Cart}/>
         <Route
           exact
           path="/admin/product/form/query"

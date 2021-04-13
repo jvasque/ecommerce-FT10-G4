@@ -7,7 +7,7 @@ import Favorite from '@material-ui/icons/Favorite';
 import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
-import {addProduct, deleteProduct} from "../../redux/cardReducer/cardActions"
+import {addProduct, deleteProduct} from "../../redux/cartReducer/cartActions"
 import {useDispatch} from "react-redux"
 
 
