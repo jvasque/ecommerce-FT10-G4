@@ -5,8 +5,8 @@ const allCategories = require("./categories/allCategories");
 const deleteCategory = require("./categories/deleteCategory");
 const putCategory = require("./categories/putCategory");
 const products = require('./products/product');
+const search = require('./products/search');
 const cors = require("cors");
-const search = require('./search');
 
 const router = Router();
 router.use(cors());
