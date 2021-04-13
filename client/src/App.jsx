@@ -15,6 +15,7 @@ import Catalog from "./components/Catalog/Catalog.jsx";
 import Form from "./components/formCategories/Form";
 import "./scss/_App.scss";
 import Footer from "./components/Footer/Footer";
+import Signup from "./components/Signup/Signup";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
           <Route exact path="/admin/product/form/query" component={ProductFormQuery} />
           <Route exact path="/admin/product/form/update" component={ProductFormUpdate} />
           <Route exact path="/admin/product/form/delete" component={ProductFormDelete} />
+          <Route exact path="/user/signup/form/create" component={Signup}/>
         </Switch>
         <Route path="/" component={Footer} />
     </div>

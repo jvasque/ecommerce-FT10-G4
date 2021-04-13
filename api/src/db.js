@@ -39,7 +39,7 @@ sequelize.models = Object.fromEntries(capsEntries);
 // Para relacionarlos hacemos un destructuring
 
 // Missing import: orderDetail, User, Review, Category
-const { Product, Brand, Category, SubCategory, Types } = sequelize.models;
+const { Product, Brand, Category, SubCategory, Types, User } = sequelize.models;
 
 // Aca vendrian las relaciones
 //roduct.hasMany(Reviews);
