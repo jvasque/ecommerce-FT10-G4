@@ -4,6 +4,7 @@ import detailReducer from './detailReducer/detailReducer';
 import searchReducer from './searchReducer/searchReducer'
 import catalogReducer from './catalogReducer/catalogReducer'
 import categoryFilterReducer from './categoryFilterReducer/categoryFilterReducer'
+
  
 const rootReducer = combineReducers({
     detailReducer,
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
     catalogReducer,
     categoryFilterReducer,
     reducerProductForms,
+    
 });
 
 export default rootReducer;
