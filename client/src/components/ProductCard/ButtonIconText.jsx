@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useState, useEffect} from 'react'
 import '../../scss/components/ProductCard/_ButtonIconText.scss'
 import DivText from './DivText.jsx'
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -25,6 +25,7 @@ function ButtonIconText(props){
         }
     }
 
+
     const Heart = (<FormControlLabel
         control={<Checkbox icon={<FavoriteBorder />} checkedIcon={<Favorite />} name="checkedH" />}
     />)
@@ -32,6 +33,7 @@ function ButtonIconText(props){
     const Cart = (<FormControlLabel
         control={<Checkbox onClick={handleClick} icon={<ShoppingCartOutlinedIcon />} checkedIcon={ <ShoppingCartIcon style={{color: "white"}}/>} name="checkedC" />}
     />)
+
 
     return (
         <div className='buttonIcon'>
