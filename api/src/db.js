@@ -39,7 +39,7 @@ sequelize.models = Object.fromEntries(capsEntries);
 // Para relacionarlos hacemos un destructuring
 
 // Missing import: orderDetail, User, Review, Category
-const { Product, Brand, Category, SubCategory, Types } = sequelize.models;
+const { Product, Brand, Category, SubCategory, Types, Order } = sequelize.models;
 
 // Aca vendrian las relaciones
 //roduct.hasMany(Reviews);
@@ -54,6 +54,7 @@ SubCategory.belongsToMany(Brand, { through: "brand", timestamps: false });
 
 Product.belongsToMany(Category, { through: "product_category", timestamps: false });
 Category.belongsToMany(Product, { through: "product_category", timestamps: false });
+
 
 
 module.exports = {
