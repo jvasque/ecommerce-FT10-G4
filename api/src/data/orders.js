@@ -4,6 +4,7 @@ module.exports = [
         creationDate: '',
         paymentDate: '',
         totalPrice: '',
+        paymentMethod: 1,
         orderDetailOrderDetailId: [1, 2, 46],
     },
     {
@@ -11,6 +12,7 @@ module.exports = [
         creationDate: '',
         paymentDate: '',
         totalPrice: '',
+        paymentMethod: 2,
         orderDetailOrderDetailId: [3, 4, 5, 6, 7, 47],
     },
     {
@@ -18,6 +20,7 @@ module.exports = [
         creationDate: '',
         paymentDate: '',
         totalPrice: '',
+        paymentMethod: 3,
         orderDetailOrderDetailId: [8, 9, 10, 11, 48],
     },
     {
@@ -25,6 +28,7 @@ module.exports = [
         creationDate: '',
         paymentDate: '',
         totalPrice: '',
+        paymentMethod: 4,
         orderDetailOrderDetailId: [12, 49],
     },
     {
@@ -32,6 +36,7 @@ module.exports = [
         creationDate: '',
         paymentDate: '',
         totalPrice: '',
+        paymentMethod: 5,
         orderDetailOrderDetailId: [13, 50],
     },
     {
@@ -39,6 +44,7 @@ module.exports = [
         creationDate: '',
         paymentDate: '',
         totalPrice: '',
+        paymentMethod: 1,
         orderDetailOrderDetailId: [14, 15],
     },
     {
@@ -46,6 +52,7 @@ module.exports = [
         creationDate: '',
         paymentDate: '',
         totalPrice: '',
+        paymentMethod: 2,
         orderDetailOrderDetailId: [16, 17, 18],
     },
     {
@@ -53,6 +60,7 @@ module.exports = [
         creationDate: '',
         paymentDate: '',
         totalPrice: '',
+        paymentMethod: 3,
         orderDetailOrderDetailId: [19, 20, 21],
     },
     {
@@ -60,6 +68,7 @@ module.exports = [
         creationDate: '',
         paymentDate: '',
         totalPrice: '',
+        paymentMethod: 4,
         orderDetailOrderDetailId: [22, 23],
     },
     {
@@ -67,6 +76,7 @@ module.exports = [
         creationDate: '',
         paymentDate: '',
         totalPrice: '',
+        paymentMethod: 5,
         orderDetailOrderDetailId: [24],
     },
     {
@@ -74,6 +84,7 @@ module.exports = [
         creationDate: '',
         paymentDate: '',
         totalPrice: '',
+        paymentMethod: 1,
         orderDetailOrderDetailId: [25],
     },
     {
@@ -81,6 +92,7 @@ module.exports = [
         creationDate: '',
         paymentDate: '',
         totalPrice: '',
+        paymentMethod: 2,
         orderDetailOrderDetailId: [26],
     },
     {
@@ -88,6 +100,7 @@ module.exports = [
         creationDate: '',
         paymentDate: '',
         totalPrice: '',
+        paymentMethod: 3,
         orderDetailOrderDetailId: [27],
     },
     {
@@ -95,6 +108,7 @@ module.exports = [
         creationDate: '',
         paymentDate: '',
         totalPrice: '',
+        paymentMethod: 4,
         orderDetailOrderDetailId: [28, 29],
     },
     {
@@ -102,6 +116,7 @@ module.exports = [
         creationDate: '',
         paymentDate: '',
         totalPrice: '',
+        paymentMethod: 5,
         orderDetailOrderDetailId: [30],
     },
     {
@@ -109,6 +124,7 @@ module.exports = [
         creationDate: '',
         paymentDate: '',
         totalPrice: '',
+        paymentMethod: 1,
         orderDetailOrderDetailId: [31, 51],
     },
     {
@@ -116,6 +132,7 @@ module.exports = [
         creationDate: '',
         paymentDate: '',
         totalPrice: '',
+        paymentMethod: 2,
         orderDetailOrderDetailId: [32, 52, 53],
     },
     {
@@ -123,6 +140,7 @@ module.exports = [
         creationDate: '',
         paymentDate: '',
         totalPrice: '',
+        paymentMethod: 3,
         orderDetailOrderDetailId: [33],
     },
     {
@@ -130,6 +148,7 @@ module.exports = [
         creationDate: '',
         paymentDate: '',
         totalPrice: '',
+        paymentMethod: 4,
         orderDetailOrderDetailId: [34, 54],
     },
     {
@@ -137,6 +156,7 @@ module.exports = [
         creationDate: '',
         paymentDate: '',
         totalPrice: '',
+        paymentMethod: 5,
         orderDetailOrderDetailId: [35],
     },
     {
@@ -144,6 +164,7 @@ module.exports = [
         creationDate: '',
         paymentDate: '',
         totalPrice: '',
+        paymentMethod: 1,
         orderDetailOrderDetailId: [36],
     },
     {
@@ -151,6 +172,7 @@ module.exports = [
         creationDate: '',
         paymentDate: '',
         totalPrice: '',
+        paymentMethod: 2,
         orderDetailOrderDetailId: [37, 55],
     },
     {
@@ -158,6 +180,7 @@ module.exports = [
         creationDate: '',
         paymentDate: '',
         totalPrice: '',
+        paymentMethod: 3,
         orderDetailOrderDetailId: [38],
     },
     {
@@ -165,6 +188,7 @@ module.exports = [
         creationDate: '',
         paymentDate: '',
         totalPrice: '',
+        paymentMethod: 4,
         orderDetailOrderDetailId: [39],
     },
     {
@@ -172,6 +196,7 @@ module.exports = [
         creationDate: '',
         paymentDate: '',
         totalPrice: '',
+        paymentMethod: 5,
         orderDetailOrderDetailId: [40, 56, 57],
     },
     {
@@ -179,6 +204,7 @@ module.exports = [
         creationDate: '',
         paymentDate: '',
         totalPrice: '',
+        paymentMethod: 1,
         orderDetailOrderDetailId: [41],
     },
     {
@@ -186,6 +212,7 @@ module.exports = [
         creationDate: '',
         paymentDate: '',
         totalPrice: '',
+        paymentMethod: 2,
         orderDetailOrderDetailId: [42],
     },
     {
@@ -193,6 +220,7 @@ module.exports = [
         creationDate: '',
         paymentDate: '',
         totalPrice: '',
+        paymentMethod: 3,
         orderDetailOrderDetailId: [43, 58, 59, 60]
     },
     {
@@ -200,6 +228,7 @@ module.exports = [
         creationDate: '',
         paymentDate: '',
         totalPrice: '',
+        paymentMethod: 4,
         orderDetailOrderDetailId: [44],
     },
     {
@@ -207,6 +236,7 @@ module.exports = [
         creationDate: '',
         paymentDate: '',
         totalPrice: '',
+        paymentMethod: 5,
         orderDetailOrderDetailId: [45],
     },
 ]

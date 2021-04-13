@@ -6,7 +6,7 @@ module.exports = [
         country: 'Chile',
         latitud: '4.650655377280689',
         longitud: '-74.12195112393924',
-        availableDates: '',
+        availableDates: [''],
         unitsOnLocationUnitsOnLocationId: [1, 2, 3],
     },
     {
@@ -16,7 +16,7 @@ module.exports = [
         country: 'Colombia',
         latitud: '-33.42816071504707',
         longitud: '-70.65096128476536',
-        availableDates: '',
+        availableDates: [''],
         unitsOnLocationUnitsOnLocationId: [4, 5],
     },
     {
@@ -26,7 +26,7 @@ module.exports = [
         country: 'Argentina',
         latitud: '-34.58472005869128',
         longitud: '-58.58508808246574',
-        availableDates: '',
+        availableDates: [''],
         unitsOnLocationUnitsOnLocationId: [6, 7, 8, 9, 10],
     },
 ]
