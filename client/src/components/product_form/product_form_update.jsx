@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { putProduct } from "../../redux/reducerProductForms/actionsProductForms";
 import "../../scss/components/productsForm/_ProductFormUpdate.scss";
+import swal from 'sweetalert';
 
 function Product_form_update(props) {
   const product = useSelector((state) => state.reducerProductForms.product);
@@ -32,6 +33,14 @@ function Product_form_update(props) {
     }
     if (product[0]) {
       setModifProduct(product[0].categories);
+      setInput({
+        name: product[0].name,
+        SKU: product[0].SKU,
+        price: product[0].unitPrice,
+        description: product[0].description,
+        pic: product[0].picture,
+        stock: product[0].unitsOnStock,
+      });
     }
 
     categories();
@@ -52,8 +61,9 @@ function Product_form_update(props) {
     );
   };
   const addCategory = (e) => {
-    
     if(!e.target.value) return;
+    let aux = modifProduct.map(e => e.categoryId);
+    if(aux.includes(e.target.value) || aux.includes(parseInt(e.target.value))) return swal("Aviso!", "La categoria se encuentra seleccionada", "info")
     setModifProduct([...modifProduct, {name: e.target[e.target.selectedIndex].text, categoryId: e.target.value}])
   };
 
@@ -74,13 +84,9 @@ function Product_form_update(props) {
       )
     );
 
-   /*  await axios.post(`http://localhost:3001/products/${id}/${selectCategory}`, {
-      categoryId: selectCategory,
-      id: id,
-    }); */
+    swal("Éxito",`El producto ${input.name} ha sido modificado`, "success");
 
-    alert(`El producto ${input.name} ha sido modificado`);
-
+    setModifProduct([]);
     setInput({
       name: "",
       SKU: "",
