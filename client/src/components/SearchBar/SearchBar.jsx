@@ -39,10 +39,17 @@ function SearchBar() {
     })
   };
 
+  const handleClick = (name, e) => {
+    e.preventDefault();
+    setFind(name)
+    dispatch(getQuery(name)); 
+  }
+
   return (
     <div>
       <div className='searchBar'>
-        <form className='searchBarForm'
+        <form className='searchBarForm' 
+          id='searchBarForm'
           onSubmit={handleSubmit}
         >
           <input id="search"
@@ -59,7 +66,9 @@ function SearchBar() {
       <div className="displayOptions">
         <ul>
         {options?.map( (result, i) => (
-          <li className='optionsLi' key={i}>
+          <li className='optionsLi' 
+          key={i} 
+          onClick={(e) => handleClick(result.name, e)}>
             {result.name}
           </li>
           )
