@@ -17,12 +17,15 @@ function Product_form_query(props) {
 
   useEffect(() => {
     setProduct(productGlobal);
-    if(product[0]?.error){ 
-      setProduct([])
+    async function alerting () {
+      if(productGlobal[0]?.error){ 
+        
+        swal("Oops!","No existe un producto con ese nombre", "error")
+      };
 
-      swal("Oops!","No existe un producto con ese nombre", "error")
-
-    };
+    }
+    alerting();
+    
     
   }, [productGlobal, dispatch])
 

@@ -39,7 +39,7 @@ function Product_form_delete(props) {
         </button>
         </div>
       </form>
-      <NavLink to="/admin/product/form">
+      <NavLink to="/admin/product/form/query">
         <button>Volver</button>
       </NavLink>
     </div>

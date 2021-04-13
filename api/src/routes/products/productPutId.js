@@ -3,6 +3,10 @@ const { Product, Category } = require('../../db.js');
 module.exports = async(req, res, next) => {
 	let {name, SKU, unitPrice, description, unitsOnStock, picture, categoriesIds} = req.body.params;
 	let code = req.params.id;
+
+	if(unitPrice < 0 ) return res.json({ error: 'unitPrice cannot be negative' })
+	if(unitsOnStock < 0) return res.json({ error: 'unitsOnStock cannot be negative' })
+	
 	const product = await Product.findOne({
 		where:{
 			productId: code

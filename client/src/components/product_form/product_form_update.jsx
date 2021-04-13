@@ -84,8 +84,7 @@ function Product_form_update(props) {
       )
     );
 
-    swal("Éxito",`El producto ${input.name} ha sido modificado`, "success");
-
+    
     setModifProduct([]);
     setInput({
       name: "",
@@ -94,7 +93,13 @@ function Product_form_update(props) {
       description: "",
       pic: "",
       stock: "",
+    })
+    swal("Éxito",`El producto ${input.name} ha sido modificado`, "success")
+    .then(e => {
+      window.location.reload()
+      window.location.replace("http://localhost:3000/admin/product/form/query")
     });
+    
   };
 
   return (
@@ -188,7 +193,7 @@ function Product_form_update(props) {
         </div>
       </form>
 
-      <NavLink to="/admin/product/form">
+      <NavLink to="/admin/product/form/query">
         <button>Volver</button>
       </NavLink>
     </div>
