@@ -1,12 +1,12 @@
 import React from 'react';
 import { NavLink } from "react-router-dom";
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useState } from 'react';
 //import { getProducts } from '../../redux/reducerProductForms/actionsProductForms'
 import '../../scss/components/productsForm/_ProductFormQuery.scss'
 import axios from 'axios';
 import ProductCard from '../ProductCard/ProductCard'
 import swal from 'sweetalert';
+import {useDispatch} from 'react-redux';
 
 function Product_form_query(props) {
   const [id, setId] = useState("");

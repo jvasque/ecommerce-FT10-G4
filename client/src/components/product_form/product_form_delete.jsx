@@ -8,14 +8,11 @@ import swal from 'sweetalert';
 
 function Product_form_delete(props) {
   const [id, setId] = useState("");
-  const [res, setRes] = useState("");
 
   async function handleId (id, event) {
     event.preventDefault();
-    setRes('');
     if(!id) return swal("Advertencia",'No lo se Rick, parece vacio', "warning");
     var data = await axios.delete("http://localhost:3001/products/" + id, { data: id });
-    setRes([data]);
     if(data.data.error) return swal("Oops!","No existe ese ID", "error");
     if(data.data.suceffullyDelete) return swal("Éxito!","Producto borrado con exito", "success");
 

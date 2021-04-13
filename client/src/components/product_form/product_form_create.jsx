@@ -1,172 +1,173 @@
 import React from 'react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from "react-router-dom";
 import '../../scss/components/productsForm/_ProductFormCreate.scss';
 import { postProduct } from '../../redux/reducerProductForms/actionsProductForms';
-import { getCategories } from '../../redux/categoryFilterReducer/categoryFilterActions'
-import { getCatalog } from '../../redux/catalogReducer/catalogActions';
-import axios from "axios";
+
 
 export default function Product_form_create(props) {
-  const [name, setName] = useState(""); 
-  const [SKU, setSKU] = useState("");
-  const [price, setPrice] = useState("");
-  const [description, setDescription] = useState("");
-  const [pic, setPic] = useState("");
-  const [categoryCheck, setCategoryCheck] = useState([]);
-  const [stock, setStock] = useState(0);
-  
+  const [input, setInput] = useState({
+    name: "",
+    SKU: "",
+    price: "",
+    description: "",
+    pic: "",
+    categoryCheck: [],
+    stock: "",
+  })
+      
   const dispatch = useDispatch();
   const category = useSelector(state => state.categoryFilterReducer.categories);
   
-  // useEffect(()=>{
-  //   dispatch(getCategories());
-  //   dispatch(getCatalog());
-  //   // var cat = await axios.get("http://localhost:3001/allCategories");
-  // //  setCategory(categories);
-  // }, [dispatch])
-  
-  var handleName = function (event) {
-    event.preventDefault();
-    setName(event.target.value);
-  };
-  var handleSku = function (event) {
-    event.preventDefault();
-    setSKU(event.target.value);
-  };
-  var handlePrecio = function (event) {
-    event.preventDefault();
-    setPrice(event.target.value);
-  };
-  var handleDescripcion = function (event) {
-    event.preventDefault();
-    setDescription(event.target.value);
-  };
-
-  var handleImg = function (event) {
-    event.preventDefault();
-    setPic(event.target.value);
-  };
-   var handleCategoryCheck = function (event) {
-    
-    if(event.target.checked){
-      setCategoryCheck([...categoryCheck, event.target.value]) 
-
-    }else{
-      setCategoryCheck(categoryCheck.filter((e)=> e != event.target.value))
-    }
-
-  }; 
-  var handleStock = function (event) {
-    event.preventDefault();
-    setStock(event.target.value);
-  };
-
-  var handleClick = function (event) {
-    event.preventDefault();
-    dispatch(postProduct(name, SKU, price, description, pic, categoryCheck, stock));
-    setName("");
-    setSKU("");
-    setPrice("");
-    setDescription("");
-    setPic("");
-    setCategoryCheck([]);
-    setStock("");
-    let inputs = document.querySelectorAll('input[type=checkbox]');
-    inputs.forEach((item) => {
-      item.checked = false;
+  const handleChange = (e) => {
+    setInput({
+      ...input,
+      [e.target.name]: e.target.value
     });
+  }
+
+  const handleCategoryCheck = function (e) {
+    if(e.target.checked) {        
+      setInput({
+        ...input,
+        categoryCheck: [...input.categoryCheck, e.target.value]
+      }); 
+    } else {
+      setInput({
+        ...input,
+        categoryCheck: input.categoryCheck.filter((category)=> category !== e.target.value)
+      })
+    }
+  }; 
+
+  const handleSubmit = function (event) {
+    event.preventDefault();
+    if(input.categoryCheck.length === 0) {
+      alert("Se requiere al menos UNA categoría")
+    } else {     
+
+      dispatch(postProduct(
+        input.name, input.SKU, input.price, input.description, 
+        input.pic, input.categoryCheck, input.stock));
+        
+        alert(`El producto ${input.name} ha sido creado`);
+
+      setInput({
+        name: "",
+        SKU: "",
+        price: "",
+        description: "",
+        pic: "",
+        categoryCheck: [],
+        stock: "",
+      });
+      let inputs = document.querySelectorAll('input[type=checkbox]');
+      inputs.forEach((item) => {
+        item.checked = false;
+      });
+    }
   }
   
   return (
     <div className="containerProdFormCreate">
       <h1>Agregar productos</h1>
-      <form>
+      <form onSubmit={(e) => handleSubmit(e)}>
         <div className="cont-1">
+         
           <label className="label">Nombre del producto:</label>
           <input
             type="text"
-            id="name"
+            name="name"
             autoComplete="off"
-            placeholder=" Nombre..."
-            value={name}
-            onChange={(e) => handleName(e)}
+            placeholder="Nombre..."
+            value={input.name}
+            required
+            onChange={handleChange}
           />
+          
           <label className="label">SKU:</label>
           <input
             type="text"
-            id="sku"
+            name="SKU"
             autoComplete="off"
             placeholder=" SKU..."
-            value={SKU}
-            onChange={(e) => handleSku(e)}
+            value={input.SKU}
+            required
+            onChange={handleChange}
           />
 
           <label className="label">Precio por unidad:</label>
           <input
-            type="text"
-            id="precio"
+            type="number"
+            min="1"
+            max="99999"
+            name="price"
             autoComplete="off"
-            placeholder=" Precio..."
-            value={price}
-            onChange={(e) => handlePrecio(e)}
+            placeholder="Precio..."
+            value={input.price}
+            required
+            onChange={handleChange}
           />
+         
           <label className="label">Descripción:</label>
           <textarea
-            id="descripcion"
-            value={description}
-            onChange={(e) => handleDescripcion(e)} />                   
-
+            name="description"
+            value={input.description}
+            required
+            onChange={handleChange}
+          />                   
+          
           <label className="label">
             Imagen:
           </label>
           <input
             type="text"
-            id="img"
+            name="pic"
             autoComplete="off"
             placeholder=" Agregar url..."
-            value={pic}
-            onChange={(e) => handleImg(e)}
+            value={input.pic}
+            required="false"
+            onChange={handleChange}
           />
+          
           <label className="label">Categoria:</label>
           <div className="categoryBoxes">
            {category&&category.map((c)=>{
              return(
-               <div key={c.name}>
+              <div key={c.name}>
                 <label>{c.name}</label>                
                 <input type = "checkbox"
-                value = {c.name}
-                onChange={(e) => handleCategoryCheck(e)}/>
+                value = {c.name}                
+                onChange={(e) => handleCategoryCheck(e)}
+                />
               </div>
              )
             })} 
-          </div>
+          </div>       
           
-          
-          <label className="label">
-            Stock:
-          </label>
+          <label className="label">Stock:</label>
           <input
-            type="text"
-            id="stock"
+            type="number"
+            min="1"
+            max="99"
+            name="stock"
             autoComplete="off"            
             placeholder=" Agregar stock..."
-            value={stock}
-            onChange={(e) => handleStock(e)}
+            value={input.stock}
+            required
+            onChange={handleChange}
           />
-          <button
-          onClick={(e) => handleClick(e)}
-        >
-          Crear producto
-        </button>
-        </div>
+          
+          <button type="submit">Crear producto</button>
         
+        </div>
       </form>
+      
       <NavLink to="/admin/product/form">
         <button>Volver</button>
       </NavLink>
+
     </div>
   );
 }
-
