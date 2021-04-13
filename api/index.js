@@ -18,9 +18,20 @@
 //                       `=---='
 //     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 const server = require("./src/app.js");
-const { conn, Product, Category } = require("./src/db.js");
+const { conn, Product, Category, SubCategory } = require("./src/db.js");
 const products = require("./src/data/products");
 const categories = require('./src/data/categories');
+const subcategories = require('./src/data/subcategories');
+const favorites = require('./src/data/favorites');
+const locations = require('./src/data/locations');
+const newsletter = require('./src/data/newsletterOptions');
+const orderDetails = require('./src/data/orderDetails');
+const orders = require('./src/data/orders');
+const paymentMethods = require('./src/data/paymentMethods');
+const reviews = require('./src/data/reviews');
+const unitsOnLocations = require('./src/data/unitsOnLocations');
+const users = require('./src/data/users');
+const wishlists = require('./src/data/wishlists');
 const { Op } = require("sequelize");
 
 // Syncing all the models at once.
@@ -28,11 +39,29 @@ conn.sync({ force: true }).then(() => {
   server.listen(3001, async function () {
     console.log("Server is listening on port 3001!");
     
-    for (let j = 0; j < categories.length; j++) {
-      await Category.create({
-        name: categories[j].name
+    for (let i = 0; i < subcategories.length; i++) {
+      await SubCategory.create({
+        name: subcategories[i].name
       }); 
     }
+
+    for (let i = 0; i < categories.length; i++) {
+      const findSubCategory = await SubCategory.findAll({
+        where: {
+          subCategoryId: {
+            [Op.in]: categories[i].subcategorySubcategoryId
+          }
+        }
+      })
+
+      let [myCategory, created] = await Category.findOrCreate({
+        where: {
+          name: categories[i].name
+        }
+      }); 
+      await myCategory.setSubCategories(findSubCategory);
+    }
+    
 
     for (let i = 0; i < products.length; i++) {
       const findCategory = await Category.findAll({
