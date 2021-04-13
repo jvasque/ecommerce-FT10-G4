@@ -70,7 +70,7 @@ function SearchBar() {
       <div className="displayOptions">
         <ul>
         {options?.map( (result, i) => (
-          <li className='optionsLi' 
+          <li 
           key={i} 
           onClick={(e) => handleClick(result.name, e)}>
             {result.name}
