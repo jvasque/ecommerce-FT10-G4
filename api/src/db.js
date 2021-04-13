@@ -75,8 +75,14 @@ Product.belongsToMany(Order, { through: OrderDetail, timestamps: false });
 Order.belongsToMany(Product, { through: OrderDetail, timestamps: false });
 
 //Relación como comprador
-User.belongsToMany(Order, { through: "payment", timestamps: false });
-Order.hasOne(User, { through: "payment", timestamps: false });
+User.belongsToMany(Order, { through: "order_buyer", timestamps: false });
+Order.hasOne(User, { through: "order_buyer", timestamps: false });
+
+
+User.belongsToMany(PaymentMethod, { through: "payment", timestamps: false });
+Order.hasOne(PaymentMethod, { through: "payment", timestamps: false });
+
+
 
 
 module.exports = {

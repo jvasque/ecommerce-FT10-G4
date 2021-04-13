@@ -36,10 +36,7 @@ module.exports = (sequelize) => {
     },
     quantity: {
       type: DataTypes.INTEGER,
-    },
-    paymentMethod: {
-      type: DataTypes.STRING,
-    },
+    },   
     state: {
       type: DataTypes.ENUM({
         values: ["cart", "created", "processing", "cancelled", "completed"],
