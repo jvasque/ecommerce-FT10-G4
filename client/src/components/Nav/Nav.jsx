@@ -5,6 +5,7 @@ import { useHistory } from "react-router";
 import { useDispatch, useSelector} from "react-redux";
 import { filterCategory } from '../../redux/categoryFilterReducer/categoryFilterActions';
 import { resetQuery } from '../../redux/searchReducer/searchActions';
+import { setPage } from '../../redux/catalogReducer/catalogActions';
 // npm install --save-dev @iconify/react @iconify-icons/mdi
 //import { Icon, InlineIcon } from "@iconify/react";
 //import loginIcon from "@iconify-icons/mdi/login";
@@ -19,6 +20,7 @@ const Nav = () => {
 
   function handleClick(cat){
     dispatch(filterCategory(cat))
+    dispatch(setPage(1))
     dispatch(resetQuery())
     history.push({
       pathname:  "/catalog",
