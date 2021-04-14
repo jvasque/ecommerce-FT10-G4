@@ -136,8 +136,8 @@ conn.sync({ force: true }).then(() => {
         SKU:products[i].SKU  ,
         unitPrice:products[i].unitPrice  ,
         description:products[i].description  ,
-        picture:products[i].picture  ,
-        score:score  ,
+        picture:products[i].picture,
+        score:score,
         unitsOnStock: products[i].unitsOnStock 
         }
       });     
