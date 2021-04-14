@@ -110,7 +110,7 @@ function Product_form_update(props) {
   return (
     <div className="containerProdFormUpdate">
       <h1>Modificar productos</h1>
-      <form>
+      <form onSubmit={(e) => handleSubmit(e)}>
         <div className="cont-1">
           <label className="label">Nombre del producto:</label>
           <input
@@ -118,7 +118,7 @@ function Product_form_update(props) {
             id="name"
             autoComplete="off"
             placeholder=" Nombre..."
-            onChange={(e) => handleName(e)}
+            onChange={handleChange}
           />
 
           <label className="label">SKU:</label>
@@ -127,7 +127,7 @@ function Product_form_update(props) {
             id="sku"
             autoComplete="off"
             placeholder=" SKU..."
-            onChange={(e) => handleSku(e)}
+            onChange={handleChange}
           />
 
           <label className="label">Precio por unidad:</label>
