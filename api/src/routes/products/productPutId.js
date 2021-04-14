@@ -1,8 +1,12 @@
-const { Product } = require('../../db.js');
+const { Product, Category } = require('../../db.js');
 
 module.exports = async(req, res, next) => {
-	let {name, SKU, unitPrice, description, unitsOnStock, picture} = req.body.params;
+	let {name, SKU, unitPrice, description, unitsOnStock, picture, categoriesIds} = req.body.params;
 	let code = req.params.id;
+
+	if(unitPrice < 0 ) return res.json({ error: 'unitPrice cannot be negative' })
+	if(unitsOnStock < 0) return res.json({ error: 'unitsOnStock cannot be negative' })
+	
 	const product = await Product.findOne({
 		where:{
 			productId: code
@@ -15,6 +19,8 @@ module.exports = async(req, res, next) => {
 		if(description) await product.update({description: description});
 		if(unitsOnStock) await product.update({unitsOnStock: unitsOnStock});
 		if(picture) await product.update({picture: picture});
+
+		product.setCategories(categoriesIds);
 
         res.status(200);
 		return res.json(product);

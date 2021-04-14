@@ -46,14 +46,16 @@ function Catalog(){
             <div className='catalogScreen'>
                 <div className='catalogMatrix'>                    
                     {
-                        catalog?.map((product) => {
+                        !catalog[0]?.error && catalog?.map((product) => {
                             return (                             
-                                <ProductCard product={product} key={product.productId}/>             
+                                <ProductCard product={product} key={product.product}/>             
                             )
                         })
                     }
                 </div>
-                <Pages totalProducts={catalog.length}/>
+                {
+                   !catalog[0]?.error &&  <Pages totalProducts={catalog.length}/>
+                }
             </div>
         </div>        
     )

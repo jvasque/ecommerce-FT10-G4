@@ -2,34 +2,35 @@ const { User } = require('../../db.js');
 const { Sequelize, Op } = require('sequelize');
 
 module.exports = async (req, res) => {
-//   let {
-//     name,
-//     SKU,
-//     unitPrice,
-//     description,
-//     picture,
-//     categoryCheck,
-//     unitsOnStock,
-//   } = req.body.params;
-//   try {
-//     const [addProduct, created] = await User.findOrCreate({
-//       where: {
-//         name,
-//         SKU,
-//         unitPrice,
-//         description,
-//         picture,
-
-//         unitsOnStock,
-//       },
-//     });
-
-    
-
-
-//     return res.json(addProduct);
-//   } catch (err) {
-//     console.log(err);
-//     res.json({ error: 'an error occurred while loading the data' });
-//   }
+    //tipo por defecto es user
+    //numero string o int?
+    //Yo no tengo que enviar id's
+  let {
+    firstName,
+    lastName,
+    email,
+    password,
+    companyName,
+    phone,
+    address,
+    city
+  } = req.body;
+  try {
+    const newUser = await User.findOrCreate({
+      where: {
+        firstName,
+        lastName,
+        email,
+        password,
+        companyName,
+        phone,
+        address,
+        city
+      },
+    });
+    return res.json(newUser);
+  } catch (err) {
+    console.log(err);
+    res.json({ error: 'an error occurred while loading the data' });
+  }
 };

@@ -6,15 +6,10 @@ module.exports = (sequelize) => {
  
 const User = sequelize.define("user", {
     userId: {
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV1,
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
         primaryKey: true,
     },
-    // vendorId: {
-    //     type: DataTypes.INTEGER,
-    //     allowNull: true,
-    //     secondaryKey: true,
-    // },
     firstName: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -41,10 +36,9 @@ const User = sequelize.define("user", {
         }
     },    
     type: {
-        type: DataTypes.ENUM("admin", "user", "guest"),
+        type: DataTypes.ENUM("superadmin", "admin", "user", "guest"),
         defaultValue: "user"
-    },
-    
+    },    
     companyName: {
         type: DataTypes.STRING,
         allowNull: true,
@@ -59,7 +53,6 @@ const User = sequelize.define("user", {
     },
     city: {
         type: DataTypes.STRING,
-        allowNull: false,
     },    
     googleId: {
         type: DataTypes.STRING,

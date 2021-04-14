@@ -2,7 +2,7 @@ import axios from 'axios';
 export const POST_PRODUCTS = "POST_PRODUCTS";
 export const DELETE_PRODUCTS = "DELETE_PRODUCTS";
 export const PUT_PRODUCTS = "PUT_PRODUCTS";
-export const GET_PRODUCTS = "GET_PRODUCTS";
+export const GET_PRODUCT_NAME = "GET_PRODUCT_NAME";
 
 export function postProduct(name, SKU, unitPrice, description, picture, categoryCheck, unitsOnStock) {
     
@@ -29,7 +29,7 @@ export function deleteProduct(id) {
     }
 }
 
-export function putProduct(id, name, SKU, unitPrice, description, picture, unitsOnStock) {
+export function putProduct(id, name, SKU, unitPrice, description, picture, unitsOnStock, categoriesIds) {
     return async function (dispatch) {
         var json = await axios.put("http://localhost:3001/products/" + id, {
             params: {
@@ -38,17 +38,24 @@ export function putProduct(id, name, SKU, unitPrice, description, picture, units
                 unitPrice,
                 description,
                 picture,
-                
-                unitsOnStock
+                unitsOnStock,
+                categoriesIds
             }
         });
         return dispatch({ type: PUT_PRODUCTS, payload: json.data })
     }
 }
 
-/* export function getProducts(id) {
+export function getProductName(find) {
     return async function (dispatch) {
-        var json = await axios.get("http://localhost:3001/products/" + id);
-        return dispatch({ type: GET_PRODUCTS, payload: json.data })
-    }
-} */
+      const info = await axios.get('http://localhost:3001/search?term=' + find);
+      let query = {
+        info: info.data,
+        find,
+      }
+      dispatch({
+        type: GET_PRODUCT_NAME,
+        payload: query,
+      });
+    };
+}

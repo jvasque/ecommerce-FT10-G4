@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useState, useEffect} from 'react'
 import '../../scss/components/ProductCard/_ButtonIconText.scss'
 import DivText from './DivText.jsx'
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -7,16 +7,34 @@ import Favorite from '@material-ui/icons/Favorite';
 import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
+import {addProduct, deleteProduct} from "../../redux/cartReducer/cartActions"
+import {useDispatch} from "react-redux"
 
-const Heart = (<FormControlLabel
-    control={<Checkbox icon={<FavoriteBorder />} checkedIcon={<Favorite />} name="checkedH" />}
-/>)
-
-const Cart = (<FormControlLabel
-    control={<Checkbox icon={<ShoppingCartOutlinedIcon />} checkedIcon={<ShoppingCartIcon style={{color: "white"}}/>} name="checkedC" />}
-/>)
 
 function ButtonIconText(props){
+
+    const [state, setState] = useState(true)
+    const dispath = useDispatch()
+
+    const handleClick = () => {
+        setState(!state)
+        if(state) {
+            dispath(addProduct(props.product))
+        } else {
+         dispath(deleteProduct(props.product))
+        }
+    }
+
+
+    const Heart = (<FormControlLabel
+        control={<Checkbox icon={<FavoriteBorder />} checkedIcon={<Favorite />} name="checkedH" />}
+    />)
+    
+    const Cart = (<FormControlLabel
+        control={<Checkbox onClick={handleClick} icon={<ShoppingCartOutlinedIcon />} checkedIcon={ <ShoppingCartIcon style={{color: "white"}}/>} name="checkedC" />}
+    />)
+
+
     return (
         <div className='buttonIcon'>
             <div className='iconContainer'>
