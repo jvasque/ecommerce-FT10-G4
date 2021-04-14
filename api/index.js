@@ -63,10 +63,10 @@ conn.sync({ force: true }).then(() => {
       const findSubCategory = await SubCategory.findAll({
         where: {
           id: {
-            [Op.in]: categories[i].subcategorySubcategoryId
-          }
-        }
-      })
+            [Op.in]: categories[i].subcategorySubcategoryId,
+          },
+        },
+      });
 
       let [myCategory, created] = await Category.findOrCreate({
         where: {
@@ -93,13 +93,15 @@ conn.sync({ force: true }).then(() => {
     //Order creation and association
     for (let i = 0; i < orders.length; i++) {
       const findOrderDetail = await OrderDetail.findAll({
-        where:{
+        where: {
           id: {
-            [Op.in]: orders[i].orderDetailOrderDetailId
-          }
-        }
-      })   
-      const findPaymentMethod = await PaymentMethod.findByPk(orders[i].paymentMethod)
+            [Op.in]: orders[i].orderDetailOrderDetailId,
+          },
+        },
+      });
+      const findPaymentMethod = await PaymentMethod.findByPk(
+        orders[i].paymentMethod
+      );
 
       let myOrder = await Order.create({
         status: orders[i].status,
@@ -121,27 +123,27 @@ conn.sync({ force: true }).then(() => {
     //Product creation and association
     for (let i = 0; i < products.length; i++) {
       const findCategory = await Category.findAll({
-        where:{
+        where: {
           id: {
-            [Op.in]: products[i].categoryCategoryId
-          }
-        }
-      })
+            [Op.in]: products[i].categoryCategoryId,
+          },
+        },
+      });
       const findSubCategory = await SubCategory.findAll({
-        where:{
+        where: {
           id: {
-            [Op.in]: products[i].subcategorySubcategoryId
-          }
-        }
-      })
-      const findOrderDetail  = await OrderDetail.findAll({
-        where:{
-          id:{
-            [Op.in]: products[i].orderDetailOrderDetailId
-          }
-        }
-      })
-      let score = products[i].score.toString()   
+            [Op.in]: products[i].subcategorySubcategoryId,
+          },
+        },
+      });
+      const findOrderDetail = await OrderDetail.findAll({
+        where: {
+          id: {
+            [Op.in]: products[i].orderDetailOrderDetailId,
+          },
+        },
+      });
+      let score = products[i].score.toString();
       let [myProduct, created] = await Product.findOrCreate({
         where: {
           name: products[i].name,
@@ -159,37 +161,37 @@ conn.sync({ force: true }).then(() => {
     }
 
     //User creation and association
-    for (let i = 0; i < users.length; i++){
-      const findReview  = await Review.findAll({
-        where:{
-          id:{
-            [Op.in]: users[i].reviews
-          }
-        }
-      })
+    for (let i = 0; i < users.length; i++) {
+      const findReview = await Review.findAll({
+        where: {
+          id: {
+            [Op.in]: users[i].reviews,
+          },
+        },
+      });
       const findProduct = await Product.findAll({
         where: {
           id: {
-            [Op.in]: users[i].products
-          }
-        }
-      })
+            [Op.in]: users[i].products,
+          },
+        },
+      });
       const findPaymentMethod = await PaymentMethod.findAll({
         where: {
           id: {
-            [Op.in]: users[i].paymentMethodpaymentMethodId
-          }
-        }
-      })
+            [Op.in]: users[i].paymentMethodpaymentMethodId,
+          },
+        },
+      });
       let [myFavorite, favCreated] = await Favorite.findOrCreate({
-        where:{
-          id: i+1
-        }
+        where: {
+          id: i + 1,
+        },
       });
       let [myWishlist, wishCreated] = await Wishlist.findOrCreate({
-        where:{
-          id: i+1
-        }
+        where: {
+          id: i + 1,
+        },
       });
       let [myUser, created] = await User.findOrCreate({
         where: {
@@ -215,11 +217,11 @@ conn.sync({ force: true }).then(() => {
       const findOrder = await Order.findAll({
         where: {
           id: {
-            [Op.in]: users[i].orderOrderId
-          }
-        }
-      })
-      await findUser.setOrders(findOrder)
+            [Op.in]: users[i].orderOrderId,
+          },
+        },
+      });
+      await findUser.setOrders(findOrder);
     }
     for (let i = 0; i < products.length; i++) {
       const findUser = await User.findByPk(products[i].userUserId);
@@ -227,20 +229,20 @@ conn.sync({ force: true }).then(() => {
       const findFavorite = await Favorite.findAll({
         where: {
           id: {
-            [Op.in]: products[i].favoriteFavoriteId
-          }
-        }
-      })
+            [Op.in]: products[i].favoriteFavoriteId,
+          },
+        },
+      });
       const findWishlist = await Wishlist.findAll({
         where: {
           id: {
-            [Op.in]: products[i].wishListWishListId
-          }
-        }
-      })
-      await findProduct.setUser(findUser)
-      await findProduct.setFavorites(findFavorite)
-      await findProduct.setWishlists(findWishlist)
+            [Op.in]: products[i].wishListWishListId,
+          },
+        },
+      });
+      await findProduct.setUser(findUser);
+      await findProduct.setFavorites(findFavorite);
+      await findProduct.setWishlists(findWishlist);
     }
 
     let [newWish] = await Wishlist.findOrCreate({
@@ -254,6 +256,11 @@ conn.sync({ force: true }).then(() => {
 
     let newUser = await User.findByPk(2);
     await newUser.addWishlists(newWish);
+    let dummyProduct = await Product.findByPk(1);
+    let dummyProduct2 = await Product.findByPk(2);
+    await dummyProduct.addWishlists(newWish);
+    await dummyProduct2.addWishlists(newWish);
+
     console.log('Products and categories pre charged');
   });
 });
