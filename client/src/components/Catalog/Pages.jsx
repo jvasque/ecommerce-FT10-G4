@@ -1,7 +1,7 @@
 import React from 'react'
 import '../../scss/components/Catalog/_Pages.scss'
 import { useDispatch, useSelector} from "react-redux";
-import { increasePage, decreasePage, setPage } from '../../redux/catalogReducer/catalogActions';
+import { increasePage, decreasePage } from '../../redux/catalogReducer/catalogActions';
 
 function Pages({totalProducts}){
     const page = useSelector(state => state.catalogReducer.page)

@@ -8,7 +8,7 @@ import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
 import { FormGroup } from '@material-ui/core';
-import { useDispatch, useSelector} from "react-redux";
+import { useDispatch } from "react-redux";
 import { modifyCart, modifyFav } from '../../redux/iconReducer/iconActions';
 
 function ButtonIconText(props){
@@ -16,15 +16,14 @@ function ButtonIconText(props){
         [`Fav-${props.productId}`]: false,
         [`Cart-${props.productId}`]: false,
     })
-    const iconsState = useSelector(state => state.iconReducer)
     const dispatch = useDispatch();
     function handleHeart(event){
         let {name, checked} = event.target
-        setState({ ...state, [event.target.name]: event.target.checked });
+        setState({ ...state, [name]: checked });
         if(name.includes('Fav')){
-            dispatch(modifyFav({[event.target.name]: event.target.checked}))
+            dispatch(modifyFav({[name]: checked}))
         }else{
-            dispatch(modifyCart({[event.target.name]: event.target.checked}))
+            dispatch(modifyCart({[name]: checked}))
         }
     }
 
