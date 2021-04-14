@@ -246,17 +246,16 @@ conn.sync({ force: true }).then(() => {
     }
 
     let [newWish] = await Wishlist.findOrCreate({
-      
       where: {
         wishlistId: 15,
       },
       defaults: {
-        name: 'wishlist15'
-      }
+        name: 'wishlist15',
+      },
     });
 
     let newUser = await User.findByPk(2);
-      await newUser.addWishlists(newWish)
+    await newUser.addWishlists(newWish);
     console.log('Products and categories pre charged');
   });
 });

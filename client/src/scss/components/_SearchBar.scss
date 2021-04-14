@@ -8,6 +8,7 @@
     background: var(--color-brand);
     border-radius: var(--rad);
     :hover {
+      cursor: text;
       background: var(--color-brand);
     }
   }
@@ -44,7 +45,7 @@
   }
   input:not(:placeholder-shown) {
     border-radius: var(--rad) 0 0 var(--rad);
-    width: 80%;
+    width: 20vw;
     // width: calc(500px - var(--btn-width));
     + button {
       outline: none;
@@ -54,6 +55,34 @@
     + button:hover {
       color: whitesmoke;
       background-color: #3c971b;
+      cursor: pointer;
+    }
+  }
+}
+
+.displayOptions {
+  color: var(--color-black);
+  ul {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    background-color: var(--color-light);
+    position: absolute;
+    transition: all var(--dur) var(--bez);
+    margin: 1px 0 0 2px;
+
+    li {
+      width: 18.3vw;
+      margin-left: -40px;
+      text-align: left;
+      padding: 8px 21px 9px 10px;
+      list-style-type: none;
+
+      &:hover {
+        cursor: pointer;
+        border: solid 2px var(--color-brand);
+        font-weight: 600;
+      }
     }
   }
 }

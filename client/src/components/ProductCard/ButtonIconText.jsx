@@ -8,16 +8,19 @@ import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
 import { FormGroup } from '@material-ui/core';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { modifyCart, modifyFav } from '../../redux/iconReducer/iconActions';
 
 function ButtonIconText(props){
+    const iconState = useSelector(state => state.iconReducer)
     const [state, setState] = useState({
-        [`Fav-${props.productId}`]: false,
-        [`Cart-${props.productId}`]: false,
+        [`Fav-${props.productId}`]: iconState.fav[`Fav-${props.productId}`],
+        [`Cart-${props.productId}`]: iconState.cart[`Cart-${props.productId}`],
     })
     const dispatch = useDispatch();
     function handleHeart(event){
+        event.preventDefault();
+        console.log(iconState)
         let {name, checked} = event.target
         setState({ ...state, [name]: checked });
         if(name.includes('Fav')){
@@ -37,7 +40,7 @@ function ButtonIconText(props){
                             <Checkbox 
                                 icon={<FavoriteBorder />} 
                                 checkedIcon={<Favorite />} 
-                                checked={state[`Fav-${props.productId}`]}
+                                checked={state[`Fav-${props.productId}`] || false}
                                 name={`Fav-${props.productId}`} 
                                 onChange={handleHeart}
                             />
@@ -46,7 +49,7 @@ function ButtonIconText(props){
                                     <Checkbox 
                                         icon={<ShoppingCartOutlinedIcon />} 
                                         checkedIcon={<ShoppingCartIcon style={{color: "white"}}/>} 
-                                        checked={state[`Cart-${props.productId}`]}
+                                        checked={state[`Cart-${props.productId}`] || false}
                                         name={`Cart-${props.productId}`} 
                                         onChange={handleHeart}
                                     />}
