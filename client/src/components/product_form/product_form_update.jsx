@@ -74,18 +74,18 @@ function Product_form_update(props) {
 
   const deleteCategory = (e) => {
     e.preventDefault();
-    setModifProduct(modifProduct.filter((x) => x.categoryId != e.target.value));
+    setModifProduct(modifProduct.filter((x) => x.id != e.target.value));
   };
   const addCategory = (e) => {
     if (!e.target.value) return;
-    let aux = modifProduct.map((e) => e.categoryId);
+    let aux = modifProduct.map((e) => e.id);
     if (aux.includes(e.target.value) || aux.includes(parseInt(e.target.value)))
       return swal('Aviso!', 'La categoria se encuentra seleccionada', 'info');
     setModifProduct([
       ...modifProduct,
       {
         name: e.target[e.target.selectedIndex].text,
-        categoryId: e.target.value,
+        id: e.target.value,
       },
     ]);
     
@@ -102,11 +102,11 @@ function Product_form_update(props) {
 
   const handleSubmit = async function (event) {
     event.preventDefault();
-    let categoriesIds = modifProduct.map((e) => e.categoryId);
+    let categoriesIds = modifProduct.map((e) => e.id);
 
     dispatch(
       putProduct(
-        product[0]?.productId,
+        product[0]?.id,
         input.name,
         input.SKU,
         input.price,
@@ -217,7 +217,7 @@ function Product_form_update(props) {
           {modifProduct?.map((x) => (
             <label>
               {x.name}
-              <button value={x.categoryId} onClick={(e) => deleteCategory(e)}>
+              <button value={x.id} onClick={(e) => deleteCategory(e)}>
                 x
               </button>
             </label>
@@ -226,7 +226,7 @@ function Product_form_update(props) {
             <option value=""> seleccionar ...</option>
             {category.map((x) => {
               return (
-                <option key={x.name} name={x.name} value={x.categoryId}>
+                <option key={x.name} name={x.name} value={x.id}>
                   {x.name}
                 </option>
               );

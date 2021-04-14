@@ -59,7 +59,7 @@ function Product_form_query(props) {
     })
     .then((willDelete) => {  
       if (willDelete) {  
-        dispatch(deleteProduct(product[0]?.productId))
+        dispatch(deleteProduct(product[0]?.id))
         dispatch(clearProduct())
         swal("Su producto fue borrado con éxito!", 
         {icon: "success"})

@@ -4,7 +4,7 @@ module.exports = async (req, res) => {
   try {
     const product = await Product.findOne({
       where: {
-        productId: id,
+        id: id,
       },
       include: {
         model: Category,
