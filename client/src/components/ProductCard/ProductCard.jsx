@@ -35,12 +35,12 @@ function ProductCard({product}){
             <div className='cardButtons'>
                 <div className='wishlistButton'>
                     <div className='cardIcon'>
-                        <ButtonIconText icon='Heart'/>
+                        <ButtonIconText icon='Heart' productId={product.productId}/>
                     </div>
                 </div>                     
                 <div className='addCartButton'>   
                     <div className='cardIcon'>
-                        <ButtonIconText/>
+                        <ButtonIconText productId={product.productId}/>
                     </div>
                 </div>                     
             </div>
