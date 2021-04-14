@@ -19,7 +19,7 @@ router.get('/', async (req, res, next) => {
     });
     return data.length > 0
       ? res.json(data)
-      : res.json([]);
+      : res.json([{error: "that product cannot be find"}]);
   } catch (err) {
     res.json(err);
     return console.log(err);

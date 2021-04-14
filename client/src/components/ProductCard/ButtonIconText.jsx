@@ -1,4 +1,4 @@
-import React,{useState, useEffect} from 'react'
+import React, { useState } from 'react'
 import '../../scss/components/ProductCard/_ButtonIconText.scss'
 import DivText from './DivText.jsx'
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -7,38 +7,52 @@ import Favorite from '@material-ui/icons/Favorite';
 import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
-import {addProduct, deleteProduct} from "../../redux/cartReducer/cartActions"
-import {useDispatch} from "react-redux"
-
+import { FormGroup } from '@material-ui/core';
+import { useDispatch } from "react-redux";
+import { modifyCart, modifyFav } from '../../redux/iconReducer/iconActions';
 
 function ButtonIconText(props){
-
-    const [state, setState] = useState(true)
-    const dispath = useDispatch()
-
-    const handleClick = () => {
-        setState(!state)
-        if(state) {
-            dispath(addProduct(props.product))
-        } else {
-         dispath(deleteProduct(props.product))
+    const [state, setState] = useState({
+        [`Fav-${props.productId}`]: false,
+        [`Cart-${props.productId}`]: false,
+    })
+    const dispatch = useDispatch();
+    function handleHeart(event){
+        let {name, checked} = event.target
+        setState({ ...state, [name]: checked });
+        if(name.includes('Fav')){
+            dispatch(modifyFav({[name]: checked}))
+        }else{
+            dispatch(modifyCart({[name]: checked}))
         }
     }
-
-
-    const Heart = (<FormControlLabel
-        control={<Checkbox icon={<FavoriteBorder />} checkedIcon={<Favorite />} name="checkedH" />}
-    />)
-    
-    const Cart = (<FormControlLabel
-        control={<Checkbox onClick={handleClick} icon={<ShoppingCartOutlinedIcon />} checkedIcon={ <ShoppingCartIcon style={{color: "white"}}/>} name="checkedC" />}
-    />)
-
 
     return (
         <div className='buttonIcon'>
             <div className='iconContainer'>
-                {props.icon === 'Heart' ? Heart:Cart}              
+                <FormGroup>
+                    {
+                        props.icon === 'Heart' ? (<FormControlLabel
+                        control={
+                            <Checkbox 
+                                icon={<FavoriteBorder />} 
+                                checkedIcon={<Favorite />} 
+                                checked={state[`Fav-${props.productId}`]}
+                                name={`Fav-${props.productId}`} 
+                                onChange={handleHeart}
+                            />
+                        }/>) : (<FormControlLabel
+                                    control={
+                                    <Checkbox 
+                                        icon={<ShoppingCartOutlinedIcon />} 
+                                        checkedIcon={<ShoppingCartIcon style={{color: "white"}}/>} 
+                                        checked={state[`Cart-${props.productId}`]}
+                                        name={`Cart-${props.productId}`} 
+                                        onChange={handleHeart}
+                                    />}
+                                />)
+                    }                    
+                </FormGroup>       
             </div>
             <div className='textContainer'>
                 <DivText className='textIcon' content={props.icon === 'Heart' ? 'Add to Favorites':'Add to Cart'}/>
