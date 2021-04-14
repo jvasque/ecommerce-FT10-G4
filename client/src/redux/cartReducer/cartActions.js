@@ -1,8 +1,8 @@
 import axios from "axios";
 export const ADD_PRODUCT = "ADD_PRODUCT";
-export const ADD_PRODUCT = "ADD_PRODUCT";
-export const INCREMENTQ = "INCREMENTQ";
+export const DELETE_PRODUCT = "DELETE_PRODUCT";
 export const TOTAL = "TOTAL";
+export const INCREMENTQ = "INCREMENTQ"
 
 export function addProduct(product) {
   axios.post(`http://localhost:3001/cart/user/${product.productId}`, {
