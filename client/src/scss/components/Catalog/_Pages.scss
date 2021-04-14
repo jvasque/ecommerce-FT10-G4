@@ -1,0 +1,17 @@
+.containerPages{       
+    height: 50px;
+    .pagesBar{
+        flex-direction: row; 
+        vertical-align: middle;
+        .page{
+            display: inline-block;
+            height: 100%;
+            width: 50px;
+            background: var(--color-brand);
+        }
+    
+        .pageNumber{
+            background: var(--color-light);
+        }
+    }    
+}
