@@ -9,6 +9,7 @@ import {
   getOptions,
   resetOptions,
 } from '../../redux/searchReducer/searchActions';
+import { setPage } from '../../redux/catalogReducer/catalogActions'
 import { filterCategory } from '../../redux/categoryFilterReducer/categoryFilterActions';
 
 function SearchBar() {
@@ -16,6 +17,7 @@ function SearchBar() {
   const query = useSelector((state) => state.searchReducer.query);
   const findQuery = useSelector((state) => state.searchReducer.findQuery);
   const options = useSelector((state) => state.searchReducer.options);
+  const page = useSelector(state => state.catalogReducer.page)
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -38,6 +40,8 @@ function SearchBar() {
     e.preventDefault();
     dispatch(filterCategory(''));
     dispatch(getQuery(find));
+    dispatch(resetOptions());
+    dispatch(setPage(1));
     history.push({
       pathname: '/catalog',
     });
