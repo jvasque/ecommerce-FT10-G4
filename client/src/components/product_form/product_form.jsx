@@ -12,12 +12,6 @@ function product_form(props) {
                 <NavLink to="/admin/product/form/query">
                     <button>Consultar</button>
                 </NavLink>
-                <NavLink to="/admin/product/form/update">
-                    <button>Modificar</button>
-                </NavLink>
-                <NavLink to="/admin/product/form/delete">
-                    <button>Eliminar</button>
-                </NavLink>
                 <NavLink to="/">
                     <button>Volver</button>
                 </NavLink>
