@@ -65,7 +65,7 @@ User.hasMany(Order);
 User.hasMany(Review);
 User.hasOne(Favorite);
 User.hasMany(Product); //MarketPlace functionality
-User.hasOne(Wishlist);
+User.belongsToMany(Wishlist, { through: 'whislist_user'});
 User.belongsToMany(PaymentMethod, { through: 'user_payment' });
 
 PaymentMethod.hasMany(Order);
@@ -74,7 +74,7 @@ PaymentMethod.belongsToMany(User, { through: 'user_payment' });
 Favorite.belongsTo(User);
 Favorite.belongsToMany(Product, { through: 'favorite_product' });
 
-Wishlist.belongsTo(User);
+Wishlist.belongsToMany(User, { through: 'whislist_user'});
 Wishlist.belongsToMany(Product, { through: 'wishlist_product' });
 
 Review.belongsTo(User);
@@ -106,18 +106,6 @@ OrderDetail.hasOne(Review); //review es por compra
 Category.hasMany(SubCategory);
 Category.belongsToMany(Product, {
   through: 'product_category',
-  timestamps: false,
-});
-
-User.hasOne(Wishlist, { through: 'user_wishlist', timestamps: false });
-Wishlist.hasOne(User, { through: 'user_wishlist', timestamps: false });
-
-Wishlist.belongsToMany(Product, {
-  through: 'wishlist_products',
-  timestamps: false,
-});
-Product.belongsToMany(Wishlist, {
-  through: 'wishlist_products',
   timestamps: false,
 });
 
