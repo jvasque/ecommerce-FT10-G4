@@ -10,7 +10,7 @@ function ProductCard({product}){
         <div className='productCard'>
             <Link className='cardLink' to={`/${product.productId}`}>
                 <div className='cardPicture'>
-                    <img src={JSON.parse(product.picture)[0]} alt='product'></img>
+                    <img src={product.picture[0]} alt='product'></img>
                 </div>
                 <div className='cardContent'>
 

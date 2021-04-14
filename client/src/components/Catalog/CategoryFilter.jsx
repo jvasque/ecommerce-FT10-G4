@@ -3,6 +3,7 @@ import '../../scss/components/Catalog/_Filter.scss'
 import { useDispatch, useSelector} from "react-redux";
 import { filterCategory } from '../../redux/categoryFilterReducer/categoryFilterActions';
 import { resetQuery } from '../../redux/searchReducer/searchActions';
+import { setPage } from '../../redux/catalogReducer/catalogActions';
 import DivText from '../ProductCard/DivText'
 
 function CategoryFilter(){
@@ -12,6 +13,7 @@ function CategoryFilter(){
 
     function handleClick(cat){
         dispatch(filterCategory(cat))
+        dispatch(setPage(1))
         if(cat.length === 0){
             dispatch(resetQuery())
         }
