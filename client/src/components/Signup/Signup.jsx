@@ -3,6 +3,7 @@ import { FaFacebookF, FaLinkedinIn, FaTwitter, FaGoogle } from "react-icons/fa";
 import "../../scss/components/_Signup.scss";
 import { useDispatch } from "react-redux";
 import { postUser } from "../../redux/postUserReducer/postUserActions";
+import Swal from 'sweetalert2'
 
 const Signup = () => {
   const [user, setUser] = React.useState({
@@ -40,6 +41,15 @@ const Signup = () => {
       address: "",
       city: "",
     });
+    Swal.fire({
+      title: 'Custom animation with Animate.css',
+      showClass: {
+        popup: 'animate__animated animate__fadeInDown'
+      },
+      hideClass: {
+        popup: 'animate__animated animate__fadeOutUp'
+      }
+    })
   };
 
   return (
