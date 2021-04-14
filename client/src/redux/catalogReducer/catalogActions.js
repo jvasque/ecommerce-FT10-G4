@@ -5,8 +5,8 @@ export const DECREASE_PAGE = 'DECREASE_PAGE';
 export const SET_PAGE = 'SET_PAGE';
 
 export function getCatalog() {
-  return async function(dispatch) {
-    const info = await axios.get("http://localhost:3001/products")
+  return async function (dispatch) {
+    const info = await axios.get("http://localhost:3001/products");
     dispatch({
       type: GET_CATALOG,
       payload: info.data,
