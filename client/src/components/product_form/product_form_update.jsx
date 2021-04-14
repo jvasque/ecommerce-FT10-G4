@@ -2,157 +2,198 @@ import axios from 'axios';
 import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { NavLink } from "react-router-dom";
-import { putProduct } from '../../redux/reducerProductForms/actionsProductForms'
-import '../../scss/components/productsForm/_ProductFormUpdate.scss'
+import { NavLink } from 'react-router-dom';
+import { putProduct } from '../../redux/reducerProductForms/actionsProductForms';
+import '../../scss/components/productsForm/_ProductFormUpdate.scss';
+import swal from 'sweetalert';
+
 function Product_form_update(props) {
-  const [id, setId] = useState("");
-  const [name, setName] = useState("");
-  const [SKU, setSKU] = useState("");
-  const [price, setPrice] = useState("");
-  const [description, setDescription] = useState("");
-  const [pic, setPic] = useState("");
-  const [score, setScore] = useState("");
-  const [selectCategory, setSelectCategory] = useState("");
+  const product = useSelector((state) => state.reducerProductForms.product);
+
   const [category, setCategory] = useState([]);
-  const [stock, setStock] = useState(0);
-  const [modifProduct, setModifiProduct] = useState([]);
-  const [ids, setIds] = useState([]);
-  const product = useSelector(state => state.reducerProductForms.product);
+  const [modifProduct, setModifProduct] = useState([]);
+
+  const [input, setInput] = useState({
+    id: '',
+    name: '',
+    SKU: '',
+    price: '',
+    description: '',
+    pic: '',
+    stock: '',
+    selectCategory: '',
+  });
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     async function categories() {
-     const data = await axios.get("http://localhost:3001/allCategories")
-     setCategory(data.data)
+      const data = await axios.get('http://localhost:3001/allCategories');
+      setCategory(data.data);
     }
-    if(product[0]){
-      setModifiProduct(product[0].categories)
+    if (product[0]) {
+      setModifProduct(product[0].categories);
+      setInput({
+        name: product[0].name,
+        SKU: product[0].SKU,
+        price: product[0].unitPrice,
+        description: product[0].description,
+        pic: product[0].picture,
+        stock: product[0].unitsOnStock,
+      });
     }
 
-    categories()
-  },[product])
+    categories();
+  }, [product]);
 
-  var handleName = function (event) {
-    event.preventDefault();
-    setName(event.target.value);
+  const handleChange = (e) => {
+    setInput({
+      ...input,
+      [e.target.name]: e.target.value,
+    });
   };
-  var handleSku = function (event) {
-    event.preventDefault();
-    setSKU(event.target.value);
-  };
-  var handlePrecio = function (event) {
-    event.preventDefault();
-    setPrice(event.target.value);
-  };
-  var handleDescripcion = function (event) {
-    event.preventDefault();
-    setDescription(event.target.value);
-  };
-
-  var handleImg = function (event) {
-    event.preventDefault();
-    setPic(event.target.value);
-  };
-
-  var handleStock = function (event) {
-    event.preventDefault();
-    setStock(event.target.value);
-  };
-
-  var handleClick = async function (event) {
-    event.preventDefault();
-    dispatch(putProduct(id, name, SKU, price, description, pic, stock))
-    await axios.post(`http://localhost:3001/products/${id}/${selectCategory}`, {
-
-      categoryId: selectCategory,
-      id: id
-    } )
-    }
 
   const deleteCategory = (e) => {
-    e.preventDefault()
-    setModifiProduct(modifProduct.filter(x => x.categoryId != e.target.value))
-  }
+    e.preventDefault();
+    setModifProduct(modifProduct.filter((x) => x.categoryId != e.target.value));
+  };
   const addCategory = (e) => {
-    setIds(e.target.value)
-  }
+    if (!e.target.value) return;
+    let aux = modifProduct.map((e) => e.categoryId);
+    if (aux.includes(e.target.value) || aux.includes(parseInt(e.target.value)))
+      return swal('Aviso!', 'La categoria se encuentra seleccionada', 'info');
+    setModifProduct([
+      ...modifProduct,
+      {
+        name: e.target[e.target.selectedIndex].text,
+        categoryId: e.target.value,
+      },
+    ]);
+  };
+
+  const handleSubmit = async function (event) {
+    event.preventDefault();
+    let categoriesIds = modifProduct.map((e) => e.categoryId);
+
+    dispatch(
+      putProduct(
+        product[0]?.productId,
+        input.name,
+        input.SKU,
+        input.price,
+        input.description,
+        input.pic,
+        input.stock,
+        categoriesIds
+      )
+    );
+
+    setModifProduct([]);
+    setInput({
+      name: '',
+      SKU: '',
+      price: '',
+      description: '',
+      pic: '',
+      stock: '',
+    });
+    swal(
+      'Éxito',
+      `El producto ${input.name} ha sido modificado`,
+      'success'
+    ).then((e) => {
+      window.location.reload();
+      window.location.replace('http://localhost:3000/admin/product/form/query');
+    });
+  };
 
   return (
     <div className="containerProdFormUpdate">
       <h1>Modificar productos</h1>
-      <form>
+      <form onSubmit={(e) => handleSubmit(e)}>
         <div className="cont-1">
-          
           <label className="label">Nombre del producto:</label>
           <input
             type="text"
-            id="name"
+            name="name"
             autoComplete="off"
             placeholder=" Nombre..."
-            onChange={(e) => handleName(e)}
+            onChange={handleChange}
           />
+
           <label className="label">SKU:</label>
           <input
             type="text"
-            id="sku"
+            name="SKU"
             autoComplete="off"
             placeholder=" SKU..."
-            onChange={(e) => handleSku(e)}
+            onChange={handleChange}
           />
 
           <label className="label">Precio por unidad:</label>
           <input
-            type="text"
-            id="precio"
+            type="number"
+            name="price"
             autoComplete="off"
             placeholder=" Precio..."
-            onChange={(e) => handlePrecio(e)}
+            value={input.price}
+            required
+            onChange={handleChange}
           />
+
           <label className="label">Descripción:</label>
           <textarea
-            id="descripcion"
-            onChange={(e) => handleDescripcion(e)} >
-
-          </textarea>
-
-          <label className="label">
-            Imagen:
-          </label>
-          <input
-            type="text"
-            id="img"
-            autoComplete="off"
-            placeholder=" Agregar url..."
-
-            onChange={(e) => handleImg(e)}
+            name="description"
+            value={input.description}
+            required
+            onChange={handleChange}
           />
 
-          <label className="label">
-            Stock:
-          </label>
-
+          <label className="label">Imagen:</label>
           <input
             type="text"
-            id="stock"
+            name="img"
+            autoComplete="off"
+            placeholder=" Agregar url..."
+            value={input.pic}
+            required
+            onChange={handleChange}
+          />
+
+          <label className="label">Stock:</label>
+          <input
+            type="number"
+            name="stock"
             autoComplete="off"
             placeholder=" Agregar stock..."
+            value={input.stock}
+            required
+            onChange={handleChange}
+          />
 
-            onChange={(e) => handleStock(e)}
-          />   
-
-          {modifProduct?.map(x => <label>{x.name}<button value={x.categoryId} onClick={(e) => deleteCategory(e)}>x</button></label>)}
-             <select onChange={(e) => addCategory(e)} >{category.map(x => <option  key= {x.name} value={x.categoryId} >{x.name}</option> )} </select>
-          <button 
-          onClick={(e) => handleClick(e)}
-        >   
-          Modificar producto
-        </button>
+          {modifProduct?.map((x) => (
+            <label>
+              {x.name}
+              <button value={x.categoryId} onClick={(e) => deleteCategory(e)}>
+                x
+              </button>
+            </label>
+          ))}
+          <select onChange={(e) => addCategory(e)}>
+            <option value=""> seleccionar ...</option>
+            {category.map((x) => {
+              return (
+                <option key={x.name} name={x.name} value={x.categoryId}>
+                  {x.name}
+                </option>
+              );
+            })}
+          </select>
+          <button type="submit">Modificar producto</button>
         </div>
-        
       </form>
-      <NavLink to="/admin/product/form">
+
+      <NavLink to="/admin/product/form/query">
         <button>Volver</button>
       </NavLink>
     </div>

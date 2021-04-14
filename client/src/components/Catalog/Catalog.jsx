@@ -10,6 +10,7 @@ function Catalog(){
     const query = useSelector(state => state.searchReducer.query)
     const queryStatus = useSelector(state => state.searchReducer.queryStatus)
     const products = useSelector(state => state.catalogReducer.products)
+    const page = useSelector(state => state.catalogReducer.page)
     const categoryFiltered = useSelector(state => state.categoryFilterReducer.categoryFiltered)
     const categories = useSelector(state => state.categoryFilterReducer.categories)
     const [catalog, setCatalog] = useState(queryStatus ? query : products)
@@ -46,14 +47,16 @@ function Catalog(){
             <div className='catalogScreen'>
                 <div className='catalogMatrix'>                    
                     {
-                        catalog?.map((product) => {
+                        !catalog[0]?.error && catalog?.map((product) => {
                             return (                             
                                 <ProductCard product={product} key={product.product}/>             
                             )
-                        })
+                        }).slice(page-1, page + 12)
                     }
                 </div>
-                <Pages totalProducts={catalog.length}/>
+                {
+                   !catalog[0]?.error &&  <Pages totalProducts={catalog.length}/>
+                }
             </div>
         </div>        
     )

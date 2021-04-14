@@ -12,11 +12,22 @@ export default function Product_form_create(props) {
     SKU: "",
     price: "",
     description: "",
-    pic: "",
+    //pic: "",
     categoryCheck: [],
     stock: "",
   })
-      
+  //=============PRUEBA PIC
+  const [pic, setPic] = useState([])
+
+  const handleChangeImg = (e) => {
+    e.preventDefault()
+    setPic(e.target.files[0]);
+  }
+
+  const CLOUDINARY_URL = "https://api.cloudinary.com/v1_1/dxy0hg426/image/upload"
+
+  const CLOUDINARY_UPLOAD_PRESET = "iyqdnelg"
+  //=======================================
   const dispatch = useDispatch();
   const category = useSelector(state => state.categoryFilterReducer.categories);
   
@@ -122,13 +133,13 @@ export default function Product_form_create(props) {
             Imagen:
           </label>
           <input
-            type="text"
-            name="pic"
-            autoComplete="off"
-            placeholder=" Agregar url..."
-            value={input.pic}
-            required="false"
-            onChange={handleChange}
+            type="file"
+            id="pic"
+            
+            
+            //value={input.pic}
+            //required="false"
+            onChange={(e) => handleChangeImg(e)}
           />
           
           <label className="label">Categoria:</label>
