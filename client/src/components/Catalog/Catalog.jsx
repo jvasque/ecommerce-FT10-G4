@@ -14,7 +14,7 @@ function Catalog(){
     const categoryFiltered = useSelector(state => state.categoryFilterReducer.categoryFiltered)
     const categories = useSelector(state => state.categoryFilterReducer.categories)
     const [catalog, setCatalog] = useState(queryStatus ? query : products)
-
+    const totalCards = 12
     useEffect(() => {     
         if(queryStatus){
             if(categoryFiltered.length > 0 && query.length > 0){
@@ -49,13 +49,13 @@ function Catalog(){
                     {
                         !catalog[0]?.error && catalog?.map((product) => {
                             return (                             
-                                <ProductCard product={product} key={product.product}/>             
+                                <ProductCard product={product} key={product.productId}/>             
                             )
-                        }).slice(page-1, page + 12)
+                        }).slice((page-1)*totalCards, (page-1)*totalCards+totalCards)
                     }
                 </div>
                 {
-                   !catalog[0]?.error &&  <Pages totalProducts={catalog.length}/>
+                   !catalog[0]?.error &&  <Pages totalProducts={catalog.length} totalCards={totalCards}/>
                 }
             </div>
         </div>        
