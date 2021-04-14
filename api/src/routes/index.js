@@ -7,6 +7,7 @@ const putCategory = require("./categories/putCategory");
 const products = require('./products/product');
 const search = require('./products/search');
 const users = require('./users/user')
+
 const cors = require("cors");
 const { route } = require("./products/product");
 

@@ -1,9 +1,9 @@
-const { DataTypes } = require("sequelize");
+const { DataTypes } = require('sequelize');
 // Exportamos una funcion que define el modelo
 // Luego le injectamos la conexion a sequelize.
 module.exports = (sequelize) => {
   // defino el modelo
-  sequelize.define("subCategory", {
+  sequelize.define('subCategory', {
     subCategoryId: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
