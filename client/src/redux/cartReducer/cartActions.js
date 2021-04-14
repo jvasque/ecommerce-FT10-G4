@@ -13,7 +13,7 @@ export function addProduct(product) {
       payload: product,
     });
   };
-}
+} 
 
 export function deleteProduct(product) {
   axios.delete(`http://localhost:3001/cart/user/${product.productId}`);

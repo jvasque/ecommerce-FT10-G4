@@ -9,7 +9,7 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case ADD_PRODUCT: {
       action.payload.quantity = 1;
-      return {
+      return { 
         ...state,
         cart: [...state.cart, action.payload],
       };

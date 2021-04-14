@@ -9,4 +9,4 @@ export function getDetail(id) {
         dispatch({ type: GET_DETAIL, payload: json.data})        
       })
     };
-  };
+  }; 
