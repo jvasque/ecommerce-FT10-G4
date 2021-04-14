@@ -13,25 +13,19 @@ export default function Product_form_create(props) {
     SKU: "",
     price: "",
     description: "",
-    //pic: "",
     categoryCheck: [],
     stock: "",
   })
   const [resPic, setResPic] = useState([])
-  const [pic, setPic] = useState(
-   
-  )
-  const [picRes, setPicRes] = useState(["", "", ""])
+  const [pic, setPic] = useState()
   
-  
-
   const CLOUDINARY_URL = "https://api.cloudinary.com/v1_1/dxy0hg426/image/upload"
-
   const CLOUDINARY_UPLOAD_PRESET = "iyqdnelg"
+
   useEffect(()=>{
     const formData = new FormData()
-  formData.append("file", pic);
-  formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET)
+    formData.append("file", pic);
+    formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET)
     
     const fetchImg = async function(){
 
@@ -40,30 +34,19 @@ export default function Product_form_create(props) {
           'Content-Type':'multipart/form-data'
         }
       })
-    setResPic([...resPic, res.data.secure_url])
-    
-    }()
+      setResPic([...resPic, res.data.secure_url])
+     }()
+    },[pic])
 
-  },[pic])
-
-  //=============PRUEBA PIC
-  
-  
-
-  const handleChangeImg =  (e) => {
-    
+    const handleChangeImg =  (e) => {
     setPic(e.target.files[0]);
-}
+    }
 
-const handleDeleteImg =  (e) => {
+    const handleDeleteImg =  (e) => {
     e.preventDefault()
-  setResPic(resPic.filter((i) => i != e.target.name) );
-}
+    setResPic(resPic.filter((i) => i != e.target.name) );
+    }
 
-
-
-  
-  //=======================================
   const dispatch = useDispatch();
   const category = useSelector(state => state.categoryFilterReducer.categories);
   
@@ -109,6 +92,9 @@ const handleDeleteImg =  (e) => {
         categoryCheck: [],
         stock: "",
       });
+      setPic("")
+      setResPic([]);
+      
       let inputs = document.querySelectorAll('input[type=checkbox]');
       inputs.forEach((item) => {
         item.checked = false;
@@ -168,18 +154,25 @@ const handleDeleteImg =  (e) => {
           <label className="label">
             Imagen:
           </label>
+          {resPic.length>2 ? 
           <input
-            type="file"
-            id="pic"
-            onChange={(e) => handleChangeImg(e)}
-          />
+          type="file"
+          id="pic"
+          disabled = "true"
+          /> : 
+          <input
+          type="file"
+          id="pic"
+          onChange={(e) => handleChangeImg(e)}
+          /> }
+          
           <div className = "img-card-pic">
             {resPic?.map((i)=>(
             <div className = "img-card-pic-interno">
-
-              <img src ={i}/>
-              <button name = {i} onClick={(e) => handleDeleteImg(e)}>X</button>
-              </div>))}
+                 <img src ={i}/>
+                 <input type= "submit" value = "x" className ="boton" name = {i} onClick={(e) => handleDeleteImg(e)}/>
+              </div>
+              ))}
 
           </div>
           

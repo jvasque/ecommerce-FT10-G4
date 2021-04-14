@@ -28,28 +28,33 @@ body {
       margin: 4vh auto;
     }
   }
-  .img-card-pic {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    border: 3px solid black;
+}
+.img-card-pic {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  border: 3px solid black;
+  width: 100%;
+  height: 200px;
+  background-color: rgba(255, 235, 205, 0.295);
 
-    .img-card-pic-interno {
-      position: relative;
-      img {
-        height: 80px;
-        width: 80px;
-      }
+  .img-card-pic-interno {
+    position: relative;
+    margin: auto;
+    img {
+      height: 190px;
+      width: 140px;
+    }
 
-      button {
-        position: absolute;
-        top: 0;
-        right: 0;
-        height: 12px;
-        width: 12px;
-        border-radius: 50%;
-        margin: 2px;
-      }
+    .boton {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: min-content;
+      width: min-content;
+
+      margin: 2px;
     }
   }
 }
