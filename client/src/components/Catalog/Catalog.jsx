@@ -49,7 +49,7 @@ function Catalog(){
                     {
                         !catalog[0]?.error && catalog?.map((product) => {
                             return (                             
-                                <ProductCard product={product} key={product.product}/>             
+                                <ProductCard product={product} key={product.productId}/>             
                             )
                         }).slice(page-1, page + 12)
                     }
