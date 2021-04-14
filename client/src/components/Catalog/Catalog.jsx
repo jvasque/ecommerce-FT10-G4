@@ -51,7 +51,7 @@ function Catalog(){
                             return (                             
                                 <ProductCard product={product} key={product.product}/>             
                             )
-                        }).slice(page-1, page + 12)
+                        })
                     }
                 </div>
                 {
