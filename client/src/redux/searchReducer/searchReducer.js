@@ -1,10 +1,15 @@
-import { GET_QUERY, RESET_QUERY, GET_OPTIONS, RESET_OPTIONS } from "./searchActions";
+import {
+  GET_QUERY,
+  RESET_QUERY,
+  GET_OPTIONS,
+  RESET_OPTIONS,
+} from './searchActions';
 
 const initialState = {
   query: [],
   queryStatus: false,
   findQuery: '',
-  options: []
+  options: [],
 };
 
 export default (state = initialState, action) => {
@@ -28,15 +33,15 @@ export default (state = initialState, action) => {
         ...state,
         findQuery: '',
         queryStatus: false,
-      }
+      };
     }
     case RESET_OPTIONS: {
       return {
         ...state,
         options: [],
-      }
+      };
     }
-  default:
-    return state;
+    default:
+      return state;
   }
 };
