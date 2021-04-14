@@ -1,4 +1,4 @@
-import { ADD_PRODUCT, DELETE_PRODUCT, TOTAL ,INCREMENTQ} from "./cartActions";
+import { ADD_PRODUCT, DELETE_PRODUCT, TOTAL, INCREMENTQ } from "./cartActions";
 
 const initialState = {
   cart: [],
@@ -9,7 +9,7 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case ADD_PRODUCT: {
       action.payload.quantity = 1;
-      return { 
+      return {
         ...state,
         cart: [...state.cart, action.payload],
       };
@@ -17,9 +17,7 @@ export default (state = initialState, action) => {
     case DELETE_PRODUCT: {
       return {
         ...state,
-        cart: state.cart.filter(
-          (x) => x.id !== action.payload.id
-        ),
+        cart: state.cart.filter((x) => x.id !== action.payload),
       };
     }
     case TOTAL: {
@@ -28,7 +26,7 @@ export default (state = initialState, action) => {
         total: state.cart.reduce((acc, e) => acc + e.unitPrice * e.quantity, 0),
       };
     }
-    
+
     case INCREMENTQ: {
       const newCart = state.cart.find(
         (product) => product.id === action.payload.product.id
