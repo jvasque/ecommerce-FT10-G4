@@ -1,6 +1,7 @@
 import axios from "axios";
 export const ADD_PRODUCT = "ADD_PRODUCT";
-export const DELETE_PRODUCT = "DELETE_PRODUCT";
+export const ADD_PRODUCT = "ADD_PRODUCT";
+export const INCREMENTQ = "INCREMENTQ";
 export const TOTAL = "TOTAL";
 
 export function addProduct(product) {
