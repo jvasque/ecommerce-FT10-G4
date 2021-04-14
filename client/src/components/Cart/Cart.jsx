@@ -22,7 +22,7 @@ function Cart() {
   return (
     <div className="cart-container">
  <div className="cart">
-      {products ? products?.map(product => <ProductCart product={product} key={product.productId}/>) : <h1>No hay elementos en el carrito</h1>}
+      {products ? products?.map(product => <ProductCart product={product} key={product.id}/>) : <h1>No hay elementos en el carrito</h1>}
        
     </div>
     <div className="total" > 

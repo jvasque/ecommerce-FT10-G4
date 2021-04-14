@@ -20,7 +20,6 @@ function ButtonIconText(props){
     const dispatch = useDispatch();
     function handleHeart(event){
         event.preventDefault();
-        console.log(iconState)
         let {name, checked} = event.target
         setState({ ...state, [name]: checked });
         if(name.includes('Fav')){

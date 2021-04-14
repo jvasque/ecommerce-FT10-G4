@@ -18,7 +18,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         cart: state.cart.filter(
-          (x) => x.productId !== action.payload.productId
+          (x) => x.id !== action.payload.id
         ),
       };
     }
@@ -30,7 +30,7 @@ export default (state = initialState, action) => {
     }
     case "INCREMENTQ": {
       const newCart = state.cart.find(
-        (product) => product.productId === action.payload.product.productId
+        (product) => product.id === action.payload.product.id
       );
       if (action.payload.value > 0) {
         newCart.quantity = action.payload.value;
