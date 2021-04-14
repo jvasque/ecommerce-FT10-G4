@@ -17,6 +17,7 @@ export function getQuery(find) {
     });
   };
 }
+
 export function getOptions(option) {
   return async function (dispatch) {
     const info = await axios.get('http://localhost:3001/search?term=' + option);
@@ -31,16 +32,6 @@ export function resetQuery() {
   return function (dispatch) {
     dispatch({
       type: RESET_QUERY,
-    });
-  };
-}
-
-export function getOptions(option) {
-  return async function (dispatch) {
-    const info = await axios.get('http://localhost:3001/search?term=' + option);
-    dispatch({
-      type: GET_OPTIONS,
-      payload: info.data,
     });
   };
 }
