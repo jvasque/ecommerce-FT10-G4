@@ -115,7 +115,7 @@ function Product_form_update(props) {
           <label className="label">Nombre del producto:</label>
           <input
             type="text"
-            id="name"
+            name="name"
             autoComplete="off"
             placeholder=" Nombre..."
             onChange={handleChange}
@@ -124,7 +124,7 @@ function Product_form_update(props) {
           <label className="label">SKU:</label>
           <input
             type="text"
-            id="sku"
+            name="SKU"
             autoComplete="off"
             placeholder=" SKU..."
             onChange={handleChange}
@@ -132,8 +132,8 @@ function Product_form_update(props) {
 
           <label className="label">Precio por unidad:</label>
           <input
-            type="text"
-            id="precio"
+            type="number"
+            name="price"
             autoComplete="off"
             placeholder=" Precio..."
             value={input.price}
@@ -152,7 +152,7 @@ function Product_form_update(props) {
           <label className="label">Imagen:</label>
           <input
             type="text"
-            id="img"
+            name="img"
             autoComplete="off"
             placeholder=" Agregar url..."
             value={input.pic}
