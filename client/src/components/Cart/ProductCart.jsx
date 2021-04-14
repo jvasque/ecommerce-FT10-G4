@@ -6,7 +6,7 @@ import DeleteButton from "@material-ui/icons/Delete"
 import { Button, Input } from '@material-ui/core'
 import {useDispatch}  from "react-redux"
 import {deleteProduct} from "../../redux/cartReducer/cartActions"
-import {totalPrice} from "../../redux/cartReducer/cartActions"
+import {totalPrice, incrementQ} from "../../redux/cartReducer/cartActions"
 
 function ProductCard({product}){
    const [quantity, setQuantity] = useState(1)
@@ -20,7 +20,7 @@ function ProductCard({product}){
          return setQuantity(1)
         }
         setStock(true)
-        dispatch({type:"INCREMENTQ", payload:{product:product, value: e.target.value}})
+        dispatch(incrementQ(product, e.target.value))
         dispatch(totalPrice())
     }
     

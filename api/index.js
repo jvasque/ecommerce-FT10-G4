@@ -84,7 +84,7 @@ conn.sync({ force: true }).then(() => {
     }
 
     //OrderDetail creation
-    for (let i = 0; i < orderDetails.length; i++) {
+    for (let i = 0; i < orderList.length; i++) {
       await OrderDetail.create({
         quantity: orderDetails[i].quantity,
       });

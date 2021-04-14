@@ -10,6 +10,7 @@ import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
 import { FormGroup } from '@material-ui/core';
 import { useDispatch, useSelector } from "react-redux";
 import { modifyCart, modifyFav } from '../../redux/iconReducer/iconActions';
+import { addProduct, deleteProduct } from "../../redux/cartReducer/cartActions";
 
 function ButtonIconText(props){
     const iconState = useSelector(state => state.iconReducer)
@@ -17,7 +18,13 @@ function ButtonIconText(props){
         [`Fav-${props.productId}`]: iconState.fav[`Fav-${props.productId}`],
         [`Cart-${props.productId}`]: iconState.cart[`Cart-${props.productId}`],
     })
+    const cartChecked= <ShoppingCartIcon style={{ color: "white" }} />
+    const [iconCartChecked, setIconcart] = useState(cartChecked);
+    const cart = useSelector((state) => state.cartReducer.cart);
     const dispatch = useDispatch();
+ 
+    //const addedCart = cart.filter(product=>product.productId===props.productId ? setIconcart(addedCart))
+    // addedCart.length!==0 && console.log(addedCart)
     function handleHeart(event){
         event.preventDefault();
         let {name, checked} = event.target
@@ -26,6 +33,11 @@ function ButtonIconText(props){
             dispatch(modifyFav({[name]: checked}))
         }else{
             dispatch(modifyCart({[name]: checked}))
+            if (checked) {
+              dispatch(addProduct(props.product));
+            } else {
+              dispatch(deleteProduct(props.product));
+            }
         }
     }
 
@@ -64,4 +76,4 @@ function ButtonIconText(props){
     )
 }
 
-export default ButtonIconText
+export default ButtonIconText;

@@ -9,8 +9,15 @@ module.exports = (sequelize) => {
       autoIncrement: true,
       primaryKey: true,
     },
+    productId: {
+      type: DataTypes.INTEGER,
+    },
     quantity: {
       type: DataTypes.INTEGER,
     },
   });
 };
+
+//item en el carrito asociado a orderDetail
+//para borrar,modificar product id
+//Order detail

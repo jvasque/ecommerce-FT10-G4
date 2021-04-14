@@ -9,17 +9,28 @@ module.exports = (sequelize) => {
       autoIncrement: true,
       primaryKey: true,
     },
+    userId: {
+      type: DataTypes.INTEGER,
+    },
+    firstName: {
+      type: DataTypes.STRING,
+    },
+    lastName: {
+      type: DataTypes.STRING,
+    },
     status: {
       type: DataTypes.STRING,
     },
     creationDate: {
-        type: DataTypes.STRING,
+      type: DataTypes.STRING,
+      allowNull: true,
     },
     paymentDate: {
-        type: DataTypes.STRING,
+      type: DataTypes.STRING,
+      allowNull: true,
     },
     totalPrice: {
-        type: DataTypes.FLOAT,
+      type: DataTypes.FLOAT,
     },
   });
 };
