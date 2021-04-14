@@ -2,6 +2,8 @@ import React from "react";
 import { FaFacebookF, FaLinkedinIn, FaTwitter, FaGoogle } from "react-icons/fa";
 import "../../scss/components/_Signup.scss";
 import { useDispatch } from "react-redux";
+import { postUser } from "../../redux/postUserReducer/postUserActions";
+
 const Signup = () => {
   const [user, setUser] = React.useState({
     id: "",
@@ -26,8 +28,7 @@ const Signup = () => {
 
   const handlesubmit = (e) => {
     e.preventDefault();
-    dispatch(addUser(user));
-    setShow(true);    
+    dispatch(postUser(user));   
     setUser({
       id: "",
       firstName: "",
