@@ -12,5 +12,13 @@ module.exports = (sequelize) => {
     quantity: {
       type: DataTypes.INTEGER,
     },
+    productId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
   });
 };
+
+//item en el carrito asociado a orderDetail
+//para borrar,modificar product id
+//Order detail
