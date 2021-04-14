@@ -28,6 +28,30 @@ body {
       margin: 4vh auto;
     }
   }
+  .img-card-pic {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    border: 3px solid black;
+
+    .img-card-pic-interno {
+      position: relative;
+      img {
+        height: 80px;
+        width: 80px;
+      }
+
+      button {
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 12px;
+        width: 12px;
+        border-radius: 50%;
+        margin: 2px;
+      }
+    }
+  }
 }
 
 .cont-1 {
@@ -81,7 +105,7 @@ body {
     margin-top: 10px;
     margin-bottom: 10px;
 
-    &[type='checkbox'] {
+    &[type="checkbox"] {
       display: flex;
       flex-direction: column;
       justify-content: space-around;

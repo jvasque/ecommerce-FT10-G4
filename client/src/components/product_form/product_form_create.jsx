@@ -1,9 +1,10 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from "react-router-dom";
 import '../../scss/components/productsForm/_ProductFormCreate.scss';
 import { postProduct } from '../../redux/reducerProductForms/actionsProductForms';
+import axios from "axios"
 
 
 export default function Product_form_create(props) {
@@ -16,17 +17,52 @@ export default function Product_form_create(props) {
     categoryCheck: [],
     stock: "",
   })
-  //=============PRUEBA PIC
-  const [pic, setPic] = useState([])
-
-  const handleChangeImg = (e) => {
-    e.preventDefault()
-    setPic(e.target.files[0]);
-  }
+  const [resPic, setResPic] = useState([])
+  const [pic, setPic] = useState(
+   
+  )
+  const [picRes, setPicRes] = useState(["", "", ""])
+  
+  
 
   const CLOUDINARY_URL = "https://api.cloudinary.com/v1_1/dxy0hg426/image/upload"
 
   const CLOUDINARY_UPLOAD_PRESET = "iyqdnelg"
+  useEffect(()=>{
+    const formData = new FormData()
+  formData.append("file", pic);
+  formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET)
+    
+    const fetchImg = async function(){
+
+      const res = await axios.post(CLOUDINARY_URL, formData, {
+        headers:{
+          'Content-Type':'multipart/form-data'
+        }
+      })
+    setResPic([...resPic, res.data.secure_url])
+    
+    }()
+
+  },[pic])
+
+  //=============PRUEBA PIC
+  
+  
+
+  const handleChangeImg =  (e) => {
+    
+    setPic(e.target.files[0]);
+}
+
+const handleDeleteImg =  (e) => {
+    e.preventDefault()
+  setResPic(resPic.filter((i) => i != e.target.name) );
+}
+
+
+
+  
   //=======================================
   const dispatch = useDispatch();
   const category = useSelector(state => state.categoryFilterReducer.categories);
@@ -60,7 +96,7 @@ export default function Product_form_create(props) {
 
       dispatch(postProduct(
         input.name, input.SKU, input.price, input.description, 
-        input.pic, input.categoryCheck, input.stock));
+        resPic, input.categoryCheck, input.stock));
         
         alert(`El producto ${input.name} ha sido creado`);
 
@@ -135,12 +171,19 @@ export default function Product_form_create(props) {
           <input
             type="file"
             id="pic"
-            
-            
-            //value={input.pic}
-            //required="false"
             onChange={(e) => handleChangeImg(e)}
           />
+          <div className = "img-card-pic">
+            {resPic?.map((i)=>(
+            <div className = "img-card-pic-interno">
+
+              <img src ={i}/>
+              <button name = {i} onClick={(e) => handleDeleteImg(e)}>X</button>
+              </div>))}
+
+          </div>
+          
+          
           
           <label className="label">Categoria:</label>
           <div className="categoryBoxes">
