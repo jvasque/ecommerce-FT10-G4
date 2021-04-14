@@ -9,7 +9,7 @@ module.exports = async(req, res, next) => {
 	
 	const product = await Product.findOne({
 		where:{
-			productId: code
+			id: code
 		}
 	})
     if (product){

@@ -1,4 +1,4 @@
-import { GET_PRODUCT_NAME } from "./actionsProductForms";
+import { GET_PRODUCT_NAME, CLEAR_PRODUCT_FORM } from "./actionsProductForms";
 
 const initialState = {
   product: [],
@@ -17,6 +17,12 @@ const productFormsReducer = (state = initialState, action) => {
         return {
           ...state,
           product: [action.payload.info[0]]
+        }
+      
+      case CLEAR_PRODUCT_FORM:
+        return {
+          ...state,
+          product: []
         }
 
     default:

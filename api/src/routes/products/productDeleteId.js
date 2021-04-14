@@ -4,12 +4,12 @@ module.exports = async (req, res, next) => {
   var code = req.params.id;
   var product = await Product.findOne({
     where: {
-      productId: code,
+      id: code,
     },
   });
   /* await Product.destroy({
 		where:{
-			productId: code
+			id: code
 		}
 	}) */
   if (product) {

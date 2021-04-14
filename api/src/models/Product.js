@@ -4,7 +4,7 @@ const { DataTypes } = require('sequelize');
 module.exports = (sequelize) => {
   // defino el modelo
   const Product = sequelize.define('product', {
-    productId: {
+    id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
@@ -26,7 +26,7 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     picture: {
-      type: DataTypes.STRING(1000),
+      type: DataTypes.ARRAY(DataTypes.TEXT),
       allowNull: false,
     },
     score: {

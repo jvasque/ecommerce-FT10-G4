@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { NavLink } from "react-router-dom";
 import { useState } from 'react';
-import { getProductName, deleteProduct } from '../../redux/reducerProductForms/actionsProductForms'
+import { getProductName, deleteProduct, clearProduct } from '../../redux/reducerProductForms/actionsProductForms'
 import '../../scss/components/productsForm/_ProductFormQuery.scss'
 import ProductCard from '../ProductCard/ProductCard'
 import swal from 'sweetalert';
@@ -59,7 +59,8 @@ function Product_form_query(props) {
     })
     .then((willDelete) => {  
       if (willDelete) {  
-        dispatch(deleteProduct(product[0]?.productId))
+        dispatch(deleteProduct(product[0]?.id))
+        dispatch(clearProduct())
         swal("Su producto fue borrado con éxito!", 
         {icon: "success"})
         .then(e => window.location.reload())
@@ -104,7 +105,7 @@ function Product_form_query(props) {
         
       </form>
       <NavLink to="/admin/product/form">
-        <button>Volver</button>
+        <button onClick= {()=> dispatch(clearProduct())}>Volver</button>
       </NavLink>
         </div>
         

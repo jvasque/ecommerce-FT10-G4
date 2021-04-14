@@ -23,7 +23,6 @@ module.exports = async (req, res) => {
         unitPrice,
         description,
         picture,
-
         unitsOnStock,
       },
     });

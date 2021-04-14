@@ -45,8 +45,8 @@
   }
   input:not(:placeholder-shown) {
     border-radius: var(--rad) 0 0 var(--rad);
-    // width: 80%;
     width: 20vw;
+    // width: calc(500px - var(--btn-width));
     + button {
       outline: none;
       display: inline-block;
