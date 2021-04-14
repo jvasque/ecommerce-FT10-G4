@@ -26,7 +26,7 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     picture: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(1000),
       allowNull: false,
     },
     score: {
