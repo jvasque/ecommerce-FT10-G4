@@ -3,6 +3,7 @@ export const POST_PRODUCTS = "POST_PRODUCTS";
 export const DELETE_PRODUCTS = "DELETE_PRODUCTS";
 export const PUT_PRODUCTS = "PUT_PRODUCTS";
 export const GET_PRODUCT_NAME = "GET_PRODUCT_NAME";
+export const CLEAR_PRODUCT_FORM = "CLEAR_PRODUCT_FORM";
 
 export function postProduct(name, SKU, unitPrice, description, picture, categoryCheck, unitsOnStock) {
     
@@ -58,4 +59,12 @@ export function getProductName(find) {
         payload: query,
       });
     };
+}
+
+export function clearProduct () {
+    return function(dispatch) {
+        dispatch({
+            type: CLEAR_PRODUCT_FORM
+        })
+    }
 }
