@@ -2,11 +2,11 @@ import axios from "axios";
 export const ADD_PRODUCT = "ADD_PRODUCT";
 export const DELETE_PRODUCT = "DELETE_PRODUCT";
 export const TOTAL = "TOTAL";
-export const INCREMENTQ = "INCREMENTQ"
+export const INCREMENTQ = "INCREMENTQ";
 
 export function addProduct(product) {
-  axios.post(`http://localhost:3001/cart/user/${product.productId}`, {
-    productId: product.productId,
+  axios.post(`http://localhost:3001/cart/user/${product.id}`, {
+    productId: product.id,
   });
   return function (dispatch) {
     dispatch({
@@ -14,14 +14,14 @@ export function addProduct(product) {
       payload: product,
     });
   };
-} 
+}
 
 export function deleteProduct(product) {
-  axios.delete(`http://localhost:3001/cart/user/${product.productId}`);
+  axios.delete(`http://localhost:3001/cart/user/${product.id}`);
   return function (dispatch) {
     dispatch({
       type: "DELETE_PRODUCT",
-      payload: product,
+      payload: product.id,
     });
   };
 }
@@ -34,8 +34,8 @@ export function totalPrice() {
   };
 }
 export function incrementQ(product, value) {
-  axios.put(`http://localhost:3001/cart/user/${product.productId}`, {
-    productId: product.productId,
+  axios.put(`http://localhost:3001/cart/user/${product.id}`, {
+    productId: product.id,
     quantity: value,
   });
   return function (dispatch) {

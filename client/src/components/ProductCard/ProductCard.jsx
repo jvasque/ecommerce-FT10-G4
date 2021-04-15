@@ -41,7 +41,7 @@ function ProductCard({product}){
                 </div>                     
                 <div className='addCartButton'>   
                     <div className='cardIcon'>
-                        <ButtonIconText productId={product.id}/>
+                        <ButtonIconText product={product} productId={product.id}/>
                     </div>
                 </div>                     
             </div>
