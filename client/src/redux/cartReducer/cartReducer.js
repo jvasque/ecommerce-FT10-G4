@@ -23,7 +23,10 @@ export default (state = initialState, action) => {
     case TOTAL: {
       return {
         ...state,
-        total: state.cart.reduce((acc, e) => acc + e.unitPrice * e.quantity, 0),
+        total: state.cart.reduce(
+          (acc, e) => acc + Math.round(e.unitPrice * e.quantity),
+          0
+        ),
       };
     }
 

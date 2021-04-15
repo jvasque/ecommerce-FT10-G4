@@ -12,6 +12,7 @@ import {modifyCart} from '../../redux/iconReducer/iconActions'
 function ProductCard({product}){
    const [quantity, setQuantity] = useState(1)
    const [stock, setStock] = useState(true)
+ 
 
     const dispatch = useDispatch()
     const handleChange = (e,unitsOnStock) => {
@@ -46,7 +47,7 @@ function ProductCard({product}){
                         {/* <p id='descriptionCard'>{product.description}</p> */}
                         <h3>{product.name}</h3>
                         <div className="delete">
-                      <Input type="number" defaultValue={quantity} onChange={(e) => handleChange(e, product.unitsOnStock)}  placeholder={quantity}></Input>
+                      <Input type="number" min="0" max={product.unitsOnStock} defaultValue={quantity} onChange={(e) => handleChange(e, product.unitsOnStock)} ></Input>
                       <Button onClick={() => {dispatch(deleteProduct(product)); dispatch(modifyCart({[`Cart-${product.id}`]: false}))}}> <DeleteButton/></Button>
                       <p className="stockUp">Disponibles:{product.unitsOnStock}</p>
                       {stock ? "" : <p className="stock">No hay stock disponible</p>}

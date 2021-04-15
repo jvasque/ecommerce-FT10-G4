@@ -18,25 +18,20 @@ function ButtonIconText(props){
         [`Fav-${props.productId}`]: iconState.fav[`Fav-${props.productId}`],
         [`Cart-${props.productId}`]: iconState.cart[`Cart-${props.productId}`],
     })
-    const cartChecked= <ShoppingCartIcon style={{ color: "white" }} />
-    const [iconCartChecked, setIconcart] = useState(cartChecked);
-    const cart = useSelector((state) => state.cartReducer.cart);
+
     const dispatch = useDispatch();
-    const [add, setAdd] = useState(true);
+
  
     //const addedCart = cart.filter(product=>product.productId===props.productId ? setIconcart(addedCart))
     // addedCart.length!==0 && console.log(addedCart)
-
-
+ 
+    //dispatch(modifyCart({[`Cart-${product.id}`]: false}))
     function handleHeart(event){
-        event.preventDefault();
-
-        if (add) {
+        const test = iconState.cart[`Cart-${props.productId}`]
+        if (test === false || test === undefined) {
             dispatch(addProduct(props.product));
-            setAdd(!add)
           } else {
-            dispatch(deleteProduct(props.product));
-            setAdd(true);
+            dispatch(deleteProduct(props.product));  
           }
         let {name, checked} = event.target
         setState({ ...state, [name]: checked });
@@ -44,6 +39,7 @@ function ButtonIconText(props){
             dispatch(modifyFav({[name]: checked}))
         }else{
             dispatch(modifyCart({[name]: checked}))
+           
         }
     }
 
