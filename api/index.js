@@ -104,7 +104,7 @@ conn.sync({ force: true }).then(() => {
       );
 
       let myOrder = await Order.create({
-        status: orders[i].status,
+        state: orders[i].state,
       });
       await myOrder.setOrderDetails(findOrderDetail);
       await myOrder.setPaymentMethod(findPaymentMethod);

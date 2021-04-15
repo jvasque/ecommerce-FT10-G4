@@ -1,15 +1,14 @@
 module.exports = [
   {
-    status: "REVIEWED",
+    state: "cart",
     creationDate: "",
     paymentDate: "",
     totalPrice: "",
     paymentMethod: 1,
     orderDetailOrderDetailId: [1, 2, 46],
-    state: "cart",
   },
   {
-    status: "REVIEWED",
+    state: "cart",
     creationDate: "",
     paymentDate: "",
     totalPrice: "",
@@ -17,7 +16,7 @@ module.exports = [
     orderDetailOrderDetailId: [3, 4, 5, 6, 7, 47],
   },
   {
-    status: "REVIEWED",
+    state: "cart",
     creationDate: "",
     paymentDate: "",
     totalPrice: "",
@@ -25,7 +24,7 @@ module.exports = [
     orderDetailOrderDetailId: [8, 9, 10, 11, 48],
   },
   {
-    status: "REVIEWED",
+    state: "cart",
     creationDate: "",
     paymentDate: "",
     totalPrice: "",
@@ -33,7 +32,7 @@ module.exports = [
     orderDetailOrderDetailId: [12, 49],
   },
   {
-    status: "REVIEWED",
+    state: "cart",
     creationDate: "",
     paymentDate: "",
     totalPrice: "",
@@ -41,7 +40,7 @@ module.exports = [
     orderDetailOrderDetailId: [13, 50],
   },
   {
-    status: "REVIEWED",
+    state: "cart",
     creationDate: "",
     paymentDate: "",
     totalPrice: "",
@@ -49,7 +48,7 @@ module.exports = [
     orderDetailOrderDetailId: [14, 15],
   },
   {
-    status: "REVIEWED",
+    state: "cart",
     creationDate: "",
     paymentDate: "",
     totalPrice: "",
@@ -57,7 +56,7 @@ module.exports = [
     orderDetailOrderDetailId: [16, 17, 18],
   },
   {
-    status: "REVIEWED",
+    state: "cart",
     creationDate: "",
     paymentDate: "",
     totalPrice: "",
@@ -65,7 +64,7 @@ module.exports = [
     orderDetailOrderDetailId: [19, 20, 21],
   },
   {
-    status: "REVIEWED",
+    state: "cart",
     creationDate: "",
     paymentDate: "",
     totalPrice: "",
@@ -73,7 +72,7 @@ module.exports = [
     orderDetailOrderDetailId: [22, 23],
   },
   {
-    status: "REVIEWED",
+    state: "cart",
     creationDate: "",
     paymentDate: "",
     totalPrice: "",
@@ -81,7 +80,7 @@ module.exports = [
     orderDetailOrderDetailId: [24],
   },
   {
-    status: "REVIEWED",
+    state: "cart",
     creationDate: "",
     paymentDate: "",
     totalPrice: "",
@@ -89,7 +88,7 @@ module.exports = [
     orderDetailOrderDetailId: [25],
   },
   {
-    status: "REVIEWED",
+    state: "cart",
     creationDate: "",
     paymentDate: "",
     totalPrice: "",
@@ -97,7 +96,7 @@ module.exports = [
     orderDetailOrderDetailId: [26],
   },
   {
-    status: "REVIEWED",
+    state: "cart",
     creationDate: "",
     paymentDate: "",
     totalPrice: "",
@@ -105,7 +104,7 @@ module.exports = [
     orderDetailOrderDetailId: [27],
   },
   {
-    status: "REVIEWED",
+    state: "cart",
     creationDate: "",
     paymentDate: "",
     totalPrice: "",
@@ -113,7 +112,7 @@ module.exports = [
     orderDetailOrderDetailId: [28, 29],
   },
   {
-    status: "REVIEWED",
+    state: "cart",
     creationDate: "",
     paymentDate: "",
     totalPrice: "",
@@ -121,7 +120,7 @@ module.exports = [
     orderDetailOrderDetailId: [30],
   },
   {
-    status: "DELIVERED",
+    state: "cart",
     creationDate: "",
     paymentDate: "",
     totalPrice: "",
@@ -129,7 +128,7 @@ module.exports = [
     orderDetailOrderDetailId: [31, 51],
   },
   {
-    status: "DELIVERED",
+    state: "cart",
     creationDate: "",
     paymentDate: "",
     totalPrice: "",
@@ -137,7 +136,7 @@ module.exports = [
     orderDetailOrderDetailId: [32, 52, 53],
   },
   {
-    status: "DELIVERED",
+    state: "cart",
     creationDate: "",
     paymentDate: "",
     totalPrice: "",
@@ -145,7 +144,7 @@ module.exports = [
     orderDetailOrderDetailId: [33],
   },
   {
-    status: "SHIPPED",
+    state: "cart",
     creationDate: "",
     paymentDate: "",
     totalPrice: "",
@@ -153,7 +152,7 @@ module.exports = [
     orderDetailOrderDetailId: [34, 54],
   },
   {
-    status: "SHIPPED",
+    state: "cart",
     creationDate: "",
     paymentDate: "",
     totalPrice: "",
@@ -161,7 +160,7 @@ module.exports = [
     orderDetailOrderDetailId: [35],
   },
   {
-    status: "SHIPPED",
+    state: "cart",
     creationDate: "",
     paymentDate: "",
     totalPrice: "",
@@ -169,7 +168,7 @@ module.exports = [
     orderDetailOrderDetailId: [36],
   },
   {
-    status: "CANCELLED",
+    state: "cart",
     creationDate: "",
     paymentDate: "",
     totalPrice: "",
@@ -177,7 +176,7 @@ module.exports = [
     orderDetailOrderDetailId: [37, 55],
   },
   {
-    status: "CANCELLED",
+    state: "cart",
     creationDate: "",
     paymentDate: "",
     totalPrice: "",
@@ -185,7 +184,7 @@ module.exports = [
     orderDetailOrderDetailId: [38],
   },
   {
-    status: "CANCELLED",
+    state: "cart",
     creationDate: "",
     paymentDate: "",
     totalPrice: "",
@@ -193,7 +192,7 @@ module.exports = [
     orderDetailOrderDetailId: [39],
   },
   {
-    status: "CANCELLED",
+    state: "cart",
     creationDate: "",
     paymentDate: "",
     totalPrice: "",
@@ -201,7 +200,7 @@ module.exports = [
     orderDetailOrderDetailId: [40, 56, 57],
   },
   {
-    status: "CANCELLED",
+    state: "cart",
     creationDate: "",
     paymentDate: "",
     totalPrice: "",
@@ -209,7 +208,7 @@ module.exports = [
     orderDetailOrderDetailId: [41],
   },
   {
-    status: "CANCELLED",
+    state: "cart",
     creationDate: "",
     paymentDate: "",
     totalPrice: "",
@@ -217,7 +216,7 @@ module.exports = [
     orderDetailOrderDetailId: [42],
   },
   {
-    status: "PAID",
+    state: "cart",
     creationDate: "",
     paymentDate: "",
     totalPrice: "",
@@ -225,7 +224,7 @@ module.exports = [
     orderDetailOrderDetailId: [43, 58, 59, 60],
   },
   {
-    status: "PAID",
+    state: "cart",
     creationDate: "",
     paymentDate: "",
     totalPrice: "",
@@ -233,7 +232,7 @@ module.exports = [
     orderDetailOrderDetailId: [44],
   },
   {
-    status: "PAID",
+    state: "cart",
     creationDate: "",
     paymentDate: "",
     totalPrice: "",
