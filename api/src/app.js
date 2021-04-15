@@ -3,7 +3,9 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const  index = require('./routes/index.js');
+const passport = require("passport");
 
+require("./passport.js");
 require("./db.js");
 
 const server = express();
@@ -23,6 +25,9 @@ server.use((req, res, next) => {
   );
   next();
 });
+
+server.use(passport.initialize())
+server.use(passport.session())
 
 server.use("/", index); //Fixear
 
