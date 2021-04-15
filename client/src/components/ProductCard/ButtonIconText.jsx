@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { modifyCart, modifyFav } from '../../redux/iconReducer/iconActions';
 import { addProduct, deleteProduct } from "../../redux/cartReducer/cartActions";
 
+
 function ButtonIconText(props){
     const iconState = useSelector(state => state.iconReducer)
     const [state, setState] = useState({
@@ -20,6 +21,7 @@ function ButtonIconText(props){
     })
 
     const dispatch = useDispatch();
+
 
  
     //const addedCart = cart.filter(product=>product.productId===props.productId ? setIconcart(addedCart))
@@ -30,8 +32,10 @@ function ButtonIconText(props){
         const test = iconState.cart[`Cart-${props.productId}`]
         if (test === false || test === undefined) {
             dispatch(addProduct(props.product));
+            localStorage.setItem(props.productId, JSON.stringify(`Cart-${props.productId}`))
           } else {
             dispatch(deleteProduct(props.product));  
+            localStorage.removeItem(props.productId)
           }
         let {name, checked} = event.target
         setState({ ...state, [name]: checked });

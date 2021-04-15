@@ -48,7 +48,7 @@ function ProductCard({product}){
                         <h3>{product.name}</h3>
                         <div className="delete">
                       <Input type="number" min="0" max={product.unitsOnStock} defaultValue={quantity} onChange={(e) => handleChange(e, product.unitsOnStock)} ></Input>
-                      <Button onClick={() => {dispatch(deleteProduct(product)); dispatch(modifyCart({[`Cart-${product.id}`]: false}))}}> <DeleteButton/></Button>
+                      <Button onClick={() => {dispatch(deleteProduct(product)); dispatch(modifyCart({[`Cart-${product.id}`]: false})); localStorage.removeItem(product.id)}}> <DeleteButton/></Button>
                       <p className="stockUp">Disponibles:{product.unitsOnStock}</p>
                       {stock ? "" : <p className="stock">No hay stock disponible</p>}
                         </div>
