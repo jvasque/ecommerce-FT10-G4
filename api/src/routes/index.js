@@ -9,7 +9,7 @@ const search = require('./products/search');
 const users = require('./users/user')
 const cors = require("cors");
 const { route } = require("./products/product");
-const server = require("./auth");
+const server = require("../routes/users/auth");
 
 
 const router = Router();

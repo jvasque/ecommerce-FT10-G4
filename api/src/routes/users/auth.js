@@ -1,9 +1,9 @@
-const server = require("express").Router();
-const { User } = require("../db.js");
+const router = require("express").Router();
+const { User } = require("../../db.js");
 const passport = require("passport");
 const jwt = require("jsonwebtoken");
 
-server.get("/me", async (req, res, next) => {
+router.get("/me", async (req, res, next) => {
   try {
     const { id } = req.user;
     const result = await User.findByPk(id);
@@ -14,7 +14,7 @@ server.get("/me", async (req, res, next) => {
   }
 });
 
-server.post("/login", function (req, res, next) {
+router.post("/login", function (req, res, next) {
   passport.authenticate("local", function (err, user) {
     if (err) return next(err);
     else if (!user) return res.sendStatus(401);
@@ -22,7 +22,7 @@ server.post("/login", function (req, res, next) {
   })(req, res, next);
 });
 
-module.exports = server;
+module.exports = router;
 
 // server.post("/login", (req, res, next) => {
 //     passport.authenticate("local", { session: false }, (err, user) => {

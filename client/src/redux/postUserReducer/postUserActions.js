@@ -12,10 +12,7 @@ export function postUser({firstName, lastName, email, password }) {
             lastName, 
             email, 
             password, 
-            // companyName, 
-            // phone, 
-            // address, 
-            // city
+           
           }
       });
       return dispatch({ type: POST_USER, payload: json.data })
