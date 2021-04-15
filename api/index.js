@@ -245,21 +245,18 @@ conn.sync({ force: true }).then(() => {
       await findProduct.setWishlists(findWishlist);
     }
 
-    let [newWish] = await Wishlist.findOrCreate({
-      where: {
-        id: 15,
-      },
-      defaults: {
-        name: 'wishlist15',
-      },
-    });
+    // let [newWish] = await Wishlist.findOrCreate({
+    //   where: {
+    //     name: 'wishlist11',
+    //   },
+    // });
 
-    let newUser = await User.findByPk(2);
-    await newUser.addWishlists(newWish);
-    let dummyProduct = await Product.findByPk(1);
-    let dummyProduct2 = await Product.findByPk(2);
-    await dummyProduct.addWishlists(newWish);
-    await dummyProduct2.addWishlists(newWish);
+    // let newUser = await User.findByPk(2);
+    // await newUser.addWishlists(newWish);
+    // let dummyProduct = await Product.findByPk(1);
+    // let dummyProduct2 = await Product.findByPk(2);
+    // await dummyProduct.addWishlists(newWish);
+    // await dummyProduct2.addWishlists(newWish);
 
     console.log('Products and categories pre charged');
   });

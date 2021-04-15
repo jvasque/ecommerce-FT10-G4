@@ -1,25 +1,22 @@
-// /users/:id/wishlist/:wishlistId/:productId?action="action"
+// /users/wishlist/:userId?name=
 
 const { Wishlist, User } = require('../../db.js');
 
 module.exports = async (req, res, next) => {
-  const wishlistId = req.params.wishlistId,
-    productId = req.params.productId,
-    action = req.query.action; // remove, add
+  let userId = req.params.userId,
+    listName = req.query.name;
 
-  let user = await User.findOne({ where: { userId: userId } });
-  let wishlist = null;
-  let product = null;
+  try {
+    let [newWishlist] = await Wishlist.findOrCreate({
+      where: { name: listName },
+    });
 
-  if (action === 'remove') {
-    newProduct.removeWishlists(newWislist);
-    res.json().status(204);
-  } else if (action === 'add') {
-    newProduct.addWishlists(newWislist);
-    res.json().status(204);
-  } else {
-    res
-      .json({ message: 'no changes made, action necessary in query' })
-      .status(400);
+    let newUser = await User.findByPk(userId);
+
+    await newUser.addWishlists(newWishlist);
+
+    return res.json(newWishlist);
+  } catch (err) {
+    console.log(err);
   }
 };

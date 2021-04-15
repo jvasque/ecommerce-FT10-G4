@@ -18,7 +18,7 @@ router.post('/post', userPost);
 // User Wishlists routes
 router.get('/wishlist', wishlistGet); // Devolver las wishlist de un usuario (?user)
 router.post('/wishlist/:userId', wishlistPost); // Crear una wishlist
-router.put('/wishlist/:wishlistId/:productId', wishlistPut); // Modificar productos (borrar o agregar)
 router.delete('/wishlist/:wishlistId', wishlistDelete); // Borrar una wishlist
+router.put('/wishlist/:wishlistId/:productId', wishlistPut); // Modificar productos (borrar o agregar)
 
 module.exports = router;

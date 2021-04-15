@@ -1,5 +1,4 @@
-// users/:id/wishlist/:name
-//already set for marketplace
+// users/wishlist?id=
 
 const { Wishlist, Product, User } = require('../../db.js');
 
