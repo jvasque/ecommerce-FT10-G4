@@ -9,7 +9,6 @@ module.exports = async (req, res) => {
       lastName,
       email,
       password,
-    
     } = req.body.data;
 
     if (!firstName) {
@@ -41,6 +40,8 @@ module.exports = async (req, res) => {
         password,
     
       });
+      //create a la order si no esta creada
+      // si esta creada tienes que relacionar la orden con el usuario
       return res.json(newUser);
     } else {
       console.log("mail already exists");

@@ -13,6 +13,7 @@ module.exports = async (req, res) => {
     const find = await User.findOne({
       where: { email },
     });
+    // includes de order
     if (!find) {
       console.log("mail already exists");
       return res.status(404).json({ error: "mail already exists" });
