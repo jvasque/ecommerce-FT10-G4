@@ -1,4 +1,4 @@
-import "../../scss/components/_AdminMenu.scss"
+import "../../scss/components/Nav/_AdminMenu.scss"
 import {Link} from "react-router-dom"
 import {BiLogOut, BiListPlus} from "react-icons/bi"
 import {FaProductHunt} from "react-icons/fa"

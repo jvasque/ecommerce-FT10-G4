@@ -1,5 +1,5 @@
 import React from "react";
-import "../../scss/components/_Footer.scss";
+import "../../scss/components/Footer/_Footer.scss";
 import { FaFacebookF, FaLinkedinIn, FaTwitter, FaInstagram } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
