@@ -210,8 +210,8 @@ export default function Product_form_create(props) {
           <label className="label">Stock:</label>
           <input
             type="number"
-            min="1"
-            max="99"
+            min="0"
+            max="9999"
             name="stock"
             autoComplete="off"            
             placeholder=" Agregar stock..."
