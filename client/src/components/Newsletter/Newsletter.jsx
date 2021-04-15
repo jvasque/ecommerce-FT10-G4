@@ -9,13 +9,11 @@ const Newsletter = () => {
 
     if (name === "") {
       alert("Digita el nombre");
-
       return;
     }
 
     if (email === "") {
       alert("Digita el email");
-
       return;
     }
 
