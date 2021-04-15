@@ -22,22 +22,28 @@ function ButtonIconText(props){
     const [iconCartChecked, setIconcart] = useState(cartChecked);
     const cart = useSelector((state) => state.cartReducer.cart);
     const dispatch = useDispatch();
+    const [add, setAdd] = useState(true);
  
     //const addedCart = cart.filter(product=>product.productId===props.productId ? setIconcart(addedCart))
     // addedCart.length!==0 && console.log(addedCart)
+
+
     function handleHeart(event){
         event.preventDefault();
+
+        if (add) {
+            dispatch(addProduct(props.product));
+            setAdd(!add)
+          } else {
+            dispatch(deleteProduct(props.product));
+            setAdd(true);
+          }
         let {name, checked} = event.target
         setState({ ...state, [name]: checked });
         if(name.includes('Fav')){
             dispatch(modifyFav({[name]: checked}))
         }else{
             dispatch(modifyCart({[name]: checked}))
-            if (checked) {
-              dispatch(addProduct(props.product));
-            } else {
-              dispatch(deleteProduct(props.product));
-            }
         }
     }
 

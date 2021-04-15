@@ -1,11 +1,12 @@
-const { OrderDetail } = require("../../db.js");
+const { Order } = require("../../db.js");
+
 module.exports = async (req, res) => {
   const { id } = req.params;
 
   try {
-    const order = await OrderDetail.findOne({
+    const order = await Order.findOne({
       where: {
-        productId: id,
+        id: id,
       },
     });
     res.json(order);
