@@ -216,6 +216,8 @@ function Product_form_update(props) {
           <label className="label">Stock:</label>
           <input
             type="number"
+            min="0"
+            max="9999"
             name="stock"
             autoComplete="off"
             placeholder=" Agregar stock..."
