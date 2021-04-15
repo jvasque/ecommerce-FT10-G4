@@ -4,8 +4,7 @@
 const { Wishlist, Product, User } = require('../../db.js');
 
 module.exports = async (req, res, next) => {
-  let id = req.params.id;
-  let name = req.params.name;
+  let id = req.query.id;
 
   try {
     let data = await User.findOne({
@@ -16,9 +15,9 @@ module.exports = async (req, res, next) => {
       include: {
         model: Wishlist,
         attributes: ['name'],
-        where: {
-          name: name,
-        },
+        // where: {
+        //   name: name,
+        // },
         through: {
           attributes: [],
         },

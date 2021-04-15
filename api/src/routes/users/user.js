@@ -1,16 +1,24 @@
 const router = require('express').Router();
-const bodyParser = require('body-parser');
+// const bodyParser = require('body-parser');
+const express = require('express');
 const userGet = require('./userGet');
 const userPost = require('./userPost');
-const userWishlist = require('./wishlistGet');
-const deleteWishlist = require("./wishlistDelete");
+const wishlistGet = require('./wishlistGet');
+const wishlistPost = require('./wishlistPost');
+const wishlistPut = require('./wishlistPut');
+const wishlistDelete = require('./wishlistDelete');
 
-router.use(bodyParser.json());
+// Middlewares
+router.use(express.json());
 
-router.get('/:id/wishlist/:name', userWishlist);
-router.delete('/:id/wishlist/:name/:productId/delete', deleteWishlist)
-router.get("/:id/", userGet);
-router.post("/post", userPost);
+// User routes
+router.get('/', userGet);
+router.post('/post', userPost);
 
+// User Wishlists routes
+router.get('/wishlist', wishlistGet); // Devolver las wishlist de un usuario (?user)
+router.post('/wishlist/:userId', wishlistPost); // Crear una wishlist
+router.put('/wishlist/:wishlistId/:productId', wishlistPut); // Modificar productos (borrar o agregar)
+router.delete('/wishlist/:wishlistId', wishlistDelete); // Borrar una wishlist
 
 module.exports = router;
