@@ -130,7 +130,20 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
-  background: #378a194d;
+  background: var(--color-brand-light);
+  background: -webkit-linear-gradient(
+    to right,
+    var(--color-brand),
+    var(--color-brand-light)
+  );
+  background: linear-gradient(
+    to right,
+    var(--color-brand),
+    var(--color-brand-light)
+  );
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 0 0;
   color: rgba(0, 0, 0, 0.699);
   margin-left: auto;
   margin-right: auto;
