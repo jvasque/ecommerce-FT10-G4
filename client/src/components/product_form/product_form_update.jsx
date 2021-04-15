@@ -24,6 +24,7 @@ function Product_form_update(props) {
   });
   const [resPic, setResPic] = useState([])
   const [pic, setPic] = useState()
+  const [progress, setProgress] = useState()
   
   const CLOUDINARY_URL = "https://api.cloudinary.com/v1_1/dxy0hg426/image/upload"
   const CLOUDINARY_UPLOAD_PRESET = "iyqdnelg"
@@ -59,6 +60,9 @@ function Product_form_update(props) {
       const res = await axios.post(CLOUDINARY_URL, formData, {
         headers:{
           'Content-Type':'multipart/form-data'
+        },
+        onUploadProgress(e){
+          setProgress((e.loaded * 100) / e.total)
         }
       })
       setResPic([...resPic, res.data.secure_url])
@@ -182,16 +186,22 @@ function Product_form_update(props) {
 
           <label className="label">Imagen:</label>
           {resPic.length>2 ? 
+          <div className="input_file_full">
+             <label className="input_text">Ya se agregaron tres archivos</label>
           <input
           type="file"
           id="pic"
           disabled = "true"
-          /> : 
+          /> 
+          </div>: 
+          <div className="input_file">
+            <label className="input_text">Agregar archivo</label>
           <input
           type="file"
           id="pic"
           onChange={(e) => handleChangeImg(e)}
-          /> }
+          />
+          </div> }
           
           <div className = "img-card-pic">
             {resPic?.map((i)=>(
@@ -200,7 +210,7 @@ function Product_form_update(props) {
                  <input type= "submit" value = "x" className ="boton" name = {i} onClick={(e) => handleDeleteImg(e)}/>
               </div>
               ))}
-
+                <progress value={progress} max="100"></progress>
           </div>
 
           <label className="label">Stock:</label>
