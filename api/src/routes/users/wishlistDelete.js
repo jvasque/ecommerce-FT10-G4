@@ -7,7 +7,7 @@ module.exports = async (req, res, next) => {
     productId = req.params.productId,
     action = req.query.action; // remove, add
 
-  let user = await User.findOne({ where: { userId: userId } });
+  let user = await User.findOne({ where: { id: userId } });
   let wishlist = null;
   let product = null;
 
