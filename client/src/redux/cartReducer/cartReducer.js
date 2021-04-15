@@ -21,12 +21,14 @@ export default (state = initialState, action) => {
       };
     }
     case TOTAL: {
+      const totalP = state.cart.reduce(
+        (acc, e) => acc + e.unitPrice * e.quantity,
+        0
+      );
+      parseFloat(totalP.toFixed(2));
       return {
         ...state,
-        total: state.cart.reduce(
-          (acc, e) => acc + Math.round(e.unitPrice * e.quantity),
-          0
-        ),
+        total: totalP,
       };
     }
 
