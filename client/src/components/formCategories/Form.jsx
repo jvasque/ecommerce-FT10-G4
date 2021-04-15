@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import PutCategory from "../formPutCategory/PutCategory";
-import "../../scss/components/_Form.scss";
+import "../../scss/components/formCategories/_Form.scss";
 
 function Form() {
   const [categories, setCategories] = useState([]);

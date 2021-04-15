@@ -1,13 +1,13 @@
 import React from "react";
 import { FaFacebookF, FaLinkedinIn, FaTwitter, FaGoogle } from "react-icons/fa";
-import "../../scss/components/_Signup.scss";
+import "../../scss/components/Signup/_Signup.scss";
 import { useDispatch } from "react-redux";
 import { postUser } from "../../redux/postUserReducer/postUserActions";
 import Swal from 'sweetalert2'
 
 const Signup = () => {
   const [user, setUser] = React.useState({
-    id: "",
+
     firstName: "",
     lastName: "",
     email: "",
@@ -30,8 +30,13 @@ const Signup = () => {
   const handlesubmit = (e) => {
     e.preventDefault();
     dispatch(postUser(user));   
+   
+    Swal.fire(
+      'Listo',
+      'El usuario ha sido creado',
+      
+    )
     setUser({
-      id: "",
       firstName: "",
       lastName: "",
       email: "",
@@ -41,15 +46,6 @@ const Signup = () => {
       address: "",
       city: "",
     });
-    Swal.fire({
-      title: 'Custom animation with Animate.css',
-      showClass: {
-        popup: 'animate__animated animate__fadeInDown'
-      },
-      hideClass: {
-        popup: 'animate__animated animate__fadeOutUp'
-      }
-    })
   };
 
   return (
@@ -74,28 +70,28 @@ const Signup = () => {
           <h2>Or use the classical way</h2>
           <form className="form" onSubmit={handlesubmit}>
             <fieldset className="firstname">
-              <input type="text"  name="firstName" placeholder="Nombre..." onChange={handleChange} />
+              <input type="text"  name="firstName" autoComplete="off" placeholder="Nombre..." value={user.firstName} onChange={handleChange} />
             </fieldset>
             <fieldset className="lastname">
-              <input type="text" name="lastName" placeholder="Apellido..." onChange={handleChange}/>
+              <input type="text" name="lastName" placeholder="Apellido..." value={user.lastName} onChange={handleChange}/>
             </fieldset>
             <fieldset className="email">
-              <input type="email" name="email" placeholder="Email..." onChange={handleChange}/>
+              <input type="email" name="email" placeholder="Email..." value={user.email} onChange={handleChange}/>
             </fieldset>
             <fieldset className="password">
-              <input type="password" name="password" placeholder="Contraseña..." onChange={handleChange}/>
+              <input type="password" name="password" placeholder="Contraseña..." value={user.password} onChange={handleChange}/>
             </fieldset>
             <fieldset className="companyname">
-              <input type="text" name="companyName" placeholder="Compañia..." onChange={handleChange}/>
+              <input type="text" name="companyName" placeholder="Compañia..." value={user.companyName} onChange={handleChange}/>
             </fieldset>
             <fieldset className="phone">
-              <input type="text" name="phone" placeholder="Numero de telefono..." onChange={handleChange}/>
+              <input type="text" name="phone" placeholder="Numero de telefono..." value={user.phone} onChange={handleChange}/>
             </fieldset>
             <fieldset className="address">
-              <input type="text" name="address" placeholder="Direccion..." onChange={handleChange}/>
+              <input type="text" name="address" placeholder="Direccion..." value={user.address} onChange={handleChange}/>
             </fieldset>
             <fieldset className="city">
-              <input type="text" name="city" placeholder="Ciudad..." onChange={handleChange}/>
+              <input type="text" name="city" placeholder="Ciudad..." value={user.city} onChange={handleChange}/>
             </fieldset>
 
             <button type="submit" className="btn">

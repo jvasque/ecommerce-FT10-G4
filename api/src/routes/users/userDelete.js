@@ -1,26 +1,20 @@
 const { User, Product, Order, OrderDetail } = require("../../db.js");
 
-module.exports = async (req, res, next) => {
+module.exports = async (req, res) => {
   var code = req.params.id;
- 
-  var user = await User.findOne({
-    where: {
-      id: code,
-    },
-    include: {
-        model: Order,
-        include: [{
-            model: OrderDetail,
-            include: Product
-        }]
-      }
-    
-  });
-  
+  var query = req.query.status;
+  var user = await User.findOne({ where: { id: code}});
+  // console.log(user);
   if (user) {
-    await user.destroy();
-    return res.json({ suceffullyDelete: "user has been deleted" });
+    if (query === "active" || "disabled" || "banned") {
+      await user.update({ status: query });
+      res.status(200);
+    } else {
+      return res.json({error: "does not have a valid option"})
+    }
+    return res.json(user);
   } else {
-    return res.json({ error: "that user cannot be find" }).status(400);
+    res.status(400);
+    return res.json({ error: "that user cannot be find" });
   }
 };

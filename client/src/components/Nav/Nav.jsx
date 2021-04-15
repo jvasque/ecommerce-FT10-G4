@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from "react-router-dom";
-import "../../scss/components/_Nav.scss";
+import "../../scss/components/Nav/_Nav.scss";
 import { useHistory } from "react-router";
 import { useDispatch, useSelector} from "react-redux";
 import { filterCategory } from '../../redux/categoryFilterReducer/categoryFilterActions';
