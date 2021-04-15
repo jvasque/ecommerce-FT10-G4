@@ -9,19 +9,19 @@ module.exports = (sequelize) => {
       autoIncrement: true,
       primaryKey: true,
     },
-    userId: {
-      type: DataTypes.INTEGER,
-    },
     firstName: {
       type: DataTypes.STRING,
     },
     lastName: {
       type: DataTypes.STRING,
     },
-    status: {
-      type: DataTypes.STRING,
+    state: {
+      type: DataTypes.ENUM({
+        values: ["cart", "created", "processing", "cancelled", "completed"],
+        allowNull: false,
+      }),
     },
-    creationDate: {
+    ionDate: {
       type: DataTypes.STRING,
       allowNull: true,
     },
