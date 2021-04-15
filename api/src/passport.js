@@ -3,8 +3,7 @@ const LocalStrategy = require("passport-local").Strategy;
 const { User } = require("./db.js");
 
 passport.use(
-  new LocalStrategy(
-    
+  new LocalStrategy(    
     { usernameField: "email", passwordField: "password", session: false },
     async (email, password, done) => {      
       const user = await User.findOne({ where: { email: email } });
@@ -13,7 +12,7 @@ passport.use(
       return done(null, {
         firstName,
         lastName,
-        email,
+        email: userEmail,
         photoURL,
         isAdmin,
       });
