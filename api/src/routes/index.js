@@ -9,6 +9,8 @@ const search = require('./products/search');
 const users = require('./users/user')
 const cors = require("cors");
 const { route } = require("./products/product");
+const server = require("./auth");
+
 
 const router = Router();
 router.use(cors());
@@ -23,5 +25,6 @@ router.use("/allCategories", allCategories);
 router.use('/products', products);
 router.use('/search', search);
 router.use('/users', users)
+router.use('/auth', server)
 
 module.exports = router;

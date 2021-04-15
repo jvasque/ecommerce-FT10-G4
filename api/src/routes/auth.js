@@ -7,6 +7,7 @@ server.get("/me", async (req, res, next) => {
     try {
         const { id } = req.user;
         const result = await User.findByPk(id);
+        //hacer verificacion por email 
         res.json(result);
     } catch (error) {
         next(error);
