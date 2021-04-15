@@ -1,4 +1,4 @@
-import React,{useEffect} from "react";
+import React,{useEffect, useState} from "react";
 import {useSelector, useDispatch } from "react-redux"
 import ProductCart from "./ProductCart"
 import '../../scss/components/Cart/_Cart.scss'
@@ -12,12 +12,13 @@ function Cart() {
  const products = useSelector(state =>state.cartReducer.cart)
  const total= useSelector(state =>state.cartReducer.total)
  const dispatch = useDispatch()
- console.log(total);
+ const [cartLocal, setCartLocal] = useState([])
+
 
  useEffect(() => {
   dispatch(totalPrice())
  }, [products])
-
+ 
 
   return (
     <div className="cart-container">
@@ -26,7 +27,7 @@ function Cart() {
        
     </div>
     <div className="total" > 
-    {total ? <h1>Total:{total}</h1>: "" }
+    {total ? <h1>Total:${total}</h1>: "" }
     <Button>Continar compra</Button>
     </div>
     </div>
