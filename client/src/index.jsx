@@ -10,8 +10,12 @@ import { getCatalog } from './redux/catalogReducer/catalogActions';
 import { getCategories } from './redux/categoryFilterReducer/categoryFilterActions'
 import store from "./redux/store";
 
+
 store.dispatch(getCatalog());
 store.dispatch(getCategories());
+
+
+
 
 ReactDOM.render(
   <React.StrictMode>

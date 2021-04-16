@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FaFacebookF, FaLinkedinIn, FaGoogle } from "react-icons/fa";
 import "../../scss/components/Signup/_Signup2.scss";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { postUser } from "../../redux/postUserReducer/postUserActions";
 import Swal from "sweetalert2";
 import { LoginAction } from "../../redux/loginReducer/loginActions";
@@ -17,13 +17,10 @@ const Signup2 = () => {
   });
 
   //Session iniciada D:
-  const [isLoading, setIsLoading] = useState(false);
+  
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  
-  
-  const state = useSelector(state => state.loginReducer)
-console.log(state)
+
   const sessionChange = (e) => {
     return(
         e.target.name === 'uname'?setUsername(e.target.value):
@@ -32,10 +29,10 @@ console.log(state)
 
     )
   };
-  const sessionHandle = (e) => {
+  const sessionSubmit = (e) => {
     e.preventDefault();
-    setIsLoading(true)
-    dispatch(LoginAction(username))
+    
+    username.length && password.length && dispatch(LoginAction(username, password))
   }
   ////////
 
@@ -127,7 +124,7 @@ console.log(state)
           </form>
         </div>
         <div className="form-container sign-in-container">
-          <form action="#" onSubmit={sessionHandle}>
+          <form action="#" onSubmit={sessionSubmit}>
             <h1>Sign in</h1>
             <div className="social-container">
               <a href="#" className="social">

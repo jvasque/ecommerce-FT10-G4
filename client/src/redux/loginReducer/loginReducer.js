@@ -8,12 +8,12 @@ const initialState = {
 
 export default (state = initialState, action) => {
     console.log("holi")
-  switch (action.payload) {
+  switch (action.type) {
     case LOGIN_ACTION_KEY:
       console.log(action.payload);
       return {
-       
-        user: action.payload,
+       ...state,
+        user: {... action.payload},
         isLogin: true,
         isAdmin: true
       };
