@@ -32,7 +32,7 @@ const Signup2 = () => {
   const sessionSubmit = (e) => {
     e.preventDefault();
     
-    username.length && password.length && dispatch(LoginAction(username, password))
+    username.length && dispatch(LoginAction(username))
   }
   ////////
 
