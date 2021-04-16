@@ -12,7 +12,7 @@ function Cart() {
  const products = useSelector(state =>state.cartReducer.cart)
  const total= useSelector(state =>state.cartReducer.total)
  const dispatch = useDispatch()
- const [cartLocal, setCartLocal] = useState([])
+
 
 
  useEffect(() => {
@@ -22,13 +22,14 @@ function Cart() {
 
   return (
     <div className="cart-container">
+      <h1>Carrito ({products.length})</h1>
  <div className="cart">
       {products ? products?.map(product => <ProductCart product={product} key={product.id}/>) : <h1>No hay elementos en el carrito</h1>}
        
     </div>
     <div className="total" > 
-    {total ? <h1>Total:${total}</h1>: "" }
-    <Button>Continar compra</Button>
+    {total ? <h2>Total  ${total}</h2>: "" }
+    <Button >Continar compra</Button>
     </div>
     </div>
    
