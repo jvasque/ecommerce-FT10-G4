@@ -1,10 +1,9 @@
-import React,{useEffect, useState,Link} from "react";
+import React,{useEffect} from "react";
 import {useSelector, useDispatch } from "react-redux"
 import ProductCart from "./ProductCart"
 import '../../scss/components/Cart/_Cart.scss'
 import {totalPrice} from "../../redux/cartReducer/cartActions"
 import { Button } from "@material-ui/core";
-import OrderDetail from "../Order/OrderDetail";
 import { NavLink } from "react-router-dom";
 
 
@@ -32,7 +31,7 @@ function Cart() {
     <div className="total" > 
     {total ? <h2>Total  ${total}</h2>: "" }
       
-    <NavLink to="/user/cart/order">Continuar Compra</NavLink>
+   {products.length ? (<NavLink to="/user/cart/order"><button>Continuar Compra</button></NavLink>): <div>Aún no llenas tu carrito, !Anímate a hacerlo!</div>}
     
     </div>
     </div>
