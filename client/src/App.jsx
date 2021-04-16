@@ -18,6 +18,7 @@ import Footer from "./components/Footer/Footer";
 import Signup from "./components/Signup/Signup";
 import Cart from "./components/Cart/Cart"
 import Signup2 from "./components/Signup/Signup2";
+import Signup3 from "./components/Signup/Signup3";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
           <Route exact path="/admin/product/form/update" component={ProductFormUpdate} />
           <Route exact path="/admin/product/form/delete" component={ProductFormDelete} />
           <Route exact path="/user/login" component={Signup2}/>
+          <Route exact path="/prueba/formik" component={Signup3}/>
         </Switch>
         <Route path="/" component={Footer} />
     </div>

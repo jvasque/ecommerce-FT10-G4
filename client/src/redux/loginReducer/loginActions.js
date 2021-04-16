@@ -2,6 +2,8 @@ import axios from "axios";
 
 export const LOGIN_ACTION_KEY = "LOGIN_ACTION_KEY";
 
+export const LOG_OUT = 'LOG_OUT'
+
 
 export const LoginAction = (email) =>{
     return async function (dispatch) {
@@ -12,4 +14,10 @@ export const LoginAction = (email) =>{
           payload: info.data,
         });
       };
+}
+
+export const LogOut = () => {
+    return {
+        type:LOG_OUT
+    }
 }

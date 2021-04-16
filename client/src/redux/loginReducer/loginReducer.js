@@ -1,4 +1,4 @@
-import { LOGIN_ACTION_KEY } from "./loginActions";
+import { LOGIN_ACTION_KEY, LOG_OUT } from "./loginActions";
 
 const initialState = {
   user: {},
@@ -7,15 +7,18 @@ const initialState = {
 };
 
 export default (state = initialState, action) => {
-    console.log("holi")
   switch (action.type) {
     case LOGIN_ACTION_KEY:
-      console.log(action.payload);
       return {
-       ...state,
-        user:  action.payload,
+        ...state,
+        user: action.payload,
         isLogin: true,
-        isAdmin: true
+      };
+    case LOG_OUT:
+      return {
+        ...state,
+        user: {},
+        isLogin: false,
       };
     default:
       return { ...state };
