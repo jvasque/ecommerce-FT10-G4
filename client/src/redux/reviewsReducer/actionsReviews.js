@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const SUBMIT_COMMENTARY = "SUBMIT_COMMENTARY";
+export const GET_COMMENTARY = "GET_COMMENTARY";
+export const SUBMIT_COMMENTARY = "SUBMIT_COMMENTARY";
 
 export function submitCommentary(text, rate){
     return async function(dispatch){
@@ -10,5 +11,12 @@ export function submitCommentary(text, rate){
                 rate
             }
         });
+    }
+}
+
+export function getCommentary(id){
+    return async function(dispatch){
+        let json = await axios.get(`http://localhost:3001/products/${id}/review`)
+        return dispatch({type: GET_COMMENTARY, payload: json});
     }
 }

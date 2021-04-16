@@ -1,16 +1,16 @@
-import { SUBMIT_COMMENTARY } from "./actionsProductForms";
+import { SUBMIT_COMMENTARY, GET_COMMENTARY } from "./actionsReviews";
 
 const initialState = {
-  product: [],
+  reviews: [],
 };
 
 const reviewsReducer = (state = initialState, action) => {
   switch (action.type) {
       
-      case SUBMIT_COMMENTARY:
+      case GET_COMMENTARY:
         return {
           ...state,
-          product: []
+          reviews: [action.payload]
         }
 
     default:
@@ -18,4 +18,4 @@ const reviewsReducer = (state = initialState, action) => {
   }
 };
 
-export default productFormsReducer;
+export default reviewsReducer;
