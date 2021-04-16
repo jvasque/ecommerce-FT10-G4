@@ -4,7 +4,7 @@ import ProductCart from "./ProductCart"
 import '../../scss/components/Cart/_Cart.scss'
 import {totalPrice} from "../../redux/cartReducer/cartActions"
 import { Button } from "@material-ui/core";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 
 
@@ -29,9 +29,8 @@ function Cart() {
        
     </div>
     <div className="total" > 
-    {total ? <h2>Total  ${total}</h2>: "" }
-      
-   {products.length ? (<NavLink to="/user/cart/order"><button>Continuar Compra</button></NavLink>): <div>Aún no llenas tu carrito, !Anímate a hacerlo!</div>}
+    {total ? <h2>Total  ${total}</h2>: "" }  
+   {products.length ? (<Link className="link-redirect" to="/user/cart/order"><Button>Continuar Compra</Button></Link>): <div>Aún no llenas tu carrito, !Anímate a hacerlo!</div>}
     
     </div>
     </div>

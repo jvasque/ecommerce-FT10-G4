@@ -22,17 +22,17 @@
     padding: 1rem;
     display: flex;
     margin-right: 2rem;
+    justify-content: center;
+    align-items: center;
     float: right;
 
+    .link-redirect {
+      text-decoration: none;
+    }
     button {
       background-color: #378a19;
       color: #f7f7f7;
       font-weight: 100px;
-
-      :hover {
-        font-weight: 800px;
-        background-color: rgba(51, 170, 51, 0.1);
-      }
     }
   }
 }

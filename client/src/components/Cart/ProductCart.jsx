@@ -8,7 +8,7 @@ import {useDispatch}  from "react-redux"
 import {deleteProduct} from "../../redux/cartReducer/cartActions"
 import {totalPrice, incrementQ} from "../../redux/cartReducer/cartActions"
 import {modifyCart} from '../../redux/iconReducer/iconActions'
-import swal from 'sweetalert';
+
 
 function ProductCard({product}){
    const [quantity, setQuantity] = useState(1)

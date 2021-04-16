@@ -12,6 +12,7 @@ const cart = require("./cart/orderDetail/cart");
 const order = require("./order/orders");
 const { route } = require("./products/product");
 const server = require("../routes/users/auth");
+const mercadopago = require("../routes/mercadopago/mercadopago");
 
 const router = Router();
 router.use(cors());
@@ -29,5 +30,6 @@ router.use("/users", users);
 router.use("/cart", cart);
 router.use("/order", order);
 router.use("/auth", server);
+router.use("/cart/checkout", mercadopago);
 
 module.exports = router;
