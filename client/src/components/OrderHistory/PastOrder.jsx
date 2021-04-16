@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import OrderDetail from './OrderDetail'
-import FilterOrderDetail from './FilterOrderDetail'
+import { sortByName, sortByQuantity, sortByPrice, sortByCost } from './FilterOrderDetail'
 import DivText from '../ProductCard/DivText'
 import "../../scss/components/OrderHistory/_OrderHistory.scss"
+import '../../scss/components/OrderHistory/_FilterOrderDetail.scss'
 
 function PastOrder({order}){
     const [state, setState] = useState(false) 
@@ -21,43 +22,27 @@ function PastOrder({order}){
     }
 
     function sortName(){
-        let ordersDetailsSorted = [...ordersDetails]
-        if(sort.name){            
-            setSort({
-                name: false,
-                quantity: false,
-                price: false,
-                cost: false,
-            })
-            ordersDetailsSorted.sort((a, b)=>{
-                if (a.product.name > b.product.name) {
-                    return -1;
-                  }
-                if (a.product.name < b.product.name) {
-                    return 1;
-                }
-                return 0;
-            })
-            setOrdersDetails(ordersDetailsSorted)
-            return
-        }
-        setSort({
-            name: true,
-            quantity: false,
-            price: false,
-            cost: false,
-        })
-        ordersDetailsSorted.sort((a, b)=>{
-            if (b.product.name > a.product.name) {
-                return -1;
-              }
-            if (b.product.name < a.product.name) {
-                return 1;
-            }
-            return 0;
-        })
-        setOrdersDetails(ordersDetailsSorted)
-        return
+        let [newOrdersDetails, newSort] = sortByName(ordersDetails, sort)
+        setSort(newSort)
+        setOrdersDetails(newOrdersDetails)
+    }
+
+    function sortQuantity(){
+        let [newOrdersDetails, newSort] = sortByQuantity(ordersDetails, sort)
+        setSort(newSort)
+        setOrdersDetails(newOrdersDetails)
+    }
+
+    function sortPrice(){
+        let [newOrdersDetails, newSort] = sortByPrice(ordersDetails, sort)
+        setSort(newSort)
+        setOrdersDetails(newOrdersDetails)
+    }
+
+    function sortCost(){
+        let [newOrdersDetails, newSort] = sortByCost(ordersDetails, sort)
+        setSort(newSort)
+        setOrdersDetails(newOrdersDetails)
     }
         
     if(!!order){
@@ -87,9 +72,9 @@ function PastOrder({order}){
                     <div className="folding-pannel filter">
                         <div className='containerFilterOrderDetail'>
                             <div className='orderFilterDetailName' onClick={sortName}><DivText content='Producto'/></div>
-                            <div className='orderFilterDetailQuantity'><DivText content='Cantidad'/></div>
-                            <div className='orderFilterDetailPrice'><DivText content='Precio Unidad'/></div>
-                            <div className='orderFilterDetailCost'><DivText content='Costo por Item'/></div>
+                            <div className='orderFilterDetailQuantity' onClick={sortQuantity}><DivText content='Cantidad'/></div>
+                            <div className='orderFilterDetailPrice' onClick={sortPrice}><DivText content='Precio Unidad'/></div>
+                            <div className='orderFilterDetailCost' onClick={sortCost}><DivText content='Costo por Item'/></div>
                         </div>  
                     </div>
                     {

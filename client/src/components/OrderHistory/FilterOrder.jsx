@@ -1,52 +1,239 @@
-import React, { useEffect, useState } from "react";
-import DivText from '../ProductCard/DivText'
-import '../../scss/components/OrderHistory/_FilterOrder.scss'
+export function sortById(orders, sort){
+    let ordersSorted = [...orders]
+        if(!sort.id){            
+            ordersSorted.sort((a, b)=>{
+                if (a.id > b.id) {
+                    return -1;
+                  }
+                if (a.id < b.id) {
+                    return 1;
+                }
+                return 0;
+            })
+            return [ordersSorted, {
+                id: true,
+                status: false,
+                created: false,
+                updated: false,
+                payment: false,
+                total: false,
+            }]
+        }
+        ordersSorted.sort((a, b)=>{
+            if (b.id > a.id) {
+                return -1;
+              }
+            if (b.id < a.id) {
+                return 1;
+            }
+            return 0;
+        })
+        return [ordersSorted, {
+            id: false,
+            status: false,
+            created: false,
+            updated: false,
+            payment: false,
+            total: false,
+        }]
+}
 
-export default function FilterOrder() {
-    const [sort, setSort] = useState({
-        id: true,
-        status: false,
-        created: false,
-        updated: false,
-        payment: false,
-        total: false,
-    })
+export function sortByState(orders, sort){
+    let ordersSorted = [...orders]
+        if(!sort.status){            
+            ordersSorted.sort((a, b)=>{
+                if (a.status > b.status) {
+                    return -1;
+                  }
+                if (a.status < b.status) {
+                    return 1;
+                }
+                return 0;
+            })
+            return [ordersSorted, {
+                id: false,
+                status: true,
+                created: false,
+                updated: false,
+                payment: false,
+                total: false,
+            }]
+        }
+        ordersSorted.sort((a, b)=>{
+            if (b.status > a.status) {
+                return -1;
+              }
+            if (b.status < a.status) {
+                return 1;
+            }
+            return 0;
+        })
+        return [ordersSorted, {
+            id: false,
+            status: false,
+            created: false,
+            updated: false,
+            payment: false,
+            total: false,
+        }]
+}
 
-    // function sortId(){
-    //     if(sort.id){
-    //         order.sort((a, b)=>{
-    //             if (a.id < b.id) {
-    //                 return -1;
-    //               }
-    //             if (b.id < a.id) {
-    //                 return 1;
-    //             }
-    //             return 0;
-    //         })
-    //         console.log(order)
-    //         return
-    //     }
-    //     setSort({
-    //         id: true,
-    //         status: false,
-    //         created: false,
-    //         updated: false,
-    //         payment: false,
-    //         total: false,
-    //     })
-    // }
+export function sortByCreation(orders, sort){
+    let ordersSorted = [...orders]
+        if(!sort.created){            
+            ordersSorted.sort((a, b)=>{
+                if (a.createdAt > b.createdAt) {
+                    return -1;
+                  }
+                if (a.createdAt < b.createdAt) {
+                    return 1;
+                }
+                return 0;
+            })
+            return [ordersSorted, {
+                id: false,
+                status: false,
+                created: true,
+                updated: false,
+                payment: false,
+                total: false,
+            }]
+        }
+        ordersSorted.sort((a, b)=>{
+            if (b.createdAt > a.createdAt) {
+                return -1;
+              }
+            if (b.createdAt < a.createdAt) {
+                return 1;
+            }
+            return 0;
+        })
+        return [ordersSorted, {
+            id: false,
+            status: false,
+            created: false,
+            updated: false,
+            payment: false,
+            total: false,
+        }]
+}
 
-    // useEffect(() => {
-    // }, [order]);
+export function sortByUpdate(orders, sort){
+    let ordersSorted = [...orders]
+        if(!sort.updated){            
+            ordersSorted.sort((a, b)=>{
+                if (a.updatedAt > b.updatedAt) {
+                    return -1;
+                  }
+                if (a.updatedAt < b.updatedAt) {
+                    return 1;
+                }
+                return 0;
+            })
+            return [ordersSorted, {
+                id: false,
+                status: false,
+                created: false,
+                updated: true,
+                payment: false,
+                total: false,
+            }]
+        }
+        ordersSorted.sort((a, b)=>{
+            if (b.updatedAt > a.updatedAt) {
+                return -1;
+              }
+            if (b.updatedAt < a.updatedAt) {
+                return 1;
+            }
+            return 0;
+        })
+        return [ordersSorted, {
+            id: false,
+            status: false,
+            created: false,
+            updated: false,
+            payment: false,
+            total: false,
+        }]
+}
 
-    return (
-        <div className='containerFilterOrder'>
-            <div className='registerFilter'><DivText content='Registro'/></div>
-            <div className='stateFilter'><DivText content='Estado'/></div>
-            <div className='creationFilter'><DivText content='Fecha de apertura'/></div>
-            <div className='updateFilter'><DivText content='Fecha de actualizacion'/></div>
-            <div className='paymentFilter'><DivText content='Metodo de Pago'/></div>
-            <div className='totalFilter'><DivText content='Valor Total'/></div>
-        </div>
-    )
+export function sortByPayment(orders, sort){
+    let ordersSorted = [...orders]
+        if(!sort.payment){            
+            ordersSorted.sort((a, b)=>{
+                if (a.paymentMethod.type > b.paymentMethod.type) {
+                    return -1;
+                  }
+                if (a.paymentMethod.type < b.paymentMethod.type) {
+                    return 1;
+                }
+                return 0;
+            })
+            return [ordersSorted, {
+                id: false,
+                status: false,
+                created: false,
+                updated: false,
+                payment: true,
+                total: false,
+            }]
+        }
+        ordersSorted.sort((a, b)=>{
+            if (b.paymentMethod.type > a.paymentMethod.type) {
+                return -1;
+              }
+            if (b.paymentMethod.type < a.paymentMethod.type) {
+                return 1;
+            }
+            return 0;
+        })
+        return [ordersSorted, {
+            id: false,
+            status: false,
+            created: false,
+            updated: false,
+            payment: false,
+            total: false,
+        }]
+}
+
+export function sortByTotal(orders, sort){
+    let ordersSorted = [...orders]
+        if(!sort.total){            
+            ordersSorted.sort((a, b)=>{
+                if (a.totalPrice > b.totalPrice) {
+                    return -1;
+                  }
+                if (a.totalPrice < b.totalPrice) {
+                    return 1;
+                }
+                return 0;
+            })
+            return [ordersSorted, {
+                id: false,
+                status: false,
+                created: false,
+                updated: false,
+                payment: false,
+                total: true,
+            }]
+        }
+        ordersSorted.sort((a, b)=>{
+            if (b.totalPrice > a.totalPrice) {
+                return -1;
+              }
+            if (b.totalPrice < a.totalPrice) {
+                return 1;
+            }
+            return 0;
+        })
+        return [ordersSorted, {
+            id: false,
+            status: false,
+            created: false,
+            updated: false,
+            payment: false,
+            total: false,
+        }]
 }
