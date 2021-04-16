@@ -10,7 +10,7 @@ const reviewsReducer = (state = initialState, action) => {
       case GET_COMMENTARY:
         return {
           ...state,
-          reviews: [action.payload]
+          reviews: [action.payload.data]
         }
 
     default:

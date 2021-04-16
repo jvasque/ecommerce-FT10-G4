@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Rating from "@material-ui/lab/Rating";
 import Box from "@material-ui/core/Box";
 import PropTypes from "prop-types";
@@ -19,6 +19,7 @@ import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
 import Reviews from "../Reviews/Reviews";
 import CommentaryReviews from "../Reviews/CommentaryReviews";
+import { getCommentary } from "../../redux/reviewsReducer/actionsReviews";
 
 const Wish = (
   <FormControlLabel
@@ -78,13 +79,20 @@ const ProductDetails = (props) => {
   let productId = props.match.params.id;
   const history = useHistory();
   const dispatch = useDispatch();
+  const [commentaries, setCommentaries] = useState([])
 
   const { productDetail, loading } = useSelector(
     (state) => state.detailReducer
   );
+
+  const {reviews} = useSelector((state)=> state.reviewsReducer)
+
   useEffect(() => {
     dispatch(getDetail(parseInt(productId)));
+    dispatch(getCommentary(parseInt(productId)));
   }, [productId, dispatch]);
+
+  
 
   const handleClick = (cat) => {
     dispatch(filterCategory(cat));
@@ -152,7 +160,12 @@ const ProductDetails = (props) => {
           </div>
           <Reviews id = {productDetail.id}/>
           <h1>Comentarios</h1>
-          <CommentaryReviews/>
+          {reviews[0]?.map(e => {
+            return (
+            <CommentaryReviews id={e.id} score={e.score} content={e.content} userId={e.userId}/>
+            )
+          })}
+          
         </div>
       ) : (
         <div>loading...</div>
