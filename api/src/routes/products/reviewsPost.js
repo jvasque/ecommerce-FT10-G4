@@ -9,6 +9,8 @@ module.exports = async (req, res) => {
     productId
   } = req.body.params;
 
+  console.log(req.params.id, "IDDDDD POSSSSSSSSSSSSSSSST");
+
   
 
   try {

@@ -18,6 +18,7 @@ import FavoriteBorder from "@material-ui/icons/FavoriteBorder";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
 import Reviews from "../Reviews/Reviews";
+import CommentaryReviews from "../Reviews/CommentaryReviews";
 
 const Wish = (
   <FormControlLabel
@@ -150,6 +151,8 @@ const ProductDetails = (props) => {
             <p>{productDetail.description}</p>
           </div>
           <Reviews id = {productDetail.id}/>
+          <h1>Comentarios</h1>
+          <CommentaryReviews/>
         </div>
       ) : (
         <div>loading...</div>
