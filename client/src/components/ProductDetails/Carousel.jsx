@@ -22,20 +22,24 @@ const Carousel = ({img}) => {
                     </div>
                   </figure>
                 </li>
+                {img[1]&&
                 <li className="carousel__slide">
                   <figure>
                     <div>
-                      <img src={img[1]? img[1]:img[0]} alt="" />
+                      <img src={img[1]} alt="" />
                     </div>
                   </figure>
                 </li>
+                 }
+                {img[2]&&
                 <li className="carousel__slide">
                   <figure>
                     <div>
-                      <img src={img[2]? img[2]:img[0]} alt="" />
+                      <img src={img[2]} alt="" />
                     </div>
                   </figure>
                 </li>
+                 }
               </ul>
               <ul className="carousel__thumbnails">
                 <li>
@@ -43,16 +47,20 @@ const Carousel = ({img}) => {
                     <img src={img[0]} alt="" />
                   </label>
                 </li>
+                {img[1]&&
                 <li>
                   <label htmlFor="slide-2">
-                    <img src={img[1]? img[1]:img[0]} alt="" />
+                    <img src={img[1]} alt="" />
                   </label>
                 </li>
+                 }
+                 {img[2]&&
                 <li>
                   <label htmlFor="slide-3">
-                    <img src={img[2]? img[2]:img[0]} alt="" />
+                    <img src={img[2]} alt="" />
                   </label>
                 </li>
+                 }
               </ul>
             </div>
           </div>
