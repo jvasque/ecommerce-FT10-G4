@@ -17,10 +17,39 @@ import Favorite from "@material-ui/icons/Favorite";
 import FavoriteBorder from "@material-ui/icons/FavoriteBorder";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
-import { modifyCart, modifyFav } from '../../redux/iconReducer/iconActions';
-import { addProduct, deleteProduct } from "../../redux/cartReducer/cartActions";
+import { modifyCart, modifyFav } from "../../redux/iconReducer/iconActions";
+import {addProduct, deleteProduct} from '../../redux/cartReducer/cartActions'
+const Wish = (productId, state, handleHeart) => {
+  return (
+    <FormControlLabel
+      control={
+        <Checkbox
+          icon={<FavoriteBorder />}
+          checkedIcon={<Favorite />}
+          checked={state[`Fav-${productId}`] || false}
+          name={`Fav-${productId}`}
+          onChange={handleHeart}
+        />
+      }
+    />
+  );
+};
 
-
+const Cart = (productId, state, handleHeart) => {
+  return (
+    <FormControlLabel
+      control={
+        <Checkbox
+          icon={<ShoppingCartOutlinedIcon />}
+          checkedIcon={<ShoppingCartIcon style={{ color: "white" }} />}
+          checked={state[`Cart-${productId}`] || false}
+          name={`Cart-${productId}`}
+          onChange={handleHeart}
+        />
+      }
+    />
+  );
+};
 const customIcons = {
   1: {
     icon: <Icon icon={tractorIcon} />,
@@ -52,11 +81,14 @@ IconContainer.propTypes = {
   value: PropTypes.number,
 };
 
+
+
+
 const ProductDetails = (props) => {
   const { productDetail, loading } = useSelector(
     (state) => state.detailReducer
   );
- const iconState = useSelector(state => state.iconReducer)
+
 
   const [state, setState] = useState({
       [`Fav-${productDetail.id}`]: iconState.fav[`Fav-${productDetail.id}}`],
@@ -112,8 +144,19 @@ const ProductDetails = (props) => {
   let productId = props.match.params.id;
   const history = useHistory();
   const dispatch = useDispatch();
+  const iconState = useSelector(state => state.iconReducer)
 
-  
+
+  function handleHeart(event) {
+    let { name, checked } = event.target;
+    setState({ ...state, [name]: checked });
+    if (name.includes("Fav")) {
+      dispatch(modifyFav({ [name]: checked }));
+    } else {
+      dispatch(modifyCart({ [name]: checked }));
+    }
+  }
+ 
   useEffect(() => {
     dispatch(getDetail(parseInt(productId)));
   }, [productId, dispatch]);
@@ -125,12 +168,11 @@ const ProductDetails = (props) => {
       pathname: "/catalog",
     });
   };
-
   return (
     <div className="productDetails">
       {loading ? (
         <div className="containerDetails">
-          <div className='firstCard'>
+          <div className="firstCard">
             <Carousel img={productDetail.picture} />
             <div className="datos">
               <div className="detailTitle">
@@ -167,12 +209,17 @@ const ProductDetails = (props) => {
               <hr />
               <div className="FavCart">
                 <div className="wishlistButton">
-                  <div className='text'>Wishlist</div>
-                  <div className='icon'>{Wish}</div> 
+                  <div className="text">Favoritos</div>
+                  <div className="icon">
+                    {Wish(productId, state, handleHeart)}
+                  </div>
                 </div>
                 <div className="addCartButton">
-                  <div className='text'>Add Cart</div>
-                  <div className='icon'> {Cart}</div> 
+                  <div className="text">AddCart</div>
+                  <div className="icon">
+                    {" "}
+                    {Cart(productId, state, handleHeart)}
+                  </div>
                 </div>
               </div>
             </div>

@@ -10,6 +10,7 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "animate.css": "^4.1.1",
     "axios": "^0.21.1",
     "framer-motion": "^4.1.2",
     "react": "^16.13.1",
@@ -23,7 +24,8 @@
     "redux-thunk": "^2.3.0",
     "sass": "^1.32.8",
     "styled-components": "^5.2.3",
-    "sweetalert": "^2.1.2"
+    "sweetalert": "^2.1.2",
+    "sweetalert2": "^10.16.0"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -1,24 +1,20 @@
 import axios from "axios";
 
-export const    POST_USER = "POST_USER";
+export const POST_USER = "POST_USER";
+// companyName, phone, address, city
 
-export const postUser = ({firstName, lastName, email, password, companyName, phone, address, city}) => {
+export function postUser({firstName, lastName, email, password }) {
     
-    return (dispatch) => {
-        dispatch({ type: POST_USER });
-        axios({
-          method: 'post',
-          url: `http://localhost:3001/users/post`,
+  return async function (dispatch) {
+      var json = await axios.post("http://localhost:3001/users/post", {
           data: {
             firstName, 
             lastName, 
             email, 
             password, 
-            companyName, 
-            phone, 
-            address, 
-            city
-          },
-        }).catch(e=> dispatch(e))
-    }
+           
+          }
+      });
+      return dispatch({ type: POST_USER, payload: json.data })
+  }
 }

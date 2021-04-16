@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router';
-import '../../scss/components/_SearchBar.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { BiSearch } from 'react-icons/bi';
 import {
@@ -9,6 +8,11 @@ import {
   getOptions,
   resetOptions,
 } from '../../redux/searchReducer/searchActions';
+
+import '../../scss/components/SearchBar/_SearchBar.scss'
+
+
+
 import { filterCategory } from '../../redux/categoryFilterReducer/categoryFilterActions';
 
 function SearchBar() {

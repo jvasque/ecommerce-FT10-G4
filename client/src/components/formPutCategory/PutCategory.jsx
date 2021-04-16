@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios'
-import "../../scss/components/_PutCategory.scss";
+import "../../scss/components/formPutCategory/_PutCategory.scss";
 
 function PutCategory({ categorySelect, setPut, put, dataCategories }) {
     const [input, setInput] = useState('');
