@@ -4,12 +4,13 @@ const { Sequelize, Op } = require("sequelize");
 module.exports = async (req, res) => {
 
   try {
+    console.log(req.user)
     let {
       firstName,
       lastName,
       email,
       password,
-    } = req.body.data;
+    } = req.body;
 
     if (!firstName) {
       console.log("the user must have first name");
