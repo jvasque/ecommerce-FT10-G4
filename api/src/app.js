@@ -1,8 +1,8 @@
-const express = require('express');
-const cookieParser = require('cookie-parser');
-const bodyParser = require('body-parser');
-const morgan = require('morgan');
-const  index = require('./routes/index.js');
+const express = require("express");
+const cookieParser = require("cookie-parser");
+const bodyParser = require("body-parser");
+const morgan = require("morgan");
+const index = require("./routes/index.js");
 const passport = require("passport");
 
 require("./passport.js");
@@ -26,8 +26,18 @@ server.use((req, res, next) => {
   next();
 });
 
-server.use(passport.initialize())
-server.use(passport.session())
+server.use(passport.initialize());
+server.use(passport.session());
+
+server.all("*", function (req, res, next) {
+  passport.authenticate("bearer", function (err, user) {
+    if (err) return next(err);
+    if (user) {
+      req.user = user;
+    }
+    return next()
+  })(req, res, next);
+});
 
 server.use("/", index); //Fixear
 

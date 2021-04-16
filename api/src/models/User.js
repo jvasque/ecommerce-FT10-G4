@@ -47,6 +47,10 @@ module.exports = (sequelize) => {
         return () => this.getDataValue("salt");
       },
     },
+    // isAdmin: {
+    //   type: DataTypes.BOOLEAN,
+    //   defaultValue: false
+    // },
     type: {
       type: DataTypes.ENUM("superadmin", "admin", "user", "guest"),
       defaultValue: "user",

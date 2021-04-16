@@ -1377,6 +1377,13 @@
   dependencies:
     "passport-oauth2" "1.x.x"
 
+"passport-http-bearer@^1.0.1":
+  "integrity" "sha1-FHRp6jZp4qhMYWfvmdu3fh8AmKg="
+  "resolved" "https://registry.npmjs.org/passport-http-bearer/-/passport-http-bearer-1.0.1.tgz"
+  "version" "1.0.1"
+  dependencies:
+    "passport-strategy" "1.x.x"
+
 "passport-local@^1.0.0":
   "integrity" "sha1-H+YyaMkudWBmJkN+O5BmYsFbpu4="
   "resolved" "https://registry.npmjs.org/passport-local/-/passport-local-1.0.0.tgz"
