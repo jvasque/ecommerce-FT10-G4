@@ -19,6 +19,7 @@ import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
 import { modifyCart, modifyFav } from "../../redux/iconReducer/iconActions";
 import {addProduct, deleteProduct} from '../../redux/cartReducer/cartActions'
+
 const Wish = (productId, state, handleHeart) => {
   return (
     <FormControlLabel
@@ -88,7 +89,10 @@ const ProductDetails = (props) => {
   const { productDetail, loading } = useSelector(
     (state) => state.detailReducer
   );
-
+  let productId = props.match.params.id;
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const iconState = useSelector(state => state.iconReducer)
 
   const [state, setState] = useState({
       [`Fav-${productDetail.id}`]: iconState.fav[`Fav-${productDetail.id}}`],
@@ -96,31 +100,31 @@ const ProductDetails = (props) => {
   })
  
 
-  const Wish = (
-    <FormControlLabel
-      control={
-        <Checkbox
-          icon={<FavoriteBorder />}
-          checkedIcon={<Favorite />}
-          name={`Fav-${productDetail.id}`} 
-        />
-      }
-    />
-  );
+  // const Wish = (
+  //   <FormControlLabel
+  //     control={
+  //       <Checkbox
+  //         icon={<FavoriteBorder />}
+  //         checkedIcon={<Favorite />}
+  //         name={`Fav-${productDetail.id}`} 
+  //       />
+  //     }
+  //   />
+  // );
   
-  const Cart = (
-    <FormControlLabel
-      control={
-        <Checkbox
-          icon={<ShoppingCartOutlinedIcon />}
-          checkedIcon={<ShoppingCartIcon style={{ color: "white" }} />}
-          name={`Cart-${productDetail.id}`} 
-          onChange={(e) => handleChange(e)}
-          checked={iconState.cart[`Cart-${productDetail.id}`] || false}
-        />
-      }
-    />
-  );
+  // const Cart = (
+  //   <FormControlLabel
+  //     control={
+  //       <Checkbox
+  //         icon={<ShoppingCartOutlinedIcon />}
+  //         checkedIcon={<ShoppingCartIcon style={{ color: "white" }} />}
+  //         name={`Cart-${productDetail.id}`} 
+  //         onChange={(e) => handleChange(e)}
+  //         checked={iconState.cart[`Cart-${productDetail.id}`] || false}
+  //       />
+  //     }
+  //   />
+  // );
 
 
   const handleChange = (event) => {
@@ -141,10 +145,7 @@ const ProductDetails = (props) => {
     }
   }
 
-  let productId = props.match.params.id;
-  const history = useHistory();
-  const dispatch = useDispatch();
-  const iconState = useSelector(state => state.iconReducer)
+ 
 
 
   function handleHeart(event) {
