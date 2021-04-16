@@ -183,14 +183,22 @@ conn.sync({ force: true }).then(() => {
       })
       let [myFavorite, favCreated] = await Favorite.findOrCreate({
         where:{
-          id: i+1
+          name: '',
         }
       });
       let [myWishlist, wishCreated] = await Wishlist.findOrCreate({
         where:{
-          id: i+1
+          name: `list-${i}`,
         }
       });
+      let wishProducts = await Product.findAll({
+        where: {
+          id: {
+            [Op.in]: wishlists[i].productProductId
+          }
+        }
+      })
+      myWishlist.addProducts(wishProducts)
       let [myUser, created] = await User.findOrCreate({
         where: {
           type: users[i].type,
@@ -206,7 +214,7 @@ conn.sync({ force: true }).then(() => {
       await myUser.setReviews(findReview);
       await myUser.hasProducts(findProduct);
       await myUser.setFavorite(myFavorite);
-      await myUser.setWishlists(myWishlist);
+      await myUser.addWishlist(myWishlist);
       await myUser.setPaymentMethods(findPaymentMethod);
     }
 
@@ -243,14 +251,31 @@ conn.sync({ force: true }).then(() => {
       await findProduct.setWishlists(findWishlist)
     }
 
-    let [newWish] = await Wishlist.findOrCreate({
+    let [newWish, wishCreated] = await Wishlist.findOrCreate({
       where: {
-        id: 15,
-      },
-      defaults: {
         name: 'wishlist15',
-      },
+      }
     });
+
+    for(let i = 0; i < reviews.length; i++){
+      const theOrderDetail = await OrderDetail.findOne({
+        where: {
+            id: i+1
+        },
+        include: [{
+          model: Product,
+          attributes: ['id']
+        }]
+      })
+      const productReviewId = theOrderDetail.dataValues.productId
+      const theProduct = await Product.findOne({
+        where: {
+          id: productReviewId
+        }
+      })
+      const theReview = await Review.findByPk(i+1)
+      theReview.setProduct(theProduct)      
+    }
 
     let newUser = await User.findByPk(2);
     await newUser.addWishlists(newWish);

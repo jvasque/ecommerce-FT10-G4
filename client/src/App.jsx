@@ -9,7 +9,7 @@ import ProductFormCreate from "./components/product_form/product_form_create";
 import ProductFormQuery from "./components/product_form/product_form_query";
 import ProductFormUpdate from "./components/product_form/product_form_update";
 import ProductFormDelete from "./components/product_form/product_form_delete";
-
+import OrderHistory from "./components/OrderHistory/OrderHistory"
 //import "./App.css";
 import Catalog from "./components/Catalog/Catalog.jsx";
 import Form from "./components/formCategories/Form";
@@ -35,6 +35,7 @@ function App() {
           <Route exact path="/admin/product/form/update" component={ProductFormUpdate} />
           <Route exact path="/admin/product/form/delete" component={ProductFormDelete} />
           <Route exact path="/user/signup/form/create" component={Signup}/>
+          <Route exact path='/user/orders' component={OrderHistory}/>
         </Switch>
         <Route path="/" component={Footer} />
     </div>

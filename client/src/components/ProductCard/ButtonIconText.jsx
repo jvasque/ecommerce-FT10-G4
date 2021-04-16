@@ -57,7 +57,7 @@ function ButtonIconText(props){
                 </FormGroup>       
             </div>
             <div className='textContainer'>
-                <DivText className='textIcon' content={props.icon === 'Heart' ? 'Add to Favorites':'Add to Cart'}/>
+                <DivText className='textIcon' content={props.icon === 'Heart' ? 'Agregar a Favoritos':'Agregar a Carrito'}/>
             </div>
         </div> 
  

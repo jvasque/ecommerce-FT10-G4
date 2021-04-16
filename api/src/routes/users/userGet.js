@@ -1,6 +1,6 @@
 const { User, Product, Order, OrderDetail } = require("../../db.js");
 
-module.exports = async (req, res, next) => {
+module.exports = async (req, res) => {
   try {
     let data = await User.findAll({ include: {
       model: Order,

@@ -64,7 +64,7 @@ function SearchBar() {
           <input
             id="search"
             type="search"
-            placeholder="Search..."
+            placeholder="Buscar..."
             autoFocus
             required
             value={find}

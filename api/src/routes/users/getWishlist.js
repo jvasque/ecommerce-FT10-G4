@@ -10,7 +10,7 @@ module.exports = async (req, res, next) => {
     let data = await User.findOne(
     {
       where: {
-        id: id,
+        userId: id,
       },
       include: {
         model: Wishlist,
