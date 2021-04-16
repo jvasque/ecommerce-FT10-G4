@@ -13,7 +13,7 @@ export default (state = initialState, action) => {
       console.log(action.payload);
       return {
        ...state,
-        user: {... action.payload},
+        user:  action.payload,
         isLogin: true,
         isAdmin: true
       };
