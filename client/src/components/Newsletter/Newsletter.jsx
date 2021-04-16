@@ -1,11 +1,24 @@
 import React, { useState } from "react";
+import axios from "axios";
 
 const Newsletter = () => {
+  
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
 
+  const [boletinesInformativos, setBoletinesInformativos] = useState(true);
+  const [promociones, setPromociones] = useState(true);  
+  const [nuevosLanzamientos, setNuevosLanzamientos] = useState(true);  
+
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (!boletinesInformativos && !promociones && !nuevosLanzamientos)
+    {
+        alert("Para suscribirte seleccion al menos un tipo de suscripción");
+
+        return;
+    }    
 
     if (name === "") {
       alert("Digita el nombre");
@@ -20,35 +33,40 @@ const Newsletter = () => {
     var url = "http://localhost:3001/newsLetter";
 
     let newsLetter = {
-        name: name,
-        email: email,
+      name: name,
+      email: email,
+      boletinesInformativos: boletinesInformativos,
+      promociones: promociones,
+      nuevosLanzamientos: nuevosLanzamientos
     };
 
-    fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json;charset=utf-8",
-      },
-      body: JSON.stringify(newsLetter),
-    })
-      .then((res) => res.json())
-      .catch((error) => {
-        console.error("Error:", error);
-        alert(error);
-      })
-      .then((response) => {
-        console.log("Success:", response);
-
-        if (response.message === "ok") {
+    axios
+      .post(
+        url,
+        newsLetter,
+        {
+          headers: {
+            "Content-Type": "application/json;charset=utf-8",
+          },
+        }
+      )
+      .then((res) => {
+        //console.log(res);
+        //console.log(res.data);
+        if (res.data.message === "ok") {
           alert("Suscripción realizada");
-
           setName("");
           setEmail("");
-        } else {
-          alert("Ese email ya existe");
-        }
 
+          setBoletinesInformativos(true);
+          setPromociones(true);
+          setNuevosLanzamientos(true);  
+
+        } else {
+          alert(res.data.message);
+        }
       });
+
   };
 
   return (
@@ -67,7 +85,31 @@ const Newsletter = () => {
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Email"
         />
+        <br />
 
+        <input
+          type="checkbox"
+          onChange={(e) => setBoletinesInformativos(!boletinesInformativos)}
+          defaultChecked={boletinesInformativos}
+        />
+
+        <label>Boletines informativos</label>
+
+        <input
+          type="checkbox"
+          onChange={(e) => setPromociones(!promociones)}
+          defaultChecked={promociones}
+        />
+
+        <label>Promociones</label>
+
+        <input
+          type="checkbox"
+          onChange={(e) => setNuevosLanzamientos(!nuevosLanzamientos)}
+          defaultChecked={nuevosLanzamientos}
+        />
+        <label>Nuevos lanzamientos</label>
+        <br />
         <button>Suscribirse</button>
       </form>
     </>

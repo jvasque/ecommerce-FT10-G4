@@ -1,15 +1,21 @@
-const { NewsletterOption } = require("./../db.js");
+const { NewsletterOption } = require("../../db.js");
 
 module.exports = async (req, res, next) => {
 
   try {
       const {
           name,
-          email
+          email,
+          boletinesInformativos,
+          promociones,
+          nuevosLanzamientos
       } = req.body;
       const newsLetther = await NewsletterOption.create({
           name,
-          email
+          email,
+          boletinesInformativos,
+          promociones,
+          nuevosLanzamientos
       });
       res.json({
                     newsLetther: newsLetther,
