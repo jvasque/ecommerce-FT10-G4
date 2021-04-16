@@ -7,7 +7,9 @@ const putCategory = require("./categories/putCategory");
 const products = require('./products/product');
 const search = require('./products/search');
 const users = require('./users/user');
+
 const newsLetter = require('./users/newsLetter');
+
 const cors = require("cors");
 const { route } = require("./products/product");
 
@@ -25,5 +27,6 @@ router.use('/products', products);
 router.use('/search', search);
 router.use('/users', users);
 router.use('/newsLetter', newsLetter);
+
 
 module.exports = router;

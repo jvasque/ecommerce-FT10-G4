@@ -51,26 +51,22 @@ const Newsletter = () => {
         }
       )
       .then((res) => {
-        //console.log(res);
-        //console.log(res.data);
-        if (res.data.message === "ok") {
-          alert("Suscripción realizada");
+
+          alert(res.data.message);
+          
           setName("");
           setEmail("");
 
           setBoletinesInformativos(true);
           setPromociones(true);
-          setNuevosLanzamientos(true);  
-
-        } else {
-          alert(res.data.message);
-        }
+          setNuevosLanzamientos(true);
+          
       });
 
   };
 
   return (
-    <>
+    <div>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -112,7 +108,7 @@ const Newsletter = () => {
         <br />
         <button>Suscribirse</button>
       </form>
-    </>
+    </div>
   );
 };
 

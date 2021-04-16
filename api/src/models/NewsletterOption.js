@@ -15,7 +15,7 @@ module.exports = (sequelize) => {
     active: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
-        defaultValue: true,
+        defaultValue: false,
     },
     email: {
         type: DataTypes.STRING,
@@ -28,17 +28,17 @@ module.exports = (sequelize) => {
     boletinesInformativos: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
-      defaultValue: true,
+      defaultValue: false,
     },
     promociones: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
-      defaultValue: true,
+      defaultValue: false,
     },
     nuevosLanzamientos: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
-      defaultValue: true,
+      defaultValue: false,
     },
   });
 };
