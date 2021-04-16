@@ -4,7 +4,7 @@ import "../../scss/components/Signup/_Signup2.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { postUser } from "../../redux/postUserReducer/postUserActions";
 import Swal from "sweetalert2";
-import { LoginAction, LogOut } from "../../redux/loginReducer/loginActions";
+import { LoginAction, LogOut, SwalBoo } from "../../redux/loginReducer/loginActions";
 import { useHistory } from "react-router";
 
 const Signup2 = () => {
@@ -22,6 +22,7 @@ const Signup2 = () => {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError]=useState(false)
   const log = useSelector((state) => state.loginReducer);
   const sessionChange = (e) => {
     return e.target.name === "uname"
@@ -34,27 +35,33 @@ const Signup2 = () => {
     e.preventDefault();
 
     if (username.length > 5) {
-      await dispatch(LoginAction(username, password));
-      
-     
-     
-    }
-  };
+   dispatch(LoginAction(username, password));
+   
+ 
+  }};
 
   useEffect(() => {
-    if (log.isLogin) {
+    if(log.isLogin){
       history.push({
         pathname: "/",
-      });
-    }else{
+      });}
+     
+  }, [log.isLogin])
+
+
+  useEffect(() => {
+    if(log.errorLogin){
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
         text: 'No voy a mentirte marge, tus datos estan mal',
         confirmButtonColor: "#378a19",
       })
-    }
-  }, [log.isLogin])
+    dispatch(SwalBoo())}
+    
+  }, [log.errorLogin])
+
+
   ////////
 
   const signUpButton = () => {

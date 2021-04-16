@@ -1,4 +1,4 @@
-import { LOGIN_ACTION_KEY, LOG_FAIL, LOG_OUT } from "./loginActions";
+import { LOGIN_ACTION_KEY, LOG_FAIL, LOG_OUT, LOG_SWAL } from "./loginActions";
 
 const initialState = {
   user: {},
@@ -6,6 +6,7 @@ const initialState = {
   errorLogin: false,
   isLogin: false,
   isAdmin: false,
+  // Swal:false
 };
 
 export default (state = initialState, action) => {
@@ -30,6 +31,10 @@ export default (state = initialState, action) => {
         user: {},
         isLogin: false,
       };
+      case LOG_SWAL:
+        return {
+          errorLogin:false
+        }
     default:
       return { ...state };
   }

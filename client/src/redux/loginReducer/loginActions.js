@@ -5,6 +5,7 @@ export const LOGIN_ACTION_KEY = "LOGIN_ACTION_KEY";
 
 export const LOG_OUT = "LOG_OUT";
 export const LOG_FAIL = "LOG_FAIL";
+export const LOG_SWAL = 'LOG_SWAL'
 
 export const LoginAction = (email, password) => {
   
@@ -33,3 +34,9 @@ export const LogOut = () => {
     type: LOG_OUT,
   };
 };
+
+export const SwalBoo = () => {
+  return {
+    type: LOG_SWAL
+  }
+}
