@@ -7,7 +7,7 @@ import "../../scss/components/OrderHistory/_OrderHistory.scss"
 import "../../scss/components/OrderHistory/_FilterOrder.scss"
 
 function OrderHistory(){
-    let userId = 2
+    let userId = 10
     const [orders, setOrders] = useState([])
     const [sort, setSort] = useState({
         id: false,
