@@ -90,35 +90,6 @@ conn.sync({ force: true }).then(() => {
       });
     }
 
-    //Order creation and association
-    for (let i = 0; i < orders.length; i++) {
-      const findOrderDetail = await OrderDetail.findAll({
-        where: {
-          id: {
-            [Op.in]: orders[i].orderDetailOrderDetailId,
-          },
-        },
-      });
-      const findPaymentMethod = await PaymentMethod.findByPk(
-        orders[i].paymentMethod
-      );
-
-      let myOrder = await Order.create({
-        status: orders[i].status,
-      });
-      await myOrder.setOrderDetails(findOrderDetail);
-      await myOrder.setPaymentMethod(findPaymentMethod);
-    }
-
-    //Review creation
-    for (let i = 0; i < reviews.length; i++) {
-      let myReview = await Review.create({
-        score: reviews[i].score,
-        content: reviews[i].content,
-      });
-      const findOrderDetail = await OrderDetail.findByPk(i + 1);
-    }
-
     //Product creation and association
     for (let i = 0; i < products.length; i++) {
       const findCategory = await Category.findAll({
@@ -158,6 +129,39 @@ conn.sync({ force: true }).then(() => {
       await myProduct.setSubCategories(findSubCategory);
       await myProduct.setOrderDetails(findOrderDetail);
     }
+    
+
+    //Order creation and association
+    for (let i = 0; i < orders.length; i++) {
+      const findOrderDetail = await OrderDetail.findAll({
+        where: {
+          id: {
+            [Op.in]: orders[i].orderDetailOrderDetailId,
+          },
+        },
+      });
+      const findPaymentMethod = await PaymentMethod.findByPk(
+        orders[i].paymentMethod
+      );
+
+      let myOrder = await Order.create({
+        status: orders[i].status,
+      });
+      await myOrder.setOrderDetails(findOrderDetail);
+      await myOrder.setPaymentMethod(findPaymentMethod);
+    }
+
+    //Review creation
+    for (let i = 0; i < reviews.length; i++) {
+      let myReview = await Review.create({
+        score: reviews[i].score,
+        content: reviews[i].content,
+      });
+      const findOrderDetail = await OrderDetail.findByPk(i + 1);
+      const findRandomProduct = await Product.findByPk(Math.round(Math.random()*4) + 1);
+      const setReview = await myReview.setProduct(findRandomProduct);
+    }
+
 
     //User creation and association
     for (let i = 0; i < users.length; i++) {
