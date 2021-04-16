@@ -149,7 +149,7 @@ const ProductDetails = (props) => {
             <hr />
             <p>{productDetail.description}</p>
           </div>
-          <Reviews></Reviews>
+          <Reviews id = {productDetail.id}/>
         </div>
       ) : (
         <div>loading...</div>

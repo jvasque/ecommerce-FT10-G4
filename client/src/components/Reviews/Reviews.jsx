@@ -5,6 +5,8 @@ import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import { makeStyles } from '@material-ui/core/styles';
+import { submitCommentary } from '../../redux/reviewsReducer/actionsReviews';
+import { useDispatch, useSelector } from 'react-redux';
 import "../../scss/components/Reviews/_Reviews.scss";
 
 const useStyles = makeStyles((theme) => ({
@@ -17,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Reviews(props) {
+  const dispatch = useDispatch();
   const [input, setInput] = useState({
       rate: "",
       text:""
@@ -59,6 +62,7 @@ function Reviews(props) {
             color="primary"
             className={classes.margin}
             type="submit"
+            onClick = {()=> dispatch(submitCommentary(input.text, input.rate, props.id))}
           >
             Enviar
           </Button>

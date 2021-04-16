@@ -18,4 +18,5 @@ router.delete("/:id", productDeleteID);
 router.post("/:id/:categoryId", productAddCategory);
 router.delete("/:id/:categoryId", productDeleteCategory);
 
+
 module.exports = router;
