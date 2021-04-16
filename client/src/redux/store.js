@@ -25,9 +25,10 @@ function loadFromLocalStorage() {
 
 const saveStore = loadFromLocalStorage();
 
+
+
 const store = createStore(
   rootReducer,
-  saveStore,
   composeWithDevTools(applyMiddleware(thunk))
 );
 store.subscribe(() => saveToLocalStorage(store.getState()));
