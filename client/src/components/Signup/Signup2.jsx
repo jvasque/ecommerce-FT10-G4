@@ -32,11 +32,7 @@ const Signup2 = () => {
   const sessionSubmit = (e) => {
     e.preventDefault();
     
-<<<<<<< Updated upstream
     username.length && dispatch(LoginAction(username))
-=======
-    username.length /*&& password.length*/ && dispatch(LoginAction(username/*, password*/))
->>>>>>> Stashed changes
   }
   ////////
 
