@@ -17,11 +17,12 @@ import "./scss/_App.scss";
 import Footer from "./components/Footer/Footer";
 import Signup from "./components/Signup/Signup";
 import Cart from "./components/Cart/Cart"
+import Order from './components/Order/Order'
 
 function App() {
   return (
     <div className="App">
-
+    
         <Route path="/" component={Nav} />
         <Switch>
           <Route exact path="/product/cart" component={Cart}/>
@@ -35,6 +36,7 @@ function App() {
           <Route exact path="/admin/product/form/update" component={ProductFormUpdate} />
           <Route exact path="/admin/product/form/delete" component={ProductFormDelete} />
           <Route exact path="/user/signup/form/create" component={Signup}/>
+          <Route exact path="/user/cart/order" component={Order}/>
         </Switch>
         <Route path="/" component={Footer} />
     </div>
