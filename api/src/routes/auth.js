@@ -18,12 +18,14 @@ server.get("/me", async (req, res, next) => {
 });
 
 server.post("/login", function (req, res, next) {
-  passport.authenticate("local", function (err, user) {
+  passport.authenticate("local", {session: false},function (err, user, message) {
     if (err) return next(err);
-    else if (!user) return res.sendStatus(401);
-    else return res.send(jwt.sign(user, TOKEN));
+    else if (!user) return res.status(401).json({err, massage});
+    else return res.send(jwt.sign({user, TOKEN}));
   })(req, res, next);
 });
+
+
 
 module.exports = server;
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaFacebookF, FaLinkedinIn, FaGoogle } from "react-icons/fa";
 import "../../scss/components/Signup/_Signup2.scss";
 import { useDispatch, useSelector } from "react-redux";
@@ -30,16 +30,31 @@ const Signup2 = () => {
       ? setPassword(e.target.value)
       : () => {};
   };
-  const sessionSubmit = (e) => {
+  const sessionSubmit = async (e) => {
     e.preventDefault();
 
     if (username.length > 5) {
-      dispatch(LoginAction(username));
+      await dispatch(LoginAction(username, password));
+      
+     
+     
+    }
+  };
+
+  useEffect(() => {
+    if (log.isLogin) {
       history.push({
         pathname: "/",
       });
+    }else{
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'No voy a mentirte marge, tus datos estan mal',
+        confirmButtonColor: "#378a19",
+      })
     }
-  };
+  }, [log.isLogin])
   ////////
 
   const signUpButton = () => {
@@ -58,18 +73,25 @@ const Signup2 = () => {
 
   const handlesubmit = (e) => {
     e.preventDefault();
-    if(user.firstName.length && user.lastName.length && user.email.length && user.password.length){dispatch(postUser(user));
+    if (
+      user.firstName.length &&
+      user.lastName.length &&
+      user.email.length &&
+      user.password.length
+    ) {
+      dispatch(postUser(user));
 
-    Swal.fire({
-      title: "Listo, El usuario ha sido creado",
-      confirmButtonColor: "#378a19",
-    });
-    setUser({
-      firstName: "",
-      lastName: "",
-      email: "",
-      password: "",
-    });}
+      Swal.fire({
+        title: "Listo, El usuario ha sido creado",
+        confirmButtonColor: "#378a19",
+      });
+      setUser({
+        firstName: "",
+        lastName: "",
+        email: "",
+        password: "",
+      });
+    }
   };
   return (
     <div className="Signup2">
@@ -97,7 +119,7 @@ const Signup2 = () => {
                 </a>
               </div>
               <span>or use your email for registration</span>
-              
+
               <input
                 type="text"
                 name="firstName"
