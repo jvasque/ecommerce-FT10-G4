@@ -17,6 +17,7 @@ import Favorite from "@material-ui/icons/Favorite";
 import FavoriteBorder from "@material-ui/icons/FavoriteBorder";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
+import WishlistButton from './WishlistButton'
 
 const Wish = (
   <FormControlLabel
@@ -133,12 +134,15 @@ const ProductDetails = (props) => {
               <hr />
               <div className="FavCart">
                 <div className="wishlistButton">
-                  <div className='text'>Wishlist</div>
+                <div className='text'>Agregar a Favoritos</div>
                   <div className='icon'>{Wish}</div> 
                 </div>
                 <div className="addCartButton">
-                  <div className='text'>Add Cart</div>
+                  <div className='text'>Agregar al Carrito</div>
                   <div className='icon'> {Cart}</div> 
+                </div>
+                <div className='wishlistButton'>
+                  <WishlistButton/>
                 </div>
               </div>
             </div>
