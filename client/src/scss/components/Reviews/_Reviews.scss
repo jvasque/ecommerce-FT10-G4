@@ -1,0 +1,15 @@
+.Reviews{
+    .input-container{
+        display: flex;
+        border-radius: 8px;
+
+        #outlined-multiline-static{
+            width: 50vw;
+        }
+
+        .rate-send{
+            display: flex;
+            flex-direction: column;
+        }
+    }
+}
