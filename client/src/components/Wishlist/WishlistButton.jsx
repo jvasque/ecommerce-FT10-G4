@@ -7,13 +7,12 @@ import {
 } from '../../redux/wishlistReducer/wishlistActions';
 import '../../scss/components/ProductDetail/_WishlistButton.scss';
 
-const auxUserId = 2;
-
 function WishlistButton(props) {
-  // let auxWishlists = ['Fertilizantes', 'para alambrados']
+  // Local React States
   const [desplegable, setDesplegable] = useState(false);
   const [inputDesplegable, setInputDesplegable] = useState(false);
   const [input, setInput] = useState('');
+  // Redux States
   const wishlists = useSelector((state) => state.wishlistReducer.wishlists);
   const productDetail = useSelector(
     (state) => state.detailReducer.productDetail
@@ -21,15 +20,22 @@ function WishlistButton(props) {
   const changedWishlist = useSelector(
     (state) => state.wishlistReducer.changedWishlist
   );
+  const user = useSelector((state) => state.loginReducer.user);
 
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch(getWishlists(user.id));
+    return () => {};
+  }, [dispatch, changedWishlist]);
+
   function handleClick() {
-    dispatch(getWishlists(auxUserId)); //sale del user session el id del usuario
+    dispatch(getWishlists(user.id)); //sale del user session el id del usuario
     setDesplegable(true);
   }
+
   function handleAdd(wishlistId, e) {
-    // despacha action para agregar
+    // despacha action para agregar a la wishlist
     e.preventDefault();
     dispatch(addToWishlist(wishlistId, productDetail.id));
   }
@@ -38,11 +44,11 @@ function WishlistButton(props) {
     e.preventDefault();
     setInput(e.target.value);
   }
+
   function handleButton(e) {
     e.preventDefault();
-    dispatch(createWishlist(auxUserId, input));
+    dispatch(createWishlist(user.id, input));
     dispatch(addToWishlist(changedWishlist.id, productDetail.id));
-
     setDesplegable(false);
     setInput('');
   }

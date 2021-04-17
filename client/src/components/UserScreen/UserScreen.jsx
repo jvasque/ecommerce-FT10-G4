@@ -1,50 +1,76 @@
-import React, { useState, useEffect } from 'react'
-import { useSelector, useDispatch } from "react-redux";
-import '../../scss/components/UserScreen/_UserScreen.scss'
-import OrderHistory from '../OrderHistory/OrderHistory'
-import Wishlists from '../Wishlist/Wishlists'
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import '../../scss/components/UserScreen/_UserScreen.scss';
+import { BiLogOut, BiListPlus } from 'react-icons/bi';
+import OrderHistory from '../OrderHistory/OrderHistory';
+import Wishlists from '../Wishlist/Wishlists';
 import {
-    getWishlists,
-    addToWishlist,
-    createWishlist,
-  } from '../../redux/wishlistReducer/wishlistActions';
+  getWishlists,
+  addToWishlist,
+  createWishlist,
+} from '../../redux/wishlistReducer/wishlistActions';
+import { LogOut } from '../../redux/loginReducer/loginActions';
 
-const auxUserId = 2;
-export function UserScreen(){
+export function UserScreen() {
+  const [render, setRender] = useState('miCuenta');
 
-    const [render, setRender] = useState('miCuenta')
+  const login = useSelector((state) => state.loginReducer);
+  //   const user = useSelector((state) => state.loginReducer.user);
 
-    function handleClick(e){
-        e.preventDefault();
-        setRender(e.target.id);
+  const dispatch = useDispatch();
+
+  function handleClick(e) {
+    e.preventDefault();
+    setRender(e.target.id);
+  }
+
+  // useEffect(() => {
+  //   return;
+  // }, []);
+
+  const handleLogOut = () => {
+    if (login.isLogin) {
+      dispatch(LogOut());
+      alert('Se ha cerrado sesión');
     }
+  };
 
-    useEffect(() => {     
-   
-        return
-    },[])
+  return (
+    <div className="infoContainer">
+      <div className="selectScreen">
+        <h2 id="miCuenta" onClick={(e) => handleClick(e)}>
+          Mi Cuenta
+        </h2>
+        <div id="misCompras" onClick={(e) => handleClick(e)}>
+          Mis Compras
+        </div>
+        <div id="Favoritos" onClick={(e) => handleClick(e)}>
+          Favoritos
+        </div>
+        <div id="Wishlists" onClick={(e) => handleClick(e)}>
+          Wishlists
+        </div>
+        <div id="logOut" onClick={() => handleLogOut()}>
+          Cerrar Sesión <BiLogOut />
+        </div>
+        {}
+      </div>
 
-    return (
-        <div className='infoContainer'>
-            <div className='selectScreen'>  
-                <h2 id='miCuenta' onClick={(e) => handleClick(e)}>Mi Cuenta</h2>
-                <div id='misCompras' onClick={(e) => handleClick(e)}>Mis Compras</div>
-                <div id='Favoritos' onClick={(e) => handleClick(e)}>Favoritos</div>
-                <div id='Wishlists' onClick={(e) => handleClick(e)}>Wishlists</div>
-                <div id='logOut' onClick={(e) => handleClick(e)}>Cerrar Sesión</div>         
-            </div>
-
-            <div className='rendersContainer'>
-                {
-                    render ==='miCuenta'? <h3>Datos de mi cuenta</h3>:
-                    render === 'misCompras'? <OrderHistory/>:
-                    render === 'Favoritos'? <h3>Productos Favoritos</h3>:
-                    render === 'logOut'? <h3>Cerrar sesión</h3>:
-                    <Wishlists/>
-                }
-            </div>
-        </div>        
-    )
+      <div className="rendersContainer">
+        {render === 'miCuenta' ? (
+          <h3>Datos de mi cuenta</h3>
+        ) : render === 'misCompras' ? (
+          <OrderHistory />
+        ) : render === 'Favoritos' ? (
+          <h3>Productos Favoritos</h3>
+        ) : render === 'logOut' ? (
+          <h3>Cerrar sesión</h3>
+        ) : (
+          <Wishlists />
+        )}
+      </div>
+    </div>
+  );
 }
 
 export default UserScreen;
