@@ -106,7 +106,7 @@ const Signup = () => {
         <div className={`${show}  container`} id="container">
           <div className="form-container sign-up-container">
             <form action="#" onSubmit={handlesubmit}>
-              <h1>Create Account</h1>
+              <h1>Crear una cuenta</h1>
               <div className="social-container">
                 <a href="#" className="social">
                   <i className="fab fa-facebook-f">
@@ -125,7 +125,7 @@ const Signup = () => {
                   </i>
                 </a>
               </div>
-              <span>or use your email for registration</span>
+              <span>o usa un email para registrarte</span>
 
               <input
                 type="text"
@@ -160,12 +160,12 @@ const Signup = () => {
                 onChange={handleChange}
                 required
               />
-              <button type="submit">Sign Up</button>
+              <button type="submit">Registrarse</button>
             </form>
           </div>
           <div className="form-container sign-in-container">
             <form action="#" onSubmit={sessionSubmit}>
-              <h1>Sign in</h1>
+              <h1>Iniciar sesion</h1>
               <div className="social-container">
                 <a href="#" className="social">
                   <i className="fab fa-facebook-f">
@@ -183,7 +183,7 @@ const Signup = () => {
                   </i>
                 </a>
               </div>
-              <span>or use your account</span>
+              <span>o usa tu cuenta</span>
               <input
                 type="email"
                 value={username}
@@ -197,28 +197,28 @@ const Signup = () => {
                 value={password}
                 name="psw"
                 onChange={sessionChange}
-                placeholder="Password"
+                placeholder="Contraseña"
               />
-              <a href="#">Forgot your password?</a>
-              <button type="submit">Sign In</button>
+              <a href="#">Olvidaste la contraseña?</a>
+              <button type="submit">Iniciar sesion</button>
             </form>
           </div>
           <div className="overlay-container">
             <div className="overlay">
               <div className="overlay-panel overlay-left">
-                <h1>Welcome Back!</h1>
+                <h1>Bienvenido!</h1>
                 <p>
-                  To keep connected with us please login with your personal info
+                  Ya tenes una cuenta? Ingresa tu email y contraseña...
                 </p>
-                <button className="ghost" id="signIn" onClick={signInButton}>
-                  Sign In
+                <button className="ghost" id="signIn" onClick={signInButton} >
+                  Iniciar sesion
                 </button>
               </div>
               <div className="overlay-panel overlay-right">
-                <h1>Hello, Friend!</h1>
-                <p>Enter your personal details and start journey with us</p>
+                <h1>Sembremos futuro, juntos!</h1>
+                <p>Para seguir conectado con nosotros por favor ingresa tu informacion personal!</p>
                 <button className="ghost" id="signUp" onClick={signUpButton}>
-                  Sign Up
+                  Registrarse
                 </button>
               </div>
             </div>
