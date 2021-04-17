@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaFacebookF, FaLinkedinIn, FaGoogle } from "react-icons/fa";
 import "../../scss/components/Signup/_Signup2.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { postUser } from "../../redux/postUserReducer/postUserActions";
 import Swal from "sweetalert2";
-import { LoginAction, LogOut } from "../../redux/loginReducer/loginActions";
+import { LoginAction, LogOut, SwalBoo } from "../../redux/loginReducer/loginActions";
 import { useHistory } from "react-router";
 
 const Signup2 = () => {
@@ -22,6 +22,7 @@ const Signup2 = () => {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError]=useState(false)
   const log = useSelector((state) => state.loginReducer);
   const sessionChange = (e) => {
     return e.target.name === "uname"
@@ -30,16 +31,37 @@ const Signup2 = () => {
       ? setPassword(e.target.value)
       : () => {};
   };
-  const sessionSubmit = (e) => {
+  const sessionSubmit = async (e) => {
     e.preventDefault();
 
     if (username.length > 5) {
-      dispatch(LoginAction(username));
+   dispatch(LoginAction(username, password));
+   
+ 
+  }};
+
+  useEffect(() => {
+    if(log.isLogin){
       history.push({
         pathname: "/",
-      });
-    }
-  };
+      });}
+     
+  }, [log.isLogin])
+
+
+  useEffect(() => {
+    if(log.errorLogin){
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'No voy a mentirte marge, tus datos estan mal',
+        confirmButtonColor: "#378a19",
+      })
+    dispatch(SwalBoo())}
+    
+  }, [log.errorLogin])
+
+
   ////////
 
   const signUpButton = () => {
@@ -58,18 +80,25 @@ const Signup2 = () => {
 
   const handlesubmit = (e) => {
     e.preventDefault();
-    if(user.firstName.length && user.lastName.length && user.email.length && user.password.length){dispatch(postUser(user));
+    if (
+      user.firstName.length &&
+      user.lastName.length &&
+      user.email.length &&
+      user.password.length
+    ) {
+      dispatch(postUser(user));
 
-    Swal.fire({
-      title: "Listo, El usuario ha sido creado",
-      confirmButtonColor: "#378a19",
-    });
-    setUser({
-      firstName: "",
-      lastName: "",
-      email: "",
-      password: "",
-    });}
+      Swal.fire({
+        title: "Listo, El usuario ha sido creado",
+        confirmButtonColor: "#378a19",
+      });
+      setUser({
+        firstName: "",
+        lastName: "",
+        email: "",
+        password: "",
+      });
+    }
   };
   return (
     <div className="Signup2">
@@ -97,7 +126,7 @@ const Signup2 = () => {
                 </a>
               </div>
               <span>or use your email for registration</span>
-              
+
               <input
                 type="text"
                 name="firstName"
