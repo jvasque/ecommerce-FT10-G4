@@ -1,7 +1,12 @@
-import React from "react";
-import "../../scss/components/Footer/_Footer.scss";
-import { FaFacebookF, FaLinkedinIn, FaTwitter, FaInstagram } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import React from 'react';
+import '../../scss/components/Footer/_Footer.scss';
+import {
+  FaFacebookF,
+  FaLinkedinIn,
+  FaTwitter,
+  FaInstagram,
+} from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
@@ -46,22 +51,42 @@ const Footer = () => {
             <div className="social-links">
               <ul className="social-icons">
                 <li>
-                  <a className="facebook" href="https://www.facebook.com/soyhenryok/" target="_blank" rel="noopener noreferrer">
+                  <a
+                    className="facebook"
+                    href="https://www.facebook.com/soyhenryok/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     <FaFacebookF />
                   </a>
                 </li>
                 <li>
-                  <a className="instagram" href="https://www.instagram.com/soyhenry_ok/" target="_blank" rel="noopener noreferrer">
-                    <FaInstagram/>
+                  <a
+                    className="instagram"
+                    href="https://www.instagram.com/soyhenry_ok/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <FaInstagram />
                   </a>
                 </li>
                 <li>
-                  <a className="twitter"  href="https://twitter.com/soyhenry_ok" target="_blank" rel="noopener noreferrer">
+                  <a
+                    className="twitter"
+                    href="https://twitter.com/soyhenry_ok"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     <FaTwitter />
                   </a>
                 </li>
                 <li>
-                  <a className="linkedin"  href="https://www.linkedin.com/school/soyhenry/" target="_blank" rel="noopener noreferrer">
+                  <a
+                    className="linkedin"
+                    href="https://www.linkedin.com/school/soyhenry/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     <FaLinkedinIn />
                   </a>
                 </li>

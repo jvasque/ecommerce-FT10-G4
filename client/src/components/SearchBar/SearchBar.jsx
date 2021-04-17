@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useHistory } from 'react-router';
+import '../../scss/components/SearchBar/_SearchBar.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { BiSearch } from 'react-icons/bi';
 import {
@@ -8,21 +9,26 @@ import {
   getOptions,
   resetOptions,
 } from '../../redux/searchReducer/searchActions';
-
-import '../../scss/components/SearchBar/_SearchBar.scss'
-
-
-
+import { setPage } from '../../redux/catalogReducer/catalogActions';
 import { filterCategory } from '../../redux/categoryFilterReducer/categoryFilterActions';
+import useOutsideClick from '../../useOutsideClick';
 
 function SearchBar() {
   const [find, setFind] = useState('');
+
   const query = useSelector((state) => state.searchReducer.query);
   const findQuery = useSelector((state) => state.searchReducer.findQuery);
   const options = useSelector((state) => state.searchReducer.options);
+  const page = useSelector((state) => state.catalogReducer.page);
 
   const dispatch = useDispatch();
   const history = useHistory();
+  const ref = useRef();
+
+  useOutsideClick(ref, () => {
+    dispatch(resetOptions());
+    setFind('');
+  });
 
   useEffect(() => {
     setFind(findQuery);
@@ -42,6 +48,8 @@ function SearchBar() {
     e.preventDefault();
     dispatch(filterCategory(''));
     dispatch(getQuery(find));
+    dispatch(resetOptions());
+    dispatch(setPage(1));
     history.push({
       pathname: '/catalog',
     });
@@ -58,7 +66,7 @@ function SearchBar() {
   };
 
   return (
-    <div>
+    <div id="searchGroup" ref={ref}>
       <div className="searchBar">
         <form
           className="searchBarForm"

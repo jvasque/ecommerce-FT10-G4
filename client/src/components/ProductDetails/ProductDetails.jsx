@@ -17,6 +17,7 @@ import Favorite from "@material-ui/icons/Favorite";
 import FavoriteBorder from "@material-ui/icons/FavoriteBorder";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
+import WishlistButton from './WishlistButton'
 import { modifyCart, modifyFav } from "../../redux/iconReducer/iconActions";
 import {addProduct, deleteProduct} from '../../redux/cartReducer/cartActions'
 
@@ -208,6 +209,9 @@ const ProductDetails = (props) => {
                     {" "}
                     {Cart(productId, state, handleHeart)}
                   </div>
+                </div>
+                <div className='wishlistButton'>
+                  <WishlistButton/>
                 </div>
               </div>
             </div>

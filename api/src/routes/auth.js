@@ -2,7 +2,7 @@ const server = require("express").Router();
 const { User } = require("../db.js");
 const passport = require("passport");
 const jwt = require("jsonwebtoken");
-const {TOKEN} = process.env;
+const { SECRET_KEY } = process.env;
 
 server.get("/me", async (req, res, next) => {
   try {
@@ -11,19 +11,21 @@ server.get("/me", async (req, res, next) => {
       const result = await User.findByPk(id);
       //hacer verificacion por email
       res.json(result);
-    }else res.sendStatus(401);
+    } else res.sendStatus(401);
   } catch (error) {
     next(error);
   }
 });
 
 server.post("/login", function (req, res, next) {
-  passport.authenticate("local", function (err, user) {
+  passport.authenticate("local", {session: false},function (err, user, message) {
     if (err) return next(err);
     else if (!user) return res.sendStatus(401);
-    else return res.send(jwt.sign(user, TOKEN));
+    else return res.send(jwt.sign(user, SECRET_KEY));
   })(req, res, next);
 });
+
+
 
 module.exports = server;
 
