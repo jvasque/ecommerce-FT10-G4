@@ -3,9 +3,10 @@ import Rating from "@material-ui/lab/Rating";
 import Box from "@material-ui/core/Box";
 import "../../scss/components/Reviews/_CommentaryReviews.scss";
 
-function CommentaryReviews({ id, content, score, userId }) {
+function CommentaryReviews({ id, content, score, userId, fullName }) {
   return (
     <div className="CommentaryReviews">
+    <i>{fullName}</i>
       <Box component="fieldset" mb={3} borderColor="transparent">
         <Rating name="read-only" value={score} readOnly />
       </Box>

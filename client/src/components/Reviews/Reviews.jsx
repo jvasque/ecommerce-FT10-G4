@@ -84,7 +84,7 @@ function Reviews(props) {
             variant="contained"
             size="large"
             color="primary"
-            className={classes.margin, "button-send"}
+            className={`${classes.margin} button-send`}
             type="submit"
             onClick = {(e)=> handleSubmit(e)}
           >
