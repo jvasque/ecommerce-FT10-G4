@@ -5,7 +5,7 @@ module.exports = [
     paymentDate: "",
     totalPrice: "",
     paymentMethod: 1,
-    orderDetailOrderDetailId: [1, 2, 46],
+    orderDetId: [1, 2, 46],
   },
   {
     state: "cart",
