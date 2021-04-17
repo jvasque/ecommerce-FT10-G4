@@ -112,7 +112,7 @@ const Signup = () => {
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
-        text: 'No lo se rick, parece que este mail ya se encuentra registrado',
+        text: 'No lo se rick, parece que este mail se encuentra registrado',
         confirmButtonColor: "#378a19",
       })
     dispatch(SwalBooC())}
@@ -126,8 +126,8 @@ const Signup = () => {
         <div className={`${show}  container`} id="container">
           <div className="form-container sign-up-container">
             <form action="#" onSubmit={handlesubmit}>
-              <h1>Crear una cuenta</h1>
-              <div className="social-container">
+              <h1>Crea tu cuenta</h1>
+              {/* <div className="social-container">
                 <a href="#" className="social">
                   <i className="fab fa-facebook-f">
                     <FaFacebookF />
@@ -145,7 +145,7 @@ const Signup = () => {
                   </i>
                 </a>
               </div>
-              <span>o usa un email para registrarte</span>
+              <span>o use tu email para registrarte</span> */}
 
               <input
                 type="text"
@@ -185,8 +185,8 @@ const Signup = () => {
           </div>
           <div className="form-container sign-in-container">
             <form action="#" onSubmit={sessionSubmit}>
-              <h1>Iniciar sesion</h1>
-              <div className="social-container">
+              <h1>Inicia Sesion</h1>
+              {/* <div className="social-container">
                 <a href="#" className="social">
                   <i className="fab fa-facebook-f">
                     <FaFacebookF />
@@ -202,8 +202,8 @@ const Signup = () => {
                     <FaLinkedinIn />
                   </i>
                 </a>
-              </div>
-              <span>o usa tu cuenta</span>
+              </div> */}
+              {/* <span>o usa tu cuenta</span> */}
               <input
                 type="email"
                 value={username}
@@ -219,8 +219,8 @@ const Signup = () => {
                 onChange={sessionChange}
                 placeholder="Contraseña"
               />
-              <a href="#">Olvidaste la contraseña?</a>
-              <button type="submit">Iniciar sesion</button>
+              {/* <a href="#">olvidaste tu clave?</a> */}
+              <button type="submit">INICIA SESION</button>
             </form>
           </div>
           <div className="overlay-container">
