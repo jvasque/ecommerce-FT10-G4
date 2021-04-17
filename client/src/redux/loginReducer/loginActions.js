@@ -14,7 +14,7 @@ export const LoginAction = (email, password) => {
       const info = await axios
       .post(`http://localhost:3001/auth/login`, { email, password })
       
-    console.log(info);
+    console.log(decode(info.data));
     dispatch({
       type: LOGIN_ACTION_KEY,
       payload: decode(info.data),

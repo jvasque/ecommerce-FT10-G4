@@ -12,5 +12,4 @@ function AuthRoute (props){
     return <Route {...props} />;
 };
 
-
 export default AuthRoute;
