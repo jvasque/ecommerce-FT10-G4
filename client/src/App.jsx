@@ -14,7 +14,7 @@ import Form from "./components/formCategories/Form";
 import "./scss/_App.scss";
 import Footer from "./components/Footer/Footer";
 import Cart from "./components/Cart/Cart"
-import Signup2 from "./components/Signup/Signup2";
+import Signup2 from "./components/Signup/Signup";
 
 function App() {
   return (
