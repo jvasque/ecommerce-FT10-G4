@@ -2,6 +2,7 @@ import "../../scss/components/Nav/_AdminMenu.scss"
 import {Link} from "react-router-dom"
 import {BiLogOut, BiListPlus} from "react-icons/bi"
 import {FaProductHunt} from "react-icons/fa"
+import {RiAccountCircleLine} from "react-icons/ri"
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import React,{useState} from 'react'
 import { useDispatch, useSelector } from "react-redux";
@@ -30,6 +31,10 @@ export default function AdminMenu() {
 
         <div className="adminMenu">
             <ul>
+                <li>
+                    <Link className="test" to="/user/info" style={colorChange === "User" ? {color:"rgba(243, 208, 11, 0.87)"} : {color :""}} 
+                    onClick={() => setColorChange("User")}><RiAccountCircleLine/></Link>
+                </li>
                 <li>
                     <Link className="test" to="/admin/product/form" style={colorChange === "Product" ? {color:"rgba(243, 208, 11, 0.87)"} : {color :""}} 
                     onClick={() => setColorChange("Product")}><FaProductHunt/></Link>

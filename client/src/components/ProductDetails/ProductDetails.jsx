@@ -20,7 +20,7 @@ import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
 import Reviews from "../Reviews/Reviews";
 import CommentaryReviews from "../Reviews/CommentaryReviews";
 import { getCommentary } from "../../redux/reviewsReducer/actionsReviews";
-import WishlistButton from './WishlistButton'
+import WishlistButton from '../Wishlist/WishlistButton'
 import { modifyCart, modifyFav } from "../../redux/iconReducer/iconActions";
 import {addProduct, deleteProduct} from '../../redux/cartReducer/cartActions'
 
