@@ -1,0 +1,26 @@
+.Reviews{
+    .input-container{
+        display: flex;
+        border-radius: 8px;
+        align-items: center;
+        justify-items: center;
+
+        #outlined-multiline-static{
+            width: 50vw;
+        }
+
+        .rate-send{
+            display: flex;
+            flex-direction: column;
+            .stars{
+                display: flex;
+                direction: rows;
+                align-items: center;
+            }
+            
+            .button-send{
+                width: 8.8rem;
+            }
+        }
+    }
+}

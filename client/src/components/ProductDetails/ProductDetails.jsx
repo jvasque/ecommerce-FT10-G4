@@ -17,6 +17,9 @@ import Favorite from "@material-ui/icons/Favorite";
 import FavoriteBorder from "@material-ui/icons/FavoriteBorder";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
+import Reviews from "../Reviews/Reviews";
+import CommentaryReviews from "../Reviews/CommentaryReviews";
+import { getCommentary } from "../../redux/reviewsReducer/actionsReviews";
 import WishlistButton from './WishlistButton'
 import { modifyCart, modifyFav } from "../../redux/iconReducer/iconActions";
 import {addProduct, deleteProduct} from '../../redux/cartReducer/cartActions'
@@ -63,6 +66,9 @@ const ProductDetails = (props) => {
   let productId = props.match.params.id;
   const history = useHistory();
   const dispatch = useDispatch();
+
+  const {reviews} = useSelector((state)=> state.reviewsReducer)
+
   const iconState = useSelector(state => state.iconReducer)
 
   const [state, setState] = useState({
@@ -148,7 +154,10 @@ const ProductDetails = (props) => {
  
   useEffect(() => {
     dispatch(getDetail(parseInt(productId)));
+    dispatch(getCommentary(parseInt(productId)));
   }, [productId, dispatch]);
+
+  
 
   const handleClick = (cat) => {
     dispatch(filterCategory(cat));
@@ -221,6 +230,22 @@ const ProductDetails = (props) => {
             <hr />
             <p>{productDetail.description}</p>
           </div>
+          <Reviews id = {productDetail.id}/>
+          <h1>Comentarios de otros usuarios</h1>
+          {reviews[0]?.map(e => {
+            let fullName;
+            let firstName;
+            let lastName;
+            let photoURL;
+            e.user? fullName=e.user.fullName : fullName="Anonymous";
+            e.user? firstName=e.user.firstName : firstName="";
+            e.user? lastName=e.user.lastName : lastName="";
+            e.user? photoURL=e.user.photoURL : photoURL="";
+            return (
+            <CommentaryReviews key={e.id} id={e.id} score={e.score} content={e.content} userId={e.userId} firstName={firstName} lastName={lastName} fullName={fullName} photoURL={photoURL} />
+            )
+          })}
+          
         </div>
       ) : (
         <div>loading...</div>
