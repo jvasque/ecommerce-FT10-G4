@@ -9,7 +9,7 @@ module.exports = async (req, res, next) => {
             },
         include:[{
             model: Order,
-            attributes: ['id', 'status','createdAt', 'updatedAt', 'totalPrice'],
+            attributes: ['id', 'state','createdAt', 'updatedAt', 'totalPrice'],
             include: [{
                 model: OrderDetail,
                 attributes: ['id','quantity', 'unitPrice'],

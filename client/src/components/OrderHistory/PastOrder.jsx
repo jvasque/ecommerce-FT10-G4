@@ -54,7 +54,7 @@ function PastOrder({order}){
                             <DivText content={order.id}/>
                         </div>
                         <div className='orderStatus'>
-                            <DivText content={order.status}/>
+                            <DivText content={order.state}/>
                         </div>
                         <div className='orderCreatedAt'>
                             <DivText content={order.createdAt.substring(0,19).split('T').join(' ')}/>

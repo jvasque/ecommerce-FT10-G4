@@ -40,12 +40,12 @@ export function sortById(orders, sort){
 
 export function sortByState(orders, sort){
     let ordersSorted = [...orders]
-        if(!sort.status){            
+        if(!sort.state){            
             ordersSorted.sort((a, b)=>{
-                if (a.status > b.status) {
+                if (a.state > b.state) {
                     return -1;
                   }
-                if (a.status < b.status) {
+                if (a.state < b.state) {
                     return 1;
                 }
                 return 0;
@@ -60,10 +60,10 @@ export function sortByState(orders, sort){
             }]
         }
         ordersSorted.sort((a, b)=>{
-            if (b.status > a.status) {
+            if (b.state > a.state) {
                 return -1;
               }
-            if (b.status < a.status) {
+            if (b.state < a.state) {
                 return 1;
             }
             return 0;

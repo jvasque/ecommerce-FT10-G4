@@ -1,11 +1,11 @@
 const express = require('express')
 const router = require("express").Router();
-const userOrderHistory = require("./getOrderHistory")
 const userGet = require('./userGet');
 const userPost = require('./userPost');
 const userDelete = require("./userDelete");
 const userLogin = require("./userLogin");
 const userPut = require("./userPut");
+const userOrderHistory = require("./getOrderHistory")
 
 const wishlistGet = require('./wishlistGet');
 const wishlistPost = require('./wishlistPost');

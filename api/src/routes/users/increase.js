@@ -14,7 +14,7 @@ module.exports = async (req, res, next) => {
     })
 
     let myOrder = findUser.orders.filter(order => {
-        return order.status === 'CART'
+        return order.state === 'CART'
     })
 
     let myOrderId = myOrder[0].dataValues.id
