@@ -20,37 +20,7 @@ import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
 import { modifyCart, modifyFav } from "../../redux/iconReducer/iconActions";
 import {addProduct, deleteProduct} from '../../redux/cartReducer/cartActions'
 
-const Wish = (productId, state, handleHeart) => {
-  return (
-    <FormControlLabel
-      control={
-        <Checkbox
-          icon={<FavoriteBorder />}
-          checkedIcon={<Favorite />}
-          checked={state[`Fav-${productId}`] || false}
-          name={`Fav-${productId}`}
-          onChange={handleHeart}
-        />
-      }
-    />
-  );
-};
 
-const Cart = (productId, state, handleHeart) => {
-  return (
-    <FormControlLabel
-      control={
-        <Checkbox
-          icon={<ShoppingCartOutlinedIcon />}
-          checkedIcon={<ShoppingCartIcon style={{ color: "white" }} />}
-          checked={state[`Cart-${productId}`] || false}
-          name={`Cart-${productId}`}
-          onChange={handleHeart}
-        />
-      }
-    />
-  );
-};
 const customIcons = {
   1: {
     icon: <Icon icon={tractorIcon} />,
@@ -126,29 +96,46 @@ const ProductDetails = (props) => {
   //   />
   // );
 
+  const Wish = (productId, state, handleHeart) => {
+    return (
+      <FormControlLabel
+        control={
+          <Checkbox
+            icon={<FavoriteBorder />}
+            checkedIcon={<Favorite />}
+            checked={state[`Fav-${productId}`] || false}
+            name={`Fav-${productId}`}
+            onChange={(e) => handleHeart(e)}
+          />
+        }
+      />
+    );
+  };
+  
+  const Cart = (productId, state, handleHeart) => {
+    return (
+      <FormControlLabel
+        control={
+          <Checkbox
+            icon={<ShoppingCartOutlinedIcon />}
+            checkedIcon={<ShoppingCartIcon style={{ color: "white" }} />}
+            checked={iconState.cart[`Cart-${productDetail.id}`] || false}
+            name={`Cart-${productId}`}
+            onChange={(e) => handleHeart(e)}
+          />
+        }
+      />
+    );
+  };
 
-  const handleChange = (event) => {
-    
-    const test = iconState.cart[`Cart-${productDetail.id}`]
+
+  function handleHeart(event) {
+     const test = iconState.cart[`Cart-${productDetail.id}`]
     if (test === false || test === undefined) {
         dispatch(addProduct(productDetail));
       } else {
         dispatch(deleteProduct(productDetail));  
       }
-    let {name, checked} = event.target
-    setState({ ...state, [name]: checked });
-    if(name.includes('Fav')){
-        dispatch(modifyFav({[name]: checked}))
-    }else{
-        dispatch(modifyCart({[name]: checked}))
-       
-    }
-  }
-
- 
-
-
-  function handleHeart(event) {
     let { name, checked } = event.target;
     setState({ ...state, [name]: checked });
     if (name.includes("Fav")) {
