@@ -10,6 +10,7 @@ import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
 import { FormGroup } from '@material-ui/core';
 import { useDispatch, useSelector } from "react-redux";
 import { modifyCart, modifyFav } from '../../redux/iconReducer/iconActions';
+import { addProduct, deleteProduct } from "../../redux/cartReducer/cartActions";
 
 function ButtonIconText(props){
     const iconState = useSelector(state => state.iconReducer)
@@ -17,9 +18,26 @@ function ButtonIconText(props){
         [`Fav-${props.productId}`]: iconState.fav[`Fav-${props.productId}`],
         [`Cart-${props.productId}`]: iconState.cart[`Cart-${props.productId}`],
     })
+    const cartChecked= <ShoppingCartIcon style={{ color: "white" }} />
+    const [iconCartChecked, setIconcart] = useState(cartChecked);
+    const cart = useSelector((state) => state.cartReducer.cart);
     const dispatch = useDispatch();
+    const [add, setAdd] = useState(true);
+ 
+    //const addedCart = cart.filter(product=>product.productId===props.productId ? setIconcart(addedCart))
+    // addedCart.length!==0 && console.log(addedCart)
+
+
     function handleHeart(event){
         event.preventDefault();
+
+        if (add) {
+            dispatch(addProduct(props.product));
+            setAdd(!add)
+          } else {
+            dispatch(deleteProduct(props.product));
+            setAdd(true);
+          }
         let {name, checked} = event.target
         setState({ ...state, [name]: checked });
         if(name.includes('Fav')){
@@ -64,4 +82,4 @@ function ButtonIconText(props){
     )
 }
 
-export default ButtonIconText
+export default ButtonIconText;

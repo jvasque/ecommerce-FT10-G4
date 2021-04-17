@@ -106,7 +106,6 @@ conn.sync({ force: true }).then(() => {
         content: reviews[i].content,
       });
       const findOrderDetail = await OrderDetail.findByPk(i + 1);
-      await findOrderDetail.setReview(myReview);
     }
 
     //Product creation and association

@@ -9,3 +9,7 @@ module.exports = (sequelize) => {
     },
   });
 };
+
+//item en el carrito asociado a orderDetail
+//para borrar,modificar product id
+//Order detail

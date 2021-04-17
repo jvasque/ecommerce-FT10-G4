@@ -6,7 +6,8 @@ import DeleteButton from "@material-ui/icons/Delete"
 import { Button, Input } from '@material-ui/core'
 import {useDispatch}  from "react-redux"
 import {deleteProduct} from "../../redux/cartReducer/cartActions"
-import {totalPrice} from "../../redux/cartReducer/cartActions"
+import {totalPrice, incrementQ} from "../../redux/cartReducer/cartActions"
+import {modifyCart} from '../../redux/iconReducer/iconActions'
 
 function ProductCard({product}){
    const [quantity, setQuantity] = useState(1)
@@ -20,7 +21,7 @@ function ProductCard({product}){
          return setQuantity(1)
         }
         setStock(true)
-        dispatch({type:"INCREMENTQ", payload:{product:product, value: e.target.value}})
+        dispatch(incrementQ(product, e.target.value))
         dispatch(totalPrice())
     }
     
@@ -46,7 +47,7 @@ function ProductCard({product}){
                         <h3>{product.name}</h3>
                         <div className="delete">
                       <Input type="number" defaultValue={quantity} onChange={(e) => handleChange(e, product.unitsOnStock)}  placeholder={quantity}></Input>
-                      <Button onClick={() => dispatch(deleteProduct(product))}> <DeleteButton/></Button>
+                      <Button onClick={() => {dispatch(deleteProduct(product)); dispatch(modifyCart({[`Cart-${product.id}`]: false}))}}> <DeleteButton/></Button>
                       <p className="stockUp">Disponibles:{product.unitsOnStock}</p>
                       {stock ? "" : <p className="stock">No hay stock disponible</p>}
                         </div>
