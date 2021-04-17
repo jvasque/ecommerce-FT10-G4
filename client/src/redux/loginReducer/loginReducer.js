@@ -6,7 +6,7 @@ const initialState = {
   errorLogin: false,
   isLogin: false,
   isAdmin: false,
-  // Swal:false
+ 
 };
 
 export default (state = initialState, action) => {

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FaFacebookF, FaLinkedinIn, FaGoogle } from "react-icons/fa";
 import "../../scss/components/Signup/_Signup.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { postUser } from "../../redux/postUserReducer/postUserActions";
+import { PostSuccess, postUser, SwalBooC } from "../../redux/postUserReducer/postUserActions";
 import Swal from "sweetalert2";
 import { LoginAction, LogOut, SwalBoo } from "../../redux/loginReducer/loginActions";
 import { useHistory } from "react-router";
@@ -10,20 +10,14 @@ import { useHistory } from "react-router";
 const Signup = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const [show, setShow] = useState(null);
-  const [user, setUser] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-  });
+  const log = useSelector((state) => state.loginReducer);
+  const post = useSelector((state) => state.postUserReducer);
 
   //Session iniciada D:
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError]=useState(false)
-  const log = useSelector((state) => state.loginReducer);
+ 
   const sessionChange = (e) => {
     return e.target.name === "uname"
       ? setUsername(e.target.value)
@@ -33,11 +27,8 @@ const Signup = () => {
   };
   const sessionSubmit = async (e) => {
     e.preventDefault();
-
     if (username.length > 5) {
    dispatch(LoginAction(username, password));
-   
- 
   }};
 
   useEffect(() => {
@@ -62,8 +53,14 @@ const Signup = () => {
   }, [log.errorLogin])
 
 
-  ////////
-
+  //////// post user && cambio de form
+  const [show, setShow] = useState(null);
+  const [user, setUser] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+  });
   const signUpButton = () => {
     setShow("right-panel-active");
   };
@@ -88,10 +85,18 @@ const Signup = () => {
     ) {
       dispatch(postUser(user));
 
+      
+      
+    }
+  };
+
+  useEffect(() => {
+    if(post.success){
       Swal.fire({
         title: "Listo, El usuario ha sido creado",
         confirmButtonColor: "#378a19",
       });
+      dispatch(PostSuccess())
       setUser({
         firstName: "",
         lastName: "",
@@ -99,7 +104,22 @@ const Signup = () => {
         password: "",
       });
     }
-  };
+  }, [post.success])
+
+
+  useEffect(() => {
+    if(post.errorMail){
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'No lo se rick, parece que este mail ya se encuentra registrado',
+        confirmButtonColor: "#378a19",
+      })
+    dispatch(SwalBooC())}
+    
+  }, [post.errorMail])
+
+
   return (
     <div className="Signup">
       {!log.isLogin ? (

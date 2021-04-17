@@ -1,9 +1,10 @@
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const BearerStrategy = require("passport-http-bearer").Strategy;
+const FacebookStrategy = require('passport-facebook').Strategy;
 const { User } = require("./db.js");
 const jwt = require("jsonwebtoken");
-const { SECRET_KEY } = process.env;
+const { SECRET_KEY, CLIENT_SECRET,URL, CLIENT_ID } = process.env;
 
 passport.use(
   new LocalStrategy(
@@ -39,5 +40,18 @@ passport.use(
     });
   })
 );
+
+passport.use(new FacebookStrategy({
+  clientID: CLIENT_ID,
+  clientSecret: CLIENT_SECRET,
+  callbackURL: URL
+},
+ function(accessToken, refreshToken, profile, done) {
+  console.log(profile)
+    const user = User.findOne({ where: { facebookUser: profile.id } });
+}
+));
+
+
 
 module.exports = passport;

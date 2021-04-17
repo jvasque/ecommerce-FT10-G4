@@ -2,7 +2,7 @@ const { User, Product, Order, OrderDetail } = require("../../db.js");
 
 module.exports = async (req, res) => {
   try {
-    if (req.user.type === "admin" || "superadmin") {
+
       let data = await User.findAll({
         include: {
           model: Order,
@@ -26,10 +26,9 @@ module.exports = async (req, res) => {
           return 0;
         });
       return res.json(users);
-    } else {
-      res.sendStatus(401);
+   
     }
-  } catch (err) {
+   catch (err) {
     res.json(err);
     return console.log(err);
   }
