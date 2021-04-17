@@ -1,18 +1,23 @@
+const path = require("path");
+
 const { NewsletterOption } = require("../../db.js");
+
+const server = require("express").Router();
 
 const nodemailer = require('nodemailer');
 
-module.exports = async (req, res, next) => {
+//Inicia el proceso de suscripción
+server.post('/email', async (req, res, next) => {
 
     try {
-      const {
-          name,
-          email,
-          boletinesInformativos,
-          promociones,
-          nuevosLanzamientos
-      } = req.body;
-        
+        const {
+            name,
+            email,
+            boletinesInformativos,
+            promociones,
+            nuevosLanzamientos
+        } = req.body;
+
         const [newsLetter, created] = await NewsletterOption.findOrCreate({
             where: {
                 email
@@ -23,9 +28,8 @@ module.exports = async (req, res, next) => {
             }
         });
 
-        if (created) 
-        {
-            const url = `http://localhost:3001/suscripcionNewsLetter?id=${newsLetter.newsletterOptionId}&boletinesInformativos=${boletinesInformativos}&promociones=${promociones}&nuevosLanzamientos=${nuevosLanzamientos}`;
+        if (created) {
+            const url = `http://localhost:3001/newsLetter/suscripcion?id=${newsLetter.newsletterOptionId}&boletinesInformativos=${boletinesInformativos}&promociones=${promociones}&nuevosLanzamientos=${nuevosLanzamientos}`;
 
             let transporter = nodemailer.createTransport({
                 service: 'gmail',
@@ -39,7 +43,7 @@ module.exports = async (req, res, next) => {
                 from: 'developer2021vlad@gmail.com',
                 to: email,
                 subject: 'Suscripción Agro Place',
-                text: 'Usted se ha suscrito a nuestros servicios de Agro Place, ' + url
+                text: name + ' Usted se ha suscrito a nuestros servicios de Agro Place, ' + url
             };
 
             transporter.sendMail(mailOptions, function (error, info) {
@@ -55,12 +59,10 @@ module.exports = async (req, res, next) => {
                     });
                 }
             });
-        }    
-        else
-        {
-                    return res.json({
-                        message: "El email ya está en nuestra base de datos"
-                    });
+        } else {
+            return res.json({
+                message: "El email ya está en nuestra base de datos"
+            });
         }
 
     } catch (err) {
@@ -71,8 +73,86 @@ module.exports = async (req, res, next) => {
         console.log(err.message);
     }
 
+}); 
 
-    
+//Aca termina el proceso de suscripción desde el correo electrónico
+server.get('/suscripcion', async (req, res, next) => {
 
+    try 
+    {
+        const {
+            id,
+            boletinesInformativos,
+            promociones,
+            nuevosLanzamientos
+        } = req.query;
+        
+        //const newsLetter = NewsletterOption.findByPk(id);
 
-};
+        const newsLetter = await NewsletterOption.findOne({
+            where: {
+                newsletterOptionId: id
+            }
+        });
+
+        if (newsLetter !== null)
+        {
+            await NewsletterOption.update({
+                active: true,
+                boletinesInformativos,
+                promociones,
+                nuevosLanzamientos
+            }, {
+                where: {
+                    newsletterOptionId : id
+                }
+            });
+
+            const html = `
+                            <html>
+                                <head>
+                                    <title>Error</title>
+                                </head>
+                                <body>
+                                <h3>${newsLetter.name} Usted está suscrito a nuestros boletines</h3>
+                                <a href="http://localhost:3000/newsletter">para terminar haga click aquí </a>
+                                </body>
+                            </html>
+                        `;
+
+            res.send(html);
+        }
+        else
+        {
+            const html = `
+                            <html>
+                                <head>
+                                    <title>Error</title>
+                                </head>
+                                <body>
+                                Usuario no válido
+                                </body>
+                            </html>
+                        `;
+
+            res.send(html);
+        }           
+    } 
+    catch (error) 
+    {
+        const html = `
+                        <html>
+                            <head>
+                                <title>Error</title>
+                            </head>
+                            <body>
+                            ${Error}
+                            </body>
+                        </html>
+                    `;    
+
+        res.send(html);    
+    }    
+});
+
+module.exports = server;

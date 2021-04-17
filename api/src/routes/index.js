@@ -8,7 +8,7 @@ const products = require('./products/product');
 const search = require('./products/search');
 const users = require('./users/user');
 
-const newsLetter = require('./users/newsLetter');
+const newsLetter = require('./users/newsLetter.js');
 
 const cors = require("cors");
 const { route } = require("./products/product");

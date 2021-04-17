@@ -30,7 +30,7 @@ const Newsletter = () => {
       return;
     }
 
-    var url = "http://localhost:3001/newsLetter";
+    var url = "http://localhost:3001/newsLetter/email";
 
     let newsLetter = {
       name: name,

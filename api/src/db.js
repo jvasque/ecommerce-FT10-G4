@@ -97,7 +97,6 @@ Type.belongsToMany(Product, { through: 'product_type'} )
 
 Brand.belongsToMany(Product, { through: 'product_brand'} )
 
-
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
   conn: sequelize, // para importart la conexión { conn } = require('./db.js');
