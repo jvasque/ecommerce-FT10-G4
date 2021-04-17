@@ -93,7 +93,8 @@ conn.sync({ force: true }).then(() => {
       );
 
       let myOrder = await Order.create({
-        state: orders[i].state,
+        state: orders[i].status,
+        totalPrice: orders[i].totalPrice
       });
       await myOrder.setOrderDetails(findOrderDetail);
       await myOrder.setPaymentMethod(findPaymentMethod);
@@ -227,6 +228,26 @@ conn.sync({ force: true }).then(() => {
       await findUser.setOrders(findOrder);
     }
 
+    for(let i = 0; i < reviews.length; i++){
+      const theOrderDetail = await OrderDetail.findOne({
+        where: {
+            id: i+1
+        },
+        include: [{
+          model: Product,
+          attributes: ['id']
+        }]
+      })
+      const productReviewId = theOrderDetail.dataValues.productId
+      const theProduct = await Product.findOne({
+        where: {
+          id: productReviewId
+        }
+      })
+      const theReview = await Review.findByPk(i+1)
+      theReview.setProduct(theProduct)      
+    }
+    
     console.log('Products and categories pre charged');
   });
 });

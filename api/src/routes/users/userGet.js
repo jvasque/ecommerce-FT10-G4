@@ -1,6 +1,6 @@
 const { User, Product, Order, OrderDetail } = require("../../db.js");
 
-module.exports = async (req, res, next) => {
+module.exports = async (req, res) => {
   try {
     if (req.user.type === "admin" || "superadmin") {
       let data = await User.findAll({
