@@ -4,7 +4,10 @@ const express = require('express');
 const userGet = require('./userGet');
 const userPost = require('./userPost');
 const userDelete = require("./userDelete");
+const userGet = require("./userGet");
+const userPost = require("./userPost");
 const userLogin = require("./userLogin");
+
 const userPut = require("./userPut");
 const wishlistGet = require('./wishlistGet');
 const wishlistPost = require('./wishlistPost');

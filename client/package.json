@@ -27,7 +27,7 @@
     "sass": "^1.32.8",
     "styled-components": "^5.2.3",
     "sweetalert": "^2.1.2",
-    "sweetalert2": "^10.16.0"
+    "sweetalert2": "^10.16.2"
   },
   "scripts": {
     "start": "react-scripts start",

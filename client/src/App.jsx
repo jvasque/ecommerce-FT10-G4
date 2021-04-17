@@ -14,12 +14,13 @@ import Form from "./components/formCategories/Form";
 import "./scss/_App.scss";
 import Footer from "./components/Footer/Footer";
 import Cart from "./components/Cart/Cart"
+import Order from './components/Order/Order'
 import Signup from "./components/Signup/Signup";
 
 function App() {
   return (
     <div className="App">
-
+    
         <Route path="/" component={Nav} />
         <Route exact path="/" component={Home} />
         <Switch>
@@ -31,6 +32,7 @@ function App() {
           <Route exact path="/admin/product/form/create" component={ProductFormCreate} />
           <Route exact path="/admin/product/form/query" component={ProductFormQuery} />
           <Route exact path="/admin/product/form/update" component={ProductFormUpdate} />
+          <Route exact path="/user/cart/order" component={Order}/>
           <Route exact path="/user/login" component={Signup}/>
         </Switch>
         <Route path="/" component={Footer} />

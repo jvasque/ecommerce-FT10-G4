@@ -4,8 +4,10 @@ export const DELETE_PRODUCT = "DELETE_PRODUCT";
 export const TOTAL = "TOTAL";
 export const INCREMENTQ = "INCREMENTQ";
 
+var userId = 1;
+
 export function addProduct(product) {
-  axios.post(`http://localhost:3001/cart/user/${product.id}`, {
+  axios.post(`http://localhost:3001/cart/${userId}/${product.id}`, {
     productId: product.id,
   });
   return function (dispatch) {
@@ -17,7 +19,7 @@ export function addProduct(product) {
 }
 
 export function deleteProduct(product) {
-  axios.delete(`http://localhost:3001/cart/user/${product.id}`);
+  axios.delete(`http://localhost:3001/cart/${userId}/${product.id}`);
   return function (dispatch) {
     dispatch({
       type: "DELETE_PRODUCT",
@@ -35,8 +37,9 @@ export function totalPrice() {
 }
 export function incrementQ(product, value) {
   axios.put(`http://localhost:3001/cart/user/${product.id}`, {
-    productId: product.id,
+    id: product.id,
     quantity: value,
+    userId: userId,
   });
   return function (dispatch) {
     dispatch({

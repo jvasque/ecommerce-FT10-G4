@@ -3,9 +3,18 @@ const { DataTypes } = require('sequelize');
 // Luego le injectamos la conexion a sequelize.
 module.exports = (sequelize) => {
   // defino el modelo
-  sequelize.define('order', {
-    status: {
+  sequelize.define("order", {
+    firstName: {
       type: DataTypes.STRING,
+    },
+    lastName: {
+      type: DataTypes.STRING,
+    },
+    state: {
+      type: DataTypes.ENUM({
+        values: ["cart", "created", "processing", "cancelled", "completed"],
+        allowNull: false,
+      }),
     },
     creationDate: {
       type: DataTypes.STRING,
