@@ -4,11 +4,6 @@ const { DataTypes } = require('sequelize');
 module.exports = (sequelize) => {
   // defino el modelo
   const Product = sequelize.define('product', {
-    id: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
-      primaryKey: true,
-    },
     name: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -39,11 +34,19 @@ module.exports = (sequelize) => {
   });
 
   Product.addHook('beforeValidate', (product) => {
-    let word = product.name.toLowerCase();
-    let upper = word.split(' ');
-    for (let i = 0; i < upper.length; i++) {
-      upper[i] = upper[i][0].toUpperCase() + upper[i].slice(1);
+    let word = product.dataValues.name;
+
+    if (word) {
+      word = word.toLowerCase();
+      let upper = word.split(' ');
+
+      for (let i = 0; i < upper.length; i++) {
+        upper[i] = upper[i][0].toUpperCase() + upper[i].slice(1);
+      }
+
+      return (product.dataValues.name = upper.join(' '));
+    } else {
+      return;
     }
-    product.name = upper.join(' ');
   });
 };

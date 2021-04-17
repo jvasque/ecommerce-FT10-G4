@@ -6,6 +6,7 @@ import ButtonIconText from './ButtonIconText';
 import ScoreIcon from './ScoreIcon';
 
 function ProductCard({product}){
+ 
     return (
         <div className='productCard'>
             <Link className='cardLink' to={`/${product.id}`}>
@@ -40,12 +41,12 @@ function ProductCard({product}){
                 </div>                     
                 <div className='addCartButton'>   
                     <div className='cardIcon'>
-                        <ButtonIconText productId={product.id}/>
+                        <ButtonIconText product={product} productId={product.id}/>
                     </div>
                 </div>                     
             </div>
         </div>
     )
-}
+} 
 
 export default ProductCard

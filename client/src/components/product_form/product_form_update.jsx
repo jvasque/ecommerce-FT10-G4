@@ -22,9 +22,12 @@ function Product_form_update(props) {
     stock: '',
     selectCategory: '',
   });
-  const [resPic, setResPic] = useState([])
+  const [resPic, setResPic] = useState(product[0]?.picture || [])
   const [pic, setPic] = useState()
-  
+  const [progress, setProgress] = useState()
+
+ 
+
   const CLOUDINARY_URL = "https://api.cloudinary.com/v1_1/dxy0hg426/image/upload"
   const CLOUDINARY_UPLOAD_PRESET = "iyqdnelg"
 
@@ -35,19 +38,10 @@ function Product_form_update(props) {
       const data = await axios.get('http://localhost:3001/allCategories');
       setCategory(data.data);
     }
-    if (product[0]) {
-      console.log(product[0], "EL PRODUCTOOOOOOOO");
+     if (product[0]) {
       setModifProduct(product[0].categories);
-      setInput({
-        name: product[0].name,
-        SKU: product[0].SKU,
-        price: product[0].unitPrice,
-        description: product[0].description,
-        stock: product[0].unitsOnStock,
-      });
-      setResPic(product[0].picture)
-    }
-
+    } 
+    
     categories();
     //SE VIENEEEEEEEE
     const formData = new FormData()
@@ -59,12 +53,15 @@ function Product_form_update(props) {
       const res = await axios.post(CLOUDINARY_URL, formData, {
         headers:{
           'Content-Type':'multipart/form-data'
+        },
+        onUploadProgress(e){
+          setProgress((e.loaded * 100) / e.total)
         }
       })
       setResPic([...resPic, res.data.secure_url])
      }()
   }, [product, pic]);
-
+  
   const handleChange = (e) => {
     setInput({
       ...input,
@@ -147,7 +144,7 @@ function Product_form_update(props) {
             name="name"
             autoComplete="off"
             value={input.name}
-            placeholder=" Nombre..."
+            placeholder={product[0]?.name || " Nombre..."}
             onChange={handleChange}
           />
 
@@ -157,41 +154,48 @@ function Product_form_update(props) {
             name="SKU"
             autoComplete="off"
             value={input.SKU}
-            placeholder=" SKU..."
+            placeholder={product[0]?.SKU || " SKU..."}
             onChange={handleChange}
           />
 
           <label className="label">Precio por unidad:</label>
           <input
             type="number"
+            min="1"
+            max="99999"
             name="price"
             autoComplete="off"
-            placeholder=" Precio..."
+            placeholder={product[0]?.unitPrice || " Precio..."}
             value={input.price}
-            required
             onChange={handleChange}
           />
 
           <label className="label">Descripción:</label>
           <textarea
             name="description"
+            placeholder={product[0]?.description || " Descripción..."}
             value={input.description}
-            required
             onChange={handleChange}
           />
 
           <label className="label">Imagen:</label>
           {resPic.length>2 ? 
+          <div className="input_file_full">
+             <label className="input_text">Ya se agregaron tres archivos</label>
           <input
           type="file"
           id="pic"
           disabled = "true"
-          /> : 
+          /> 
+          </div>: 
+          <div className="input_file">
+            <label className="input_text">Agregar archivo</label>
           <input
           type="file"
           id="pic"
           onChange={(e) => handleChangeImg(e)}
-          /> }
+          />
+          </div> }
           
           <div className = "img-card-pic">
             {resPic?.map((i)=>(
@@ -200,17 +204,18 @@ function Product_form_update(props) {
                  <input type= "submit" value = "x" className ="boton" name = {i} onClick={(e) => handleDeleteImg(e)}/>
               </div>
               ))}
-
+                <progress value={progress} max="100"></progress>
           </div>
 
           <label className="label">Stock:</label>
           <input
             type="number"
+            min="0"
+            max="9999"
             name="stock"
             autoComplete="off"
-            placeholder=" Agregar stock..."
+            placeholder={product[0]?.unitsOnStock || " Stock..."}
             value={input.stock}
-            required
             onChange={handleChange}
           />
 

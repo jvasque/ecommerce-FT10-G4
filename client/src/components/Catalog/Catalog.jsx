@@ -48,6 +48,7 @@ function Catalog(){
                 <div className='catalogMatrix'>                    
                     {
                         !catalog[0]?.error && catalog?.map((product) => {
+                            if(product.unitsOnStock === 0) return
                             return (                             
                                 <ProductCard product={product} key={product.id}/>             
                             )
