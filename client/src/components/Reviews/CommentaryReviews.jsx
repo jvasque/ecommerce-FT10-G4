@@ -1,6 +1,7 @@
-import React from "react";
+import React, {useState} from "react";
 import Rating from "@material-ui/lab/Rating";
 import Box from "@material-ui/core/Box";
+import Typography from '@material-ui/core/Typography';
 import "../../scss/components/Reviews/_CommentaryReviews.scss";
 import { deleteCommentary } from '../../redux/reviewsReducer/actionsReviews';
 import { useDispatch } from 'react-redux';
@@ -11,6 +12,7 @@ import { deepOrange, deepPurple } from '@material-ui/core/colors';
 //PRUEBA <DELETE>
 import DeleteIcon from '@material-ui/icons/Delete';
 import SettingsIcon from '@material-ui/icons/Settings';
+import Swal2 from 'sweetalert2'
 
 const verdePrincipal="#378A19";
 const verdeClaro="#85DA6C";
@@ -60,6 +62,11 @@ function CommentaryReviews({ id, content, score, userId,
 
     const dispatch = useDispatch();
     const classes = useStyles();
+    const [input, setInput] = useState({
+      text:content,
+      rate:score
+    })
+    const [toggle, setToggle] = useState(false);
 
     function deleteRev(e, id){
       e.preventDefault(e);
@@ -83,6 +90,11 @@ function CommentaryReviews({ id, content, score, userId,
         }});
     }
 
+    async function modifRev(e){
+      e.preventDefault();
+
+    }
+
     let firstLast = (firstName[0] && lastName[0])? 
     (firstName[0] + lastName[0]) : ""
 
@@ -99,13 +111,23 @@ function CommentaryReviews({ id, content, score, userId,
     <Avatar className={classes.green}>
       {firstLast || "A"}
     </Avatar>}
-      <Box component="fieldset" mb={3} borderColor="transparent">
+      {!toggle && <Box component="fieldset" mb={3} borderColor="transparent">
         <Rating name="read-only" value={score} readOnly />
-      </Box>
-      {content}
+      </Box>}
+      {toggle && <Box component="fieldset" mb={3} borderColor="transparent">
+        <Rating
+          name="simple-controlled"
+          value={input.rate}
+          onChange={(event, newValue) => {
+            setInput({...input, rate: newValue});
+          }}
+        />
+      </Box>}
+      {!toggle && content}
+      {toggle && <input className="input-textarea" type="textarea" value={input.text} onChange={(e)=> setInput({...input, text:e.target.value})}/>}
       <DeleteIcon className={classes.delete} 
       onClick ={(e) => deleteRev(e, id)}/>
-      <SettingsIcon className={classes.settings}/>
+      <SettingsIcon className={classes.settings} onClick={(e) => {setToggle(!toggle); console.log(toggle);}}/>
     </div>
   );
 }
