@@ -46,45 +46,39 @@ function ButtonIconText(props) {
     }
   }
 
-  return (
-    <div className="buttonIcon">
-      <div className="iconContainer">
-        <FormGroup>
-          {props.icon === "Heart" ? (
-            <FormControlLabel
-              control={
-                <Checkbox
-                  icon={<FavoriteBorder />}
-                  checkedIcon={<Favorite />}
-                  checked={state[`Fav-${props.productId}`] || false}
-                  name={`Fav-${props.productId}`}
-                  onChange={handleHeart}
-                />
-              }
-            />
-          ) : (
-            <FormControlLabel
-              control={
-                <Checkbox
-                  icon={<ShoppingCartOutlinedIcon />}
-                  checkedIcon={<ShoppingCartIcon style={{ color: "white" }} />}
-                  checked={state[`Cart-${props.productId}`] || false}
-                  name={`Cart-${props.productId}`}
-                  onChange={handleHeart}
-                />
-              }
-            />
-          )}
-        </FormGroup>
-      </div>
-      <div className="textContainer">
-        <DivText
-          className="textIcon"
-          content={props.icon === "Heart" ? "Add to Favorites" : "Add to Cart"}
-        />
-      </div>
-    </div>
-  );
+    return (
+        <div className='buttonIcon'>
+            <div className='iconContainer'>
+                <FormGroup>
+                    {
+                        props.icon === 'Heart' ? (<FormControlLabel
+                        control={
+                            <Checkbox 
+                                icon={<FavoriteBorder />} 
+                                checkedIcon={<Favorite />} 
+                                checked={state[`Fav-${props.productId}`] || false}
+                                name={`Fav-${props.productId}`} 
+                                onChange={handleHeart}
+                            />
+                        }/>) : (<FormControlLabel
+                                    control={
+                                    <Checkbox 
+                                        icon={<ShoppingCartOutlinedIcon />} 
+                                        checkedIcon={<ShoppingCartIcon style={{color: "white"}}/>} 
+                                        checked={state[`Cart-${props.productId}`] || false}
+                                        name={`Cart-${props.productId}`} 
+                                        onChange={handleHeart}
+                                    />}
+                                />)
+                    }                    
+                </FormGroup>       
+            </div>
+            <div className='textContainer'>
+                <DivText className='textIcon' content={props.icon === 'Heart' ? 'Agregar a Favoritos':'Agregar a Carrito'}/>
+            </div>
+        </div> 
+ 
+    )
 }
 
 export default ButtonIconText;

@@ -7,6 +7,9 @@ module.exports = (sequelize) => {
     quantity: {
       type: DataTypes.INTEGER,
     },
+    unitPrice: {
+      type: DataTypes.FLOAT,
+    },
   });
 };
 

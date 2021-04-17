@@ -8,6 +8,7 @@ import ProductForm from "./components/product_form/product_form";
 import ProductFormCreate from "./components/product_form/product_form_create";
 import ProductFormQuery from "./components/product_form/product_form_query";
 import ProductFormUpdate from "./components/product_form/product_form_update";
+import OrderHistory from "./components/OrderHistory/OrderHistory"
 //import "./App.css";
 import Catalog from "./components/Catalog/Catalog.jsx";
 import Form from "./components/formCategories/Form";
@@ -33,6 +34,7 @@ function App() {
           <Route exact path="/admin/product/form/create" component={ProductFormCreate} />
           <Route exact path="/admin/product/form/query" component={ProductFormQuery} />
           <Route exact path="/admin/product/form/update" component={ProductFormUpdate} />
+          <Route exact path='/user/orders' component={OrderHistory}/>
           <Route exact path="/user/cart/order" component={Order}/>
           <Route exact path="/user/login" component={Signup}/>
           <Route exact path="/user/info" component={UserScreen}/>

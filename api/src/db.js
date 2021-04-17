@@ -79,11 +79,11 @@ Wishlist.belongsTo(User);
 Wishlist.belongsToMany(Product, { through: 'wishlist_product' });
 
 Review.belongsTo(User);
-//Review.belongsTo(Product) // Comment.belonfsTo(Comment)
+Review.belongsTo(Product) // Comment.belonfsTo(Comment)
 Review.belongsTo(OrderDetail); // review es por compra
 
 Product.belongsTo(User);
-//Product.hasMany(Review) // review es por compra,
+Product.hasMany(Review) // review es por compra,
 Product.hasMany(OrderDetail);
 Product.hasMany(UnitsOnLocation);
 Product.belongsToMany(Category, {

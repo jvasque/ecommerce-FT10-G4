@@ -1,0 +1,39 @@
+.containerFilterOrder{
+    flex-direction: row;
+    height: 50px;
+    width: 100%;
+    background: var(--color-brand);
+    //sanimation: 1s ease-out 0s 1 slideInFromLeft;
+    .registerFilter{
+        display: inline-block;
+        height: 100%;
+        width: 10%;
+    }
+    .stateFilter{
+        display: inline-block;
+        height: 100%;
+        width: 15%;
+    }
+    .creationFilter{
+        display: inline-block;
+        height: 100%;
+        width: 20%;
+    }
+    .updateFilter{
+        display: inline-block;
+        height: 100%;
+        width: 20%;
+    }
+    .paymentFilter{
+        display: inline-block;
+        height: 100%;
+        width: 20%;
+    }
+    .totalFilter{
+        display: inline-block;
+        height: 100%;
+        width: 15%;
+    }
+}
+
+
