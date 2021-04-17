@@ -2,17 +2,11 @@ const { User } = require("../../db.js");
 const { Sequelize, Op } = require("sequelize");
 
 module.exports = async (req, res) => {
-
   try {
-    console.log(req.user)
-    let {
-      firstName,
-      lastName,
-      email,
-      password,
-    } = req.body.data;
+    console.log(req.user);
+    let { firstName, lastName, email, password } = req.body.data;
 
-    if (!firstName) {                                                
+    if (!firstName) {
       console.log("the user must have first name");
       return res.status(404).json({ error: "the user must have first name" });
     }
@@ -28,7 +22,6 @@ module.exports = async (req, res) => {
       console.log("the user must have password");
       return res.status(404).json({ error: "the user must have password" });
     }
-    
 
     const find = await User.findOne({
       where: { email },
@@ -39,7 +32,6 @@ module.exports = async (req, res) => {
         lastName,
         email,
         password,
-    
       });
       //create a la order si no esta creada
       // si esta creada tienes que relacionar la orden con el usuario
