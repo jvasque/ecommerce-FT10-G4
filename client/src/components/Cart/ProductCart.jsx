@@ -66,6 +66,7 @@ function ProductCard({ product }) {
               dispatch(deleteProduct(product));
               dispatch(modifyCart({ [`Cart-${product.id}`]: false }));
               localStorage.removeItem(product.id);
+              dispatch(totalPrice())
             }}
           >
             {" "}
