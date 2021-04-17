@@ -2,18 +2,14 @@ import React from "react";
 import { connect, useSelector } from "react-redux";
 import { Redirect, Route } from "react-router";
 
-const AuthRoute = props => {
+function AuthRoute (props){
     const isLogin = useSelector(state => state.loginReducer.isLogin)
     const isAdmin = useSelector(state => state.loginReducer.isAdmin)
-    const { isAuthUser, type } = props;
-    if (type === "guest" && isAuthUser) return <Redirect to="/home" />;
-    else if (type === "private" && !isAuthUser) return <Redirect to="/" />;
+    const { type } = props;
+    if (type === 'admin' && !isAdmin) return <Redirect to="/" />;
+    else if (type === 'user' && !isLogin) return <Redirect to="/user/login" />;
 
     return <Route {...props} />;
 };
 
-const mapStateToProps = ({ isAuthUser }) => ({
-  isAuthUser
-});
-
-export default connect(mapStateToProps)(AuthRoute);
+export default AuthRoute;

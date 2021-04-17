@@ -5,6 +5,7 @@ import {
   addToWishlist,
   createWishlist,
 } from '../../redux/wishlistReducer/wishlistActions';
+import '../../scss/components/ProductDetail/_WishlistButton.scss';
 
 const auxUserId = 2;
 
