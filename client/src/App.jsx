@@ -49,7 +49,7 @@ function App() {
             component={ProductFormUpdate}
           />
         </AuthRoute>
-        <AuthRoute type="user">
+        <AuthRoute path="/user" type="user">
           <Route exact path="/user/orders" component={OrderHistory} />
           <Route exact path="/user/cart/order" component={Order} />
           <Route exact path="/user/info" component={UserScreen} />
