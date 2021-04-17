@@ -1,3 +1,4 @@
+const express = require('express')
 const router = require("express").Router();
 const userOrderHistory = require("./getOrderHistory")
 const userGet = require('./userGet');
@@ -6,7 +7,6 @@ const userDelete = require("./userDelete");
 const userLogin = require("./userLogin");
 const userPut = require("./userPut");
 
-const userWishlist = require("./getWishlist")
 const wishlistGet = require('./wishlistGet');
 const wishlistPost = require('./wishlistPost');
 const wishlistPut = require('./wishlistPut');
@@ -23,7 +23,6 @@ router.put("/update/:id", userPut)
 router.put("/delete/:id", userDelete);
 
 router.get("/:id/orders", userOrderHistory)
-router.get("/:id/wishlist", userWishlist)
 
 // User Wishlists routes
 router.get('/wishlist', wishlistGet); // Devolver las wishlist de un usuario (?user)

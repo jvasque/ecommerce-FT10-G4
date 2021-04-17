@@ -8,7 +8,6 @@ import ProductForm from "./components/product_form/product_form";
 import ProductFormCreate from "./components/product_form/product_form_create";
 import ProductFormQuery from "./components/product_form/product_form_query";
 import ProductFormUpdate from "./components/product_form/product_form_update";
-import ProductFormDelete from "./components/product_form/product_form_delete";
 import OrderHistory from "./components/OrderHistory/OrderHistory"
 //import "./App.css";
 import Catalog from "./components/Catalog/Catalog.jsx";
