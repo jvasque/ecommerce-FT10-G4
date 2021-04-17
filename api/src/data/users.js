@@ -66,6 +66,7 @@ module.exports = [
         address: 'Av 132 Cl 987',
         reviews: [5, 6, 7, 8, 9, 10],
         products: [],
+        photoURL:"https://www.fonditos3d.com/1024x768/espacio-misterioso.jpg",
         orderOrderId: [5, 6, 7, 8, 9 ,10, 21, 22],
         paymentMethodpaymentMethodId: [2, 3],
       },

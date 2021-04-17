@@ -9,7 +9,7 @@ const productAddCategory = require("./productAddCategory");
 const productDeleteCategory = require("./productDeleteCategory");
 const reviewGet = require("./reviewsGet");
 const reviewPost = require("./reviewsPost");
-//const reviewDelete = require("./reviewsDelete");
+const reviewDelete = require("./reviewsDelete");
 //const reviewPut = require("./reviewsPut");
 
 router.use(bodyParser.json());
@@ -22,7 +22,7 @@ router.put("/:id", productPutId);
 router.post("/", productPost);
 router.post("/:id/review", reviewPost);
 router.post("/:id/:categoryId", productAddCategory);
-//router.delete("/:id/review", reviewDelete);
+router.delete("/:id/review", reviewDelete);
 router.delete("/:id", productDeleteID);
 router.delete("/:id/:categoryId", productDeleteCategory);
 

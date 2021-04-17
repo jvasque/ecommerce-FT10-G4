@@ -205,6 +205,7 @@ conn.sync({ force: true }).then(() => {
           email: users[i].email,
           password: users[i].password,
           phone: users[i].phone,
+          photoURL: users[i].photoURL || "",
           address: users[i].address,
         },
       });

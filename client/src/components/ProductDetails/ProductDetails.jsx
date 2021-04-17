@@ -162,9 +162,15 @@ const ProductDetails = (props) => {
           <h1>Comentarios de otros usuarios</h1>
           {reviews[0]?.map(e => {
             let fullName;
+            let firstName;
+            let lastName;
+            let photoURL;
             e.user? fullName=e.user.fullName : fullName="Anonymous";
+            e.user? firstName=e.user.firstName : firstName="";
+            e.user? lastName=e.user.lastName : lastName="";
+            e.user? photoURL=e.user.photoURL : photoURL="";
             return (
-            <CommentaryReviews key={e.id} id={e.id} score={e.score} content={e.content} userId={e.userId}  fullName={fullName} />
+            <CommentaryReviews key={e.id} id={e.id} score={e.score} content={e.content} userId={e.userId} firstName={firstName} lastName={lastName} fullName={fullName} photoURL={photoURL} />
             )
           })}
           

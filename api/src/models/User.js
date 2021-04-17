@@ -90,7 +90,7 @@ module.exports = (sequelize) => {
       unique: true,
     },
     photoURL: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: true,
     },
   });
