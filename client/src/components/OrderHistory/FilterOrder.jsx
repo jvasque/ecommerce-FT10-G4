@@ -12,6 +12,8 @@ export function sortById(orders, sort){
             })
             return [ordersSorted, {
                 id: true,
+                firstName: false,
+                lastName: false,
                 status: false,
                 created: false,
                 updated: false,
@@ -30,6 +32,8 @@ export function sortById(orders, sort){
         })
         return [ordersSorted, {
             id: false,
+            firstName: false,
+            lastName: false,
             status: false,
             created: false,
             updated: false,
@@ -52,6 +56,8 @@ export function sortByState(orders, sort){
             })
             return [ordersSorted, {
                 id: false,
+                firstName: false,
+                lastName: false,
                 status: true,
                 created: false,
                 updated: false,
@@ -70,6 +76,8 @@ export function sortByState(orders, sort){
         })
         return [ordersSorted, {
             id: false,
+            firstName: false,
+            lastName: false,
             status: false,
             created: false,
             updated: false,
@@ -92,6 +100,8 @@ export function sortByCreation(orders, sort){
             })
             return [ordersSorted, {
                 id: false,
+                firstName: false,
+                lastName: false,
                 status: false,
                 created: true,
                 updated: false,
@@ -110,6 +120,8 @@ export function sortByCreation(orders, sort){
         })
         return [ordersSorted, {
             id: false,
+            firstName: false,
+            lastName: false,
             status: false,
             created: false,
             updated: false,
@@ -132,6 +144,8 @@ export function sortByUpdate(orders, sort){
             })
             return [ordersSorted, {
                 id: false,
+                firstName: false,
+                lastName: false,
                 status: false,
                 created: false,
                 updated: true,
@@ -150,6 +164,8 @@ export function sortByUpdate(orders, sort){
         })
         return [ordersSorted, {
             id: false,
+            firstName: false,
+            lastName: false,
             status: false,
             created: false,
             updated: false,
@@ -172,6 +188,8 @@ export function sortByPayment(orders, sort){
             })
             return [ordersSorted, {
                 id: false,
+                firstName: false,
+                lastName: false,
                 status: false,
                 created: false,
                 updated: false,
@@ -190,6 +208,8 @@ export function sortByPayment(orders, sort){
         })
         return [ordersSorted, {
             id: false,
+            firstName: false,
+            lastName: false,
             status: false,
             created: false,
             updated: false,
@@ -212,6 +232,8 @@ export function sortByTotal(orders, sort){
             })
             return [ordersSorted, {
                 id: false,
+                firstName: false,
+                lastName: false,
                 status: false,
                 created: false,
                 updated: false,
@@ -230,6 +252,52 @@ export function sortByTotal(orders, sort){
         })
         return [ordersSorted, {
             id: false,
+            firstName: false,
+            lastName: false,
+            status: false,
+            created: false,
+            updated: false,
+            payment: false,
+            total: false,
+        }]
+}
+
+export function sortByFirstName(orders, sort){
+    let ordersSorted = [...orders]
+        if(!sort.firstName){            
+            ordersSorted.sort((a, b)=>{
+                if (a.user.firstName > b.user.firstName) {
+                    return -1;
+                  }
+                if (a.user.firstName < b.user.firstName) {
+                    return 1;
+                }
+                return 0;
+            })
+            return [ordersSorted, {
+                id: false,
+                firstName: true,
+                lastName: false,
+                status: false,
+                created: false,
+                updated: false,
+                payment: false,
+                total: false,
+            }]
+        }
+        ordersSorted.sort((a, b)=>{
+            if (b.user.firstName > a.user.firstName) {
+                return -1;
+              }
+            if (b.user.firstName < a.user.firstName) {
+                return 1;
+            }
+            return 0;
+        })
+        return [ordersSorted, {
+            id: false,
+            firstName: false,
+            lastName: false,
             status: false,
             created: false,
             updated: false,

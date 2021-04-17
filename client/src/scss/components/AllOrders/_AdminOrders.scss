@@ -1,0 +1,105 @@
+.containerAdminOrders{
+    width: 80%;
+    margin: 2% 10%;
+    border-radius: 10px;
+    overflow: hidden;
+    .containerOrder{
+        width: 100%;
+        animation: 1s ease-out 0s 1 slideInFromLeft;
+        .order{
+            flex-direction: row;
+            background: var(--color-gray);
+            height: 50px;
+            .orderId{
+                display: inline-block;
+                height: 100%;
+                width: 10%;
+            }
+            .orderStatus{
+                display: inline-block;
+                height: 100%;
+                width: 15%;
+            }
+            .orderCreatedAt{
+                display: inline-block;
+                height: 100%;
+                width: 20%;
+            }
+            .orderUpdatedAt{
+                display: inline-block;
+                height: 100%;
+                width: 20%;
+            }
+            .orderPayment{
+                display: inline-block;
+                height: 100%;
+                width: 20%;
+            }
+            .orderTotal{
+                display: inline-block;
+                height: 100%;
+                width: 15%;
+            }
+        }
+        .folding-pannel {
+            display: block;
+            transition: all 0.2s ease-in;
+            line-height: 40px;
+        }
+        .active{
+            height: 100%;
+            .folding-pannel{
+                background: var(--color-gray);
+                //transform: perspective(350px) rotateX(0deg);
+                transition: all 0.4s ease-in-out;
+                height: 100px;                
+            }
+            .filter{
+                height: 50px;
+            }
+        } 
+        .inactive {   
+            background: var(--color-gray); 
+            height: 100%;    
+            .folding-pannel{
+                transform-origin: 50% 0%;
+                transform: perspective(250px) rotateX(-90deg);
+                transition: all 0.4s ease-in-out;
+                height: 0;
+            }
+        }
+        .containerOrderDetails {
+            width: 100%;        
+        }
+    }        
+}
+
+@keyframes slideInFromLeft {
+    // 0% {
+    //   transform: translateY(-500%);
+    // }
+    // 100% {
+    //   transform: translateY(0);
+    // }
+    0%{
+        display: none;
+        opacity: 0;
+        transform: rotateX(90deg);
+        
+      }
+      50%{
+        opacity: 0.5;
+        
+      }
+      100%{
+        opacity: 1;
+        transform: rotateX(0deg);
+      } 
+}
+
+
+
+
+
+
+
