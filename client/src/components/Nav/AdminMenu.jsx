@@ -3,7 +3,6 @@ import {Link} from "react-router-dom"
 import {BiLogOut, BiListPlus} from "react-icons/bi"
 import {FaProductHunt} from "react-icons/fa"
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import {useSelector} from "react-redux"
 import React,{useState} from 'react'
 import { useDispatch, useSelector } from "react-redux";
 import { LogOut } from "../../redux/loginReducer/loginActions";
