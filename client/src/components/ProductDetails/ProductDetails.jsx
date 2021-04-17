@@ -159,7 +159,7 @@ const ProductDetails = (props) => {
             <p>{productDetail.description}</p>
           </div>
           <Reviews id = {productDetail.id}/>
-          <h1>Comentarios</h1>
+          <h1>Comentarios de otros usuarios</h1>
           {reviews[0]?.map(e => {
             return (
             <CommentaryReviews id={e.id} score={e.score} content={e.content} userId={e.userId}/>

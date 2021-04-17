@@ -1,9 +1,7 @@
 const { Product, Review } = require("../../db.js");
 
 module.exports = async (req, res, next) => {
-    console.log(req.body, "BODYYYY");
-    console.log(req.query, "QUERYYY");
-    console.log(req.params, "PARAMSSSS");
+
     let id = req.params.id;
 
     if(!id) return res.json({error: "please, give us an id"})
@@ -11,7 +9,10 @@ module.exports = async (req, res, next) => {
       let data = await Review.findAll({
         where:{
           productId:id
-        }
+        },
+        order: [
+          ['createdAt', 'DESC']
+        ]
       });
 
       if(!data) return res.json({error: "there are not reviews for this product"})

@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import TextField from "@material-ui/core/TextField";
 import Rating from "@material-ui/lab/Rating";
 import Typography from "@material-ui/core/Typography";
+import Alert from '@material-ui/lab/Alert';
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import { submitCommentary } from '../../redux/reviewsReducer/actionsReviews';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import swal from "sweetalert";
 import "../../scss/components/Reviews/_Reviews.scss";
 
 const useStyles = makeStyles((theme) => ({
@@ -18,11 +20,12 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+
 function Reviews(props) {
   const dispatch = useDispatch();
   const [input, setInput] = useState({
-      rate: "",
-      text:""
+    rate: "",
+    text:""
   });
   const classes = useStyles();
 
@@ -34,9 +37,27 @@ function Reviews(props) {
     })
   }
 
+  function handleSubmit(e){
+    e.preventDefault(e);
+    if(!input.text) {
+      return swal("Aviso!","No has ingresado un comentario", "warning")
+    }
+    if(!input.rate) {
+      return e.preventDefault(e);
+    }
+    dispatch(submitCommentary(input.text, input.rate, props.id))
+    .then(e => {
+      swal("Éxito!","Su comentario ha sido registrado", "success")
+      .then(e => {
+        return window.location.reload();
+      })
+    })
+    
+  }
+
   return (
     <div className="Reviews">
-      <h1>LAS REVIEWS BROO</h1>
+      <h1>Deja un comentario</h1>
       <form className="input-container">
         <TextField
           id="outlined-multiline-static"
@@ -51,18 +72,21 @@ function Reviews(props) {
         />
         <Box component="fieldset" mb={3} borderColor="transparent" className="rate-send">
           <Typography component="legend">Valora este producto</Typography>
-          <Rating
-            name="rate"
-            value={input.rate}
-            onChange={(e)=>{handleInput(e)}}
-          />
+          <div className="stars">
+            <Rating
+              name="rate"
+              value={input.rate}
+              onChange={(e)=>{handleInput(e)}}
+            />
+            {!input.rate && <Alert severity="warning">Ingresa la cantidad de estrillitas</Alert>}
+          </div>
           <Button
             variant="contained"
             size="large"
             color="primary"
-            className={classes.margin}
+            className={classes.margin, "button-send"}
             type="submit"
-            onClick = {()=> dispatch(submitCommentary(input.text, input.rate, props.id))}
+            onClick = {(e)=> handleSubmit(e)}
           >
             Enviar
           </Button>
