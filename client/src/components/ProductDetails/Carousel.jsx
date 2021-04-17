@@ -1,7 +1,7 @@
 import React from "react";
 import "../../scss/components/ProductDetail/_Carousel.scss";
 
-const Carousel = ( {img }) => {
+const Carousel = ( {img}) => {
 
   return (
     <div className="containerCar">
