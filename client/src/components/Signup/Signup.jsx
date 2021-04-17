@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { FaFacebookF, FaLinkedinIn, FaGoogle } from "react-icons/fa";
-import "../../scss/components/Signup/_Signup2.scss";
+import "../../scss/components/Signup/_Signup.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { postUser } from "../../redux/postUserReducer/postUserActions";
 import Swal from "sweetalert2";
 import { LoginAction, LogOut, SwalBoo } from "../../redux/loginReducer/loginActions";
 import { useHistory } from "react-router";
 
-const Signup2 = () => {
+const Signup = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [show, setShow] = useState(null);
@@ -101,7 +101,7 @@ const Signup2 = () => {
     }
   };
   return (
-    <div className="Signup2">
+    <div className="Signup">
       {!log.isLogin ? (
         <div className={`${show}  container`} id="container">
           <div className="form-container sign-up-container">
@@ -231,4 +231,4 @@ const Signup2 = () => {
   );
 };
 
-export default Signup2;
+export default Signup;
