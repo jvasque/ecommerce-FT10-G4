@@ -31,6 +31,7 @@ export default (state = initialState, action) => {
         ...state,
         user: {},
         isLogin: false,
+        isAdmin: false,
       };
       case LOG_SWAL:
         return {
