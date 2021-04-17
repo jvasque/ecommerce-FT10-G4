@@ -9,23 +9,43 @@ module.exports = async (req, res) => {
     productId = req.params.productId,
     action = req.query.action,
     result = [];
-    wishlist = await Wishlist.findByPk(wishlistId),
+  let wishlist = await Wishlist.findByPk(wishlistId),
     product = await Product.findByPk(productId);
 
   if (action === 'remove') {
     await product.removeWishlists(wishlist);
   } else if (action === 'add') {
     await product.addWishlists(wishlist);
+
+    wishlist = await Wishlist.findOne({
+      where: {
+        id: wishlistId,
+      },
+      attributes: ['id', 'name'],
+      include: {
+        model: Product,
+        attributes: [
+          'id',
+          'name',
+          'SKU',
+          'unitPrice',
+          'description',
+          'picture',
+          'score',
+          'unitsOnStock',
+        ],
+        through: {
+          attributes: [],
+        },
+      },
+    });
+
+    result.push(wishlist);
+    result.push(204);
   } else {
     result.push({ message: 'no changes made, action necessary in query' });
     result.push(400);
   }
-  result.push(await Wishlist.findOne({
-    where: {id: wishlistId},
-    include: {
-      model: Product,
-    }
-  }));
-  result.push(204);
-  res.json(result[0]).status(result[0]);
+
+  res.json(result[0]).status(result[1]);
 };
