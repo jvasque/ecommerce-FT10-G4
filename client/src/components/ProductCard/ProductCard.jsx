@@ -6,11 +6,12 @@ import ButtonIconText from './ButtonIconText';
 import ScoreIcon from './ScoreIcon';
 
 function ProductCard({product}){
+ 
     return (
         <div className='productCard'>
-            <Link className='cardLink' to={`/${product.productId}`}>
+            <Link className='cardLink' to={`/${product.id}`}>
                 <div className='cardPicture'>
-                    <img src={JSON.parse(product.picture)[0]} alt='product'></img>
+                    <img src={product.picture[0]} alt='product'></img>
                 </div>
                 <div className='cardContent'>
 
@@ -35,17 +36,17 @@ function ProductCard({product}){
             <div className='cardButtons'>
                 <div className='wishlistButton'>
                     <div className='cardIcon'>
-                        <ButtonIconText icon='Heart' productId={product.productId}/>
+                        <ButtonIconText icon='Heart' productId={product.id}/>
                     </div>
                 </div>                     
                 <div className='addCartButton'>   
                     <div className='cardIcon'>
-                        <ButtonIconText productId={product.productId}/>
+                        <ButtonIconText product={product} productId={product.id}/>
                     </div>
                 </div>                     
             </div>
         </div>
     )
-}
+} 
 
 export default ProductCard

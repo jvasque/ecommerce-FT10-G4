@@ -6,6 +6,8 @@ import catalogReducer from './catalogReducer/catalogReducer';
 import categoryFilterReducer from './categoryFilterReducer/categoryFilterReducer';
 import iconReducer from './iconReducer/iconReducer';
 import cartReducer from './cartReducer/cartReducer';
+import wishlistReducer from './wishlistReducer/wishlistReducer';
+import loginReducer from './loginReducer/loginReducer'
 
 const rootReducer = combineReducers({
   detailReducer,
@@ -15,6 +17,8 @@ const rootReducer = combineReducers({
   reducerProductForms,
   iconReducer,
   cartReducer,
+  wishlistReducer,
+  loginReducer,
 });
 
 export default rootReducer;

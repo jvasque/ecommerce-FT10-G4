@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Rating from "@material-ui/lab/Rating";
 import Box from "@material-ui/core/Box";
 import PropTypes from "prop-types";
@@ -17,30 +17,11 @@ import Favorite from "@material-ui/icons/Favorite";
 import FavoriteBorder from "@material-ui/icons/FavoriteBorder";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
+import WishlistButton from './WishlistButton'
+import { modifyCart, modifyFav } from "../../redux/iconReducer/iconActions";
+import {addProduct, deleteProduct} from '../../redux/cartReducer/cartActions'
 
-const Wish = (
-  <FormControlLabel
-    control={
-      <Checkbox
-        icon={<FavoriteBorder />}
-        checkedIcon={<Favorite />}
-        name="checkedH"
-      />
-    }
-  />
-);
 
-const Cart = (
-  <FormControlLabel
-    control={
-      <Checkbox
-        icon={<ShoppingCartOutlinedIcon />}
-        checkedIcon={<ShoppingCartIcon style={{ color: "white" }} />}
-        name="checkedC"
-      />
-    }
-  />
-);
 const customIcons = {
   1: {
     icon: <Icon icon={tractorIcon} />,
@@ -72,14 +53,99 @@ IconContainer.propTypes = {
   value: PropTypes.number,
 };
 
-const ProductDetails = (props) => {
-  let productId = props.match.params.id;
-  const history = useHistory();
-  const dispatch = useDispatch();
 
+
+
+const ProductDetails = (props) => {
   const { productDetail, loading } = useSelector(
     (state) => state.detailReducer
   );
+  let productId = props.match.params.id;
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const iconState = useSelector(state => state.iconReducer)
+
+  const [state, setState] = useState({
+      [`Fav-${productDetail.id}`]: iconState.fav[`Fav-${productDetail.id}}`],
+      [`Cart-${productDetail.id}}`]: iconState.cart[`Cart-${productDetail.id}}`],
+  })
+ 
+
+  // const Wish = (
+  //   <FormControlLabel
+  //     control={
+  //       <Checkbox
+  //         icon={<FavoriteBorder />}
+  //         checkedIcon={<Favorite />}
+  //         name={`Fav-${productDetail.id}`} 
+  //       />
+  //     }
+  //   />
+  // );
+  
+  // const Cart = (
+  //   <FormControlLabel
+  //     control={
+  //       <Checkbox
+  //         icon={<ShoppingCartOutlinedIcon />}
+  //         checkedIcon={<ShoppingCartIcon style={{ color: "white" }} />}
+  //         name={`Cart-${productDetail.id}`} 
+  //         onChange={(e) => handleChange(e)}
+  //         checked={iconState.cart[`Cart-${productDetail.id}`] || false}
+  //       />
+  //     }
+  //   />
+  // );
+
+  const Wish = (productId, state, handleHeart) => {
+    return (
+      <FormControlLabel
+        control={
+          <Checkbox
+            icon={<FavoriteBorder />}
+            checkedIcon={<Favorite />}
+            checked={state[`Fav-${productId}`] || false}
+            name={`Fav-${productId}`}
+            onChange={(e) => handleHeart(e)}
+          />
+        }
+      />
+    );
+  };
+  
+  const Cart = (productId, state, handleHeart) => {
+    return (
+      <FormControlLabel
+        control={
+          <Checkbox
+            icon={<ShoppingCartOutlinedIcon />}
+            checkedIcon={<ShoppingCartIcon style={{ color: "white" }} />}
+            checked={iconState.cart[`Cart-${productDetail.id}`] || false}
+            name={`Cart-${productId}`}
+            onChange={(e) => handleHeart(e)}
+          />
+        }
+      />
+    );
+  };
+
+
+  function handleHeart(event) {
+     const test = iconState.cart[`Cart-${productDetail.id}`]
+    if (test === false || test === undefined) {
+        dispatch(addProduct(productDetail));
+      } else {
+        dispatch(deleteProduct(productDetail));  
+      }
+    let { name, checked } = event.target;
+    setState({ ...state, [name]: checked });
+    if (name.includes("Fav")) {
+      dispatch(modifyFav({ [name]: checked }));
+    } else {
+      dispatch(modifyCart({ [name]: checked }));
+    }
+  }
+ 
   useEffect(() => {
     dispatch(getDetail(parseInt(productId)));
   }, [productId, dispatch]);
@@ -91,13 +157,12 @@ const ProductDetails = (props) => {
       pathname: "/catalog",
     });
   };
-
   return (
     <div className="productDetails">
       {loading ? (
         <div className="containerDetails">
-          <div className='firstCard'>
-            <Carousel img={JSON.parse(productDetail.picture)[0]} />
+          <div className="firstCard">
+            <Carousel img={productDetail.picture} />
             <div className="datos">
               <div className="detailTitle">
                 <h2>{productDetail.name}</h2>
@@ -133,12 +198,20 @@ const ProductDetails = (props) => {
               <hr />
               <div className="FavCart">
                 <div className="wishlistButton">
-                  <div className='text'>Wishlist</div>
-                  <div className='icon'>{Wish}</div> 
+                  <div className="text">Favoritos</div>
+                  <div className="icon">
+                    {Wish(productId, state, handleHeart)}
+                  </div>
                 </div>
                 <div className="addCartButton">
-                  <div className='text'>Add Cart</div>
-                  <div className='icon'> {Cart}</div> 
+                  <div className="text">AddCart</div>
+                  <div className="icon">
+                    {" "}
+                    {Cart(productId, state, handleHeart)}
+                  </div>
+                </div>
+                <div className='wishlistButton'>
+                  <WishlistButton/>
                 </div>
               </div>
             </div>

@@ -8,24 +8,25 @@ import ProductForm from "./components/product_form/product_form";
 import ProductFormCreate from "./components/product_form/product_form_create";
 import ProductFormQuery from "./components/product_form/product_form_query";
 import ProductFormUpdate from "./components/product_form/product_form_update";
-import ProductFormDelete from "./components/product_form/product_form_delete";
-
+import OrderHistory from "./components/OrderHistory/OrderHistory"
 //import "./App.css";
 import Catalog from "./components/Catalog/Catalog.jsx";
 import Form from "./components/formCategories/Form";
 import "./scss/_App.scss";
 import Footer from "./components/Footer/Footer";
-import Signup from "./components/Signup/Signup";
 import Cart from "./components/Cart/Cart"
 import Newsletter from './components/Newsletter/Newsletter';
+import Order from './components/Order/Order'
+import Signup from "./components/Signup/Signup";
 
 function App() {
   return (
     <div className="App">
-      <Route path="/" component={Nav} />
-      <Switch>
-         <Route exact path="/product/cart" component={Cart}/>
-          <Route exact path="/" component={Home} />
+    
+        <Route path="/" component={Nav} />
+        <Route exact path="/" component={Home} />
+        <Switch>
+          <Route exact path="/product/cart" component={Cart}/>
           <Route exact path="/admin/categories" component={Form} />
           <Route exact path="/catalog" component={Catalog} /> 
           {/*<Route exact path="/:id" component={ProductDetails} /> */}
@@ -33,11 +34,12 @@ function App() {
           <Route exact path="/admin/product/form/create" component={ProductFormCreate} /> 
           <Route exact path="/admin/product/form/query" component={ProductFormQuery} /> 
           <Route exact path="/admin/product/form/update" component={ProductFormUpdate} />
-          <Route exact path="/admin/product/form/delete" component={ProductFormDelete} />
-        <Route exact path="/user/signup/form/create" component={Signup} />
-        <Route exact path="/newsletter" component={Newsletter} />
-      </Switch>
-      <Route path="/" component={Footer} />
+          <Route exact path='/user/orders' component={OrderHistory}/>
+          <Route exact path="/user/cart/order" component={Order}/>
+          <Route exact path="/user/login" component={Signup}/>
+          <Route exact path="/newsletter" component={Newsletter} />
+        </Switch>
+        <Route path="/" component={Footer} />
     </div>
   );
 }

@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import { putProduct } from '../../redux/reducerProductForms/actionsProductForms';
+import { putProduct, clearProduct } from '../../redux/reducerProductForms/actionsProductForms';
 import '../../scss/components/productsForm/_ProductFormUpdate.scss';
 import swal from 'sweetalert';
 
@@ -19,10 +19,17 @@ function Product_form_update(props) {
     SKU: '',
     price: '',
     description: '',
-    pic: '',
     stock: '',
     selectCategory: '',
   });
+  const [resPic, setResPic] = useState(product[0]?.picture || [])
+  const [pic, setPic] = useState()
+  const [progress, setProgress] = useState()
+
+ 
+
+  const CLOUDINARY_URL = "https://api.cloudinary.com/v1_1/dxy0hg426/image/upload"
+  const CLOUDINARY_UPLOAD_PRESET = "iyqdnelg"
 
   const dispatch = useDispatch();
 
@@ -31,21 +38,30 @@ function Product_form_update(props) {
       const data = await axios.get('http://localhost:3001/allCategories');
       setCategory(data.data);
     }
-    if (product[0]) {
+     if (product[0]) {
       setModifProduct(product[0].categories);
-      setInput({
-        name: product[0].name,
-        SKU: product[0].SKU,
-        price: product[0].unitPrice,
-        description: product[0].description,
-        pic: product[0].picture,
-        stock: product[0].unitsOnStock,
-      });
-    }
-
+    } 
+    
     categories();
-  }, [product]);
+    //SE VIENEEEEEEEE
+    const formData = new FormData()
+    formData.append("file", pic);
+    formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET)
+    
+    const fetchImg = async function(){
 
+      const res = await axios.post(CLOUDINARY_URL, formData, {
+        headers:{
+          'Content-Type':'multipart/form-data'
+        },
+        onUploadProgress(e){
+          setProgress((e.loaded * 100) / e.total)
+        }
+      })
+      setResPic([...resPic, res.data.secure_url])
+     }()
+  }, [product, pic]);
+  
   const handleChange = (e) => {
     setInput({
       ...input,
@@ -55,34 +71,44 @@ function Product_form_update(props) {
 
   const deleteCategory = (e) => {
     e.preventDefault();
-    setModifProduct(modifProduct.filter((x) => x.categoryId != e.target.value));
+    setModifProduct(modifProduct.filter((x) => x.id != e.target.value));
   };
   const addCategory = (e) => {
     if (!e.target.value) return;
-    let aux = modifProduct.map((e) => e.categoryId);
+    let aux = modifProduct.map((e) => e.id);
     if (aux.includes(e.target.value) || aux.includes(parseInt(e.target.value)))
       return swal('Aviso!', 'La categoria se encuentra seleccionada', 'info');
     setModifProduct([
       ...modifProduct,
       {
         name: e.target[e.target.selectedIndex].text,
-        categoryId: e.target.value,
+        id: e.target.value,
       },
     ]);
+    
   };
+
+  const handleChangeImg =  (e) => {
+    setPic(e.target.files[0]);
+  }
+
+  const handleDeleteImg =  (e) => {
+  e.preventDefault()
+  setResPic(resPic.filter((i) => i != e.target.name) );
+  }
 
   const handleSubmit = async function (event) {
     event.preventDefault();
-    let categoriesIds = modifProduct.map((e) => e.categoryId);
+    let categoriesIds = modifProduct.map((e) => e.id);
 
     dispatch(
       putProduct(
-        product[0]?.productId,
+        product[0]?.id,
         input.name,
         input.SKU,
         input.price,
         input.description,
-        input.pic,
+        resPic,
         input.stock,
         categoriesIds
       )
@@ -94,7 +120,6 @@ function Product_form_update(props) {
       SKU: '',
       price: '',
       description: '',
-      pic: '',
       stock: '',
     });
     swal(
@@ -102,6 +127,7 @@ function Product_form_update(props) {
       `El producto ${input.name} ha sido modificado`,
       'success'
     ).then((e) => {
+      dispatch(clearProduct())
       window.location.reload();
       window.location.replace('http://localhost:3000/admin/product/form/query');
     });
@@ -117,7 +143,8 @@ function Product_form_update(props) {
             type="text"
             name="name"
             autoComplete="off"
-            placeholder=" Nombre..."
+            value={input.name}
+            placeholder={product[0]?.name || " Nombre..."}
             onChange={handleChange}
           />
 
@@ -126,55 +153,76 @@ function Product_form_update(props) {
             type="text"
             name="SKU"
             autoComplete="off"
-            placeholder=" SKU..."
+            value={input.SKU}
+            placeholder={product[0]?.SKU || " SKU..."}
             onChange={handleChange}
           />
 
           <label className="label">Precio por unidad:</label>
           <input
             type="number"
+            min="1"
+            max="99999"
             name="price"
             autoComplete="off"
-            placeholder=" Precio..."
+            placeholder={product[0]?.unitPrice || " Precio..."}
             value={input.price}
-            required
             onChange={handleChange}
           />
 
           <label className="label">Descripción:</label>
           <textarea
             name="description"
+            placeholder={product[0]?.description || " Descripción..."}
             value={input.description}
-            required
             onChange={handleChange}
           />
 
           <label className="label">Imagen:</label>
+          {resPic.length>2 ? 
+          <div className="input_file_full">
+             <label className="input_text">Ya se agregaron tres archivos</label>
           <input
-            type="text"
-            name="img"
-            autoComplete="off"
-            placeholder=" Agregar url..."
-            value={input.pic}
-            required
-            onChange={handleChange}
+          type="file"
+          id="pic"
+          disabled = "true"
+          /> 
+          </div>: 
+          <div className="input_file">
+            <label className="input_text">Agregar archivo</label>
+          <input
+          type="file"
+          id="pic"
+          onChange={(e) => handleChangeImg(e)}
           />
+          </div> }
+          
+          <div className = "img-card-pic">
+            {resPic?.map((i)=>(
+            <div className = "img-card-pic-interno">
+                 <img src ={i}/>
+                 <input type= "submit" value = "x" className ="boton" name = {i} onClick={(e) => handleDeleteImg(e)}/>
+              </div>
+              ))}
+                <progress value={progress} max="100"></progress>
+          </div>
 
           <label className="label">Stock:</label>
           <input
             type="number"
+            min="0"
+            max="9999"
             name="stock"
             autoComplete="off"
-            placeholder=" Agregar stock..."
+            placeholder={product[0]?.unitsOnStock || " Stock..."}
             value={input.stock}
-            required
             onChange={handleChange}
           />
 
           {modifProduct?.map((x) => (
             <label>
               {x.name}
-              <button value={x.categoryId} onClick={(e) => deleteCategory(e)}>
+              <button value={x.id} onClick={(e) => deleteCategory(e)}>
                 x
               </button>
             </label>
@@ -183,7 +231,7 @@ function Product_form_update(props) {
             <option value=""> seleccionar ...</option>
             {category.map((x) => {
               return (
-                <option key={x.name} name={x.name} value={x.categoryId}>
+                <option key={x.name} name={x.name} value={x.id}>
                   {x.name}
                 </option>
               );
@@ -194,7 +242,7 @@ function Product_form_update(props) {
       </form>
 
       <NavLink to="/admin/product/form/query">
-        <button>Volver</button>
+        <button onClick = {()=> dispatch(clearProduct())}>Volver</button>
       </NavLink>
     </div>
   );

@@ -1,7 +1,13 @@
 import React from 'react';
 import { NavLink } from "react-router-dom";
+import {clearProduct } from '../../redux/reducerProductForms/actionsProductForms'
+import { useDispatch } from 'react-redux';
 import '../../scss/components/productsForm/_ProductForm.scss'
-function product_form(props) {
+
+function Product_form(props) {
+
+    const dispatch = useDispatch();
+
     return (
         <div className = "containerProdForm">
             <h1>Administración de productos</h1>
@@ -10,7 +16,7 @@ function product_form(props) {
                     <button>Crear</button>
                 </NavLink>
                 <NavLink to="/admin/product/form/query">
-                    <button>Consultar</button>
+                    <button onClick = {()=> dispatch(clearProduct())}>Consultar</button>
                 </NavLink>
                 <NavLink to="/">
                     <button>Volver</button>
@@ -20,4 +26,4 @@ function product_form(props) {
     );
 }
 
-export default product_form;
+export default Product_form;
