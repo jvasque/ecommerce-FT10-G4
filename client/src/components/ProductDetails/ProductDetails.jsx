@@ -67,10 +67,6 @@ const ProductDetails = (props) => {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const { productDetail, loading } = useSelector(
-    (state) => state.detailReducer
-  );
-
   const {reviews} = useSelector((state)=> state.reviewsReducer)
 
   const iconState = useSelector(state => state.iconReducer)
