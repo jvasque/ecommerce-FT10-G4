@@ -11,12 +11,19 @@ import { useDispatch } from 'react-redux';
 import swal from "sweetalert";
 import "../../scss/components/Reviews/_Reviews.scss";
 
+const verdePrincipal="#378A19";
+const grisPrincipal= "#EFEFEF";
+
+
 const useStyles = makeStyles((theme) => ({
     margin: {
       margin: theme.spacing(1),
+      color: grisPrincipal,
+      backgroundColor: verdePrincipal,
     },
     extendedIcon: {
       marginRight: theme.spacing(1),
+      
     },
 }));
 
@@ -43,7 +50,7 @@ function Reviews(props) {
       return swal("Aviso!","No has ingresado un comentario", "warning")
     }
     if(!input.rate) {
-      return e.preventDefault(e);
+      return e.preventDefault(e); 
     }
     dispatch(submitCommentary(input.text, input.rate, props.id))
     .then(e => {
@@ -57,7 +64,7 @@ function Reviews(props) {
 
   return (
     <div className="Reviews">
-      <h1>Deja un comentario</h1>
+      <h2>Deja un comentario</h2>
       <form className="input-container">
         <TextField
           id="outlined-multiline-static"
@@ -78,7 +85,7 @@ function Reviews(props) {
               value={input.rate}
               onChange={(e)=>{handleInput(e)}}
             />
-            {!input.rate && <Alert severity="warning">Ingresa la cantidad de estrillitas</Alert>}
+            {(input.text&&!input.rate) && <Alert severity="warning">Ingresa la cantidad de estrillitas</Alert>}
           </div>
           <Button
             variant="contained"
