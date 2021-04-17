@@ -1,45 +1,31 @@
 const { Order } = require("../../db.js");
 
 module.exports = async (req, res, next) => {
-  console.log(req.body)
-  const {    
-    userId,
+  const {
     firstName,
     lastName,
-    status,
-    creationDate,
+    state,  
     paymentDate,
     totalPrice,
   } = req.body;
-
+  console.log(req.params.id);
   try {
-    const findDuplicate = await Order.findAll({
+    const orderCreate = await Order.findOrCreate({
       where: {
-        id:req.params.id,
-        userId: userId,
+        id: parseInt(req.params.id),
         firstName: firstName,
         lastName: lastName,
-        status: status,
-        creationDate: creationDate,
+        state: state,       
         paymentDate: paymentDate,
         totalPrice: totalPrice,
       },
     });
-    if (findDuplicate.length !== 0) {
-      res.send("Orden duplicada");
-    } else {
-      await Order.create({
-        userId: userId,
-        firstName: firstName,
-        lastName: lastName,
-        status: status,
-        creationDate: creationDate,
-        paymentDate: paymentDate,
-        totalPrice: totalPrice,
-      });
-      res.send("Orden Creada").status(200);
-    }
+    
+      res.send(orderCreate).status(200);
+    
   } catch (error) {
+    console.log(error);
     res.json(error);
   }
-};
+
+}

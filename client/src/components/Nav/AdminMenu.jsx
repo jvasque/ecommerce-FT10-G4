@@ -1,15 +1,33 @@
-import "../../scss/components/_AdminMenu.scss"
+import "../../scss/components/Nav/_AdminMenu.scss"
 import {Link} from "react-router-dom"
 import {BiLogOut, BiListPlus} from "react-icons/bi"
 import {FaProductHunt} from "react-icons/fa"
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-
 import React,{useState} from 'react'
+import { useDispatch, useSelector } from "react-redux";
+import { LogOut } from "../../redux/loginReducer/loginActions";
+
+
 
 export default function AdminMenu() {
     const [colorChange, setColorChange] = useState("")
+    const products = useSelector(state => state.cartReducer.cart)
+    let productCart = products.length !== 0 ? products.length : ""
 
+    const dispatch = useDispatch()
+    const log = useSelector(state => state.loginReducer)
+   
+    const handleLog = () => {
+        setColorChange("Exit")
+        if(log.isLogin) {
+            dispatch(LogOut());
+            alert("deslogeado")
+        }
+        
+    }
     return (
+        <div>
+
         <div className="adminMenu">
             <ul>
                 <li>
@@ -21,16 +39,16 @@ export default function AdminMenu() {
                     onClick={() => setColorChange("Categories")}><BiListPlus/></Link>
                 </li>
                 <li>
-                    <Link className="test" style={colorChange === "Exit" ? {color:"rgba(243, 208, 11, 0.87)"} : {color :""}}  to="/salir" 
-                    onClick={() => setColorChange("Exit")}><BiLogOut/></Link>
+                    <Link className="test" style={colorChange === "Exit" ? {color:"rgba(243, 208, 11, 0.87)"} : {color :""}}  to={log.isLogin?"/":'/user/login'} 
+                    onClick={handleLog}><BiLogOut/></Link>
         
                 </li>
-                <li>
-                   
-                <Link className="test" to="/product/cart"><ShoppingCartIcon/></Link>
-        
-                </li>
+                
+             
+                
             </ul>
+        </div>
+            <Link className="cart-items" to="/product/cart"><ShoppingCartIcon/>{productCart}</Link>
         </div>
     )
 }

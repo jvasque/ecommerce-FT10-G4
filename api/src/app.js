@@ -1,9 +1,11 @@
-const express = require('express');
-const cookieParser = require('cookie-parser');
-const bodyParser = require('body-parser');
-const morgan = require('morgan');
-const  index = require('./routes/index.js');
+const express = require("express");
+const cookieParser = require("cookie-parser");
+const bodyParser = require("body-parser");
+const morgan = require("morgan");
+const index = require("./routes/index.js");
+const passport = require("passport");
 
+require("./passport.js");
 require("./db.js");
 
 const server = express();
@@ -22,6 +24,19 @@ server.use((req, res, next) => {
     "Origin, X-Requested-With, Content-Type, Accept"
   );
   next();
+});
+
+server.use(passport.initialize());
+server.use(passport.session());
+
+server.all("*", function (req, res, next) {
+  passport.authenticate("bearer", function (err, user) {
+    if (err) return next(err);
+    if (user) {
+      req.user = user;
+    }
+    return next()
+  })(req, res, next);
 });
 
 server.use("/", index); //Fixear

@@ -70,6 +70,7 @@
     position: absolute;
     transition: all var(--dur) var(--bez);
     margin: 1px 0 0 2px;
+    z-index: 999;
 
     li {
       width: 18.3vw;
