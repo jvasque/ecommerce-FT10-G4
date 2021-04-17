@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { Link, NavLink, Redirect } from "react-router-dom";
 import "../../scss/components/Order/_Order.scss"
 import { Button } from "@material-ui/core";
+import OrderModify from './OrderModify'
 import axios from 'axios'
 
 
@@ -11,17 +12,39 @@ function Order() {
   const products = useSelector((state) => state.cartReducer.cart);
   const total = useSelector((state) => state.cartReducer.total);
   const user = useSelector(state=>state.loginReducer.user)
-  const islogin = useSelector(state=>state.loginReducer.isLogin)
+  const isLogin = useSelector(state=>state.loginReducer.isLogin)
 
-  
-//   useEffect(() => {
-   
-//     async()=>{
-//       let data = axios.get(`localhost:3001/order/orders/${user.id}`)
-// return
-//     }
+  useEffect(() => {
+    async function postOrder(){
+      let id= Date.now()
 
-//   }, [])
+      let user={
+        "firstName": "NataN",
+        "lastName": "J",
+        "state": "cart",             
+        "paymentDate": "hoy",
+        "totalPrice": total
+      }
+      console.log(typeof id)
+      await axios.post(`http://localhost:3001/order/orders/${id}`,{
+        
+        "firstName": user.firstName,
+        "lastName": user.lastName,
+        "state": "cart",             
+        "paymentDate": user.paymentDate,
+        "totalPrice": total
+
+      
+      })
+
+      
+    }
+
+    postOrder()
+
+  }, [isLogin])
+
+ 
 
 
   return (
@@ -36,10 +59,12 @@ function Order() {
         </div>
       </div>
       <div className="total">{total ? <h2>Total ${total}</h2> : ""}
-      {(islogin ? <a>Espacio para mercadoPago</a> : <Link className="link-redirect" to='/user/login'><Button className="test2">Realizar Pago</Button></Link>)}
+      {(isLogin ? <a>Espacio para mercadoPago</a> : <Link className="link-redirect" to='/user/login'><Button className="test2">Realizar Pago</Button></Link>)}
       
       </div>
-     
+     <div>
+          <OrderModify />
+     </div>
         
     </div>
   );

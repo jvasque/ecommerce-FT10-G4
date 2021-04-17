@@ -7,7 +7,7 @@ module.exports = async (req, res) => {
       userId,
       firstName,
       lastName,
-      status,
+      state,
       paymentDate,
       totalPrice,
     } = req.body;
@@ -22,7 +22,7 @@ module.exports = async (req, res) => {
     order.userId = userId;
     order.firstName = firstName;
     order.lastName = lastName;
-    order.status= status;
+    order.state= state;
     order.totalPrice = totalPrice;
     order.paymentDate = paymentDate;
 

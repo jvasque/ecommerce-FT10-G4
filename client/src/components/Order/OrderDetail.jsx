@@ -1,10 +1,8 @@
 import React from "react";
 import "../../scss/components/Order/_OrderDetail.scss";
 import DivText from "../ProductCard/DivText";
-import ScoreIcon from "../ProductCard/ScoreIcon";
-import { useSelector } from "react-redux";
 function OrderDetail({ product }) {
-  console.log(product);
+
   return (
     <div className="orderCard">
       <div>
