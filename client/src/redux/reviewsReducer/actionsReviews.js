@@ -32,7 +32,7 @@ export function deleteCommentary(id){
 
 export function modifyCommentary(id, text, rate){
     return async function (){
-        let json = await axios.post(`http://localhost:3001/products/${id}/review`, {
+        let json = await axios.put(`http://localhost:3001/products/${id}/review`, {
             params:{
                 text,
                 rate

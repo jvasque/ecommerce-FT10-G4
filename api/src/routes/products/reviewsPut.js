@@ -1,8 +1,10 @@
 const { Product, Review, User } = require("../../db.js");
 
 module.exports = async (req, res, next) => {
+
   let id = req.params.id;
   let {text, rate} = req.body.params;
+
 
   if (!id) return res.json({ error: "please, give us an id" });
   try {

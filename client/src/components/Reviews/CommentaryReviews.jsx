@@ -3,7 +3,7 @@ import Rating from "@material-ui/lab/Rating";
 import Box from "@material-ui/core/Box";
 import Typography from '@material-ui/core/Typography';
 import "../../scss/components/Reviews/_CommentaryReviews.scss";
-import { deleteCommentary } from '../../redux/reviewsReducer/actionsReviews';
+import { deleteCommentary, modifyCommentary } from '../../redux/reviewsReducer/actionsReviews';
 import { useDispatch } from 'react-redux';
 import swal from "sweetalert";
 import { makeStyles } from '@material-ui/core/styles';
@@ -90,10 +90,34 @@ function CommentaryReviews({ id, content, score, userId,
         }});
     }
 
-    async function modifRev(e){
-      e.preventDefault();
-
+    function modifRev(e, id, text, rate){
+      //e.preventDefault();
+      swal({
+        title: "Está seguro de modificar su comentario?",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      })
+      .then((willModify) => {  
+        if (willModify) {  
+          dispatch(modifyCommentary(id, text, rate.toString()));
+          
+          swal("Su comentario fue modificado con éxito!", 
+          {icon: "success"})
+          .then(e => window.location.reload())
+          
+        } else {    
+          swal("El comentario NO fue modificado");  
+        }});
     }
+
+    function handleCancelModif (e) {
+      setInput({
+        text:content,
+        rate:score
+      });
+      setToggle(!toggle)
+    } 
 
     let firstLast = (firstName[0] && lastName[0])? 
     (firstName[0] + lastName[0]) : ""
@@ -127,6 +151,11 @@ function CommentaryReviews({ id, content, score, userId,
       {toggle && <input className="input-textarea" type="textarea" value={input.text} onChange={(e)=> setInput({...input, text:e.target.value})}/>}
       <DeleteIcon className={classes.delete} 
       onClick ={(e) => deleteRev(e, id)}/>
+      {toggle && 
+      <div>
+        <button onClick={(e)=>{modifRev(e, id, input.text, input.rate)}}>Modificar</button>
+        <button onClick={(e) => {handleCancelModif(e)}}>Cancelar</button>
+      </div>}
       <SettingsIcon className={classes.settings} onClick={(e) => {setToggle(!toggle); console.log(toggle);}}/>
     </div>
   );
