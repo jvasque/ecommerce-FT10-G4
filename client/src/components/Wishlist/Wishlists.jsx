@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import '../../scss/components/ProductDetail/_Wishlist.scss';
+import '../../scss/components/Wishlists/_Wishlists.scss';
 
 const Wishlists = (props) => {
   const [display, setDisplay] = useState('')
@@ -13,23 +13,27 @@ const Wishlists = (props) => {
   }
 
   return (
-    <div>
-      <h1>Wishlists</h1>
+    <div className='allcontent'>
+      <h1 className='title'>Wishlists</h1>
       {wishlists &&
         wishlists.map((result, i) => (
 
-          <li key={i}>
+          <li key={i} className='wishlist'>
             <h3 onClick={() => setDisplay(result.name)}>{result.name}</h3>
-              <div className={`${result.name}Items`} style={ display === result.name? {display: "block"}: {display: "none"}}>
+              
+              <div className='products' style={ display === result.name? {display: "block"}: {display: "none"}}>
               {result.products.map((product, i) => (
-                <div>
-                  <div>{product.name}</div>
-                  <div>Precio: {product.unitPrice}</div>
-                  <div>Stock: {product.unitsOnStock}</div>
-                  <img src={product.picture[0]}></img>
+                <div className='wishlistProducts'>
+                  <img className='wishlistPic' src={product.picture[0]}></img>
+                  <div className='productsInfo'>
+                    <div className='productTitle'>{product.name}</div>
+                    <div>Precio: {product.unitPrice}</div>
+                    <div>Stock: {product.unitsOnStock}</div>
+                  </div>
                 </div>
               ))}  
               </div>
+
           </li>
         ))
       }
