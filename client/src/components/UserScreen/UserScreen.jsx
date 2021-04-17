@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from "react-redux";
 import '../../scss/components/UserScreen/_UserScreen.scss'
+import OrderHistory from '../OrderHistory/OrderHistory'
+import Wishlists from '../Wishlist/Wishlists'
 import {
     getWishlists,
     addToWishlist,
@@ -8,12 +10,9 @@ import {
   } from '../../redux/wishlistReducer/wishlistActions';
 
 const auxUserId = 2;
-function UserScreen(){
+export function UserScreen(){
 
     const [render, setRender] = useState('miCuenta')
-
-    const wishlists = useSelector((state) => state.wishlistReducer.wishlists);
-    const dispatch = useDispatch();
 
     function handleClick(e){
         e.preventDefault();
@@ -38,10 +37,10 @@ function UserScreen(){
             <div className='rendersContainer'>
                 {
                     render ==='miCuenta'? <h3>Datos de mi cuenta</h3>:
-                    render === 'misCompras'? <h3>Historial de Ordenes de compras</h3>:
+                    render === 'misCompras'? <OrderHistory/>:
                     render === 'Favoritos'? <h3>Productos Favoritos</h3>:
                     render === 'logOut'? <h3>Cerrar sesión</h3>:
-                    <h3>Wishlists</h3>
+                    <Wishlists/>
                 }
             </div>
         </div>        
