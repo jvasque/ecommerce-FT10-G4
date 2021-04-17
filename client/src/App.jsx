@@ -8,23 +8,22 @@ import ProductForm from "./components/product_form/product_form";
 import ProductFormCreate from "./components/product_form/product_form_create";
 import ProductFormQuery from "./components/product_form/product_form_query";
 import ProductFormUpdate from "./components/product_form/product_form_update";
-
 //import "./App.css";
 import Catalog from "./components/Catalog/Catalog.jsx";
 import Form from "./components/formCategories/Form";
 import "./scss/_App.scss";
 import Footer from "./components/Footer/Footer";
-import Signup from "./components/Signup/Signup";
 import Cart from "./components/Cart/Cart"
+import Signup2 from "./components/Signup/Signup2";
 
 function App() {
   return (
     <div className="App">
 
         <Route path="/" component={Nav} />
+        <Route exact path="/" component={Home} />
         <Switch>
           <Route exact path="/product/cart" component={Cart}/>
-          <Route exact path="/" component={Home} />
           <Route exact path="/admin/categories" component={Form} />
           <Route exact path="/catalog" component={Catalog} />
           <Route exact path="/:id" component={ProductDetails} />
@@ -32,7 +31,7 @@ function App() {
           <Route exact path="/admin/product/form/create" component={ProductFormCreate} />
           <Route exact path="/admin/product/form/query" component={ProductFormQuery} />
           <Route exact path="/admin/product/form/update" component={ProductFormUpdate} />
-          <Route exact path="/user/signup/form/create" component={Signup}/>
+          <Route exact path="/user/login" component={Signup2}/>
         </Switch>
         <Route path="/" component={Footer} />
     </div>

@@ -21,7 +21,7 @@ module.exports = (sequelize) => {
     email: {
       type: DataTypes.STRING,
       unique: true,
-      allowNull: false,
+      allowNull: true,
       validate: {
         isEmail: true,
       },
@@ -42,9 +42,17 @@ module.exports = (sequelize) => {
         return () => this.getDataValue('salt');
       },
     },
+    // isAdmin: {
+    //   type: DataTypes.BOOLEAN,
+    //   defaultValue: false
+    // },
     type: {
       type: DataTypes.ENUM('superadmin', 'admin', 'user', 'guest'),
       defaultValue: 'user',
+    },
+    status: {
+      type: DataTypes.ENUM("active", "disabled", "banned"),
+      defaultValue: "active",
     },
     companyName: {
       type: DataTypes.STRING,
