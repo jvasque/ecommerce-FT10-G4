@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import DivText from '../ProductCard/DivText'
-import PastOrder from '../OrderHistory/PastOrder'
+import SingleOrder from './SingleOrder'
 import { useSelector } from "react-redux";
 import "../../scss/components/AllOrders/_AdminOrders.scss"
 import "../../scss/components/AllOrders/_AdminFilterOrders.scss"
-import { sortById, sortByState, sortByCreation, sortByUpdate, sortByPayment, sortByTotal } from '../OrderHistory/FilterOrder'
-//import "../../scss/components/OrderHistory/_OrderHistory.scss"
-//import "../../scss/components/OrderHistory/_FilterOrder.scss"
+import { sortById, sortByState, sortByCreation, sortByUpdate, sortByPayment, sortByTotal, sortByFirstName, sortByLastName } from '../OrderHistory/FilterOrder'
 
 function AllOrders(){
     const userId = useSelector(state => state.loginReducer.user.id)
@@ -38,6 +36,17 @@ function AllOrders(){
         setOrders(newOrders)
     }
     
+    function sortFirstName(){
+        let [newOrders, newSort] = sortByFirstName(orders, sort)
+        setSort(newSort)
+        setOrders(newOrders)
+    }
+
+    function sortLastName(){
+        let [newOrders, newSort] = sortByLastName(orders, sort)
+        setSort(newSort)
+        setOrders(newOrders)
+    }
 
     function sortCreation(){
         let [newOrders, newSort] = sortByCreation(orders, sort)
@@ -73,8 +82,8 @@ function AllOrders(){
         <div className='containerAdminOrders'>
             <b><div className='containerAdminFilterOrder'>
                 <div className='registerAdminFilter' onClick={sortId}><DivText content='Registro'/></div>
-                <div className='firstNameAdminFilter' ><DivText content='Nombre'/></div>
-                <div className='lastNameAdminFilter' ><DivText content='Apellido'/></div>
+                <div className='firstNameAdminFilter' onClick={sortFirstName}><DivText content='Nombre'/></div>
+                <div className='lastNameAdminFilter' onClick={sortLastName}><DivText content='Apellido'/></div>
                 <div className='creationAdminFilter' onClick={sortCreation}><DivText content='Fecha de apertura'/></div>
                 <div className='updateAdminFilter' onClick={sortUpdate}><DivText content='Fecha de compra'/></div>
                 <div className='paymentAdminFilter' onClick={sortPayment}><DivText content='Metodo de Pago'/></div>
@@ -83,7 +92,7 @@ function AllOrders(){
             </div></b>
             {
                 !orders[0]?.error && orders?.map((order) => {
-                    return <PastOrder order={order} key={`Order-${order.id}`}/>
+                    return <SingleOrder order={order} key={`Order-${order.id}`}/>
                 })
             }
         </div>

@@ -1,3 +1,41 @@
+export function sortById(ordersDetails, sort){
+    let ordersDetailsSorted = [...ordersDetails]
+        if(!sort.id){            
+            ordersDetailsSorted.sort((a, b)=>{
+                if (a.id > b.id) {
+                    return -1;
+                  }
+                if (a.id < b.id) {
+                    return 1;
+                }
+                return 0;
+            })
+            return [ordersDetailsSorted, {
+                id: true,
+                name: false,
+                quantity: false,
+                price: false,
+                cost: false,
+            }]
+        }
+        ordersDetailsSorted.sort((a, b)=>{
+            if (b.id > a.id) {
+                return -1;
+              }
+            if (b.id < a.id) {
+                return 1;
+            }
+            return 0;
+        })
+        return [ordersDetailsSorted, {
+            id: false,
+            name: false,
+            quantity: false,
+            price: false,
+            cost: false,
+        }]
+}
+
 export function sortByName(ordersDetails, sort){
     let ordersDetailsSorted = [...ordersDetails]
         if(!sort.name){            
@@ -11,6 +49,7 @@ export function sortByName(ordersDetails, sort){
                 return 0;
             })
             return [ordersDetailsSorted, {
+                id: false,
                 name: true,
                 quantity: false,
                 price: false,
@@ -27,6 +66,7 @@ export function sortByName(ordersDetails, sort){
             return 0;
         })
         return [ordersDetailsSorted, {
+            id: false,
             name: false,
             quantity: false,
             price: false,
@@ -47,6 +87,7 @@ export function sortByQuantity(ordersDetails, sort){
                 return 0;
             })
             return [ordersDetailsSorted, {
+                id: false,
                 name: false,
                 quantity: true,
                 price: false,
@@ -63,6 +104,7 @@ export function sortByQuantity(ordersDetails, sort){
             return 0;
         })
         return [ordersDetailsSorted, {
+            id: false,
             name: false,
             quantity: false,
             price: false,
@@ -83,6 +125,7 @@ export function sortByPrice(ordersDetails, sort){
                 return 0;
             })
             return [ordersDetailsSorted, {
+                id: false,
                 name: false,
                 quantity: false,
                 price: true,
@@ -99,6 +142,7 @@ export function sortByPrice(ordersDetails, sort){
             return 0;
         })
         return [ordersDetailsSorted, {
+            id: false,
             name: false,
             quantity: false,
             price: false,
@@ -119,6 +163,7 @@ export function sortByCost(ordersDetails, sort){
                 return 0;
             })
             return [ordersDetailsSorted, {
+                id: false,
                 name: false,
                 quantity: false,
                 price: false,
@@ -135,6 +180,7 @@ export function sortByCost(ordersDetails, sort){
             return 0;
         })
         return [ordersDetailsSorted, {
+            id: false,
             name: false,
             quantity: false,
             price: false,

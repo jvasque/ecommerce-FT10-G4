@@ -305,3 +305,47 @@ export function sortByFirstName(orders, sort){
             total: false,
         }]
 }
+
+export function sortByLastName(orders, sort){
+    let ordersSorted = [...orders]
+        if(!sort.lastName){            
+            ordersSorted.sort((a, b)=>{
+                if (a.user.lastName > b.user.lastName) {
+                    return -1;
+                  }
+                if (a.user.lastName < b.user.lastName) {
+                    return 1;
+                }
+                return 0;
+            })
+            return [ordersSorted, {
+                id: false,
+                firstName: false,
+                lastName: true,
+                status: false,
+                created: false,
+                updated: false,
+                payment: false,
+                total: false,
+            }]
+        }
+        ordersSorted.sort((a, b)=>{
+            if (b.user.lastName > a.user.lastName) {
+                return -1;
+              }
+            if (b.user.lastName < a.user.lastName) {
+                return 1;
+            }
+            return 0;
+        })
+        return [ordersSorted, {
+            id: false,
+            firstName: false,
+            lastName: false,
+            status: false,
+            created: false,
+            updated: false,
+            payment: false,
+            total: false,
+        }]
+}
