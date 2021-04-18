@@ -46,15 +46,12 @@ function WishlistButton(props) {
   }
 
   function handleButton(e) {
-    e.preventDefault();
+    e.preventDefault()
     dispatch(createWishlist(user.id, input));
-    dispatch(addToWishlist(changedWishlist.id, productDetail.id));
-    setDesplegable(false);
     setInput('');
   }
 
   function handleCreate(e) {
-    // despacha action para crear wishlist
     e.preventDefault();
     setInputDesplegable(true);
   }
@@ -82,7 +79,7 @@ function WishlistButton(props) {
                   type="text"
                   placeholder="Nombre de lista..."
                 />
-                <button onClick={handleButton}>Crear</button>
+                <button onClick={(e) => handleButton(e)}>Crear</button>
               </li>
             ) : (
               <li id="create" onClick={(e) => handleCreate(e)}>

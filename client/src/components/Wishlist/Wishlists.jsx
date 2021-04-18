@@ -5,6 +5,7 @@ import {
   removeFromWishlist,
   getWishlists,
   createWishlist,
+  deleteWishlist,
 } from '../../redux/wishlistReducer/wishlistActions';
 
 const Wishlists = (props) => {
@@ -37,10 +38,10 @@ const Wishlists = (props) => {
     dispatch(getWishlists(login.user.id));
   }
 
-  function handleRemove(e) {
+  function handleRemove(e, wishlistId) {
     e.preventDefault(e);
-    dispatch(getWishlists(login.user.id));
-  }
+    dispatch(deleteWishlist(wishlistId));
+  };
 
   function handleInput(e) {
     e.preventDefault();
@@ -64,7 +65,7 @@ const Wishlists = (props) => {
       {wishlists &&
         wishlists.map((result, i) => (
           <li key={i} className="wishlist" onClick={(e) => handleList(e)}>
-            <button onClick={(e) => handleRemove(e)} className="X">
+            <button onClick={(e) => handleRemove(e, result.id)} className="X">
               X
             </button>
 

@@ -3,6 +3,7 @@ export const GET_WISHLISTS='GET_WISHLISTS';
 export const ADD_TO_WISHLIST='ADD_TO_WISHLIST';
 export const CREATE_WISHLIST='CREATE_WISHLIST';
 export const REMOVE_FROM_WISHLIST='REMOVE_FROM_WISHLIST';
+export const DELETE_WISHLIST='DELETE_WISHLIST';
 
 // users/wishlist?id=
 export function getWishlists(id) {
@@ -35,6 +36,14 @@ export function createWishlist( userId ,name ) {
     return axios.post(`http://localhost:3001/users/wishlist/post/${userId}?name=${name}`)
     .then(json => {
       dispatch({ type: CREATE_WISHLIST, payload: json.data})        
+    })
+  };
+};
+export function deleteWishlist( wishlistId ) {
+  return function(dispatch) {
+    return axios.delete(`http://localhost:3001/users/wishlist/delete/${wishlistId}`)
+    .then(json => {
+      dispatch({ type: DELETE_WISHLIST, payload: json.data})        
     })
   };
 };
