@@ -11,8 +11,9 @@ const cors = require("cors");
 const cart = require("./cart/orderDetail/cart");
 const order = require("./order/orders");
 const { route } = require("./products/product");
-const server = require("../routes/users/auth");
+const server = require("./auth");
 const mercadopago = require("../routes/mercadopago/mercadopago");
+const admin = require("../routes/admin/admin");
 
 const router = Router();
 router.use(cors());
@@ -31,5 +32,6 @@ router.use("/cart", cart);
 router.use("/order", order);
 router.use("/auth", server);
 router.use("/cart/checkout", mercadopago);
+router.use("/admin", admin)
 
 module.exports = router;
