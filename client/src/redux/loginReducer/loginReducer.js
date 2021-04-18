@@ -16,6 +16,7 @@ export default (state = initialState, action) => {
         ...state,
         user: action.payload,
         isLogin: true,
+        isAdmin: action.payload.type.includes('admin'),
         errorLogin:  false,
         error:{}
       };
@@ -30,6 +31,7 @@ export default (state = initialState, action) => {
         ...state,
         user: {},
         isLogin: false,
+        isAdmin: false,
       };
       case LOG_SWAL:
         return {

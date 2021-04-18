@@ -13,6 +13,7 @@ const order = require("./order/orders");
 const { route } = require("./products/product");
 const server = require("../routes/users/auth");
 const mercadopago = require("../routes/mercadopago/mercadopago");
+const orders = require("../routes/orders/orders")
 
 const router = Router();
 router.use(cors());
@@ -29,6 +30,7 @@ router.use("/search", search);
 router.use("/users", users);
 router.use("/cart", cart);
 router.use("/order", order);
+router.use("/orders", orders);
 router.use("/auth", server);
 router.use("/cart/checkout", mercadopago);
 
