@@ -1,0 +1,116 @@
+.containerAdminOrders{
+    width: 80%;
+    margin: 2% 10%;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0px 0px 3px 3px rgba(0, 0, 0, 0.1);
+    .containerAdminOrder{
+        width: 100%;
+        animation: 1s ease-out 0s 1 slideInFromLeft;
+        .orderAdmin{
+            flex-direction: row;
+            background: var(--color-gray);
+            height: 50px;
+            .orderAdminId{
+                display: inline-block;
+                height: 100%;
+                width: 7%;
+            } 
+            .orderAdminFirstName{
+                display: inline-block;
+                height: 100%;
+                width: 10%;
+            } 
+            .orderAdminLastName{
+                display: inline-block;
+                height: 100%;
+                width: 10%;
+            } 
+            .orderAdminCreatedAt{
+                display: inline-block;
+                height: 100%;
+                width: 15%;
+            }
+            .orderAdminUpdatedAt{
+                display: inline-block;
+                height: 100%;
+                width: 15%;
+            }
+            .orderAdminPayment{
+                display: inline-block;
+                height: 100%;
+                width: 13%;
+            }
+            .orderAdminTotal{
+                display: inline-block;
+                height: 100%;
+                width: 15%;
+            }
+            .orderAdminStatus{
+                display: inline-block;
+                height: 100%;
+                width: 15%;
+            }
+        }
+        .folding-pannel {
+            display: block;
+            transition: all 0.2s ease-in;
+            line-height: 40px;
+        }
+        .active{
+            height: 100%;
+            .folding-pannel{
+                background: var(--color-brand-lights);
+                //transform: perspective(350px) rotateX(0deg);
+                transition: all 0.4s ease-in-out;
+                height: 100px;                
+            }
+            .filter{
+                height: 50px;
+            }
+        } 
+        .inactive {   
+            background: var(--color-brand-lights); 
+            height: 100%;    
+            .folding-pannel{
+                transform-origin: 50% 0%;
+                transform: perspective(250px) rotateX(-90deg);
+                transition: all 0.4s ease-in-out;
+                height: 0;
+            }
+        }
+        .containerAdminOrderDetails {
+            width: 100%;        
+        }
+    }        
+}
+
+@keyframes slideInFromLeft {
+    // 0% {
+    //   transform: translateY(-500%);
+    // }
+    // 100% {
+    //   transform: translateY(0);
+    // }
+    0%{
+        display: none;
+        opacity: 0;
+        transform: rotateX(90deg);
+        
+      }
+      50%{
+        opacity: 0.5;
+        
+      }
+      100%{
+        opacity: 1;
+        transform: rotateX(0deg);
+      } 
+}
+
+
+
+
+
+
+

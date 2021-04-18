@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import OrderDetail from './OrderDetail'
 import { sortByName, sortByQuantity, sortByPrice, sortByCost } from './FilterOrderDetail'
 import DivText from '../ProductCard/DivText'
