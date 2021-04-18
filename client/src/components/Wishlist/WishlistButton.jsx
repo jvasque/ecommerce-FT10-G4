@@ -5,14 +5,14 @@ import {
   addToWishlist,
   createWishlist,
 } from '../../redux/wishlistReducer/wishlistActions';
-
-const auxUserId = 2;
+import '../../scss/components/Wishlists/_WishlistButton.scss';
 
 function WishlistButton(props) {
-  // let auxWishlists = ['Fertilizantes', 'para alambrados']
+  // Local React States
   const [desplegable, setDesplegable] = useState(false);
   const [inputDesplegable, setInputDesplegable] = useState(false);
   const [input, setInput] = useState('');
+  // Redux States
   const wishlists = useSelector((state) => state.wishlistReducer.wishlists);
   const productDetail = useSelector(
     (state) => state.detailReducer.productDetail
@@ -20,15 +20,22 @@ function WishlistButton(props) {
   const changedWishlist = useSelector(
     (state) => state.wishlistReducer.changedWishlist
   );
+  const user = useSelector((state) => state.loginReducer.user);
 
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch(getWishlists(user.id));
+    return () => {};
+  }, [dispatch, changedWishlist]);
+
   function handleClick() {
-    dispatch(getWishlists(auxUserId)); //sale del user session el id del usuario
+    dispatch(getWishlists(user.id)); //sale del user session el id del usuario
     setDesplegable(true);
   }
+
   function handleAdd(wishlistId, e) {
-    // despacha action para agregar
+    // despacha action para agregar a la wishlist
     e.preventDefault();
     dispatch(addToWishlist(wishlistId, productDetail.id));
   }
@@ -37,53 +44,66 @@ function WishlistButton(props) {
     e.preventDefault();
     setInput(e.target.value);
   }
+
   function handleButton(e) {
     e.preventDefault();
-    dispatch(createWishlist(auxUserId, input));
-    dispatch(addToWishlist(changedWishlist.id, productDetail.id));
-
-    setDesplegable(false);
+    dispatch(createWishlist(user.id, input));
     setInput('');
   }
 
   function handleCreate(e) {
-    // despacha action para crear wishlist
     e.preventDefault();
     setInputDesplegable(true);
   }
 
+  function handleClose() {
+    setInputDesplegable(false);
+    setDesplegable(false);
+  }
+
   return (
     <div id="wishlistButton">
-      <button onClick={handleClick} value="value1">
+      <button
+        onClick={handleClick}
+        value="value1"
+        style={desplegable ? { display: 'none' } : { display: '' }}
+      >
         Agregar a wishlist
       </button>
 
       {desplegable && (
         <div className="desplegable">
-          <ul className="desplegable">
+          <ul>
             {wishlists &&
               wishlists.map((result, i) => (
                 <li key={i} onClick={(e) => handleAdd(result.id, e)}>
                   <a href="">{result.name}</a>
                 </li>
               ))}
-            {inputDesplegable ? (
-              <li>
-                <input
-                  onChange={(e) => handleInput(e)}
-                  value={input}
-                  type="text"
-                  placeholder="Nombre de lista..."
-                />
-                <button onClick={handleButton}>Crear</button>
-              </li>
-            ) : (
-              <li id="create" onClick={(e) => handleCreate(e)}>
-                Crear Wishlist
-              </li>
-            )}
           </ul>
-          <button onClick={() => setDesplegable(false)}>X</button>
+          {inputDesplegable ? (
+            <div className="wishlistCreate">
+              <input
+                onChange={(e) => handleInput(e)}
+                value={input}
+                type="text"
+                placeholder="Nombre de lista..."
+              />
+              <button onClick={(e) => handleButton(e)}>Crear</button>
+              <button className="deleteButton" onClick={handleClose}>
+                X
+              </button>
+            </div>
+          ) : (
+            <div>
+              <button id="create" onClick={(e) => handleCreate(e)}>
+                Crear Wishlist
+              </button>
+              <button className="deleteButton" onClick={handleClose}>
+                X
+              </button>
+            </div>
+          )}
         </div>
       )}
     </div>

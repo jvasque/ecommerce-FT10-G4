@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import DivText from '../ProductCard/DivText'
 import PastOrder from './PastOrder'
+import { useSelector } from "react-redux";
 import { sortById, sortByState, sortByCreation, sortByUpdate, sortByPayment, sortByTotal } from './FilterOrder'
 import "../../scss/components/OrderHistory/_OrderHistory.scss"
 import "../../scss/components/OrderHistory/_FilterOrder.scss"
 
 function OrderHistory(){
-    let userId = 5
+    const userId = useSelector(state => state.loginReducer.user.id)
     const [orders, setOrders] = useState([])
     const [sort, setSort] = useState({
         id: false,

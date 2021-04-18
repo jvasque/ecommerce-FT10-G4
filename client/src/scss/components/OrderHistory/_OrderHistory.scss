@@ -3,13 +3,18 @@
     margin: 2% 10%;
     border-radius: 10px;
     overflow: hidden;
+    box-shadow: 0px 0px 3px 3px rgba(0, 0, 0, 0.1);
     .containerOrder{
         width: 100%;
         animation: 1s ease-out 0s 1 slideInFromLeft;
         .order{
             flex-direction: row;
-            background: var(--color-brand-light);
+            background: white;
             height: 50px;
+            cursor: pointer;
+            &:hover{
+                color:var(--color-brand);
+            }
             .orderId{
                 display: inline-block;
                 height: 100%;
@@ -49,7 +54,7 @@
         .active{
             height: 100%;
             .folding-pannel{
-                background: var(--color-gray);
+                background: var(--color-brand-lights);
                 //transform: perspective(350px) rotateX(0deg);
                 transition: all 0.4s ease-in-out;
                 height: 100px;                
@@ -59,7 +64,7 @@
             }
         } 
         .inactive {   
-            background: var(--color-gray); 
+            background: var(--color-light); 
             height: 100%;    
             .folding-pannel{
                 transform-origin: 50% 0%;

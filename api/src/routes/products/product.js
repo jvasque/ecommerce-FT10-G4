@@ -10,14 +10,14 @@ const productDeleteCategory = require("./productDeleteCategory");
 const reviewGet = require("./reviewsGet");
 const reviewPost = require("./reviewsPost");
 const reviewDelete = require("./reviewsDelete");
-//const reviewPut = require("./reviewsPut");
+const reviewPut = require("./reviewsPut");
 
 router.use(bodyParser.json());
 
 router.get("/", productGet);
 router.get("/:id", productGetId);
 router.get("/:id/review", reviewGet);
-//router.put("/:id/review", reviewPut);
+router.put("/:id/review", reviewPut);
 router.put("/:id", productPutId);
 router.post("/", productPost);
 router.post("/:id/review", reviewPost);
