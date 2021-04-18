@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FaFacebookF, FaLinkedinIn, FaGoogle } from "react-icons/fa";
 import "../../scss/components/Signup/_Signup.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { postUser } from "../../redux/postUserReducer/postUserActions";
+import { PostSuccess, postUser, SwalBooC } from "../../redux/postUserReducer/postUserActions";
 import Swal from "sweetalert2";
 import { LoginAction, LogOut, SwalBoo } from "../../redux/loginReducer/loginActions";
 import { useHistory } from "react-router";
@@ -10,20 +10,14 @@ import { useHistory } from "react-router";
 const Signup = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const [show, setShow] = useState(null);
-  const [user, setUser] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-  });
+  const log = useSelector((state) => state.loginReducer);
+  const post = useSelector((state) => state.postUserReducer);
 
   //Session iniciada D:
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError]=useState(false)
-  const log = useSelector((state) => state.loginReducer);
+ 
   const sessionChange = (e) => {
     return e.target.name === "uname"
       ? setUsername(e.target.value)
@@ -33,11 +27,8 @@ const Signup = () => {
   };
   const sessionSubmit = async (e) => {
     e.preventDefault();
-
     if (username.length > 5) {
    dispatch(LoginAction(username, password));
-   
- 
   }};
 
   useEffect(() => {
@@ -62,8 +53,14 @@ const Signup = () => {
   }, [log.errorLogin])
 
 
-  ////////
-
+  //////// post user && cambio de form
+  const [show, setShow] = useState(null);
+  const [user, setUser] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+  });
   const signUpButton = () => {
     setShow("right-panel-active");
   };
@@ -88,10 +85,18 @@ const Signup = () => {
     ) {
       dispatch(postUser(user));
 
+      
+      
+    }
+  };
+
+  useEffect(() => {
+    if(post.success){
       Swal.fire({
         title: "Listo, El usuario ha sido creado",
         confirmButtonColor: "#378a19",
       });
+      dispatch(PostSuccess())
       setUser({
         firstName: "",
         lastName: "",
@@ -99,15 +104,30 @@ const Signup = () => {
         password: "",
       });
     }
-  };
+  }, [post.success])
+
+
+  useEffect(() => {
+    if(post.errorMail){
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'No lo se rick, parece que este mail se encuentra registrado',
+        confirmButtonColor: "#378a19",
+      })
+    dispatch(SwalBooC())}
+    
+  }, [post.errorMail])
+
+
   return (
     <div className="Signup">
       {!log.isLogin ? (
         <div className={`${show}  container`} id="container">
           <div className="form-container sign-up-container">
             <form action="#" onSubmit={handlesubmit}>
-              <h1>Create Account</h1>
-              <div className="social-container">
+              <h1>Crea tu cuenta</h1>
+              {/* <div className="social-container">
                 <a href="#" className="social">
                   <i className="fab fa-facebook-f">
                     <FaFacebookF />
@@ -125,7 +145,7 @@ const Signup = () => {
                   </i>
                 </a>
               </div>
-              <span>or use your email for registration</span>
+              <span>o use tu email para registrarte</span> */}
 
               <input
                 type="text"
@@ -160,13 +180,13 @@ const Signup = () => {
                 onChange={handleChange}
                 required
               />
-              <button type="submit">Sign Up</button>
+              <button type="submit">Registrarse</button>
             </form>
           </div>
           <div className="form-container sign-in-container">
             <form action="#" onSubmit={sessionSubmit}>
-              <h1>Sign in</h1>
-              <div className="social-container">
+              <h1>Inicia Sesion</h1>
+              {/* <div className="social-container">
                 <a href="#" className="social">
                   <i className="fab fa-facebook-f">
                     <FaFacebookF />
@@ -182,8 +202,8 @@ const Signup = () => {
                     <FaLinkedinIn />
                   </i>
                 </a>
-              </div>
-              <span>or use your account</span>
+              </div> */}
+              {/* <span>o usa tu cuenta</span> */}
               <input
                 type="email"
                 value={username}
@@ -197,28 +217,28 @@ const Signup = () => {
                 value={password}
                 name="psw"
                 onChange={sessionChange}
-                placeholder="Password"
+                placeholder="Contraseña"
               />
-              <a href="#">Forgot your password?</a>
-              <button type="submit">Sign In</button>
+              {/* <a href="#">olvidaste tu clave?</a> */}
+              <button type="submit">INICIA SESION</button>
             </form>
           </div>
           <div className="overlay-container">
             <div className="overlay">
               <div className="overlay-panel overlay-left">
-                <h1>Welcome Back!</h1>
+                <h1>Bienvenido!</h1>
                 <p>
-                  To keep connected with us please login with your personal info
+                  Ya tenes una cuenta? Ingresa tu email y contraseña...
                 </p>
-                <button className="ghost" id="signIn" onClick={signInButton}>
-                  Sign In
+                <button className="ghost" id="signIn" onClick={signInButton} >
+                  Iniciar sesion
                 </button>
               </div>
               <div className="overlay-panel overlay-right">
-                <h1>Hello, Friend!</h1>
-                <p>Enter your personal details and start journey with us</p>
+                <h1>Sembremos futuro, juntos!</h1>
+                <p>Para seguir conectado con nosotros por favor ingresa tu informacion personal!</p>
                 <button className="ghost" id="signUp" onClick={signUpButton}>
-                  Sign Up
+                  Registrarse
                 </button>
               </div>
             </div>

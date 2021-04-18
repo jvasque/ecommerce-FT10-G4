@@ -6,7 +6,7 @@ const userDelete = require("./userDelete");
 const userLogin = require("./userLogin");
 const userPut = require("./userPut");
 const userOrderHistory = require("./getOrderHistory")
-
+const passport = require("passport");
 const wishlistGet = require('./wishlistGet');
 const wishlistPost = require('./wishlistPost');
 const wishlistPut = require('./wishlistPut');
@@ -29,5 +29,8 @@ router.get('/wishlist', wishlistGet); // Devolver las wishlist de un usuario (?u
 router.post('/wishlist/post/:userId', wishlistPost); // Crear una wishlist
 router.delete('/wishlist/delete/:wishlistId', wishlistDelete); // Borrar una wishlist
 router.put('/wishlist/:wishlistId/:productId', wishlistPut); // Modificar productos (borrar o agregar)
+
+
+
 
 module.exports = router;
