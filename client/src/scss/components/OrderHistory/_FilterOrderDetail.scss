@@ -5,28 +5,28 @@
         flex-direction: row;
         height: 50px;
         width: 100%;
-        background: var(--color-dark);
+        background: var(--color-brand-light);
         .orderFilterDetailName{
             display: inline-block;
             width: 60%;
             height: 100%;
             vertical-align: top;
             margin: 0;
-            border-right: 1px solid var(--color-dark);
+            //border-right: 1px solid var(--color-dark);
         }
         .orderFilterDetailQuantity{
             display: inline-block;
             vertical-align: top;
             width: 10%;
             height: 100%;
-            border-right: 1px solid var(--color-dark);
+            //border-right: 1px solid var(--color-dark);
         }
         .orderFilterDetailPrice{
             display: inline-block;
             vertical-align: top;
             height: 100%;
             width: 14%;
-            border-right: 1px solid var(--color-dark);
+            //border-right: 1px solid var(--color-dark);
         }
         .orderFilterDetailCost{
             display: inline-block;
