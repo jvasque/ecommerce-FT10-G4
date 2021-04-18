@@ -16,22 +16,23 @@ function Order() {
 
   useEffect(() => {
     async function postOrder() {
-      let id = Date.now();
+     // let id = Date.now();
 
-      let user = {
-        firstName: "NataN",
-        lastName: "J",
-        state: "cart",
-        paymentDate: "hoy",
-        totalPrice: total,
-      };
-      console.log(typeof id);
-      await axios.post(`http://localhost:3001/order/orders/${id}`, {
+      // let user = {
+      //   firstName: "NataN",
+      //   lastName: "J",
+      //   state: "cart",
+      //   paymentDate: "hoy",
+      //   totalPrice: total,
+      // };
+      
+      await axios.post(`http://localhost:3001/order/orders/`, {
         firstName: user.firstName,
         lastName: user.lastName,
         state: "cart",
         paymentDate: user.paymentDate,
         totalPrice: total,
+        email:user.email
       });
     }
 
