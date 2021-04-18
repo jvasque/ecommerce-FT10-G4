@@ -75,7 +75,7 @@ const useStyles = makeStyles((theme) =>({
 }));
 
 function CommentaryReviews({ id, content, score, userId, 
-  firstName, lastName, fullName, photoURL, productId }) {
+  firstName, lastName, fullName, photoURL, productId, state }) {
 
     const dispatch = useDispatch();
     const classes = useStyles();
@@ -141,6 +141,16 @@ function CommentaryReviews({ id, content, score, userId,
       setToggle(!toggle)
     } 
 
+    const validateModify = () => {
+     /*  console.log(state, "STATEEEEEEE");
+      console.log(userId, "ID USUARIO");
+      console.log(state.user.id, "STATE USER ID"); */
+      if(!state.isLogin) return false;
+      if(state.user.type === "superadmin" || state.user.type === "admin") return true;
+      if(state.user.id !== userId) return false; 
+      return true;
+    }
+
     let firstLast = (firstName[0] && lastName[0])? 
     (firstName[0] + lastName[0]) : ""
 
@@ -171,15 +181,15 @@ function CommentaryReviews({ id, content, score, userId,
       </Box>}
       {!toggle && content}
       {toggle && <input className="input-textarea" type="textarea" value={input.text} onChange={(e)=> setInput({...input, text:e.target.value})}/>}
-      <DeleteIcon className={classes.delete} 
-      onClick ={(e) => deleteRev(e, id)}/>
+      { validateModify() && <DeleteIcon className={classes.delete} 
+      onClick ={(e) => deleteRev(e, id)}/>}
       {toggle && 
       <div>
         <CheckCircleIcon className={classes.checkIcon} onClick={(e)=>{modifRev(e, id, input.text, input.rate)}}/>
         <CancelIcon className={classes.cancelIcon} onClick={(e) => {handleCancelModif(e)}}/>
        
       </div>}
-      <SettingsIcon className={classes.settings} onClick={(e) => {setToggle(!toggle); handleVisibility(); }}/>
+      { validateModify() && <SettingsIcon className={classes.settings} onClick={(e) => {setToggle(!toggle); handleVisibility(); }}/>}
     </div>
   );
 }

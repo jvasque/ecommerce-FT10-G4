@@ -1,4 +1,4 @@
-const { Product, Review, User } = require("../../db.js");
+const { Product, Review, User, Order, OrderDetail } = require("../../db.js");
 
 module.exports = async (req, res, next) => {
 
@@ -13,7 +13,16 @@ module.exports = async (req, res, next) => {
         order: [
           ['createdAt', 'DESC']
         ],
-        include: User
+        include:[/* {
+          model: OrderDetail,
+          where: {
+            productId: id
+          },
+          include: [{
+            model: Order,
+            attributes: ['userId']
+          }]
+        } */{model: User}]
       });
 
       if(!data) return res.json({error: "there are not reviews for this product"})

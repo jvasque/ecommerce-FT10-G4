@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-function Reviews(props) {
+function Reviews({id, userId}) {
   const dispatch = useDispatch();
   const [input, setInput] = useState({
     rate: "",
@@ -56,7 +56,7 @@ function Reviews(props) {
     if(!input.rate) {
       return e.preventDefault(e); 
     }
-    dispatch(submitCommentary(input.text, input.rate, props.id))
+    dispatch(submitCommentary(input.text, input.rate, id, userId))
     .then(e => {
       swal("Éxito!","Su comentario ha sido registrado", "success")
       .then(e => {

@@ -5,13 +5,13 @@ export const SUBMIT_COMMENTARY = "SUBMIT_COMMENTARY";
 export const DELETE_COMMENTARY = "DELETE_COMMENTARY";
 export const MODIFY_COMMENTARY = "MODIFY_COMMENTARY";
 
-export function submitCommentary(text, rate, productId){
+export function submitCommentary(text, rate, productId, userId){
     return async function(dispatch){
         let json = await axios.post(`http://localhost:3001/products/${productId}/review`, {
             params: {
                 text,
                 rate,
-                productId
+                userId
             }
         });
     }

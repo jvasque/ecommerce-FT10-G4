@@ -71,37 +71,15 @@ const ProductDetails = (props) => {
 
   const iconState = useSelector(state => state.iconReducer)
 
+  const loggin = useSelector(state => state.loginReducer)
+
   const [state, setState] = useState({
       [`Fav-${productDetail.id}`]: iconState.fav[`Fav-${productDetail.id}}`],
       [`Cart-${productDetail.id}}`]: iconState.cart[`Cart-${productDetail.id}}`],
   })
- 
-
-  // const Wish = (
-  //   <FormControlLabel
-  //     control={
-  //       <Checkbox
-  //         icon={<FavoriteBorder />}
-  //         checkedIcon={<Favorite />}
-  //         name={`Fav-${productDetail.id}`} 
-  //       />
-  //     }
-  //   />
-  // );
-  
-  // const Cart = (
-  //   <FormControlLabel
-  //     control={
-  //       <Checkbox
-  //         icon={<ShoppingCartOutlinedIcon />}
-  //         checkedIcon={<ShoppingCartIcon style={{ color: "white" }} />}
-  //         name={`Cart-${productDetail.id}`} 
-  //         onChange={(e) => handleChange(e)}
-  //         checked={iconState.cart[`Cart-${productDetail.id}`] || false}
-  //       />
-  //     }
-  //   />
-  // );
+  const [logged, setLogged] = useState('');
+  const [hasBuy, setHasBuy] = useState([]);
+  const [hasComment, setHasComment] = useState([]);
 
   const Wish = (productId, state, handleHeart) => {
     return (
@@ -153,6 +131,9 @@ const ProductDetails = (props) => {
   }
  
   useEffect(() => {
+    setLogged(loggin);
+    //setHasBuy(reviews[0]?.map(e => e.orderDetail.order.userId)); //Me fijo quienes tienen una orden de compra con este producto, saco sus ID
+    //setHasComment(reviews[0]?.map(e => e.userId)); //Saco los ID de los que tienen al menos una review en el producto
     dispatch(getDetail(parseInt(productId)));
     dispatch(getCommentary(parseInt(productId)));
   }, [productId, dispatch]);
@@ -166,6 +147,17 @@ const ProductDetails = (props) => {
       pathname: "/catalog",
     });
   };
+
+  const validateComment = () =>{
+
+    if(!loggin.isLogin) return false;
+    if(loggin.user.type === "superadmin" || loggin.user.type === "admin") return true;
+    //if(!hasBuy.includes(loggin.user.id)) return false; //Descomentar cuando este bien hecha la pre-carga
+    if(hasComment.includes(loggin.user.id)) return false;
+
+    return true;
+  }
+
   return (
     <div className="productDetails">
       {loading ? (
@@ -230,9 +222,9 @@ const ProductDetails = (props) => {
             <hr />
             <p>{productDetail.description}</p>
           </div>
-          <Reviews id = {productDetail.id}/>
+          {validateComment() && <Reviews userId={loggin.user.id} id = {productDetail.id}/>}
           <h2>Comentarios de otros usuarios</h2>
-          {reviews[0]?.map(e => {
+          {reviews[0] && reviews[0][0] && reviews[0].map(e => {
             let fullName;
             let firstName;
             let lastName;
@@ -242,7 +234,7 @@ const ProductDetails = (props) => {
             e.user? lastName=e.user.lastName : lastName="";
             e.user? photoURL=e.user.photoURL : photoURL="";
             return (
-            <CommentaryReviews key={e.id} id={e.id} score={e.score} 
+            <CommentaryReviews key={e.id} id={e.id} state={loggin} score={e.score} 
             content={e.content} userId={e.userId} firstName={firstName} 
             lastName={lastName} fullName={fullName} photoURL={photoURL}
             productId={productDetail.id} />
