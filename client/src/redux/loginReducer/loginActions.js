@@ -13,13 +13,13 @@ export const LoginAction = (email, password) => {
         email,
         password,
       });
-      console.log(info.data);
+      //console.log(info.data);
       localStorage.setItem('token', info.data); // guardo mi token encryptado
 
-      // console.log(decode(info.data));
+      //console.log(decode(info.data));
       dispatch({
         type: LOGIN_ACTION_KEY,
-        payload: info.data,
+        payload: decode(info.data),
       });
     } catch (e) {
       dispatch({

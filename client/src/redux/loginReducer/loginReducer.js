@@ -14,7 +14,7 @@ export default (state = initialState, action) => {
     case LOGIN_ACTION_KEY:
       return {
         ...state,
-        user: decode(action.payload),
+        user: action.payload,
         isLogin: true,
         isAdmin: action.payload.type.includes('admin'),
         errorLogin: false,
