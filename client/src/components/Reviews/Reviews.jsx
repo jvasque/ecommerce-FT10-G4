@@ -13,6 +13,7 @@ import "../../scss/components/Reviews/_Reviews.scss";
 
 const verdePrincipal="#378A19";
 const grisPrincipal= "#EFEFEF";
+const verdeClaro="#85DA6C";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -20,6 +21,9 @@ const useStyles = makeStyles((theme) => ({
       margin: theme.spacing(1),
       color: grisPrincipal,
       backgroundColor: verdePrincipal,
+      '&:hover': {
+        backgroundColor: verdeClaro,
+        }
     },
     extendedIcon: {
       marginRight: theme.spacing(1),

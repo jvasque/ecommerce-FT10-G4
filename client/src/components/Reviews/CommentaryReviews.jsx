@@ -1,7 +1,6 @@
 import React, {useState} from "react";
 import Rating from "@material-ui/lab/Rating";
 import Box from "@material-ui/core/Box";
-import Typography from '@material-ui/core/Typography';
 import "../../scss/components/Reviews/_CommentaryReviews.scss";
 import { deleteCommentary, modifyCommentary } from '../../redux/reviewsReducer/actionsReviews';
 import { useDispatch } from 'react-redux';
@@ -9,15 +8,13 @@ import swal from "sweetalert";
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import { deepOrange, deepPurple } from '@material-ui/core/colors';
-//PRUEBA <DELETE>
 import DeleteIcon from '@material-ui/icons/Delete';
 import SettingsIcon from '@material-ui/icons/Settings';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import CancelIcon from '@material-ui/icons/Cancel';
-import Swal2 from 'sweetalert2'
+
 
 const verdePrincipal="#378A19";
-const verdeClaro="#85DA6C";
 const grisPrincipal= "#EFEFEF";
 const grisClaro= "#F7F7F7";
 
