@@ -8,6 +8,7 @@ import '../../scss/components/Catalog/_Catalog.scss'
 
 
 
+
 function Catalog(){
     const query = useSelector(state => state.searchReducer.query)
     const queryStatus = useSelector(state => state.searchReducer.queryStatus)
@@ -18,7 +19,7 @@ function Catalog(){
     
     const [catalog, setCatalog] = useState(queryStatus ? query : products)
     const totalCards = 12
-  
+
     
     
     useEffect(() => {     
@@ -45,6 +46,7 @@ function Catalog(){
         return
     },[categoryFiltered, queryStatus, query, products, categories])
 
+  
     
     return (
         <div className='catalogContainer'>

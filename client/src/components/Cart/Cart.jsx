@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import ProductCart from "./ProductCart";
 import "../../scss/components/Cart/_Cart.scss";
-import { empty, totalPrice } from "../../redux/cartReducer/cartActions";
+import { emptyDb, totalPrice } from "../../redux/cartReducer/cartActions";
 import { Button } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import axios from "axios";
@@ -18,7 +18,7 @@ function Cart() {
   }, [dispatch]);
 
   const handleClick = () => {
-    dispatch(empty())
+    dispatch(emptyDb())
     dispatch(totalPrice())
   }
   

@@ -3,7 +3,7 @@ import {
   DELETE_PRODUCT,
   TOTAL,
   INCREMENTQ,
-  USERCART,
+  USERLOGGED,
   EMPTY,
 } from "./cartActions";
 
@@ -50,13 +50,10 @@ export default (state = initialState, action) => {
         ...state,
       };
     }
-    case USERCART: {
-      const { products, productsId } = action.payload;
-
-      const cartSaved = products.data.filter((x) => productsId.includes(x.id));
+    case USERLOGGED: {
       return {
         ...state,
-        cart: cartSaved,
+        cart: action.payload,
       };
     }
     case EMPTY: {

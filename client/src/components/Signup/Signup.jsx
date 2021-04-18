@@ -7,8 +7,8 @@ import Swal from "sweetalert2";
 import { LoginAction, LogOut, SwalBoo } from "../../redux/loginReducer/loginActions";
 import { useHistory } from "react-router";
 import { totalPrice, userLogged } from "../../redux/cartReducer/cartActions";
-import { reset } from "../../redux/iconReducer/iconActions";
-import { icons } from "react-icons/lib";
+import {modifyCart} from "../../redux/iconReducer/iconActions"
+import axios from "axios";
 
 
 const Signup = () => {
@@ -23,12 +23,12 @@ const Signup = () => {
   });
 
   //Session iniciada D:
-  
+  const productCart = useSelector(state => state.cartReducer.cart)
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError]=useState(false)
   const log = useSelector((state) => state.loginReducer);
-  const productCart = useSelector(state => state.cartReducer.cart)
+
  
   
   const sessionChange = (e) => {
@@ -48,14 +48,31 @@ const Signup = () => {
   }};
 
   useEffect(() => {
-    if(log.isLogin){
-     dispatch(userLogged())
-      history.push({
-        pathname: "/",
-      });
-     dispatch(totalPrice())
-         
-  }}, [log.isLogin, dispatch])
+    async function test() {
+      if(log.isLogin){
+        const userId = localStorage.getItem("user");
+        
+         history.push({
+           pathname: "/",
+         });
+        dispatch(totalPrice())
+       
+        const data = await axios.get(`http://localhost:3001/cart/${userId}/cart`);
+        const products = await axios.get("http://localhost:3001/products");
+        const productsId = data.data.map((x) => x.productId);
+        const cartSaved = products.data.filter((x) => productsId.includes(x.id));
+        dispatch(userLogged(cartSaved))
+
+    
+        for(let i =0; i<cartSaved.length; i++) {
+          dispatch(modifyCart({ [`Cart-${cartSaved[i].id}`]: true }))
+          
+        }
+      
+     }
+    }
+    test()
+   }, [log.isLogin, dispatch ])
 
 
 

@@ -6,7 +6,7 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import React,{useState} from 'react'
 import { useDispatch, useSelector } from "react-redux";
 import { LogOut } from "../../redux/loginReducer/loginActions";
-import { empty } from "../../redux/cartReducer/cartActions";
+import { emptyCart } from "../../redux/cartReducer/cartActions";
 import { reset } from "../../redux/iconReducer/iconActions";
 
 
@@ -24,7 +24,7 @@ export default function AdminMenu() {
         setColorChange("Exit")
         if(log.isLogin) {
             dispatch(LogOut());
-            dispatch(empty())
+            dispatch(emptyCart())
             dispatch(reset())
             alert("deslogeado")
             localStorage.setItem("user", 0)

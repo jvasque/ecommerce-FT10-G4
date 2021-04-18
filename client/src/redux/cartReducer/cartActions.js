@@ -3,7 +3,7 @@ export const ADD_PRODUCT = "ADD_PRODUCT";
 export const DELETE_PRODUCT = "DELETE_PRODUCT";
 export const TOTAL = "TOTAL";
 export const INCREMENTQ = "INCREMENTQ";
-export const USERCART = "USERCART";
+export const USERLOGGED = "USERLOGGED";
 export const EMPTY = "EMPTY";
 
 export function addProduct(product) {
@@ -60,28 +60,28 @@ export function incrementQ(product, value) {
     });
   };
 }
-export function userLogged() {
-  const userId = localStorage.getItem("user");
-  return async function (dispatch) {
-    const data = await axios.get(`http://localhost:3001/cart/${userId}/cart`);
-    const products = await axios.get("http://localhost:3001/products");
-    const productsId = data.data.map((x) => x.productId);
-
+export function userLogged(cart) {
+  return function (dispatch) {
     dispatch({
-      type: "USERCART",
-      payload: {
-        productsId,
-        products,
-      },
+      type: "USERLOGGED",
+      payload: cart,
     });
   };
 }
 
-export function empty() {
+export function emptyDb() {
   const userId = localStorage.getItem("user");
   if (userId !== "0") {
     axios.delete(`http://localhost:3001/cart/${userId}/items/delete`);
   }
+  return function (dispatch) {
+    dispatch({
+      type: "EMPTY",
+    });
+  };
+}
+
+export function emptyCart() {
   return function (dispatch) {
     dispatch({
       type: "EMPTY",
