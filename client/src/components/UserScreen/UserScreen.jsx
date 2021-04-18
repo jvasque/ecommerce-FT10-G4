@@ -4,6 +4,9 @@ import '../../scss/components/UserScreen/_UserScreen.scss';
 import { BiLogOut, BiListPlus } from 'react-icons/bi';
 import OrderHistory from '../OrderHistory/OrderHistory';
 import Wishlists from '../Wishlist/Wishlists';
+import ProductForm from '../product_form/product_form';
+import CategoriesForm from '../formCategories/Form';
+
 import {
   getWishlists,
   addToWishlist,
@@ -38,36 +41,49 @@ export function UserScreen() {
   return (
     <div className="infoContainer">
       <div className="selectScreen">
-        <h2 id="miCuenta" onClick={(e) => handleClick(e)}>
+        <h2 id="MyAccount" onClick={(e) => handleClick(e)}>
           Mi Cuenta
         </h2>
-        <div id="misCompras" onClick={(e) => handleClick(e)}>
+        <div id="PurchaseHistory" onClick={(e) => handleClick(e)}>
           Mis Compras
         </div>
-        <div id="Favoritos" onClick={(e) => handleClick(e)}>
+        <div id="Favorites" onClick={(e) => handleClick(e)}>
           Favoritos
         </div>
         <div id="Wishlists" onClick={(e) => handleClick(e)}>
           Wishlists
         </div>
-        <div id="logOut" onClick={() => handleLogOut()}>
+        {login.isAdmin ? (
+          <div id="CreateProduct" onClick={(e) => handleClick(e)}>
+            Crear productos
+          </div>
+        ) : null}
+        {login.isAdmin ? (
+          <div id="ManageCategories" onClick={(e) => handleClick(e)}>
+            Crear categorías
+          </div>
+        ) : null}
+        <div id="LogOut" onClick={() => handleLogOut()}>
           Cerrar Sesión <BiLogOut />
         </div>
-        {}
       </div>
 
       <div className="rendersContainer">
-        {render === 'miCuenta' ? (
+        {render === 'MyAccount' ? (
           <h3>Datos de mi cuenta</h3>
-        ) : render === 'misCompras' ? (
+        ) : render === 'PurchaseHistory' ? (
           <OrderHistory />
-        ) : render === 'Favoritos' ? (
+        ) : render === 'Favorites' ? (
           <h3>Productos Favoritos</h3>
-        ) : render === 'logOut' ? (
+        ) : render === 'LogOut' ? (
           <h3>Cerrar sesión</h3>
-        ) : (
+        ) : render === 'Wishlists' ? (
           <Wishlists />
-        )}
+        ) : render === 'CreateProduct' ? (
+          <ProductForm />
+        ) : render === 'ManageCategories' ? (
+          <CategoriesForm />
+        ) : null}
       </div>
     </div>
   );
