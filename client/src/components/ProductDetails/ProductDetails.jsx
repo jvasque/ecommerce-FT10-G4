@@ -67,7 +67,7 @@ const ProductDetails = (props) => {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const {reviews} = useSelector((state)=> state.reviewsReducer)
+  const {reviews} = useSelector((state)=> state.reviewsReducer);
 
   const iconState = useSelector(state => state.iconReducer)
 
@@ -129,13 +129,13 @@ const ProductDetails = (props) => {
       dispatch(modifyCart({ [name]: checked }));
     }
   }
- 
+
   useEffect(() => {
-    setLogged(loggin);
-    //setHasBuy(reviews[0]?.map(e => e.orderDetail.order.userId)); //Me fijo quienes tienen una orden de compra con este producto, saco sus ID
-    //setHasComment(reviews[0]?.map(e => e.userId)); //Saco los ID de los que tienen al menos una review en el producto
     dispatch(getDetail(parseInt(productId)));
     dispatch(getCommentary(parseInt(productId)));
+    setHasComment(reviews[0]?.map(e => e.userId)); //Saco los ID de los que tienen al menos una review en el producto
+    //setHasBuy(reviews[0]?.map(e => e.orderDetail.order.userId)); //Me fijo quienes tienen una orden de compra con este producto, saco sus ID
+    setLogged(loggin);
   }, [productId, dispatch]);
 
   
