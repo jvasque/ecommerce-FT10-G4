@@ -19,7 +19,6 @@ export function modifyFav(fav) {
     });
   };
 }
-
 export function reset() {
   return function (dispatch) {
     dispatch({

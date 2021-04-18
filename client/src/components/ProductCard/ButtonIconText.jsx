@@ -56,9 +56,9 @@ function ButtonIconText(props) {
                             <Checkbox 
                                 icon={<FavoriteBorder />} 
                                 checkedIcon={<Favorite />} 
-                                checked={state[`Fav-${props.productId}`] || false}
                                 name={`Fav-${props.productId}`} 
-                                onChange={handleHeart}
+                                
+                                
                             />
                         }/>) : (<FormControlLabel
                                     control={

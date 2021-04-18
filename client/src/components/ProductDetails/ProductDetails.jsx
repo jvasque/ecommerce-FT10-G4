@@ -77,16 +77,15 @@ const ProductDetails = (props) => {
   const [hasBuy, setHasBuy] = useState([]);
   const [hasComment, setHasComment] = useState([]);
 
-  const Wish = (productId, state, handleHeart) => {
+  const Wish = () => {
     return (
       <FormControlLabel
         control={
           <Checkbox
             icon={<FavoriteBorder />}
             checkedIcon={<Favorite />}
-            checked={state[`Fav-${productId}`] || false}
-            name={`Fav-${productId}`}
-            onChange={(e) => handleHeart(e)}
+            name={`Fav-${productDetail.id}`}
+            
           />
         }
       />
