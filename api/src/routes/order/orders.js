@@ -8,7 +8,7 @@ const router = require("express").Router();
 router.use(bodyParser.json());
 
 router.delete("/user/:id", deleteOrder);
-router.post("/orders/:id", addOrder);
+router.post("/orders/", addOrder);
 router.put("/orders/:id", putOrder);
 router.get("/users/:id/orders", allOrders);
 

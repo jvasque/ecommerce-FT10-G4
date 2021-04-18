@@ -1,28 +1,14 @@
 import '../../scss/components/Nav/_AdminMenu.scss';
 import { Link } from 'react-router-dom';
-// import { BiLogOut, BiListPlus } from 'react-icons/bi';
-// import { FaProductHunt } from 'react-icons/fa';
 import { RiAccountCircleLine, RiShoppingCart2Line } from 'react-icons/ri';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { LogOut } from '../../redux/loginReducer/loginActions';
+import { useSelector } from 'react-redux';
 
 export default function AdminMenu() {
   const [colorChange, setColorChange] = useState('');
   const products = useSelector((state) => state.cartReducer.cart);
 
   let productCart = products.length !== 0 ? products.length : '';
-
-  //   const dispatch = useDispatch();
-
-  //   const handleLogOut = () => {
-  //     setColorChange('Exit');
-  //     if (log.isLogin) {
-  //       dispatch(LogOut());
-  //       alert('deslogeado');
-  //     }
-  //   };
 
   return (
     <div>

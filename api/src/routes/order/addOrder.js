@@ -1,4 +1,4 @@
-const { Order } = require("../../db.js");
+const { Order ,User } = require("../../db.js");
 
 module.exports = async (req, res, next) => {
   const {
@@ -7,16 +7,20 @@ module.exports = async (req, res, next) => {
     state,  
     paymentDate,
     totalPrice,
+    email
   } = req.body;
   console.log(req.params.id);
   try {
+
+    const user = await User.findOne({where:{email:email}})
+    console.log(user.email, user.id)
     const orderCreate = await Order.findOrCreate({
       where: {
-        id: parseInt(req.params.id),
+        //id: parseInt(req.params.id),
         firstName: firstName,
         lastName: lastName,
         state: state,       
-        paymentDate: paymentDate,
+        paymentDate: paymentDate || "pending",
         totalPrice: totalPrice,
       },
     });

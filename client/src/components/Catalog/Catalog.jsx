@@ -6,6 +6,9 @@ import CategoryFilter from './CategoryFilter.jsx'
 import '../../scss/components/Catalog/_Catalog.scss'
 
 
+
+
+
 function Catalog(){
     const query = useSelector(state => state.searchReducer.query)
     const queryStatus = useSelector(state => state.searchReducer.queryStatus)
@@ -13,8 +16,12 @@ function Catalog(){
     const page = useSelector(state => state.catalogReducer.page)
     const categoryFiltered = useSelector(state => state.categoryFilterReducer.categoryFiltered)
     const categories = useSelector(state => state.categoryFilterReducer.categories)
+    
     const [catalog, setCatalog] = useState(queryStatus ? query : products)
     const totalCards = 12
+
+    
+    
     useEffect(() => {     
         if(queryStatus){
             if(categoryFiltered.length > 0 && query.length > 0){
@@ -39,6 +46,8 @@ function Catalog(){
         return
     },[categoryFiltered, queryStatus, query, products, categories])
 
+  
+    
     return (
         <div className='catalogContainer'>
             <div className='filterScreen'>
