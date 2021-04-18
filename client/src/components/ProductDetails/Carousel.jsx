@@ -1,7 +1,7 @@
 import React from "react";
 import "../../scss/components/ProductDetail/_Carousel.scss";
 
-const Carousel = ( {img }) => {
+const Carousel = ( {img}) => {
 
   return (
     <div className="containerCar">
@@ -16,7 +16,7 @@ const Carousel = ( {img }) => {
         <input type="radio" name="slides" id="slide-3" />
 
         <ul className="carousel__slides">
-          {img.length > 0
+          {img?.length > 0
             ? img.map((i) => (
                 <li className="carousel__slide" key={img.indexOf(i)}>
                   <figure>
@@ -29,7 +29,7 @@ const Carousel = ( {img }) => {
             : ""}
         </ul>
         <ul className="carousel__thumbnails">
-          {img.length > 0
+          {img?.length > 0
             ? img.map((i) => (
                 <li key={img.indexOf(i)}>
                   <label htmlFor={`slide-${img.indexOf(i) + 1}`}>

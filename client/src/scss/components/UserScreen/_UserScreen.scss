@@ -1,0 +1,34 @@
+.infoContainer {
+  padding: 40px 0;
+  background-color: var(--color-gray);
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  .selectScreen {
+    background-color: white;
+    width: 20%;
+    height: fit-content;
+    display: inline-block;
+    // vertical-align: top;
+
+    margin-left: 10%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    color: var(--color-brand);
+    h2 {
+      cursor: pointer;
+    }
+
+    div {
+      padding: 20px;
+      width: 90%;
+      cursor: pointer;
+    }
+  }
+}
+
+.rendersContainer {
+  width: 80%;
+}

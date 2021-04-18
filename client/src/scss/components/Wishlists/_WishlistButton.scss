@@ -1,0 +1,69 @@
+#wishlistButton {
+  margin-top: 0.1rem;
+  display: flex;
+  flex-direction: column;
+  height: 3rem;
+  border-radius: 0.18em;
+  border: none;
+
+  button {
+    background-color: var(--color-sun-85);
+    height: 100%;
+    text-align: left;
+    font-family: inherit;
+    font-size: 0.9rem;
+    padding-left: 20px;
+    border: inherit;
+  }
+
+  .desplegable {
+    ul {
+      margin: 0 0 0.1rem 0;
+      padding: 1rem;
+      border: solid 1px var(--color-dark);
+      border: inherit;
+
+      li {
+        list-style-type: none;
+        position: relative;
+        margin-bottom: 0.5rem;
+        border: inherit;
+        border-bottom: solid 1px var(--color-dark);
+        a {
+          color: var(--color-brand);
+          text-decoration: none;
+          &:hover {
+            font-weight: 700;
+          }
+          &:visited {
+            color: var(--color-brand);
+          }
+        }
+      }
+    }
+
+    button {
+      position: relative;
+      height: inherit;
+      padding: 10px;
+      text-align: center;
+      color: unset;
+    }
+
+    .deleteButton {
+      margin-left: 1em;
+      text-align: center;
+      width: inherit;
+    }
+
+    .wishlistCreate {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+
+      input {
+        margin-right: 1em;
+      }
+    }
+  }
+}

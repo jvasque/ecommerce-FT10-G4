@@ -4,7 +4,6 @@ const deleteOrder = require("./deleteOrder");
 const addOrder = require("./addOrder");
 const allOrders = require("./allOrders");
 
-
 const router = require("express").Router();
 router.use(bodyParser.json());
 

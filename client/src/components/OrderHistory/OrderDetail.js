@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import DivText from '../ProductCard/DivText'
 import '../../scss/components/OrderHistory/_OrderDetail.scss'
 

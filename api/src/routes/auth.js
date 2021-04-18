@@ -9,7 +9,6 @@ server.get("/me", async (req, res, next) => {
     if (req.user) {
       const { id } = req.user;
       const result = await User.findByPk(id);
-      //hacer verificacion por email
       res.json(result);
     } else res.sendStatus(401);
   } catch (error) {
@@ -18,15 +17,28 @@ server.get("/me", async (req, res, next) => {
 });
 
 server.post("/login", function (req, res, next) {
-  passport.authenticate("local", {session: false},function (err, user, message) {
-    if (err) return next(err);
-    else if (!user) return res.sendStatus(401);
-    else return res.send(jwt.sign(user, SECRET_KEY));
-  })(req, res, next);
+  passport.authenticate(
+    "local",
+    { session: false },
+    function (err, user, message) {
+      if (err) return next(err);
+      else if (!user) return res.sendStatus(401);
+      else return res.send(jwt.sign(user, SECRET_KEY));
+    }
+  )(req, res, next);
+});
+
+server.get("/facebook", function(req, res, next) {
+  passport.authenticate("facebook");
 });
 
 
-
+server.get("/facebook/callback", function (req, res, next)  {
+  passport.authenticate("facebook", {
+    successRedirect: "/",
+    failureRedirect: "/",
+  });
+});
 module.exports = server;
 
 // server.post("/login", (req, res, next) => {
