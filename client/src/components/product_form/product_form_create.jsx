@@ -235,7 +235,7 @@ export default function Product_form_create(props) {
         </div>
       </form>
 
-      <NavLink to="/admin/product/form">
+      <NavLink to="/user/info">
         <button>Volver</button>
       </NavLink>
     </div>
