@@ -78,6 +78,10 @@ export function userLogged() {
 }
 
 export function empty() {
+  const userId = localStorage.getItem("user");
+  if (userId !== "0") {
+    axios.delete(`http://localhost:3001/cart/${userId}/items/delete`);
+  }
   return function (dispatch) {
     dispatch({
       type: "EMPTY",
