@@ -30,14 +30,26 @@
       width: 90%;
       background-color: var(--color-brand-light);
     }
-    div:hover {
-      background-color: var(--color-light);
-      color: black;
-      cursor: pointer;
-    }
   }
-}
+};
+
+.X{
+  width: 25px;
+  height: 25px;
+  margin-left: 5px;
+  margin-top: 5px;
+  border: none;
+  border-radius: 2px;
+  background:none;
+  &:hover{
+    color:white;
+    background-color:rgb(201, 67, 94);
+  };
+  &:focus{
+    border: none;
+  };
+};
 
 .rendersContainer {
   width: 80%;
-}
+};
