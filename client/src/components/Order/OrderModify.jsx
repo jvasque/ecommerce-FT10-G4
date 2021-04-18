@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { totalPrice, incrementQ } from "../../redux/cartReducer/cartActions";
-import "../../scss/components/Order/_OrderModify.scss"
+import "../../scss/components/Order/_OrderModify.scss";
 //form que muestre lista de productos y permita editar cantidad
 //Eliminar un producto
 
@@ -13,24 +13,18 @@ const OrderModify = () => {
   const dispatch = useDispatch();
   const [quantity, setQuantity] = useState(1);
   const [stock, setStock] = useState(true);
-  const [negative, setNegative] = useState(true);
+
 
   const onSubmitForm = (e) => {
     e.preventDefault();
   };
-  const handleChange = (value, unitsOnStock) => {
-    console.log(value);
+  const handleChange = (value, unitsOnStock) => { 
     setQuantity(value);
     if (value > unitsOnStock) {
       setStock(false);
       return setQuantity(1);
-    }
-    if (value && value < 1) {
-      setQuantity(1);
-      setNegative(false);
-      return;
-    }
-    setNegative(true);
+    }  
+   
     setStock(true);
     //setQuantity(0);
     dispatch(incrementQ(productToModify[0], value));
@@ -70,7 +64,7 @@ const OrderModify = () => {
                   Cambiar cantidad
                 </label>
                 <input
-                name="product"
+                  name="product"
                   type="number"
                   min="0"
                   max={productToModify[0].unitsOnStock}
@@ -78,22 +72,17 @@ const OrderModify = () => {
                   type="text"
                   placeholder="cantidad"
                   value={quantity}
-                  onChange={(e) =>
-                    handleChange(
-                      e.target.value,
-                      productToModify[0]["unitsOnStock"]
-                    )
-                  }
+                  onChange={(e) => {
+                    let value =
+                      parseInt(e.target.value) <= 0 ? 1 : e.target.value;
+                    console.log(typeof e.target.value);
+                    handleChange(value, productToModify[0]["unitsOnStock"]);
+                  }}
                 ></input>
                 <p className="stockUp">
                   Disponibles:{productToModify[0].unitsOnStock}
                 </p>
                 {stock ? "" : <p className="stock">No hay stock disponible</p>}
-                {negative ? (
-                  ""
-                ) : (
-                  <p className="stock">Ingrese un valor valido</p>
-                )}
               </>
             ) : (
               ""
