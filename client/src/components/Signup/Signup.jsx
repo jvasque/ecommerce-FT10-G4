@@ -6,6 +6,10 @@ import { postUser } from "../../redux/postUserReducer/postUserActions";
 import Swal from "sweetalert2";
 import { LoginAction, LogOut, SwalBoo } from "../../redux/loginReducer/loginActions";
 import { useHistory } from "react-router";
+import { totalPrice, userLogged } from "../../redux/cartReducer/cartActions";
+import { reset } from "../../redux/iconReducer/iconActions";
+import { icons } from "react-icons/lib";
+
 
 const Signup = () => {
   const dispatch = useDispatch();
@@ -19,11 +23,14 @@ const Signup = () => {
   });
 
   //Session iniciada D:
-
+  
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError]=useState(false)
   const log = useSelector((state) => state.loginReducer);
+  const productCart = useSelector(state => state.cartReducer.cart)
+ 
+  
   const sessionChange = (e) => {
     return e.target.name === "uname"
       ? setUsername(e.target.value)
@@ -36,17 +43,21 @@ const Signup = () => {
 
     if (username.length > 5) {
    dispatch(LoginAction(username, password));
-   
+       
  
   }};
 
   useEffect(() => {
     if(log.isLogin){
+     dispatch(userLogged())
       history.push({
         pathname: "/",
-      });}
-     
-  }, [log.isLogin])
+      });
+     dispatch(totalPrice())
+         
+  }}, [log.isLogin, dispatch])
+
+
 
 
   useEffect(() => {

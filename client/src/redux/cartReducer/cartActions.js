@@ -3,13 +3,17 @@ export const ADD_PRODUCT = "ADD_PRODUCT";
 export const DELETE_PRODUCT = "DELETE_PRODUCT";
 export const TOTAL = "TOTAL";
 export const INCREMENTQ = "INCREMENTQ";
-
-var userId = 1;
+export const USERCART = "USERCART";
+export const EMPTY = "EMPTY";
 
 export function addProduct(product) {
-  axios.post(`http://localhost:3001/cart/${userId}/${product.id}`, {
-    productId: product.id,
-  });
+  const userId = localStorage.getItem("user");
+
+  if (userId !== 0) {
+    axios.post(`http://localhost:3001/cart/${userId}/${product.id}`, {
+      productId: product.id,
+    });
+  }
   return function (dispatch) {
     dispatch({
       type: "ADD_PRODUCT",
@@ -19,7 +23,10 @@ export function addProduct(product) {
 }
 
 export function deleteProduct(product) {
-  axios.delete(`http://localhost:3001/cart/${userId}/${product.id}`);
+  const userId = localStorage.getItem("user");
+  if (userId !== 0) {
+    axios.delete(`http://localhost:3001/cart/${userId}/${product.id}`);
+  }
   return function (dispatch) {
     dispatch({
       type: "DELETE_PRODUCT",
@@ -36,11 +43,14 @@ export function totalPrice() {
   };
 }
 export function incrementQ(product, value) {
-  axios.put(`http://localhost:3001/cart/user/${product.id}`, {
-    id: product.id,
-    quantity: value,
-    userId: userId,
-  });
+  const userId = localStorage.getItem("user");
+  if (userId !== 0) {
+    axios.put(`http://localhost:3001/cart/user/${product.id}`, {
+      id: product.id,
+      quantity: value,
+      userId: userId,
+    });
+  }
   return function (dispatch) {
     dispatch({
       type: "INCREMENTQ",
@@ -48,6 +58,30 @@ export function incrementQ(product, value) {
         product,
         value,
       },
+    });
+  };
+}
+export function userLogged() {
+  const userId = localStorage.getItem("user");
+  return async function (dispatch) {
+    const data = await axios.get(`http://localhost:3001/cart/${userId}/cart`);
+    const products = await axios.get("http://localhost:3001/products");
+    const productsId = data.data.map((x) => x.productId);
+
+    dispatch({
+      type: "USERCART",
+      payload: {
+        productsId,
+        products,
+      },
+    });
+  };
+}
+
+export function empty() {
+  return function (dispatch) {
+    dispatch({
+      type: "EMPTY",
     });
   };
 }

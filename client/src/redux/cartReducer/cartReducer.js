@@ -1,4 +1,11 @@
-import { ADD_PRODUCT, DELETE_PRODUCT, TOTAL, INCREMENTQ } from "./cartActions";
+import {
+  ADD_PRODUCT,
+  DELETE_PRODUCT,
+  TOTAL,
+  INCREMENTQ,
+  USERCART,
+  EMPTY,
+} from "./cartActions";
 
 const initialState = {
   cart: [],
@@ -22,7 +29,7 @@ export default (state = initialState, action) => {
     }
     case TOTAL: {
       const totalP = state.cart.reduce(
-        (acc, e) => acc + e.unitPrice * e.quantity,
+        (acc, e) => acc + e.unitPrice * (e.quantity ? e.quantity : 1),
         0
       );
       parseFloat(totalP.toFixed(2));
@@ -39,6 +46,24 @@ export default (state = initialState, action) => {
       if (action.payload.value > 0) {
         newCart.quantity = action.payload.value;
       }
+      return {
+        ...state,
+      };
+    }
+    case USERCART: {
+      const { products, productsId } = action.payload;
+
+      const cartSaved = products.data.filter((x) => productsId.includes(x.id));
+      return {
+        ...state,
+        cart: cartSaved,
+      };
+    }
+    case EMPTY: {
+      return {
+        ...state,
+        cart: [],
+      };
     }
     default:
       return state;
