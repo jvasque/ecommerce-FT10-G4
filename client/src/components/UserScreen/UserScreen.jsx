@@ -7,12 +7,8 @@ import Favorites from '../Wishlist/Favorites';
 import Wishlists from '../Wishlist/Wishlists';
 import ProductForm from '../product_form/product_form';
 import CategoriesForm from '../formCategories/Form';
-
-import {
-  getWishlists,
-  addToWishlist,
-  createWishlist,
-} from '../../redux/wishlistReducer/wishlistActions';
+import { emptyCart } from '../../redux/cartReducer/cartActions';
+import { reset } from '../../redux/iconReducer/iconActions';
 import { LogOut } from '../../redux/loginReducer/loginActions';
 
 export function UserScreen() {
@@ -30,7 +26,10 @@ export function UserScreen() {
   const handleLogOut = () => {
     if (login.isLogin) {
       dispatch(LogOut());
-      alert('Se ha cerrado sesión');
+      dispatch(emptyCart());
+      dispatch(reset());
+      alert('Se cerró sesión');
+      localStorage.setItem('user', 0);
     }
   };
 

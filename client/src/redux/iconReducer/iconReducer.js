@@ -1,4 +1,4 @@
-import { MODIFY_CART, MODIFY_FAV } from "./iconActions";
+import { MODIFY_CART, MODIFY_FAV, RESET } from './iconActions';
 
 const initialState = {
   fav: {},
@@ -17,6 +17,13 @@ export default (state = initialState, action) => {
       return {
         ...state,
         fav: { ...state.fav, ...action.payload },
+      };
+    }
+    case RESET: {
+      return {
+        ...state,
+        fav: {},
+        cart: {},
       };
     }
     default:
