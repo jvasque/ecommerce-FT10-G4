@@ -19,10 +19,10 @@ import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
 import Reviews from "../Reviews/Reviews";
 import CommentaryReviews from "../Reviews/CommentaryReviews";
-import { getCommentary } from "../../redux/reviewsReducer/actionsReviews";
 import WishlistButton from './WishlistButton'
 import { modifyCart, modifyFav } from "../../redux/iconReducer/iconActions";
-import {addProduct, deleteProduct} from '../../redux/cartReducer/cartActions'
+import {addProduct, deleteProduct} from '../../redux/cartReducer/cartActions';
+import axios from 'axios';
 
 
 const customIcons = {
@@ -131,11 +131,14 @@ const ProductDetails = (props) => {
   }
 
   useEffect(() => {
-    dispatch(getDetail(parseInt(productId)));
-    dispatch(getCommentary(parseInt(productId)));
-    setHasComment(reviews[0]?.map(e => e.userId)); //Saco los ID de los que tienen al menos una review en el producto
-    //setHasBuy(reviews[0]?.map(e => e.orderDetail.order.userId)); //Me fijo quienes tienen una orden de compra con este producto, saco sus ID
-    setLogged(loggin);
+    const fetchData = async function(nada){
+      let json = await axios.get(`http://localhost:3001/products/${parseInt(productId)}/review`);
+      dispatch({type: 'GET_COMMENTARY', payload: json});
+      setHasComment(json.data?.map(e => e.userId)); //Saco los ID de los que tienen al menos una review en el producto
+   }()
+   //setHasBuy(reviews[0]?.map(e => e.orderDetail.order.userId)); //Me fijo quienes tienen una orden de compra con este producto, saco sus ID
+   setLogged(loggin);
+   dispatch(getDetail(parseInt(productId)));
   }, [productId, dispatch]);
 
   
