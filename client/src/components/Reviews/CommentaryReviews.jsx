@@ -12,6 +12,8 @@ import { deepOrange, deepPurple } from '@material-ui/core/colors';
 //PRUEBA <DELETE>
 import DeleteIcon from '@material-ui/icons/Delete';
 import SettingsIcon from '@material-ui/icons/Settings';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import CancelIcon from '@material-ui/icons/Cancel';
 import Swal2 from 'sweetalert2'
 
 const verdePrincipal="#378A19";
@@ -54,6 +56,24 @@ const useStyles = makeStyles((theme) =>({
       position: "absolute",
       top: "5%",
       right: "2%"
+    },
+    checkIcon: {
+      color: verdePrincipal,
+      backgroundColor: grisPrincipal,
+      position: "absolute",
+      top: "8%",
+      right: "20%",
+      cursor: "pointer",
+      borderRadius: "50%" 
+    },
+    cancelIcon: {
+      color: "rgb(245, 59, 26)",
+      backgroundColor: grisPrincipal,
+      position: "absolute",
+      top: "8%",
+      right: "25%",
+      cursor: "pointer",
+      borderRadius: "50%" 
     }
 }));
 
@@ -67,7 +87,12 @@ function CommentaryReviews({ id, content, score, userId,
       rate:score
     })
     const [toggle, setToggle] = useState(false);
+    const [hidden, setHidden] = React.useState(false);
 
+    const handleVisibility = () => {
+      setHidden((prevHidden) => !prevHidden);
+    };
+     
     function deleteRev(e, id){
       e.preventDefault(e);
       swal({
@@ -153,10 +178,11 @@ function CommentaryReviews({ id, content, score, userId,
       onClick ={(e) => deleteRev(e, id)}/>
       {toggle && 
       <div>
-        <button onClick={(e)=>{modifRev(e, id, input.text, input.rate)}}>Modificar</button>
-        <button onClick={(e) => {handleCancelModif(e)}}>Cancelar</button>
+        <CheckCircleIcon className={classes.checkIcon} onClick={(e)=>{modifRev(e, id, input.text, input.rate)}}/>
+        <CancelIcon className={classes.cancelIcon} onClick={(e) => {handleCancelModif(e)}}/>
+       
       </div>}
-      <SettingsIcon className={classes.settings} onClick={(e) => {setToggle(!toggle); console.log(toggle);}}/>
+      <SettingsIcon className={classes.settings} onClick={(e) => {setToggle(!toggle); handleVisibility(); }}/>
     </div>
   );
 }
