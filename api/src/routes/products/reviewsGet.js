@@ -1,4 +1,5 @@
-const { Product, Review, User } = require("../../db.js");
+const { Product, Review, User, Order, OrderDetail } = require("../../db.js");
+const { Op } = require("sequelize");
 
 module.exports = async (req, res, next) => {
 
@@ -13,7 +14,18 @@ module.exports = async (req, res, next) => {
         order: [
           ['createdAt', 'DESC']
         ],
-        include: User
+        include:[{
+          model: OrderDetail,
+         /*  where: {
+            productId: {
+              [Op.in]:[id , null] //NO ANDAAA
+            }
+          }, */
+          include: [{
+            model: Order,
+            attributes: ['userId']
+          }]
+        }, {model: User}]
       });
 
       if(!data) return res.json({error: "there are not reviews for this product"})
