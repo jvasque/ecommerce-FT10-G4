@@ -8,8 +8,7 @@ export const EMPTY = "EMPTY";
 
 export function addProduct(product) {
   const userId = localStorage.getItem("user");
-
-  if (userId !== 0) {
+  if (userId !== "0") {
     axios.post(`http://localhost:3001/cart/${userId}/${product.id}`, {
       productId: product.id,
     });
@@ -24,7 +23,7 @@ export function addProduct(product) {
 
 export function deleteProduct(product) {
   const userId = localStorage.getItem("user");
-  if (userId !== 0) {
+  if (userId !== "0") {
     axios.delete(`http://localhost:3001/cart/${userId}/${product.id}`);
   }
   return function (dispatch) {
@@ -44,7 +43,7 @@ export function totalPrice() {
 }
 export function incrementQ(product, value) {
   const userId = localStorage.getItem("user");
-  if (userId !== 0) {
+  if (userId !== "0") {
     axios.put(`http://localhost:3001/cart/user/${product.id}`, {
       id: product.id,
       quantity: value,
