@@ -63,7 +63,11 @@ function WishlistButton(props) {
 
   return (
     <div id="wishlistButton">
-      <button onClick={handleClick} value="value1">
+      <button
+        onClick={handleClick}
+        value="value1"
+        style={desplegable ? { display: 'none' } : { display: '' }}
+      >
         Agregar a wishlist
       </button>
 
@@ -86,13 +90,20 @@ function WishlistButton(props) {
                 placeholder="Nombre de lista..."
               />
               <button onClick={(e) => handleButton(e)}>Crear</button>
+              <button className="deleteButton" onClick={handleClose}>
+                X
+              </button>
             </div>
           ) : (
-            <button id="create" onClick={(e) => handleCreate(e)}>
-              Crear Wishlist
-            </button>
+            <div>
+              <button id="create" onClick={(e) => handleCreate(e)}>
+                Crear Wishlist
+              </button>
+              <button className="deleteButton" onClick={handleClose}>
+                X
+              </button>
+            </div>
           )}
-          <button onClick={handleClose}>X</button>
         </div>
       )}
     </div>

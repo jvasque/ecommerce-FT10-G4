@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import '../../scss/components/UserScreen/_UserScreen.scss';
 import { BiLogOut, BiListPlus } from 'react-icons/bi';
 import OrderHistory from '../OrderHistory/OrderHistory';
+import Favorites from '../Wishlist/Favorites';
 import Wishlists from '../Wishlist/Wishlists';
 import ProductForm from '../product_form/product_form';
 import CategoriesForm from '../formCategories/Form';
@@ -141,16 +142,36 @@ export function UserScreen() {
         ) : render === 'PurchaseHistory' ? (
           <OrderHistory />
         ) : render === 'Favorites' ? (
-          <h3>Productos Favoritos</h3>
-        ) : render === 'LogOut' ? (
-          <h3>Cerrar sesión</h3>
+          <Favorites />
         ) : render === 'Wishlists' ? (
           <Wishlists />
         ) : render === 'CreateProduct' ? (
           <ProductForm />
         ) : render === 'ManageCategories' ? (
           <CategoriesForm />
-        ) : null}
+        ) : (
+          <div>
+            <h3>Bienvenido {login.user.firstName}!</h3>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora
+              delectus sunt inventore minima, in beatae, vero eos sapiente qui
+              nisi autem obcaecati dolorem molestiae architecto voluptate enim
+              exercitationem, vitae quas?
+            </p>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora
+              delectus sunt inventore minima, in beatae, vero eos sapiente qui
+              nisi autem obcaecati dolorem molestiae architecto voluptate enim
+              exercitationem, vitae quas?
+            </p>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora
+              delectus sunt inventore minima, in beatae, vero eos sapiente qui
+              nisi autem obcaecati dolorem molestiae architecto voluptate enim
+              exercitationem, vitae quas?
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );
