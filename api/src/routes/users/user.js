@@ -16,7 +16,7 @@ const wishlistDelete = require('./wishlistDelete');
 router.use(express.json());
 
 // User routes
-router.get('/', passport.authenticate('bearer', { session: false }), userGet);
+router.get('/', userGet);
 router.get('/login', userLogin)
 router.post('/post', userPost);
 router.put("/update/:id", userPut)
