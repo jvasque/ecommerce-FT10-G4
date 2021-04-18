@@ -12,8 +12,9 @@ export const LoginAction = (email, password) => {
     try{
       const info = await axios
       .post(`http://localhost:3001/auth/login`, { email, password })
-     
-    
+      console.log(info.data)
+      localStorage.setItem("token",info.data);// guardo mi token encryptado
+      
     dispatch({
       type: LOGIN_ACTION_KEY,
       payload: info.data,

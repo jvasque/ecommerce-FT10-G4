@@ -232,7 +232,7 @@ const ProductDetails = (props) => {
           </div>
           <Reviews id = {productDetail.id}/>
           <h1>Comentarios de otros usuarios</h1>
-          {reviews[0]?.map(e => {
+          {reviews.length>0?reviews.map(e => {
             let fullName;
             let firstName;
             let lastName;
@@ -244,7 +244,7 @@ const ProductDetails = (props) => {
             return (
             <CommentaryReviews key={e.id} id={e.id} score={e.score} content={e.content} userId={e.userId} firstName={firstName} lastName={lastName} fullName={fullName} photoURL={photoURL} />
             )
-          })}
+          }):''}
           
         </div>
       ) : (

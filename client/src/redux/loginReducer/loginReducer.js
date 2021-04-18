@@ -1,5 +1,7 @@
 import { LOGIN_ACTION_KEY, LOG_FAIL, LOG_OUT, LOG_SWAL } from "./loginActions";
 import decode from "jwt-decode";
+
+
 const initialState = {
   user: {},
   error: {},
@@ -13,7 +15,7 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case LOGIN_ACTION_KEY:
       
-      localStorage.setItem('token', JSON.stringify(action.payload));
+   
       return {
         ...state,
         user: decode(action.payload),
@@ -28,7 +30,7 @@ export default (state = initialState, action) => {
           error:action.payload
         }
     case LOG_OUT:
-      localStorage.removeItem('token');
+      localStorage.removeItem("token");
       return {
         ...state,
         user: {},

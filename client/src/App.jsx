@@ -17,6 +17,7 @@ import Footer from "./components/Footer/Footer";
 import Cart from "./components/Cart/Cart"
 import Order from './components/Order/Order'
 import Signup from "./components/Signup/Signup";
+import Admin from "./components/Admin/Admin";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
           <Route exact path='/user/orders' component={OrderHistory}/>
           <Route exact path="/user/cart/order" component={Order}/>
           <Route exact path="/user/login" component={Signup}/>
+          <Route exact path="/admin/users" component={Admin}/>
         </Switch>
         <Route path="/" component={Footer} />
     </div>
