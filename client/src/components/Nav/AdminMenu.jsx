@@ -62,7 +62,16 @@ export default function AdminMenu() {
               onClick={() => setColorChange('Cart')}
             >
               <RiShoppingCart2Line />
-              {productCart}
+              <span
+                style={
+                  colorChange === 'Cart'
+                    ? { backgroundColor: 'rgba(243, 208, 11, 0.87)' }
+                    : { backgroundColor: '' }
+                }
+                onClick={() => setColorChange('Cart')}
+              >
+                {productCart}
+              </span>
             </Link>
           </li>
         </ul>

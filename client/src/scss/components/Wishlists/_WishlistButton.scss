@@ -1,0 +1,31 @@
+#wishlistButton {
+  margin-top: 0.1rem;
+  display: flex;
+  flex-direction: column;
+  height: 3rem;
+  border-radius: 0.18em;
+
+  button {
+    height: 100%;
+    text-align: left;
+    font-family: inherit;
+    font-size: 1.5rem;
+  }
+
+  .desplegable {
+    border: solid 2px red;
+
+    ul {
+      border: solid 2px blue;
+
+      li {
+        border: solid 2px violet;
+        list-style-type: none;
+
+        input {
+          border: solid 2px maroon;
+        }
+      }
+    }
+  }
+}

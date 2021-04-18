@@ -41,7 +41,7 @@ const Wishlists = (props) => {
   function handleRemove(e, wishlistId) {
     e.preventDefault(e);
     dispatch(deleteWishlist(wishlistId));
-  };
+  }
 
   function handleInput(e) {
     e.preventDefault();
@@ -49,14 +49,17 @@ const Wishlists = (props) => {
   }
 
   function handleCreate(e) {
-    // despacha action para crear wishlist
     e.preventDefault();
     setInputDesplegable(true);
   }
 
   function handleButton(e) {
-    dispatch(createWishlist(login.user.id, input));
-    dispatch(getWishlists(login.user.id));
+    if (input) {
+      dispatch(createWishlist(login.user.id, input));
+      dispatch(getWishlists(login.user.id));
+    } else {
+      alert('Se requiere un nombre para la lista');
+    }
   }
 
   return (
@@ -65,11 +68,15 @@ const Wishlists = (props) => {
       {wishlists &&
         wishlists.map((result, i) => (
           <li key={i} className="wishlist" onClick={(e) => handleList(e)}>
-            <button onClick={(e) => handleRemove(e, result.id)} className="X">
-              X
-            </button>
-
-            <h3 onClick={() => setDisplay(result.name)}>{result.name}</h3>
+            <h3 onClick={() => setDisplay(result.name)}>
+              {result.name}
+              <button
+                onClick={(e) => handleRemove(e, result.id)}
+                className="deleteButton"
+              >
+                X
+              </button>
+            </h3>
             <div
               className="products"
               style={
@@ -82,7 +89,7 @@ const Wishlists = (props) => {
                 <div className="wishlistProducts">
                   <button
                     onClick={(e) => handleClick(e, result.id, product.id)}
-                    className="X"
+                    className="deleteButton"
                   >
                     X
                   </button>

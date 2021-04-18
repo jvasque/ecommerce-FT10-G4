@@ -5,7 +5,7 @@ import {
   addToWishlist,
   createWishlist,
 } from '../../redux/wishlistReducer/wishlistActions';
-import '../../scss/components/ProductDetail/_WishlistButton.scss';
+import '../../scss/components/Wishlists/_WishlistButton.scss';
 
 function WishlistButton(props) {
   // Local React States
@@ -46,7 +46,7 @@ function WishlistButton(props) {
   }
 
   function handleButton(e) {
-    e.preventDefault()
+    e.preventDefault();
     dispatch(createWishlist(user.id, input));
     setInput('');
   }
@@ -54,6 +54,11 @@ function WishlistButton(props) {
   function handleCreate(e) {
     e.preventDefault();
     setInputDesplegable(true);
+  }
+
+  function handleClose() {
+    setInputDesplegable(false);
+    setDesplegable(false);
   }
 
   return (
@@ -64,30 +69,30 @@ function WishlistButton(props) {
 
       {desplegable && (
         <div className="desplegable">
-          <ul className="desplegable">
+          <ul>
             {wishlists &&
               wishlists.map((result, i) => (
                 <li key={i} onClick={(e) => handleAdd(result.id, e)}>
                   <a href="">{result.name}</a>
                 </li>
               ))}
-            {inputDesplegable ? (
-              <li>
-                <input
-                  onChange={(e) => handleInput(e)}
-                  value={input}
-                  type="text"
-                  placeholder="Nombre de lista..."
-                />
-                <button onClick={(e) => handleButton(e)}>Crear</button>
-              </li>
-            ) : (
-              <li id="create" onClick={(e) => handleCreate(e)}>
-                Crear Wishlist
-              </li>
-            )}
           </ul>
-          <button onClick={() => setDesplegable(false)}>X</button>
+          {inputDesplegable ? (
+            <div className="wishlistCreate">
+              <input
+                onChange={(e) => handleInput(e)}
+                value={input}
+                type="text"
+                placeholder="Nombre de lista..."
+              />
+              <button onClick={(e) => handleButton(e)}>Crear</button>
+            </div>
+          ) : (
+            <button id="create" onClick={(e) => handleCreate(e)}>
+              Crear Wishlist
+            </button>
+          )}
+          <button onClick={handleClose}>X</button>
         </div>
       )}
     </div>

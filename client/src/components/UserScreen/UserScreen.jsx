@@ -18,7 +18,6 @@ export function UserScreen() {
   const [render, setRender] = useState('miCuenta');
 
   const login = useSelector((state) => state.loginReducer);
-  //   const user = useSelector((state) => state.loginReducer.user);
 
   const dispatch = useDispatch();
 
@@ -26,10 +25,6 @@ export function UserScreen() {
     e.preventDefault();
     setRender(e.target.id);
   }
-
-  // useEffect(() => {
-  //   return;
-  // }, []);
 
   const handleLogOut = () => {
     if (login.isLogin) {
@@ -44,26 +39,98 @@ export function UserScreen() {
         <h2 id="MyAccount" onClick={(e) => handleClick(e)}>
           Mi Cuenta
         </h2>
-        <div id="PurchaseHistory" onClick={(e) => handleClick(e)}>
+        <div
+          id="PurchaseHistory"
+          onClick={(e) => handleClick(e)}
+          style={
+            render === 'PurchaseHistory'
+              ? {
+                  backgroundColor: 'var(--color-brand)',
+                  opacity: '50%',
+                  color: 'var(--color-light)',
+                }
+              : { backgroundColor: '' }
+          }
+        >
           Mis Compras
         </div>
-        <div id="Favorites" onClick={(e) => handleClick(e)}>
+        <div
+          id="Favorites"
+          onClick={(e) => handleClick(e)}
+          style={
+            render === 'Favorites'
+              ? {
+                  backgroundColor: 'var(--color-brand)',
+                  opacity: '50%',
+                  color: 'var(--color-light)',
+                }
+              : { backgroundColor: '' }
+          }
+        >
           Favoritos
         </div>
-        <div id="Wishlists" onClick={(e) => handleClick(e)}>
+        <div
+          id="Wishlists"
+          onClick={(e) => handleClick(e)}
+          style={
+            render === 'Wishlists'
+              ? {
+                  backgroundColor: 'var(--color-brand)',
+                  opacity: '50%',
+                  color: 'var(--color-light)',
+                }
+              : { backgroundColor: '' }
+          }
+        >
           Wishlists
         </div>
         {login.isAdmin ? (
-          <div id="CreateProduct" onClick={(e) => handleClick(e)}>
+          <div
+            id="CreateProduct"
+            onClick={(e) => handleClick(e)}
+            style={
+              render === 'CreateProduct'
+                ? {
+                    backgroundColor: 'var(--color-brand)',
+                    opacity: '50%',
+                    color: 'var(--color-light)',
+                  }
+                : { backgroundColor: '' }
+            }
+          >
             Crear productos
           </div>
         ) : null}
         {login.isAdmin ? (
-          <div id="ManageCategories" onClick={(e) => handleClick(e)}>
+          <div
+            id="ManageCategories"
+            onClick={(e) => handleClick(e)}
+            style={
+              render === 'ManageCategories'
+                ? {
+                    backgroundColor: 'var(--color-brand)',
+                    opacity: '50%',
+                    color: 'var(--color-light)',
+                  }
+                : { backgroundColor: '' }
+            }
+          >
             Crear categorías
           </div>
         ) : null}
-        <div id="LogOut" onClick={() => handleLogOut()}>
+        <div
+          id="LogOut"
+          onClick={() => handleLogOut()}
+          style={
+            render === 'LogOut'
+              ? {
+                  backgroundColor: 'var(--color-brand)',
+                  opacity: '50%',
+                  color: 'var(--color-light)',
+                }
+              : { backgroundColor: '' }
+          }
+        >
           Cerrar Sesión <BiLogOut />
         </div>
       </div>
