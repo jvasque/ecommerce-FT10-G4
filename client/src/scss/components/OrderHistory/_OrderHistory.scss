@@ -9,8 +9,12 @@
         animation: 1s ease-out 0s 1 slideInFromLeft;
         .order{
             flex-direction: row;
-            background: var(--color-gray);
+            background: white;
             height: 50px;
+            cursor: pointer;
+            &:hover{
+                color:var(--color-brand);
+            }
             .orderId{
                 display: inline-block;
                 height: 100%;
@@ -60,7 +64,7 @@
             }
         } 
         .inactive {   
-            background: var(--color-brand-lights); 
+            background: var(--color-light); 
             height: 100%;    
             .folding-pannel{
                 transform-origin: 50% 0%;
