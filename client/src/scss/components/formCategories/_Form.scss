@@ -49,7 +49,7 @@
       text-align: center;
       width: 50%;
       height: 40px;
-      background: #d8e7bd;
+      background: #dfebcb;
       z-index: 1;
 
       -webkit-border-radius: 6px 6px 0 0;
@@ -60,12 +60,11 @@
       -moz-box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.32);
       box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.32);
 
-      // -webkit-transform: perspective(5px) rotateX(0.53deg) translateZ(-2px);
-      // transform: perspective(5px) rotateX(0.93deg) translateZ(-1px);
-      // -webkit-transform-origin: 0 0;
-      // transform-origin: 0 0;
-      // -webkit-backface-visibility: hidden;
-      // backface-visibility: hidden;
+      transform: perspective(15px) rotateX(0.93deg) translateZ(-0.6px);
+        -webkit-transform-origin: 0 0;
+        transform-origin: 0 0;
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
     }
   }
 
