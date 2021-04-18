@@ -2,37 +2,58 @@
     flex-direction: row;
     height: 50px;
     width: 100%;
-    background: var(--color-brand);
+    background: var(--color-brand-75);
+    color: white;
+    cursor: pointer;
     //sanimation: 1s ease-out 0s 1 slideInFromLeft;
     .registerFilter{
         display: inline-block;
         height: 100%;
         width: 10%;
+        &:hover{
+            background-color: var(--color-brand-50);       
+        };
+        
     }
     .stateFilter{
         display: inline-block;
         height: 100%;
         width: 15%;
+        &:hover{
+            background-color: var(--color-brand-50);       
+        };
     }
     .creationFilter{
         display: inline-block;
         height: 100%;
         width: 20%;
+        &:hover{
+            background-color: var(--color-brand-50);       
+        };
     }
     .updateFilter{
         display: inline-block;
         height: 100%;
         width: 20%;
+        &:hover{
+            background-color: var(--color-brand-50);       
+        };
     }
     .paymentFilter{
         display: inline-block;
         height: 100%;
         width: 20%;
+        &:hover{
+            background-color: var(--color-brand-50);       
+        };
     }
     .totalFilter{
         display: inline-block;
         height: 100%;
         width: 15%;
+        &:hover{
+            background-color: var(--color-brand-50);       
+        };
     }
 }
 
