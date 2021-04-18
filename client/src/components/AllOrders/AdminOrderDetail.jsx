@@ -1,29 +1,32 @@
 import React from "react";
 import DivText from '../ProductCard/DivText'
-import '../../scss/components/OrderHistory/_OrderDetail.scss'
+import '../../scss/components/AllOrders/_AdminOrderDetail.scss'
 
-function OrderDetail({product}){
+function AdminOrderDetail({product}){
         return (
-            <div className='containerOrderDetail'>
-                <div className='orderDetailPicture'>
+            <div className='containerAdminOrderDetail'>
+                <div className='orderAdminDetailRegister'>
+                    <DivText content={product.id} />
+                </div>
+                <div className='orderAdminDetailPicture'>
                     <img src={product.product.picture} alt='product'/>
                 </div>
-                <div className='orderDetailName'>
+                <div className='orderAdminDetailName'>
                     <a href={`/${product.product.id}`} target="_blank">
                         <DivText content={product.product.name} />
                     </a> 
                 </div> 
-                <div className='orderDetailQuantity'>   
+                <div className='orderAdminDetailQuantity'>   
                     <DivText content={product.quantity} /> 
                 </div> 
-                <div className='orderDetailPrice'>   
+                <div className='orderAdminDetailPrice'>   
                     <DivText content={product.product.unitPrice} /> 
                 </div> 
-                <div className='orderDetailCost'>   
+                <div className='orderAdminDetailCost'>   
                     <DivText content={(product.product.unitPrice*product.quantity).toFixed(2)} /> 
                 </div>           
             </div>
         )    
 }
 
-export default OrderDetail;
+export default AdminOrderDetail;
