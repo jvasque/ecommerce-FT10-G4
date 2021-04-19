@@ -104,7 +104,7 @@ server.get('/suscripcion', async (req, res, next) => {
                                 </head>
                                 <body>
                                 <h3>${newsLetter.name} Usted está suscrito a nuestros boletines </h3>
-                                <a href="http://localhost:3000/newsletter"> para terminar haga click aquí </a>
+                                <a href="http://localhost:3000"> para terminar haga click aquí </a>
                                 </body>
                             </html>
                         `;
