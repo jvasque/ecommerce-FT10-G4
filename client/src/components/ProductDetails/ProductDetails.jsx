@@ -196,13 +196,13 @@ const ProductDetails = (props) => {
               <hr />
               <div className="productOptions">
                 <div className="favorites">
-                  <div className="text">Favoritos</div>
+                  <div className="text">Agregar a Favoritos</div>
                   <div className="icon">
                     {Wish(productId, state, handleHeart)}
                   </div>
                 </div>
                 <div className="addCart">
-                  <div className="text">AddCart</div>
+                  <div className="text">Agregar al Carrito</div>
                   <div className="icon">
                     {Cart(productId, state, handleHeart)}
                   </div>

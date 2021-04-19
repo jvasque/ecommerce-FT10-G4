@@ -1,7 +1,12 @@
 .containerFilter {
-  background-color: var(--color-light);
+  background-color: white;
   height: 100%;
   .categoriesFilter {
+    h2{
+      padding: 10px;
+      background-color: white;
+      cursor: pointer;
+    };
     background: #d1c9c9;
     color: var(--color-brand);
     height: 50px;
@@ -13,10 +18,15 @@
   }
 
   .activeCategory{
-    background: #e2d8d8;
+    background: var(--color-brand);
+    opacity: 0.5;
+    color: white
   }
-
+  
   .categoriesLoaded:hover {
-    background: #e2d8d8;
+    background: var(--color-brand);
+    opacity: 0.5;
+    color: white;
+    cursor: pointer;
   }
 }
