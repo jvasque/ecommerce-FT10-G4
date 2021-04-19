@@ -16,6 +16,7 @@ module.exports = async (req, res) => {
         orderId: order.id,
       },
     });
+   
     ordersDetail ? res.json(ordersDetail) : res.send("Card Empty");
   } catch (error) {
     console.log(error);
