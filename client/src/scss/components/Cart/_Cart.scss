@@ -44,7 +44,6 @@
   .deleteAll {
     padding: 1rem;
     display: flex;
-    margin-right: 2rem;
     justify-content: center;
     align-items: center;
     float: left;
@@ -58,10 +57,12 @@
       color: var(--color-light);
       font-weight: 100px;
     }
+  }
 
-    hr {
-      width: 80%;
-      color: var(--color-dark);
-    }
+  hr {
+    margin: 5vh auto;
+    width: 80%;
+    color: var(--color-dark);
+    opacity: 50%;
   }
 }

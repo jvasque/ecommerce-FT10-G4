@@ -47,7 +47,7 @@ function ProductCard({ product }) {
             </div>
           </div>
           <div className="cardPrice">
-            <DivText content={`USD$${product.unitPrice}`} />
+            <DivText content={`USD$ ${product.unitPrice}`} />
           </div>
         </div>
         {/* <p id='nameCard'><b>{product.name}</b></p> */}

@@ -1,23 +1,23 @@
-.scoreIcon{
-    flex-direction: row;
+.scoreIcon {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+
+  .starContainer {
+    padding-top: 10px;
     height: 100%;
     width: 100%;
-    .starContainer{
-        display: inline-block;
-        height: 75%;
-        width: 50%;
-        margin-top: 5%;
-        vertical-align: top;
-        .icon{
-            height: 100%;
-            width: 100%;
-        }
+
+    .icon {
+      height: 85%;
+      width: 100%;
     }
-    .scoreContainer{
-        display: inline-block;
-        width: 40%;
-        height: 100%;
-        margin-left: 10%;
-        font-size: 25px;
-    }    
+  }
+  .scoreContainer {
+    width: 100%;
+    height: 100%;
+    font-size: 30px;
+  }
 }
