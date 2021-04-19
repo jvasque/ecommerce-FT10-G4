@@ -25,7 +25,7 @@ function ButtonIconText(props) {
   // addedCart.length!==0 && console.log(addedCart)
 
   //dispatch(modifyCart({[`Cart-${product.id}`]: false}))
-  function handleHeart(event) {
+  function handleCart(event) {
     const test = iconState.cart[`Cart-${props.productId}`];
     if (test === false || test === undefined) {
       dispatch(addProduct(props.product));
@@ -39,12 +39,18 @@ function ButtonIconText(props) {
     }
     let { name, checked } = event.target;
     setState({ ...state, [name]: checked });
-    if (name.includes("Fav")) {
-      dispatch(modifyFav({ [name]: checked }));
-    } else {
+    if (name.includes("Cart")) {
       dispatch(modifyCart({ [name]: checked }));
     }
   }
+
+    function handleHeart(event){
+      let { name, checked } = event.target;
+      setState({ ...state, [name]: checked });
+      if (name.includes("Fav")) {
+        dispatch(modifyFav({ [name]: checked }));
+      }
+    }
 
     return (
         <div className='buttonIcon'>
@@ -56,9 +62,9 @@ function ButtonIconText(props) {
                             <Checkbox 
                                 icon={<FavoriteBorder />} 
                                 checkedIcon={<Favorite />} 
+                                checked={state[`Fav-${props.productId}`] || false}
                                 name={`Fav-${props.productId}`} 
-                                
-                                
+                                onChange={handleHeart}
                             />
                         }/>) : (<FormControlLabel
                                     control={
@@ -67,7 +73,7 @@ function ButtonIconText(props) {
                                         checkedIcon={<ShoppingCartIcon style={{color: "white"}}/>} 
                                         checked={state[`Cart-${props.productId}`] || false}
                                         name={`Cart-${props.productId}`} 
-                                        onChange={handleHeart}
+                                        onChange={handleCart}
                                     />}
                                 />)
                     }                    
