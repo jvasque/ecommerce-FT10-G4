@@ -1,19 +1,17 @@
 .productCart {
-  display: flex;
-  flex-direction: row;
-  background: white;
   height: 200px;
   width: 963px;
   padding: 10px;
-  // -moz-border-radius: 10%;
-  // border-radius: 10%;
+  margin: 20px auto;
+  display: flex;
+  flex-direction: row;
+  background: white;
   border: solid 1px var(--color-black-50);
+
   &:hover {
     -webkit-box-shadow: 1px 2px 2px 2px rgba(0, 0, 0, 0.29);
     box-shadow: 1px 2px 2px 2px rgba(0, 0, 0, 0.29);
   }
-  // overflow: hidden;
-  margin: 20px auto;
 
   .cardPicture {
     height: max-content;
@@ -23,9 +21,10 @@
       height: 80%;
     }
   }
+
   .cartContent {
     height: 80%;
-    width: 180%;
+    width: 150%;
 
     .cardData {
       display: flex;
@@ -34,84 +33,52 @@
       width: 63%;
       height: 25%;
       margin-top: 5px;
+      background: var(--color-sun);
+      color: white;
+      width: 36%;
+      border-radius: 10px;
+      -moz-border-radius: 10px;
+    }
 
-      .cardScore {
-        background: var(--color-sun);
-        color: white;
-        width: 36%;
-        height: 120%;
-        border-radius: 10px;
-        -moz-border-radius: 10px;
+    .starIcon {
+      height: 100%;
+    }
 
-        .starIcon {
-          height: 100%;
-          width: 90%;
-        }
+    h2 {
+      color: var(--color-brand-85);
+    }
 
-        .cardPrice {
-          height: 10%;
-          width: 100%;
-          font-size: 40px;
-        }
+    h3 {
+      font-size: 20px;
+    }
+  }
+
+  .cartOptions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    width: 80%;
+
+    .deleteButton2 {
+      position: relative;
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+      margin-bottom: 20px;
+    }
+
+    .stockOptions {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-content: center;
+      margin: 20px 20px 0px 0;
+      margin-right: 20px;
+      .stock {
+        color: var(--color-delete);
       }
     }
   }
-
-  .cardButtons {
-    width: 100%;
-    height: 10%;
-    flex-direction: row;
-
-    .wishlistButton {
-      background: gray;
-      width: 50%;
-      height: 100%;
-      display: inline-block;
-      border: none;
-      outline: none;
-    }
-    .addCartButton {
-      background: green;
-      color: white;
-      width: 50%;
-      height: 100%;
-      display: inline-block;
-      border: none;
-      outline: none;
-    }
-    .cardIcon {
-      flex-direction: row;
-      height: 100%;
-      width: 100%;
-    }
-  }
-  .delete {
-    float: right;
-  }
-}
-
-p {
-  margin: 0;
-  vertical-align: center;
-}
-.stock {
-  color: red;
-}
-.stockUp {
-  font-weight: 300;
-  font-size: 14px;
-  color: #999;
-  margin-top: 2px;
-}
-#nameCard {
-  height: 50%;
-}
-
-#descriptionCard {
-  height: 70%;
-}
-
-.cardLink {
-  text-decoration: none;
-  color: black;
 }

@@ -2,14 +2,14 @@
   background-color: white;
   height: 100%;
   .categoriesFilter {
-    h2{
-      padding: 10px;
+    h2 {
+      padding: 20px;
       background-color: white;
       cursor: pointer;
-    };
-    background: #d1c9c9;
+      text-align: center;
+    }
     color: var(--color-brand);
-    height: 50px;
+    height: 81px;
   }
   .categoriesLoaded {
     color: var(--color-brand);
@@ -17,12 +17,12 @@
     border: 2px rgb(0, 90, 0);
   }
 
-  .activeCategory{
+  .activeCategory {
     background: var(--color-brand);
     opacity: 0.5;
-    color: white
+    color: white;
   }
-  
+
   .categoriesLoaded:hover {
     background: var(--color-brand);
     opacity: 0.5;

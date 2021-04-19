@@ -3,6 +3,7 @@
   background-color: var(--color-gray);
   display: flex;
   flex-direction: row;
+
   .filterScreen {
     width: 20%;
     display: inline-block;
@@ -11,6 +12,7 @@
   }
 
   .catalogScreen {
+    padding-top: 5px;
     display: inline-block;
     // background-color: var(--color-gray);
     width: 80%;
@@ -24,7 +26,7 @@
       text-align: right;
     }
   }
-  .pagesBar{
+  .pagesBar {
     vertical-align: middle;
   }
 }

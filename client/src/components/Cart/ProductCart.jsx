@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import '../../scss/components/Cart/_ProductCart.scss';
-import DivText from '../ProductCard/DivText';
 import ScoreIcon from '../ProductCard/ScoreIcon';
 import DeleteButton from '@material-ui/icons/Delete';
 import { Button, Input } from '@material-ui/core';
@@ -37,30 +36,19 @@ function ProductCard({ product }) {
   return (
     <div className="productCart">
       <div className="cardPicture">
-        <img src={product.picture} alt="product"></img>
+        <img src={product.picture} alt="product" />
       </div>
       <div className="cartContent">
         <div className="cardData">
-          <div className="cardScore">
-            <div className="starIcon">
-              <ScoreIcon score={product.score} />
-            </div>
-          </div>
-          <div className="cardPrice">
-            <DivText content={`USD$ ${product.unitPrice}`} />
-          </div>
+          <p className="starIcon">
+            <ScoreIcon score={product.score} />
+          </p>
         </div>
-        {/* <p id='nameCard'><b>{product.name}</b></p> */}
-        {/* <p id='descriptionCard'>{product.description}</p> */}
+        <h2 className="cardPrice">{`USD$ ${product.unitPrice}`}</h2>
         <h3>{product.name}</h3>
-        <div className="delete">
-          <Input
-            type="number"
-            min="0"
-            max={product.unitsOnStock}
-            defaultValue={quantity}
-            onChange={(e) => handleChange(e, product.unitsOnStock)}
-          />
+      </div>
+      <div className="cartOptions">
+        <div className="deleteButton2">
           <Button
             onClick={() => {
               dispatch(deleteProduct(product));
@@ -69,10 +57,19 @@ function ProductCard({ product }) {
               dispatch(totalPrice());
             }}
           >
-            {' '}
             <DeleteButton />
           </Button>
+        </div>
+        <div className="stockOptions">
+          <Input
+            type="number"
+            min="0"
+            max={product.unitsOnStock}
+            defaultValue={quantity}
+            onChange={(e) => handleChange(e, product.unitsOnStock)}
+          />
           <p className="stockUp">Disponibles:{product.unitsOnStock}</p>
+
           {stock ? '' : <p className="stock">No hay stock disponible</p>}
           {negative ? '' : <p className="stock">Ingrese un valor valido</p>}
         </div>
