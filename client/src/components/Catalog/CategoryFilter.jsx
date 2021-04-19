@@ -22,7 +22,7 @@ function CategoryFilter(){
     return (
         <div className='containerFilter'>
             <div className='categoriesFilter' onClick={() => handleClick('')}>
-                <b><DivText content='Catalogo'/></b>
+                <h2><DivText content='Catálogo'/></h2>
             </div>     
             {
                 categories.map((category, index) => {

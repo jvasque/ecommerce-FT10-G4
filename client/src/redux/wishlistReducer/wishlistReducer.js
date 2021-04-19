@@ -1,8 +1,9 @@
-import { GET_WISHLISTS, ADD_TO_WISHLIST, CREATE_WISHLIST } from "./wishlistActions"
+import { GET_WISHLISTS, ADD_TO_WISHLIST, CREATE_WISHLIST, REMOVE_FROM_WISHLIST, DELETE_WISHLIST } from "./wishlistActions"
 
 const initialState = {
   wishlists : [],
   changedWishlist : {},
+  changedProduct : {},
 }
 
 const wishlistReducer = (state=initialState, action) => {
@@ -18,10 +19,20 @@ const wishlistReducer = (state=initialState, action) => {
         ...state,
         changedWishlist: action.payload
       };
+    case REMOVE_FROM_WISHLIST:
+      return {
+        ...state,
+        changedWishlist: action.payload
+      };
     case CREATE_WISHLIST:
       return {
         ...state,
         changedWishlist: action.payload,
+      };
+    case DELETE_WISHLIST:
+      return {
+        ...state,
+        changedWishlist: {},
       };
     default:
       return {...state}

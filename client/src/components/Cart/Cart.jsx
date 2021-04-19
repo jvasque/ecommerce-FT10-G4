@@ -1,11 +1,11 @@
-import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import ProductCart from "./ProductCart";
-import "../../scss/components/Cart/_Cart.scss";
-import { totalPrice } from "../../redux/cartReducer/cartActions";
-import { Button } from "@material-ui/core";
-import { Link } from "react-router-dom";
-import axios from "axios";
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import ProductCart from './ProductCart';
+import '../../scss/components/Cart/_Cart.scss';
+import { emptyDb, totalPrice } from '../../redux/cartReducer/cartActions';
+import { Button } from '@material-ui/core';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 function Cart() {
   const products = useSelector((state) => state.cartReducer.cart);
@@ -13,10 +13,13 @@ function Cart() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(totalPrice());  
-
+    dispatch(totalPrice());
   }, [dispatch]);
-  
+
+  const handleClick = () => {
+    dispatch(emptyDb());
+    dispatch(totalPrice());
+  };
 
   return (
     <div className="cart-container">
@@ -30,14 +33,23 @@ function Cart() {
           <h1>No hay elementos en el carrito</h1>
         )}
       </div>
+      <div className="deleteAll">
+        {products.length !== 0 ? (
+          <Button onClick={handleClick}>Eliminar todo</Button>
+        ) : (
+          ''
+        )}
+      </div>
+      <hr />
+
       <div className="total">
-        {total ? <h2>Total ${total}</h2> : ""}
+        {total ? <h2>Total ${total}</h2> : ''}
         {products.length ? (
           <Link className="link-redirect" to="/user/cart/order">
             <Button>Continuar Compra</Button>
           </Link>
         ) : (
-          <div>Aún no llenas tu carrito, !Anímate a hacerlo!</div>
+          <div>¿Aún no llenas tu carrito? ¡Anímate a hacerlo!</div>
         )}
       </div>
     </div>

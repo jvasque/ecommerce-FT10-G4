@@ -7,6 +7,7 @@ module.exports = async (req, res) => {
     let { firstName, lastName, email, password } = req.body.data;
 
     if (!firstName) {
+      
       console.log("the user must have first name");
       return res.status(404).json({ error: "the user must have first name" });
     }

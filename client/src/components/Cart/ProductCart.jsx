@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from "react";
-import "../../scss/components/Cart/_ProductCart.scss";
-import DivText from "../ProductCard/DivText";
-import ScoreIcon from "../ProductCard/ScoreIcon";
-import DeleteButton from "@material-ui/icons/Delete";
-import { Button, Input } from "@material-ui/core";
-import { useDispatch } from "react-redux";
-import { deleteProduct } from "../../redux/cartReducer/cartActions";
-import { totalPrice, incrementQ } from "../../redux/cartReducer/cartActions";
-import { modifyCart } from "../../redux/iconReducer/iconActions";
+import React, { useState, useEffect } from 'react';
+import '../../scss/components/Cart/_ProductCart.scss';
+import DivText from '../ProductCard/DivText';
+import ScoreIcon from '../ProductCard/ScoreIcon';
+import DeleteButton from '@material-ui/icons/Delete';
+import { Button, Input } from '@material-ui/core';
+import { useDispatch } from 'react-redux';
+import { deleteProduct } from '../../redux/cartReducer/cartActions';
+import { totalPrice, incrementQ } from '../../redux/cartReducer/cartActions';
+import { modifyCart } from '../../redux/iconReducer/iconActions';
 
 function ProductCard({ product }) {
   const [quantity, setQuantity] = useState(1);
@@ -47,7 +47,7 @@ function ProductCard({ product }) {
             </div>
           </div>
           <div className="cardPrice">
-            <DivText content={`USD$${product.unitPrice}`} />
+            <DivText content={`USD$ ${product.unitPrice}`} />
           </div>
         </div>
         {/* <p id='nameCard'><b>{product.name}</b></p> */}
@@ -66,14 +66,15 @@ function ProductCard({ product }) {
               dispatch(deleteProduct(product));
               dispatch(modifyCart({ [`Cart-${product.id}`]: false }));
               localStorage.removeItem(product.id);
+              dispatch(totalPrice());
             }}
           >
-            {" "}
+            {' '}
             <DeleteButton />
           </Button>
           <p className="stockUp">Disponibles:{product.unitsOnStock}</p>
-          {stock ? "" : <p className="stock">No hay stock disponible</p>}
-          {negative ? "" : <p className="stock">Ingrese un valor valido</p>}
+          {stock ? '' : <p className="stock">No hay stock disponible</p>}
+          {negative ? '' : <p className="stock">Ingrese un valor valido</p>}
         </div>
       </div>
     </div>

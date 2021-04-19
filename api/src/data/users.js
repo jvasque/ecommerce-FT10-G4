@@ -28,7 +28,7 @@ module.exports = [
     payId: [1, 2],
   },
   {
-    type: 'user',
+    type: 'admin',
     firstName: 'Julian',
     lastName: 'Ariza',
     companyName: 'Telegram',
