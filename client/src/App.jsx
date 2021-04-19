@@ -29,7 +29,7 @@ function App() {
           <Route exact path="/product/cart" component={Cart}/>
           <Route exact path="/admin/categories" component={Form} />
           <Route exact path="/catalog" component={Catalog} /> 
-          {/*<Route exact path="/:id" component={ProductDetails} /> */}
+          {/* <Route exact path="/:id" component={ProductDetails} /> */}
           <Route exact path="/admin/product/form" component={ProductForm} /> 
           <Route exact path="/admin/product/form/create" component={ProductFormCreate} /> 
           <Route exact path="/admin/product/form/query" component={ProductFormQuery} /> 

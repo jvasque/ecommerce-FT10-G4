@@ -1,20 +1,16 @@
-const path = require("path");
+//const path = require("path");
 
 const { NewsletterOption, User } = require("../../db.js");
 
 const server = require("express").Router();
 
-const nodemailer = require('nodemailer');
+const enviarEmail = require('./../../handlers/email');
 
-const {
-    user,
-    pass,
-} = process.env;
-
-//Inicia el proceso de suscripción
+//Inicia el proceso de suscripción, por el momento no maneja token
 server.post('/email', async (req, res, next) => {
 
-    try {
+    try 
+    {
         const {
             name,
             email,
@@ -31,54 +27,44 @@ server.post('/email', async (req, res, next) => {
                 name,
                 email
             }
-        });
+        });  
+        
+        if (created)
+        {
+            const url = `http://localhost:3001/newsLetter/suscripcion?id=${newsLetter.id}&boletinesInformativos=${boletinesInformativos}&promociones=${promociones}&nuevosLanzamientos=${nuevosLanzamientos}`;
+            //const urlBaja = `http://localhost:3001/newsLetter/desuscribir?id=${newsLetter.id}&boletinesInformativos=true&promociones=false&nuevosLanzamientos=false`;
 
-        if (created) {
-            const url = `http://localhost:3001/newsLetter/suscripcion?id=${newsLetter.newsletterOptionId}&boletinesInformativos=${boletinesInformativos}&promociones=${promociones}&nuevosLanzamientos=${nuevosLanzamientos}`;
+            await enviarEmail.enviar({
 
-            let transporter = nodemailer.createTransport({
-                service: 'gmail',
-                auth: {
-                    user,
-                    pass
-                }
-            });
-
-            let mailOptions = {
-                from: 'developer2021vlad@gmail.com',
-                to: email,
+                email,
+                name,
                 subject: 'Suscripción Agro Place',
-                text: name + ' Usted se ha suscrito a nuestros servicios de Agro Place, ' + url
-            };
+                url,
+                archivo: 'layout-suscription' // aqui va la plantilla               
 
-            transporter.sendMail(mailOptions, function (error, info) {
-                if (error) {
-                    return res.json({
-                        message: error
-                    });
-                } else {
-                    console.log('Email enviado: ' + info.response);
-
-                    return res.json({
-                        message: "En su bandeja de entrada llegará la autorización para la suscripción"
-                    });
-                }
             });
-        } else {
+
+            return res.json({
+                message: `En su bandeja de entrada llegará la autorización para la suscripción, 
+                          por favor verifique su correo no deseado y agreguenos a sus favoritos`
+            });            
+        }
+        else
+        {
             return res.json({
                 message: "El email ya está en nuestra base de datos"
             });
         }
-
-    } catch (err) {
+    } 
+    catch (error) 
+    {
         return res.json({
             newsLetther: {},
-            message: err.message
+            message: error.message
         });
-        console.log(err.message);
+        console.log(error.message);        
     }
-
-}); 
+});
 
 //Aca termina el proceso de suscripción desde el correo electrónico
 server.get('/suscripcion', async (req, res, next) => {
@@ -91,12 +77,10 @@ server.get('/suscripcion', async (req, res, next) => {
             promociones,
             nuevosLanzamientos
         } = req.query;
-        
-        //const newsLetter = NewsletterOption.findByPk(id);
 
         const newsLetter = await NewsletterOption.findOne({
             where: {
-                newsletterOptionId: id
+                id
             }
         });
 
@@ -109,18 +93,18 @@ server.get('/suscripcion', async (req, res, next) => {
                 nuevosLanzamientos
             }, {
                 where: {
-                    newsletterOptionId : id
+                    id
                 }
             });
 
             const html = `
                             <html>
                                 <head>
-                                    <title>Error</title>
+                                    <title>Suscription</title>
                                 </head>
                                 <body>
-                                <h3>${newsLetter.name} Usted está suscrito a nuestros boletines</h3>
-                                <a href="http://localhost:3000/newsletter">para terminar haga click aquí </a>
+                                <h3>${newsLetter.name} Usted está suscrito a nuestros boletines </h3>
+                                <a href="http://localhost:3000/newsletter"> para terminar haga click aquí </a>
                                 </body>
                             </html>
                         `;
@@ -160,7 +144,6 @@ server.get('/suscripcion', async (req, res, next) => {
     }    
 });
 
-//Aca termina el proceso de suscripción desde el correo electrónico
 server.get('/desuscribir', async (req, res, next) => {
 
     try 
@@ -174,7 +157,7 @@ server.get('/desuscribir', async (req, res, next) => {
 
         const newsLetter = await NewsletterOption.findOne({
             where: {
-                newsletterOptionId: id
+                id
             }
         });
 
@@ -192,7 +175,7 @@ server.get('/desuscribir', async (req, res, next) => {
                     nuevosLanzamientos
                 }, {
                     where: {
-                        newsletterOptionId: id
+                        id
                     }
                 });
 
@@ -203,7 +186,7 @@ server.get('/desuscribir', async (req, res, next) => {
                                     </head>
                                     <body>
                                     <h3>${newsLetter.name} Usted se desuscribio de nustros boletines, ya no recibiras correos</h3>
-                                    <a href="http://localhost:3000/home"> Vuela a nuestra Agro Place</a>
+                                    <a href="http://localhost:3000/home"> Vuela a nuestra Agro Place </a>
                                     </body>
                                 </html>
                             `;
@@ -218,7 +201,7 @@ server.get('/desuscribir', async (req, res, next) => {
                     nuevosLanzamientos
                 }, {
                     where: {
-                        newsletterOptionId: id
+                        id
                     }
                 });             
 
@@ -263,40 +246,27 @@ server.get('/desuscribir', async (req, res, next) => {
 
 server.get('/correo-masivo-de-prueba', async (req, res, next) => {
 
+    const boletinesInformativos = true;
+    const promociones = true;
+    const nuevosLanzamientos = true;
+
     try 
     {
-        let transporter = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-                user,
-                pass
-            }
-        });
-
         const users = await User.findAll();
 
         for (let i = 0; i < users.length; i++) 
         {
-            
-            let mailOptions = {
-                from: user,
-                to: users[i].email,
+            const url = `http://localhost:3001/newsLetter/suscripcion?id=${users[i].id}&boletinesInformativos=${boletinesInformativos}&promociones=${promociones}&nuevosLanzamientos=${nuevosLanzamientos}`;
+            //const urlBaja = `http://localhost:3001/newsLetter/desuscribir?id=${newsLetter.id}&boletinesInformativos=true&promociones=false&nuevosLanzamientos=false`;
+
+            await enviarEmail.enviar({
+
+                email: users[i].email,
+                name: users[i].firstName,
                 subject: 'Suscripción Agro Place',
-                text: users[i].firstName + ' Usted se ha recibido un correo de prueba de Agro Place!!!'
-            };
+                url,
+                archivo: 'layout-suscription'
 
-            transporter.sendMail(mailOptions, function (error, info) {
-                if (error) {
-                    return res.json({
-                        message: error
-                    });
-                } else {
-                    console.log('Email enviado: ' + info.response);
-
-                    // return res.json({
-                    //     message: "En su bandeja de entrada llegará la autorización para la suscripción"
-                    // });
-                }
             });
         }
 
@@ -310,7 +280,7 @@ server.get('/correo-masivo-de-prueba', async (req, res, next) => {
             message: "Error " + error
         });
     }
-    
+
 });
 
 module.exports = server;
