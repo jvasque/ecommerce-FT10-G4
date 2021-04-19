@@ -98,7 +98,7 @@ export function UserScreen() {
                 : { backgroundColor: '' }
             }
           >
-            Crear productos
+            Administrar productos
           </div>
         ) : null}
         {login.isAdmin ? (
@@ -115,7 +115,7 @@ export function UserScreen() {
                 : { backgroundColor: '' }
             }
           >
-            Crear categorías
+            Administrar categorías
           </div>
         ) : null}
         <div
@@ -149,13 +149,41 @@ export function UserScreen() {
         ) : render === 'ManageCategories' ? (
           <CategoriesForm />
         ) : (
-          <div>
-            <h3>Bienvenido {login.user.firstName}!</h3>
+          <div id="welcomeUser">
+            <h3>¡Hola {login.user.firstName}!</h3>
             <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora
-              delectus sunt inventore minima, in beatae, vero eos sapiente qui
-              nisi autem obcaecati dolorem molestiae architecto voluptate enim
-              exercitationem, vitae quas?
+              {login.isAdmin ? (
+                <p>Este es tu panel de administrador, en el que podrás:</p>
+              ) : (
+                <p>Este es tu panel de usuario, en el que podrás:</p>
+              )}
+
+              <ul>
+                <li>
+                  interactuar con tus <strong>favoritos</strong>
+                </li>
+                <li>
+                  administrar tus <strong>listas de deseados</strong>
+                </li>
+                <li>
+                  ver tu historial de <strong>compras</strong>
+                </li>
+                <li>
+                  <strong>cerrar sesión</strong>
+                </li>
+                {login.isAdmin ? (
+                  <li>
+                    crear <strong>nuevos productos</strong> y modificar{' '}
+                    <strong>existencias</strong>
+                  </li>
+                ) : null}
+                {login.isAdmin ? (
+                  <li>
+                    crear <strong>nuevas categorías</strong> y modificar las{' '}
+                    <strong>existentes</strong>
+                  </li>
+                ) : null}
+              </ul>
             </p>
             <p>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora

@@ -17,9 +17,6 @@ function Product_form(props) {
         <NavLink to="/admin/product/form/query">
           <button onClick={() => dispatch(clearProduct())}>Consultar</button>
         </NavLink>
-        <NavLink to="/user/info">
-          <button>Volver</button>
-        </NavLink>
       </div>
     </div>
   );

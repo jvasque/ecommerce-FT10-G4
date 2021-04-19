@@ -38,6 +38,7 @@ function WishlistButton(props) {
     // despacha action para agregar a la wishlist
     e.preventDefault();
     dispatch(addToWishlist(wishlistId, productDetail.id));
+    alert('El producto fue agregado satisfactoriamente');
   }
 
   function handleInput(e) {
@@ -47,8 +48,12 @@ function WishlistButton(props) {
 
   function handleButton(e) {
     e.preventDefault();
-    dispatch(createWishlist(user.id, input));
-    setInput('');
+    if (input) {
+      dispatch(createWishlist(user.id, input));
+      setInput('');
+    } else {
+      alert('La lista necesita un nombre');
+    }
   }
 
   function handleCreate(e) {

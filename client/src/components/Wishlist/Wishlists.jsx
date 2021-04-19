@@ -57,6 +57,7 @@ const Wishlists = (props) => {
     if (input) {
       dispatch(createWishlist(login.user.id, input));
       dispatch(getWishlists(login.user.id));
+      alert('La lista fue creada');
     } else {
       alert('Se requiere un nombre para la lista');
     }
