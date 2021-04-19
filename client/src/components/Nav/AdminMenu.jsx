@@ -28,14 +28,6 @@ export default function AdminMenu() {
               <RiAccountCircleLine />
             </Link>
           </li>
-          {/* <li>
-                    <Link className="test" to="/admin/product/form" style={colorChange === "Product" ? {color:"rgba(243, 208, 11, 0.87)"} : {color :""}} 
-                    onClick={() => setColorChange("Product")}><FaProductHunt/></Link>
-                </li> */}
-          {/* <li>
-                    <Link className="test" to="/admin/categories" style={colorChange === "Categories" ? {color:"rgba(243, 208, 11, 0.87)"} : {color :""}}
-                    onClick={() => setColorChange("Categories")}><BiListPlus/></Link>
-                </li> */}
           <li>
             <Link
               className="test"

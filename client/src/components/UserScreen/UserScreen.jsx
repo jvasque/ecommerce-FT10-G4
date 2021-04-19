@@ -7,6 +7,7 @@ import Favorites from '../Wishlist/Favorites';
 import Wishlists from '../Wishlist/Wishlists';
 import ProductForm from '../product_form/product_form';
 import CategoriesForm from '../formCategories/Form';
+import AllOrders from '../AllOrders/AllOrders';
 import { emptyCart } from '../../redux/cartReducer/cartActions';
 import { reset } from '../../redux/iconReducer/iconActions';
 import { LogOut } from '../../redux/loginReducer/loginActions';
@@ -84,6 +85,38 @@ export function UserScreen() {
         >
           Wishlists
         </div>
+        <div
+          id="Newsletter"
+          onClick={(e) => handleClick(e)}
+          style={
+            render === 'Newsletter'
+              ? {
+                  backgroundColor: 'var(--color-brand)',
+                  opacity: '50%',
+                  color: 'var(--color-light)',
+                }
+              : { backgroundColor: '' }
+          }
+        >
+          Newsletter
+        </div>
+        {login.isAdmin ? (
+          <div
+            id="allOrders"
+            onClick={(e) => handleClick(e)}
+            style={
+              render === 'allOrders'
+                ? {
+                    backgroundColor: 'var(--color-brand)',
+                    opacity: '50%',
+                    color: 'var(--color-light)',
+                  }
+                : { backgroundColor: '' }
+            }
+          >
+            Administrar órdenes
+          </div>
+        ) : null}
         {login.isAdmin ? (
           <div
             id="CreateProduct"
@@ -144,6 +177,13 @@ export function UserScreen() {
           <Favorites />
         ) : render === 'Wishlists' ? (
           <Wishlists />
+        ) : render === 'Newsletter' ? (
+          <div style={{ marginLeft: '3vw' }}>
+            <h2>Newsletter</h2>
+            <p>Pronto estará disponible</p>
+          </div>
+        ) : render === 'allOrders' ? (
+          <AllOrders />
         ) : render === 'CreateProduct' ? (
           <ProductForm />
         ) : render === 'ManageCategories' ? (
@@ -168,9 +208,6 @@ export function UserScreen() {
                 <li>
                   ver tu historial de <strong>compras</strong>
                 </li>
-                <li>
-                  <strong>cerrar sesión</strong>
-                </li>
                 {login.isAdmin ? (
                   <li>
                     crear <strong>nuevos productos</strong> y modificar{' '}
@@ -183,6 +220,14 @@ export function UserScreen() {
                     <strong>existentes</strong>
                   </li>
                 ) : null}
+                {login.isAdmin ? (
+                  <li>
+                    ver todas las <strong>órdenes de compra</strong>
+                  </li>
+                ) : null}
+                <li>
+                  Salir de tu cuenta al <strong>cerrar sesión</strong>
+                </li>
               </ul>
             </p>
             <p>
