@@ -1,0 +1,92 @@
+doctype html
+html(lang="es")
+    head
+        meta(charset="UTF-8")
+        meta(http-equiv="X-UA-Compatible", content="IE=edge")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title Suscription
+        style 
+            include ./email.css
+
+body
+
+    div(class="es-wrapper-color")
+
+        table(class="es-wrapper" width="100%" cellspacing="0" cellpadding="0")
+            tbody
+                tr
+                    td(class="esd-email-paddings" valign="top")                                            
+                        table(class="es-content" cellspacing="0" cellpadding="0")
+                            tbody
+                                tr
+                                    td(class="esd-stripe" style="background-color: #378A19;" esd-custom-block-id="6340")
+                                        table(class="es-content-body" style="background-color: transparent;" width="600" cellspacing="0" cellpadding="0" align="center")
+                                            tbody
+                                                tr
+                                                    td(class="esd-structure")
+                                                        table(width="100%" cellspacing="0" cellpadding="0")
+                                                            tbody
+                                                                tr
+                                                                    td(class="esd-container-frame" width="600" valign="top" align="center")
+                                                                        table(style="background-color: #ffffff; border-radius: 4px; border-collapse: separate;" width="100%" cellspacing="0" cellpadding="0" bgcolor="#ffffff")
+                                                                            tbody
+                                                                                tr
+                                                                                    td(class="esd-block-text es-p35t es-p5b es-p30r es-p30l" align="center")
+                                                                                        h1 Bienvenido! #{name}                                                                                                                                                                                                            
+                        //- fin titulo "bienvenido"
+                        br
+                        //- inicio cuerpo del email
+                        table(class="es-content" cellspacing="0" cellpadding="0" align="center")
+                            tbody
+                                tr
+                                    td(class="esd-stripe" align="center")
+                                        table(class="es-content-body" style="background-color: transparent;" width="600" cellspacing="0" cellpadding="0" align="center")
+                                            tbody
+                                                tr
+                                                    td(class="esd-structure" align="left")
+                                                        table(width="100%" cellspacing="0" cellpadding="0")
+                                                            tbody
+                                                                tr
+                                                                    td(class="esd-container-frame" width="600" valign="top" align="center")
+                                                                        table(style="border-radius: 4px; border-collapse: separate; background-color: #ffffff;" width="100%" cellspacing="0" cellpadding="0" bgcolor="#ffffff")
+                                                                            tbody
+                                                                                tr
+                                                                                    td(class="esd-block-text es-p20t es-p20b es-p30r es-p30l es-m-txt-l" bgcolor="#ffffff" align="left")
+                                                                                        p Gracias por suscribirse a nuestro newsletter, para continuar por favor haga click en el botón "confirmar suscripción".
+                                                                                tr
+                                                                                    td(class="esd-block-button es-p35t es-p35b es-p10r es-p10l" align="center") 
+                                                                                        span(class="es-button-border") 
+                                                                                            a(href=`${url}` class="es-button" target="_blank" style="border-width: 15px 30px;") Confirmar Suscripción                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+                                                                                
+                                                                                tr
+                                                                                    td(class="esd-block-text es-p20t es-p30r es-p30l es-m-txt-l" align="left")
+                                                                                        p Si tiene alguna pregunta, solo responda a este correo electrónico; siempre estaremos encantados de ayudarle.
+                                                                                tr
+                                                                                    td(class="esd-block-text es-p20t es-p40b es-p30r es-p30l es-m-txt-l" align="left")
+                                                                                        p(style="font-weight: bold;") Agro Place
+
+                        //- Fin cuerpo del email
+
+                        //- Footer del email
+                        table(cellpadding="0" cellspacing="0" class="es-footer" align="center")
+                            tbody
+                                tr
+                                    td(class="esd-stripe" esd-custom-block-id="6342" align="center")
+                                        table(class="es-footer-body" width="600" cellspacing="0" cellpadding="0" align="center")
+                                            tbody
+                                                tr
+                                                    td(class="esd-structure es-p30t es-p30b es-p30r es-p30l" align="left")
+                                                        table(width="100%" cellspacing="0" cellpadding="0")
+                                                            tbody
+                                                                tr
+                                                                    td(class="esd-container-frame" width="540" valign="top" align="center")
+                                                                        table(width="100%" cellspacing="0" cellpadding="0")
+                                                                            tbody
+                                                                                //- tr
+                                                                                //-     td(align="left" class="esd-block-text es-p25t")
+                                                                                //-         p Si estos correos electrónicos se vuelven molestos, no dude en cancelar la suscripción.&nbsp;                                                                                             
+                                                                                //-             a(href=`${urlBaja}`) Darse de baja
+                                                                                tr
+                                                                                    td(class="esd-block-text es-p25t" align="left")
+                                                                                        p Balcarce 50, C1064 CABA, Argentina                                                                                                                                                                    
+                        //- fin del Footer del email                

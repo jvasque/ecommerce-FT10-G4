@@ -1,4 +1,5 @@
 import React from "react";
+import Newsletter from "../Newsletter/Newsletter"
 import "../../scss/components/Home/_Home.scss";
 
 const Home = () => {
