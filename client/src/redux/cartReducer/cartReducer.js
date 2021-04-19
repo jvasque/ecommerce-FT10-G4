@@ -28,11 +28,11 @@ export default (state = initialState, action) => {
       };
     }
     case TOTAL: {
-      const totalP = state.cart.reduce(
+      let totalP = state.cart.reduce(
         (acc, e) => acc + e.unitPrice * (e.quantity ? e.quantity : 1),
         0
       );
-      parseFloat(totalP.toFixed(2));
+      totalP = parseFloat(totalP.toFixed(2));
       return {
         ...state,
         total: totalP,
