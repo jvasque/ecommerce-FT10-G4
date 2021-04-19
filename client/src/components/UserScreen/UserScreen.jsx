@@ -8,6 +8,7 @@ import Wishlists from '../Wishlist/Wishlists';
 import ProductForm from '../product_form/product_form';
 import CategoriesForm from '../formCategories/Form';
 import AllOrders from '../AllOrders/AllOrders';
+import Newsletter from '../Newsletter/Newsletter';
 import { emptyCart } from '../../redux/cartReducer/cartActions';
 import { reset } from '../../redux/iconReducer/iconActions';
 import { LogOut } from '../../redux/loginReducer/loginActions';
@@ -179,8 +180,7 @@ export function UserScreen() {
           <Wishlists />
         ) : render === 'Newsletter' ? (
           <div style={{ marginLeft: '3vw' }}>
-            <h2>Newsletter</h2>
-            <p>Pronto estará disponible</p>
+            <Newsletter />
           </div>
         ) : render === 'allOrders' ? (
           <AllOrders />
