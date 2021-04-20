@@ -4,7 +4,7 @@ module.exports = async (req, res, next) => {
   const { userId, id } = req.params;
 
   try {
-    const order = await Order.findOne({
+    const order = await Order.findOrCreate({
       where: {
         userId: userId,
         state: "cart",
@@ -14,7 +14,7 @@ module.exports = async (req, res, next) => {
     const findDuplicate = await OrderDetail.findAll({
       where: {
         productId: id,
-        orderId: order.id,
+        orderId: order[0].id,
       },
     });
     if (findDuplicate.length !== 0) {
@@ -24,7 +24,7 @@ module.exports = async (req, res, next) => {
         productId: id,
         quantity: 1,
       });
-      await detailCreate.setOrder(order.id);
+      await detailCreate.setOrder(order[0].id);
       res.json(detailCreate);
     }
   } catch (error) {
