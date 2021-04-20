@@ -17,6 +17,11 @@ import { useHistory } from 'react-router';
 import { totalPrice, userLogged } from '../../redux/cartReducer/cartActions';
 import { modifyCart } from '../../redux/iconReducer/iconActions';
 import axios from 'axios';
+import FacebookLogin from 'react-facebook-login';
+
+const responseFacebook = (response) => {
+  console.log(response);
+};
 
 const Signup = () => {
   const dispatch = useDispatch();
@@ -245,6 +250,13 @@ const Signup = () => {
                 placeholder="Contraseña"
               />
               {/* <a href="#">olvidaste tu clave?</a> */}
+              <FacebookLogin
+                appId="311325910426887"
+                autoLoad={false}
+                fields="name,email,picture"
+                // onClick={componentClicked}
+                callback={responseFacebook}
+              />
               <button type="submit">INICIA SESION</button>
             </form>
           </div>
