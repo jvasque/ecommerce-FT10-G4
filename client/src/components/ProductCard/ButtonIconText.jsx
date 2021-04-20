@@ -14,7 +14,6 @@ import { addProduct, deleteProduct } from "../../redux/cartReducer/cartActions";
 
 function ButtonIconText(props) {
   const iconState = useSelector((state) => state.iconReducer);
-  const reduxCart = useSelector((state) => state.cartReducer.cart)
   const [state, setState] = useState({
     //[`Fav-${props.productId}`]: iconState.fav[`Fav-${props.productId}`],
     [`Fav-${props.productId}`]: JSON.parse(localStorage.getItem('Fav'))?.includes(props.productId) || false,
@@ -22,7 +21,7 @@ function ButtonIconText(props) {
   });
 
   const dispatch = useDispatch();
-
+  
   //const addedCart = cart.filter(product=>product.productId===props.productId ? setIconcart(addedCart))
   // addedCart.length!==0 && console.log(addedCart)
 

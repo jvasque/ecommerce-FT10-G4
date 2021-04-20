@@ -65,13 +65,12 @@ const Signup = () => {
           unic.includes(x.id)
         );
          
-        dispatch(emptyDb())
+        dispatch(emptyCart())
         
         for (let i = 0; i < cartSaved.length; i++) {
           dispatch(modifyCart({ [`Cart-${cartSaved[i].id}`]: true }));
           dispatch(addProduct(cartSaved[i]))
-          console.log(cartSaved[i]);
-     
+
          
         }
       }
