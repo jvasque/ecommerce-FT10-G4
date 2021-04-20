@@ -11,12 +11,14 @@ const reviewGet = require("./reviewsGet");
 const reviewPost = require("./reviewsPost");
 const reviewDelete = require("./reviewsDelete");
 const reviewPut = require("./reviewsPut");
+const reviewOrderDetail = require("./reviewOrderDetail");
 
 router.use(bodyParser.json());
 
 router.get("/", productGet);
 router.get("/:id", productGetId);
 router.get("/:id/review", reviewGet);
+router.get("/:id/review-order-details/", reviewOrderDetail);
 router.put("/:id/review", reviewPut);
 router.put("/:id", productPutId);
 router.post("/", productPost);

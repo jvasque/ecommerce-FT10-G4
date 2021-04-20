@@ -1,7 +1,8 @@
-import { SUBMIT_COMMENTARY, GET_COMMENTARY } from "./actionsReviews";
+import { SUBMIT_COMMENTARY, GET_COMMENTARY, HAS_BUY } from "./actionsReviews";
 
 const initialState = {
   reviews: [],
+  hasBuyOrderDetail: []
 };
 
 const reviewsReducer = (state = initialState, action) => {
@@ -11,6 +12,12 @@ const reviewsReducer = (state = initialState, action) => {
         return {
           ...state,
           reviews: [action.payload.data]
+        }
+
+      case HAS_BUY:
+        return {
+          ...state,
+          hasBuyOrderDetail: [action.payload.data]
         }
 
     default:

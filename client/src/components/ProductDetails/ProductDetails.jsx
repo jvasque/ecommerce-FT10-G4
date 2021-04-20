@@ -63,7 +63,7 @@ const ProductDetails = (props) => {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const { reviews } = useSelector((state) => state.reviewsReducer);
+  const { reviews, hasBuyOrderDetail } = useSelector((state) => state.reviewsReducer);
 
   const iconState = useSelector((state) => state.iconReducer);
 
@@ -129,10 +129,15 @@ const ProductDetails = (props) => {
       let json = await axios.get(
         `http://localhost:3001/products/${parseInt(productId)}/review`
       );
+      
+      let userHasBuy = await axios.get(`http://localhost:3001/products/${parseInt(productId)}/review-order-details/`);
+      
       dispatch({ type: 'GET_COMMENTARY', payload: json });
+      dispatch({type: 'HAS_BUY', payload: userHasBuy});
       setHasComment(json.data?.map((e) => e.userId)); //Saco los ID de los que tienen al menos una review en el producto
+      setHasBuy(userHasBuy.data?.map(e => e.order.userId)); //Saco los ID de los usuarios que tienen una Order Detail con el produco
     })();
-    //setHasBuy(reviews[0]?.map(e => e.orderDetail.order.userId)); //Me fijo quienes tienen una orden de compra con este producto, saco sus ID
+    
     setLogged(loggin);
     dispatch(getDetail(parseInt(productId)));
   }, [productId, dispatch]);
@@ -149,9 +154,8 @@ const ProductDetails = (props) => {
     if (!loggin.isLogin) return false;
     if (loggin.user.type === 'superadmin' || loggin.user.type === 'admin')
       return true;
-    //if(!hasBuy.includes(loggin.user.id)) return false; //Descomentar cuando este bien hecha la pre-carga
+    if(!hasBuy.includes(loggin.user.id)) return false; //Descomentar cuando este bien hecha la pre-carga
     if (hasComment.includes(loggin.user.id)) return false;
-
     return true;
   };
 
