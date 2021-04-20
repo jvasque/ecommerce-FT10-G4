@@ -28,17 +28,31 @@ server.post("/login", function (req, res, next) {
   )(req, res, next);
 });
 
-server.get("/facebook", function(req, res, next) {
-  passport.authenticate("facebook");
-});
+// server.get("/facebook", function(req, res, next) {
+//   passport.authenticate("facebook");
+// });
 
 
-server.get("/facebook/callback", function (req, res, next)  {
-  passport.authenticate("facebook", {
-    successRedirect: "/",
-    failureRedirect: "/",
+// server.get("/facebook/callback", function (req, res, next)  {
+//   passport.authenticate("facebook", {
+//     successRedirect: "/",
+//     failureRedirect: "/",
+//   });
+// });
+
+
+
+server.get('/google',
+
+  passport.authenticate('google', { scope: ['profile', 'email'] }));
+
+
+server.get('/google/callback', 
+  passport.authenticate('google', { failureRedirect: 'http://localhost:3000/user/login',session: false }),
+  function(req, res) {
+    console.log('hola')
+    res.redirect('http://localhost:3000');
   });
-});
 module.exports = server;
 
 // server.post("/login", (req, res, next) => {

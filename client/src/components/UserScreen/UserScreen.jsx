@@ -1,18 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import '../../scss/components/UserScreen/_UserScreen.scss';
-import { BiLogOut, BiListPlus } from 'react-icons/bi';
-import OrderHistory from '../OrderHistory/OrderHistory';
-import Favorites from '../Wishlist/Favorites';
-import Wishlists from '../Wishlist/Wishlists';
-import ProductForm from '../product_form/product_form';
-import CategoriesForm from '../formCategories/Form';
-import { emptyCart } from '../../redux/cartReducer/cartActions';
-import { reset } from '../../redux/iconReducer/iconActions';
-import { LogOut } from '../../redux/loginReducer/loginActions';
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import "../../scss/components/UserScreen/_UserScreen.scss";
+import { BiLogOut, BiListPlus } from "react-icons/bi";
+import OrderHistory from "../OrderHistory/OrderHistory";
+import Favorites from "../Wishlist/Favorites";
+import Wishlists from "../Wishlist/Wishlists";
+import ProductForm from "../product_form/product_form";
+import CategoriesForm from "../formCategories/Form";
+import { emptyCart } from "../../redux/cartReducer/cartActions";
+import { reset } from "../../redux/iconReducer/iconActions";
+import { LogOut } from "../../redux/loginReducer/loginActions";
+import ManageAccount from "../Admin/ManageAccount";
 
 export function UserScreen() {
-  const [render, setRender] = useState('miCuenta');
+  const [render, setRender] = useState("miCuenta");
 
   const login = useSelector((state) => state.loginReducer);
 
@@ -28,8 +29,8 @@ export function UserScreen() {
       dispatch(LogOut());
       dispatch(emptyCart());
       dispatch(reset());
-      alert('Se cerró sesión');
-      localStorage.setItem('user', 0);
+      alert("Se cerró sesión");
+      localStorage.setItem("user", 0);
     }
   };
 
@@ -43,13 +44,13 @@ export function UserScreen() {
           id="PurchaseHistory"
           onClick={(e) => handleClick(e)}
           style={
-            render === 'PurchaseHistory'
+            render === "PurchaseHistory"
               ? {
-                  backgroundColor: 'var(--color-brand)',
-                  opacity: '50%',
-                  color: 'var(--color-light)',
+                  backgroundColor: "var(--color-brand)",
+                  opacity: "50%",
+                  color: "var(--color-light)",
                 }
-              : { backgroundColor: '' }
+              : { backgroundColor: "" }
           }
         >
           Mis Compras
@@ -58,13 +59,13 @@ export function UserScreen() {
           id="Favorites"
           onClick={(e) => handleClick(e)}
           style={
-            render === 'Favorites'
+            render === "Favorites"
               ? {
-                  backgroundColor: 'var(--color-brand)',
-                  opacity: '50%',
-                  color: 'var(--color-light)',
+                  backgroundColor: "var(--color-brand)",
+                  opacity: "50%",
+                  color: "var(--color-light)",
                 }
-              : { backgroundColor: '' }
+              : { backgroundColor: "" }
           }
         >
           Favoritos
@@ -73,13 +74,13 @@ export function UserScreen() {
           id="Wishlists"
           onClick={(e) => handleClick(e)}
           style={
-            render === 'Wishlists'
+            render === "Wishlists"
               ? {
-                  backgroundColor: 'var(--color-brand)',
-                  opacity: '50%',
-                  color: 'var(--color-light)',
+                  backgroundColor: "var(--color-brand)",
+                  opacity: "50%",
+                  color: "var(--color-light)",
                 }
-              : { backgroundColor: '' }
+              : { backgroundColor: "" }
           }
         >
           Wishlists
@@ -89,13 +90,13 @@ export function UserScreen() {
             id="CreateProduct"
             onClick={(e) => handleClick(e)}
             style={
-              render === 'CreateProduct'
+              render === "CreateProduct"
                 ? {
-                    backgroundColor: 'var(--color-brand)',
-                    opacity: '50%',
-                    color: 'var(--color-light)',
+                    backgroundColor: "var(--color-brand)",
+                    opacity: "50%",
+                    color: "var(--color-light)",
                   }
-                : { backgroundColor: '' }
+                : { backgroundColor: "" }
             }
           >
             Crear productos
@@ -106,29 +107,46 @@ export function UserScreen() {
             id="ManageCategories"
             onClick={(e) => handleClick(e)}
             style={
-              render === 'ManageCategories'
+              render === "ManageCategories"
                 ? {
-                    backgroundColor: 'var(--color-brand)',
-                    opacity: '50%',
-                    color: 'var(--color-light)',
+                    backgroundColor: "var(--color-brand)",
+                    opacity: "50%",
+                    color: "var(--color-light)",
                   }
-                : { backgroundColor: '' }
+                : { backgroundColor: "" }
             }
           >
             Crear categorías
+          </div>
+        ) : null}
+        {login.isAdmin ? (
+          <div
+            id="ManageAccount"
+            onClick={(e) => handleClick(e)}
+            style={
+              render === "ManageAccount"
+                ? {
+                    backgroundColor: "var(--color-brand)",
+                    opacity: "50%",
+                    color: "var(--color-light)",
+                  }
+                : { backgroundColor: "" }
+            }
+          >
+            Modificar usuario
           </div>
         ) : null}
         <div
           id="LogOut"
           onClick={() => handleLogOut()}
           style={
-            render === 'LogOut'
+            render === "LogOut"
               ? {
-                  backgroundColor: 'var(--color-brand)',
-                  opacity: '50%',
-                  color: 'var(--color-light)',
+                  backgroundColor: "var(--color-brand)",
+                  opacity: "50%",
+                  color: "var(--color-light)",
                 }
-              : { backgroundColor: '' }
+              : { backgroundColor: "" }
           }
         >
           Cerrar Sesión <BiLogOut />
@@ -136,18 +154,20 @@ export function UserScreen() {
       </div>
 
       <div className="rendersContainer">
-        {render === 'MyAccount' ? (
+        {render === "MyAccount" ? (
           <h3>Datos de mi cuenta</h3>
-        ) : render === 'PurchaseHistory' ? (
+        ) : render === "PurchaseHistory" ? (
           <OrderHistory />
-        ) : render === 'Favorites' ? (
+        ) : render === "Favorites" ? (
           <Favorites />
-        ) : render === 'Wishlists' ? (
+        ) : render === "Wishlists" ? (
           <Wishlists />
-        ) : render === 'CreateProduct' ? (
+        ) : render === "CreateProduct" ? (
           <ProductForm />
-        ) : render === 'ManageCategories' ? (
+        ) : render === "ManageCategories" ? (
           <CategoriesForm />
+        ) : render === "ManageAccount" ? (
+          <ManageAccount />
         ) : (
           <div>
             <h3>Bienvenido {login.user.firstName}!</h3>

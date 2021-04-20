@@ -10,6 +10,7 @@ import reviewsReducer from './reviewsReducer/reducerReviews';
 import wishlistReducer from './wishlistReducer/wishlistReducer';
 import loginReducer from './loginReducer/loginReducer'
 import postUserReducer from './postUserReducer/postUserReducer'
+// import AdminReducer from './AdminReducer/AdminReducer'
 
 
 const rootReducer = combineReducers({
@@ -25,6 +26,7 @@ const rootReducer = combineReducers({
   wishlistReducer,
   loginReducer,
   postUserReducer,
+  // AdminReducer,
 });
 
 export default rootReducer;

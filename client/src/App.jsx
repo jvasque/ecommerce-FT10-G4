@@ -18,7 +18,7 @@ import Footer from './components/Footer/Footer';
 import Cart from './components/Cart/Cart';
 import Order from './components/Order/Order';
 import Signup from './components/Signup/Signup';
-import Admin from './components/Admin/Admin';
+import ManageAccount from './components/Admin/ManageAccount';
 import AuthRoute from './components/FrontAuth/AuthRoute';
 import UserScreen from './components/UserScreen/UserScreen';
 
@@ -56,7 +56,7 @@ function App() {
           <Route exact path="/user/orders" component={OrderHistory} />
           <Route exact path="/user/cart/order" component={Order} />
           <Route exact path="/user/info" component={UserScreen} />
-          <Route exact path="/user/admin" component={Admin} />
+          <Route exact path="/user/admin" component={ManageAccount} />
         </AuthRoute>
       </Switch>
       <Route path="/" component={Footer} />

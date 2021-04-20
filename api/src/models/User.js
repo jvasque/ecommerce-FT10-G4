@@ -81,12 +81,12 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       unique: true,
     },
-    googleUser: {
+    googleId: {
       type: DataTypes.STRING,
       unique: true,
-      validate: {
-        isEmail: true,
-      },
+      // validate: {
+      //   isEmail: true,
+      // },
     },
     linkedinUser: {
       type: DataTypes.STRING,

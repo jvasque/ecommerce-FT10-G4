@@ -21,7 +21,6 @@ router.get('/login', userLogin)
 router.post('/post', userPost);
 router.put("/update/:id", userPut)
 router.put("/delete/:id", userDelete);
-
 router.get("/:id/orders", userOrderHistory)
 
 // User Wishlists routes
