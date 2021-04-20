@@ -1,17 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import { TextField } from "@material-ui/core";
+import Typography from "@material-ui/core/Typography";
 //import {  } from "react-router";
-import { Link,Redirect ,useHistory} from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
+import {
+  FormControl,
+  Input,
+  InputLabel,
+  FormHelperText,
+} from "@material-ui/core";
 
 const FormPayment = () => {
-  
-    const history = useHistory()
+  const history = useHistory();
 
   const [input, setInput] = useState({
     firstName: "",
     lastName: "",
     address: "",
+    id: 0,
   });
 
   const total = useSelector((state) => state.cartReducer.total);
@@ -22,6 +30,14 @@ const FormPayment = () => {
       [e.target.name]: e.target.value,
     });
   };
+
+  useEffect(() => {
+    async function getId() {
+      let data = await axios.get("localhost:3001/order/users/orders/");
+      console.log(data.data);
+    }
+    getId();
+  }, []);
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -34,35 +50,48 @@ const FormPayment = () => {
       email: user.email,
       totalPrice: total,
     });
-    history.push("/rutaMercadoPago");
+    //  history.push("/rutaMercadoPago");
   };
 
   return (
     <div>
-      <h1>Detalles de la orden</h1>
-      <p>
+      <Typography variant="h5">
         Nombres y Apellidos : {user.firstName} {user.lastName}
-      </p>
-      <form onSubmit={onSubmit}>
-        <label>Telefono de contacto:</label>
-        <input
-          min="1"
+      </Typography>
+      <FormControl className="" noValidate autoComplete="off">
+        <TextField
           type="number"
           name="phoneNumber"
+          label="Telefono de contacto:"
+          variant="outlined"
           onChange={handleChange}
         />
-        <label>Dirección de envío</label>
-        <input type="text" name="address" onChange={handleChange} />
-        <input type="email" name="email" onChange={handleChange} />
+        <TextField
+          type="text"
+          name="address"
+          onChange={handleChange}
+          label="Dirección de envío:"
+          variant="outlined"
+        />
+        <TextField
+          type="email"
+          name="email"
+          onChange={handleChange}
+          label="Email"
+          variant="outlined"
+        />
 
-        <p>Precio Total: {total}</p>
-
-        <input type="submit" value="Pagar" />
-      </form>
-
-      <Link to='/product/cart'>
-        <button>Volver</button>
-      </Link>
+        <Typography>Precio Total: {total}</Typography>
+        <TextField
+          type="submit"
+          value="Pagar"
+          variant="outlined"
+          onClick={onSubmit}
+        />
+      </FormControl>
+      <NavLink to="/product/cart">
+        <TextField type="submit" value="Volver" variant="outlined" />
+      </NavLink>
     </div>
   );
 };
