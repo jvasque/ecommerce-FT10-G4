@@ -68,7 +68,6 @@ function SingleOrder({order}){
             return (
                 <form onSubmit={handleSubmit}>
                     <select value={status} onChange={handleStatusChange}>
-                        <option value="cart">Carrito</option>
                         <option value="created">Creada</option>                    
                         <option value="processing">Procesando</option>
                         <option value="cancelled">Cancelada</option>
