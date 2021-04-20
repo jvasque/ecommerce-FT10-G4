@@ -9,8 +9,53 @@ import {
 } from '../../redux/reducerProductForms/actionsProductForms';
 import '../../scss/components/productsForm/_ProductFormUpdate.scss';
 import swal from 'sweetalert';
+import { makeStyles } from '@material-ui/core/styles';
+import { TextField, CircularProgress } from '@material-ui/core';
+
+
+const grisPrincipal= "#EFEFEF";
+
+const useStyles = makeStyles((theme) => ({
+  
+  root: {
+    '& > *': {
+      margin: "40px auto",
+      width: '80%',
+      background: grisPrincipal,
+      color: "black" 
+    },
+  },
+  input: {
+    
+    width: "90%",
+    color: "red",
+    marginTop: "15px",
+    marginBottom: "15px"
+    
+  },
+  inputDescription: {
+    padding:"0px",
+    width: "95%",
+    marginTop: "15px",
+    marginBottom: "15px"
+    
+  },
+  cancelIcon: {
+    color: "rgb(245, 59, 26)",
+    backgroundColor: grisPrincipal,
+    cursor: "pointer",
+    borderRadius: "50%" 
+  },
+  button: {
+    margin: theme.spacing(1),
+    width: "90px",
+    marginLeft: "10px"
+  },
+}));
 
 function Product_form_update(props) {
+  const classes = useStyles();
+
   const product = useSelector((state) => state.reducerProductForms.product);
 
   const [category, setCategory] = useState([]);
@@ -136,48 +181,56 @@ function Product_form_update(props) {
   return (
     <div className="containerProdFormUpdate">
       <h1>Modificar productos</h1>
-      <form onSubmit={(e) => handleSubmit(e)}>
+      <form className={classes.root} onSubmit={(e) => handleSubmit(e)}>
         <div className="cont-1">
-          <label className="label">Nombre del producto:</label>
-          <input
-            type="text"
-            name="name"
-            autoComplete="off"
-            value={input.name}
-            placeholder={product[0]?.name || ' Nombre...'}
-            onChange={handleChange}
-          />
+           <label className="label">Nombre del producto:</label>
+         
+           <TextField 
+          id="outlined-basic" 
+          label= {product[0]?.name || ' Nombre'} 
+          placeholder="Agregue el nuevo nombre del producto..."
+          variant="outlined"
+          name="name"
+          value={input.name} 
+          type="text"
+          onChange={handleChange}
+          className={classes.input}/>
 
-          <label className="label">SKU:</label>
-          <input
-            type="text"
-            name="SKU"
-            autoComplete="off"
-            value={input.SKU}
-            placeholder={product[0]?.SKU || ' SKU...'}
-            onChange={handleChange}
-          />
+           <label className="label">SKU:</label>
+         
+          <TextField 
+          id="outlined-basic" 
+          label={product[0]?.SKU || ' SKU'} 
+          placeholder="Agregue el nuevo SKU del producto..."
+          variant="outlined"
+          name="SKU" 
+          value={input.SKU}
+          onChange={handleChange}
+          className={classes.input}/>
 
-          <label className="label">Precio por unidad:</label>
-          <input
-            type="number"
-            min="1"
-            max="99999"
-            name="price"
-            autoComplete="off"
-            placeholder={product[0]?.unitPrice || ' Precio...'}
-            value={input.price}
-            onChange={handleChange}
-          />
+           <label className="label">Precio por unidad:</label>
+         
+          <TextField 
+          id="outlined-basic" 
+          label={product[0]?.unitPrice || ' Precio...'}
+          placeholder="Agregue el nuevo precio del producto..."
+          variant="outlined"
+          name="price" 
+          value={input.price} 
+          type="number"
+          InputProps={{ inputProps: { min: 0, max: 99999 } }}
+          onChange={handleChange}
+          className={classes.input}/>
 
           <label className="label">Descripción:</label>
           <textarea
+            className="textareaDescription"
             name="description"
             placeholder={product[0]?.description || ' Descripción...'}
             value={input.description}
             onChange={handleChange}
           />
-
+          
           <label className="label">Imagen:</label>
           {resPic.length > 2 ? (
             <div className="input_file_full">
@@ -210,27 +263,27 @@ function Product_form_update(props) {
                 />
               </div>
             ))}
-            <progress value={progress} max="100"></progress>
+            {progress != 100 && <CircularProgress className="circular" variant="determinate" value={progress}/>}
           </div>
 
-          <label className="label">Stock:</label>
-          <input
-            type="number"
-            min="0"
-            max="9999"
-            name="stock"
-            autoComplete="off"
-            placeholder={product[0]?.unitsOnStock || ' Stock...'}
-            value={input.stock}
-            onChange={handleChange}
-          />
+          <TextField 
+          id="outlined-basic" 
+          label={product[0]?.unitsOnStock || ' Stock...'}
+          placeholder="Agregue el nuevo stock del producto" 
+          variant="outlined"
+          name="stock" 
+          value={input.stock} 
+          type="number"
+          InputProps={{ inputProps: { min: 0, max: 99999 } }} 
+          onChange={handleChange}
+          className={classes.input}/>
 
           {modifProduct?.map((x) => (
             <label>
-              {x.name}
-              <button value={x.id} onClick={(e) => deleteCategory(e)}>
+              {x.name + "  "}
+               <button value={x.id} onClick={(e) => deleteCategory(e)}>
                 x
-              </button>
+              </button> 
             </label>
           ))}
           <select onChange={(e) => addCategory(e)}>
