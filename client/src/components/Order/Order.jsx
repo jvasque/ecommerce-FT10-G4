@@ -1,7 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import OrderDetail from "./OrderDetail";
 import { useSelector } from "react-redux";
-import { Link, NavLink, Redirect } from "react-router-dom";
 import "../../scss/components/Order/_Order.scss";
 import "../../scss/components/formCategories/_Form.scss";
 import { Button } from "@material-ui/core";
@@ -13,6 +12,8 @@ function Order() {
   const total = useSelector((state) => state.cartReducer.total);
   const user = useSelector((state) => state.loginReducer.user);
   const isLogin = useSelector((state) => state.loginReducer.isLogin);
+
+  const [url, setUrl] = useState("")
 
   useEffect(() => {
     async function postOrder() {
@@ -44,6 +45,16 @@ function Order() {
     postOrder();
   }, [isLogin,products]);
 
+  const mercadopago = async (e) => {
+     e.preventDefault()
+    const urlMercadopago = await axios.post("http://localhost:3001/cart/checkout", {
+      title: "Pago AgroPlace",
+      totalPrice: total
+     })
+    setUrl(urlMercadopago.data.url)
+    window.location = urlMercadopago.data.url
+  }
+
   return (
     <div >
       
@@ -63,13 +74,8 @@ function Order() {
     
       <div className="total">
         {total ? <h2>Total ${total}</h2> : ""}
-        {isLogin ? (
-          <a>Espacio para mercadoPago</a>
-        ) : (
-          <Link className="link-redirect" to="/user/login">
-            <Button className="test2">Realizar Pago</Button>
-          </Link>
-        )}
+        <Button onClick={(e) => mercadopago(e)}><a href={url}>Continuar Compra</a></Button>
+       
       </div>
      
     </div>
