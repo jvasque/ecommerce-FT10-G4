@@ -1,4 +1,5 @@
 const nodemailer = require("nodemailer");
+const { user, pass } = process.env;
 
 module.exports = async (req, res)=> {
     const { products, userName, userMail } = req.body;
@@ -13,27 +14,38 @@ module.exports = async (req, res)=> {
     if(!userMail) return res.status(500).json({error: "userMail missing"});
     
     if(products.length === 1) product = `${products[0]} !`;
-    if(products.length > 1) product = `${products[0]} y más !`;
+    if(products.length === 2) product = `${products[0]} y ${products[1]}!`;
+    if(products.length > 2) product = `${products[0]}, ${products[1]} y más !`;
 
     let transporter = nodemailer.createTransport({
         service: 'Gmail',
         post: 587,
         secure: false,
         auth: {
-            user: 'agroplaceofficial@gmail.com',
-            pass:'Henry@12#$'
+            user: user,
+            pass: pass
         }
     });
 
     let htmlCreator = `
     <h1>Hola ${userName}!, confirmamos la compra de su producto</h1>
+    <p>Confirmación de compra de su producto ! ! !</p>
+    </br>
+    <b>Tu lista de productos:</b>
+    <ul>
+    ${products.map(e => `<li>${e}</li>`)}
+    </ul>
+    </br>
+    <b>Gracias por confiar en nosotros!</b>
+    <div>
+    <img src="https://i.ibb.co/qnDz2D5/apus.png" alt="apus" border="0"/>
+    </div>
     `
 
     let mailOptions = {
         from: "AgroPlace <agroplaceofficial@gmail.com>",
         to: userMail,
         subject: `Has comprado ${product}`,
-        text: "Confirmación de orden de su producto ! ! !",
         html: htmlCreator
     };
 

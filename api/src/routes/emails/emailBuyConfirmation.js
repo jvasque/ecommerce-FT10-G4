@@ -1,5 +1,5 @@
 const nodemailer = require("nodemailer");
-const { EMAIL_CONFIRMATION, PASSWORD_EMAIL_CONFIRMATION } = process.env;
+const { user, pass } = process.env;
 
 module.exports = async (req, res)=> {
     const { products, userName, userMail } = req.body;
@@ -22,8 +22,8 @@ module.exports = async (req, res)=> {
         post: 587,
         secure: false,
         auth: {
-            user: EMAIL_CONFIRMATION,
-            pass: PASSWORD_EMAIL_CONFIRMATION
+            user: user,
+            pass: pass
         }
     });
 
