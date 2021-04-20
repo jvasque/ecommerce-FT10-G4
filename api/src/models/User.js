@@ -41,11 +41,7 @@ module.exports = (sequelize) => {
       get() {
         return () => this.getDataValue('salt');
       },
-    },
-    // isAdmin: {
-    //   type: DataTypes.BOOLEAN,
-    //   defaultValue: false
-    // },
+    },   
     type: {
       type: DataTypes.ENUM('superadmin', 'admin', 'user', 'guest'),
       defaultValue: 'user',
@@ -123,5 +119,6 @@ module.exports = (sequelize) => {
     );
   };
 };
+
 // correctPassword will only return true if the entered password encrypts to the same value as the saved password,
 //  meaning the users plaintext password is never saved or checked against!

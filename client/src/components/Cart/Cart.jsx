@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import ProductCart from "./ProductCart";
@@ -6,6 +7,17 @@ import { emptyDb, totalPrice } from "../../redux/cartReducer/cartActions";
 import { Button } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import axios from "axios";
+=======
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import ProductCart from './ProductCart';
+import '../../scss/components/Cart/_Cart.scss';
+import { emptyDb, totalPrice } from '../../redux/cartReducer/cartActions';
+import { Button } from '@material-ui/core';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
+import {reset} from "../../redux/iconReducer/iconActions"
+>>>>>>> Stashed changes
 
 function Cart() {
   const products = useSelector((state) => state.cartReducer.cart);
@@ -18,10 +30,17 @@ function Cart() {
   }, [dispatch]);
 
   const handleClick = () => {
+<<<<<<< Updated upstream
     dispatch(emptyDb())
     dispatch(totalPrice())
   }
   
+=======
+    dispatch(emptyDb());
+    dispatch(totalPrice());
+    dispatch(reset())
+  };
+>>>>>>> Stashed changes
 
   return (
     <div className="cart-container">
