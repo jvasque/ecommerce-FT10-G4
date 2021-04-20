@@ -1,4 +1,4 @@
-const { OrderDetail, Order } = require("../../../db.js");
+const { OrderDetail, Order, Product } = require("../../../db.js");
 
 module.exports = async (req, res, next) => {
   const { userId, id } = req.params;
@@ -10,6 +10,8 @@ module.exports = async (req, res, next) => {
         state: "cart",
       },
     });
+
+    const product = await Product.findByPk(id);
 
     const findDuplicate = await OrderDetail.findAll({
       where: {
@@ -23,6 +25,7 @@ module.exports = async (req, res, next) => {
       const detailCreate = await OrderDetail.create({
         productId: id,
         quantity: 1,
+        unitPrice: product.unitPrice,
       });
       await detailCreate.setOrder(order[0].id);
       res.json(detailCreate);

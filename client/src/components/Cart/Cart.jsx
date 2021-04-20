@@ -6,6 +6,7 @@ import { emptyDb, totalPrice } from '../../redux/cartReducer/cartActions';
 import { Button } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { reset } from '../../redux/iconReducer/iconActions';
 
 function Cart() {
   const products = useSelector((state) => state.cartReducer.cart);
@@ -19,6 +20,7 @@ function Cart() {
   const handleClick = () => {
     dispatch(emptyDb());
     dispatch(totalPrice());
+    dispatch(reset())
   };
 
   return (
