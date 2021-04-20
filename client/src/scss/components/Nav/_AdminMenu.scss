@@ -31,7 +31,7 @@
       margin-top: 0.3rem;
       margin-left: 0.2rem;
       padding: 0 0.5rem;
-      font-size: 75%;
+      font-size: 50%;
       color: var(--color-light);
       background-color: var(--color-brand);
       border-radius: 50%;
@@ -41,16 +41,5 @@
         background-color: var(--color-brand-light);
       }
     }
-  }
-}
-
-.cart {
-  font-family: sans-serif;
-  color: var(--color-brand);
-  text-decoration: none;
-  font-size: 22px;
-  float: right;
-  :hover {
-    color: var(--color-brand-light);
   }
 }

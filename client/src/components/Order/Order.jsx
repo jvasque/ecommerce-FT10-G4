@@ -9,7 +9,7 @@ import OrderModify from "./OrderModify";
 import axios from "axios";
 
 function Order() {
-  const products = useSelector((state) => state.cartReducer.cart);
+  let products = useSelector((state) => state.cartReducer.cart);
   const total = useSelector((state) => state.cartReducer.total);
   const user = useSelector((state) => state.loginReducer.user);
   const isLogin = useSelector((state) => state.loginReducer.isLogin);
@@ -26,18 +26,23 @@ function Order() {
       //   totalPrice: total,
       // };
       
-      await axios.post(`http://localhost:3001/order/orders/`, {
-        firstName: user.firstName,
-        lastName: user.lastName,
-        state: "cart",
-        paymentDate: user.paymentDate,
-        totalPrice: total,
-        email:user.email
-      });
-    }
+      // await axios.post(`http://localhost:3001/order/orders/`, {
+      //   firstName: user.firstName,
+      //   lastName: user.lastName,
+      //   state: "cart",
+      //   paymentDate: user.paymentDate,
+      //   totalPrice: total,
+      //   email:user.email
+      // });
+
+        let orderDetails = await axios.get(`http://localhost:3001/cart/${user.id}/cart`);
+        orderDetails && orderDetails.data.map((order,i)=>products[i]['quantity']=order.quantity)
+     
+    
+      }
 
     postOrder();
-  }, [isLogin]);
+  }, [isLogin,products]);
 
   return (
     <div >

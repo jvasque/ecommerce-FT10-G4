@@ -15,7 +15,8 @@ import { addProduct, deleteProduct } from "../../redux/cartReducer/cartActions";
 function ButtonIconText(props) {
   const iconState = useSelector((state) => state.iconReducer);
   const [state, setState] = useState({
-    [`Fav-${props.productId}`]: iconState.fav[`Fav-${props.productId}`],
+    //[`Fav-${props.productId}`]: iconState.fav[`Fav-${props.productId}`],
+    [`Fav-${props.productId}`]: JSON.parse(localStorage.getItem('Fav'))?.includes(props.productId) || false,
     [`Cart-${props.productId}`]: iconState.cart[`Cart-${props.productId}`],
   });
 
@@ -45,6 +46,7 @@ function ButtonIconText(props) {
   }
 
     function handleHeart(event){
+      console.log(JSON.parse(localStorage.getItem('Fav'))?.includes(props.productId))
       let { name, checked } = event.target;
       setState({ ...state, [name]: checked });
       if (name.includes("Fav")) {

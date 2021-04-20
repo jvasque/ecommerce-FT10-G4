@@ -5,6 +5,7 @@ import { NavLink } from 'react-router-dom';
 import '../../scss/components/productsForm/_ProductFormCreate.scss';
 import { postProduct } from '../../redux/reducerProductForms/actionsProductForms';
 import axios from 'axios';
+import swal from 'sweetalert';
 import { makeStyles } from '@material-ui/core/styles';
 import { TextField, CircularProgress } from '@material-ui/core';
 
@@ -29,6 +30,9 @@ const useStyles = makeStyles((theme) => ({
     
   }
 }));
+
+
+
 
 
 
@@ -109,7 +113,7 @@ export default function Product_form_create(props) {
   const handleSubmit = function (event) {
     event.preventDefault();
     if (input.categoryCheck.length === 0) {
-      alert('Se requiere al menos UNA categoría');
+      swal('Aviso!','Se requiere al menos UNA categoría', 'warning');
     } else {
       dispatch(
         postProduct(
@@ -123,8 +127,7 @@ export default function Product_form_create(props) {
         )
       );
 
-      alert(`El producto ${input.name} ha sido creado`);
-
+      
       setInput({
         name: '',
         SKU: '',
@@ -136,11 +139,12 @@ export default function Product_form_create(props) {
       });
       setPic('');
       setResPic([]);
-
+      
       let inputs = document.querySelectorAll('input[type=checkbox]');
       inputs.forEach((item) => {
         item.checked = false;
       });
+      swal('Éxito!',`El producto ${input.name} ha sido creado`, 'success');
     }
   };
 

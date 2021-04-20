@@ -1,6 +1,6 @@
 .containerAdminOrders{
-    width: 80%;
-    margin: 2% 10%;
+    width: 90%;
+    margin: 2% 5%;
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0px 0px 3px 3px #0000001a;
@@ -11,6 +11,10 @@
             flex-direction: row;
             background: var(--color-gray);
             height: 50px;
+            cursor: pointer;
+            &:hover{
+                color:var(--color-brand);
+            }
             .orderAdminId{
                 display: inline-block;
                 height: 100%;
@@ -60,7 +64,7 @@
         .active{
             height: 100%;
             .folding-pannel{
-                background: var(--color-brand-lights);
+                background: white;
                 //transform: perspective(350px) rotateX(0deg);
                 transition: all 0.4s ease-in-out;
                 height: 100px;                

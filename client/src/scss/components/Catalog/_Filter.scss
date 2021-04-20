@@ -1,10 +1,15 @@
 .containerFilter {
-  background-color: var(--color-light);
+  background-color: white;
   height: 100%;
   .categoriesFilter {
-    background: #d1c9c9;
+    h2 {
+      padding: 20px;
+      background-color: white;
+      cursor: pointer;
+      text-align: center;
+    }
     color: var(--color-brand);
-    height: 50px;
+    height: 81px;
   }
   .categoriesLoaded {
     color: var(--color-brand);
@@ -12,11 +17,16 @@
     border: 2px rgb(0, 90, 0);
   }
 
-  .activeCategory{
-    background: #e2d8d8;
+  .activeCategory {
+    background: var(--color-brand);
+    opacity: 0.5;
+    color: white;
   }
 
   .categoriesLoaded:hover {
-    background: #e2d8d8;
+    background: var(--color-brand);
+    opacity: 0.5;
+    color: white;
+    cursor: pointer;
   }
 }
