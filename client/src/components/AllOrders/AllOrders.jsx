@@ -10,6 +10,14 @@ import { sortById, sortByState, sortByCreation, sortByUpdate, sortByPayment, sor
 function AllOrders(){
     const userId = useSelector(state => state.loginReducer.user.id)
     const [orders, setOrders] = useState([])
+    const [filter, setFilter] = useState({
+        created: false,
+        processing: false,
+        completed: false,
+        cancelled: false,
+        modify: false,
+    })
+    const [filtered, setFiltered] = useState(false)
     const [sort, setSort] = useState({
         id: false,
         firstName: false,
@@ -22,13 +30,13 @@ function AllOrders(){
     })
 
     async function getOrderHistory(){
-        let data = await axios.get(`http://localhost:3001/orders`);
+        let data = await axios.get(`http://localhost:3001/orders?created=${filter.created}&processing=${filter.processing}&completed=${filter.completed}&cancelled=${filter.cancelled}`);
         setOrders(data.data); 
     }
 
     useEffect(() => {
         getOrderHistory();
-    }, []);
+    }, [filtered]);
 
     function sortId(){
         let [newOrders, newSort] = sortById(orders, sort)
@@ -78,9 +86,64 @@ function AllOrders(){
         setOrders(newOrders)
     }
 
+    function handleFilter(event){
+        let {name, checked} = event.target
+        if(name === 'modify'){
+            setFilter({...filter, [name]: !filter[name]})
+        }else{
+            setFilter({...filter, [name]: checked})
+        }
+    }
+
+    function onFilter(event){
+        event.preventDefault()
+        getOrderHistory();
+        setFiltered(!filtered)
+    }    
+
     return (
-        <div className='containerAdminOrders'>
-            <div className='containerAdminFilterOrder'>
+        <div className='containerAdminOrders'>            
+            <form onSubmit={onFilter}>
+                <label>
+                Creada
+                    <input 
+                        name='created'
+                        checked={filter.created}
+                        type='checkbox'
+                        onChange={handleFilter}
+                    />
+                </label>
+                <label>
+                Procesando
+                    <input 
+                        name='processing'
+                        checked={filter.processing}
+                        type='checkbox'
+                        onChange={handleFilter}
+                    />
+                </label>
+                <label>
+                Completada
+                    <input 
+                        name='completed'
+                        checked={filter.completed}
+                        type='checkbox'
+                        onChange={handleFilter}
+                    />
+                </label>
+                <label>
+                Cancelada
+                    <input 
+                        name='cancelled'
+                        checked={filter.cancelled}
+                        type='checkbox'
+                        onChange={handleFilter}
+                    />
+                </label>
+                <input type='submit' value='Filtrar'/>
+                <input name='modify' type='button' value={filter.modify ? 'Desabilitar Modificación' : 'Habilitar Modificación'} onClick={handleFilter}/>
+            </form>
+             <div className='containerAdminFilterOrder'>
                 <div className='registerAdminFilter' onClick={sortId}><DivText content='Registro'/></div>
                 <div className='firstNameAdminFilter' onClick={sortFirstName}><DivText content='Nombre'/></div>
                 <div className='lastNameAdminFilter' onClick={sortLastName}><DivText content='Apellido'/></div>
@@ -92,7 +155,7 @@ function AllOrders(){
             </div>
             {
                 !orders[0]?.error && orders?.map((order) => {
-                    return <SingleOrder order={order} key={`Order-${order.id}`}/>
+                    return <SingleOrder order={order} key={`Order-${order.id}`} modify={filter.modify}/>
                 })
             }
         </div>

@@ -6,7 +6,7 @@ import DivText from '../ProductCard/DivText'
 import "../../scss/components/AllOrders/_AdminOrderDetail.scss"
 import "../../scss/components/AllOrders/_AdminFilterOrderDetail.scss"
 
-function SingleOrder({order}){
+function SingleOrder({order, modify}){
     const [state, setState] = useState(false) 
     const [status, setStatus] = useState(order.state)
     const [ordersDetails, setOrdersDetails] = useState(order.orderDetails)  
@@ -56,6 +56,7 @@ function SingleOrder({order}){
     
     async function handleSubmit(e){
         e.preventDefault();
+        console.log(e.target.name)
 
     }
 
@@ -63,8 +64,8 @@ function SingleOrder({order}){
         setStatus(event.target.value)
     }
 
-    let statusForm = (status) => {
-        if(status==='cart' || status==='created'){
+    let statusForm = () => {
+        if(modify && (order.state==='created')){
             return (
                 <form onSubmit={handleSubmit}>
                     <select value={status} onChange={handleStatusChange}>
@@ -73,9 +74,10 @@ function SingleOrder({order}){
                         <option value="cancelled">Cancelada</option>
                     </select>
                     <input disabled={status===order.state} type='submit' value='Guardar'></input>
+                    <input type='button' value='Cancelar' onClick={() => setStatus(order.state)}/>
                 </form>
             )
-        }else if(status === "processing"){
+        }else if(modify && (order.state === "processing" || order.state === "cancelled" || order.state === "completed")){
             return (
                 <form onSubmit={handleSubmit}>
                     <select value={status} onChange={handleStatusChange}>
@@ -84,7 +86,16 @@ function SingleOrder({order}){
                         <option value="completed">Completada</option>
                     </select>
                     <input disabled={status===order.state} type='submit' value='Guardar'></input>
+                    <input type='button' value='Cancelar' onClick={() => setStatus(order.state)}/>
                 </form>
+            )
+        }else if(status==="created"){
+            return (
+                <DivText content='Creada'/>
+            )
+        }else if(status==="processing"){
+            return (
+                <DivText content='Procesando'/>
             )
         }else if(status==="cancelled"){
             return (
