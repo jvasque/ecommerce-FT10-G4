@@ -9,11 +9,11 @@ module.exports = async (req, res, next) => {
     totalPrice,
     email
   } = req.body;
-  console.log(req.params.id);
+ 
   try {
 
     const user = await User.findOne({where:{email:email}})
-    console.log(user.email, user.id)
+  
     const orderCreate = await Order.findOrCreate({
       where: {
         //id: parseInt(req.params.id),
