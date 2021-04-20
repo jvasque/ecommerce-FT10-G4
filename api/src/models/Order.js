@@ -22,6 +22,9 @@ module.exports = (sequelize) => {
     paymentDate: {
       type: DataTypes.STRING,
     },
+    address: {
+      type: DataTypes.STRING,
+    },
     totalPrice: {
       type: DataTypes.FLOAT,
     },

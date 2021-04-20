@@ -4,28 +4,27 @@ module.exports = async (req, res) => {
 
   try {
     let {      
-      userId,
+      address,
       firstName,
       lastName,
       state,
       paymentDate,
       totalPrice,
-    } = req.body;
+    } = req.body; 
 
     let order = await Order.findOne({
       where: {
         id: parseInt(req.params.id),
       },
     });
-
   
-    order.userId = userId;
+  
     order.firstName = firstName;
     order.lastName = lastName;
     order.state= state;
     order.totalPrice = totalPrice;
     order.paymentDate = paymentDate;
-
+    order.address = address
     await order.save();
 
     

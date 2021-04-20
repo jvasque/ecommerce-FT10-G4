@@ -88,7 +88,7 @@ module.exports = [
         orderDetId: [14],
     },
     {
-        status: 'completed',
+        status: 'cart',
         creationDate: '',
         paymentDate: '',
         totalPrice: 2658.3,

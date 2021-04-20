@@ -75,7 +75,7 @@ function Order() {
       <div className="total">
         {total ? <h2>Total ${total}</h2> : ""}
         <Button onClick={(e) => mercadopago(e)}><a href={url}>Continuar Compra</a></Button>
-       
+            <FormPayment />
       </div>
     </div>
   );
