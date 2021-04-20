@@ -6,6 +6,7 @@ import "../../scss/components/formCategories/_Form.scss";
 import { Button } from "@material-ui/core";
 import OrderModify from "./OrderModify";
 import axios from "axios";
+import FormPayment from "../formPayment/FormPayment";
 
 function Order() {
   let products = useSelector((state) => state.cartReducer.cart);
@@ -17,7 +18,7 @@ function Order() {
 
   useEffect(() => {
     async function postOrder() {
-     // let id = Date.now();
+      // let id = Date.now();
 
       // let user = {
       //   firstName: "NataN",
@@ -26,7 +27,7 @@ function Order() {
       //   paymentDate: "hoy",
       //   totalPrice: total,
       // };
-      
+
       // await axios.post(`http://localhost:3001/order/orders/`, {
       //   firstName: user.firstName,
       //   lastName: user.lastName,
@@ -36,14 +37,17 @@ function Order() {
       //   email:user.email
       // });
 
-        let orderDetails = await axios.get(`http://localhost:3001/cart/${user.id}/cart`);
-        orderDetails && orderDetails.data.map((order,i)=>products[i]['quantity']=order.quantity)
-     
-    
-      }
+      let orderDetails = await axios.get(
+        `http://localhost:3001/cart/${user.id}/cart`
+      );
+      orderDetails &&
+        orderDetails.data.map(
+          (order, i) => (products[i]["quantity"] = order.quantity)
+        );
+    }
 
     postOrder();
-  }, [isLogin,products]);
+  }, [isLogin, products]);
 
   const mercadopago = async (e) => {
      e.preventDefault()
@@ -56,14 +60,10 @@ function Order() {
   }
 
   return (
-    <div >
-      
+    <div>
       <div className="order-container">
-     
         <div className="cart">
-        <div className="OrderModify">
-        <OrderModify />
-      </div>
+          <div className="OrderModify">{/* <OrderModify /> */}</div>
           {products ? (
             products?.map((product) => <OrderDetail product={product} />)
           ) : (
@@ -71,13 +71,12 @@ function Order() {
           )}
         </div>
       </div>
-    
+
       <div className="total">
         {total ? <h2>Total ${total}</h2> : ""}
         <Button onClick={(e) => mercadopago(e)}><a href={url}>Continuar Compra</a></Button>
        
       </div>
-     
     </div>
   );
 }
