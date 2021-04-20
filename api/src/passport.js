@@ -14,7 +14,6 @@ passport.use(
       const user = await User.findOne({ where: { email: email } });
       if (!user || !user.correctPassword(password)) return done(null, false);
       
-      console.log(user)
       const {
         id,
         firstName,
@@ -24,6 +23,8 @@ passport.use(
         type,
         status,
       } = user;
+      
+      if(status === 'banned') return done(null, false)
       return done(null, {
         id,
         firstName,

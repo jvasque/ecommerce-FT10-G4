@@ -12,7 +12,7 @@ import Newsletter from '../Newsletter/Newsletter';
 import { emptyCart } from '../../redux/cartReducer/cartActions';
 import { reset } from '../../redux/iconReducer/iconActions';
 import { LogOut } from '../../redux/loginReducer/loginActions';
-
+import ManageAccount from '../Admin/ManageAccount';
 export function UserScreen() {
   const [render, setRender] = useState("miCuenta");
 
