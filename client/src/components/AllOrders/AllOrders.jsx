@@ -80,7 +80,7 @@ function AllOrders(){
 
     return (
         <div className='containerAdminOrders'>
-            <b><div className='containerAdminFilterOrder'>
+            <div className='containerAdminFilterOrder'>
                 <div className='registerAdminFilter' onClick={sortId}><DivText content='Registro'/></div>
                 <div className='firstNameAdminFilter' onClick={sortFirstName}><DivText content='Nombre'/></div>
                 <div className='lastNameAdminFilter' onClick={sortLastName}><DivText content='Apellido'/></div>
@@ -89,7 +89,7 @@ function AllOrders(){
                 <div className='paymentAdminFilter' onClick={sortPayment}><DivText content='Metodo de Pago'/></div>
                 <div className='totalAdminFilter' onClick={sortTotal}><DivText content='Valor Total'/></div>
                 <div className='stateAdminFilter' onClick={sortState}><DivText content='Estado'/></div>
-            </div></b>
+            </div>
             {
                 !orders[0]?.error && orders?.map((order) => {
                     return <SingleOrder order={order} key={`Order-${order.id}`}/>

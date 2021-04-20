@@ -131,13 +131,13 @@ function SingleOrder({order}){
                         </div>
                     </div>
                     <div className="folding-pannel filter">
-                        <b><div className='containerAdminFilterOrderDetail'>
+                        <div className='containerAdminFilterOrderDetail'>
                             <div className='orderAdminFilterDetailId' onClick={sortId}><DivText content='Subregistro'/></div>
                             <div className='orderAdminFilterDetailName' onClick={sortName}><DivText content='Producto'/></div>
                             <div className='orderAdminFilterDetailQuantity' onClick={sortQuantity}><DivText content='Cantidad'/></div>
                             <div className='orderAdminFilterDetailPrice' onClick={sortPrice}><DivText content='Precio Unidad'/></div>
                             <div className='orderAdminFilterDetailCost' onClick={sortCost}><DivText content='Costo por Item'/></div>
-                        </div></b>
+                        </div>
                     </div>
                     {
                         ordersDetails?.map(orderDetail => {

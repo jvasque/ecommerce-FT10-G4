@@ -6,30 +6,43 @@
         height: 50px;
         width: 100%;
         background: var(--color-light);
+        cursor: pointer;
         .orderFilterDetailName{
-            background-color: var(--color-light);
+            //background-color: var(--color-light);
             display: inline-block;
             width: 60%;
             height: 100%;
             vertical-align: top;
             margin: 0;
-            border-right: 1px solid var(--color-dark);
+            &:hover{
+                background-color: var(--color-dark);  
+                color: white;  
+            };
+            //border-right: 1px solid var(--color-dark);
         }
         .orderFilterDetailQuantity{
-            background-color: var(--color-light);
+            //background-color: var(--color-light);
             display: inline-block;
             vertical-align: top;
             width: 10%;
             height: 100%;
-            border-right: 1px solid var(--color-dark);
+            &:hover{
+                background-color: var(--color-dark);  
+                color: white;                  
+            };
+            //border-right: 1px solid var(--color-dark);
         }
         .orderFilterDetailPrice{
             background-color: var(--color-light);
             display: inline-block;
             vertical-align: top;
             height: 100%;
-            width: 14%;
-            border-right: 1px solid var(--color-dark);
+            width: 15%;
+            &:hover{
+                background-color: var(--color-dark);  
+                color: white;                   
+            };
+            //border-right: 1px solid var(--color-dark);
         }
         .orderFilterDetailCost{
             background-color: var(--color-light);
@@ -37,6 +50,10 @@
             vertical-align: top;
             height: 100%;
             width: 15%;
+            &:hover{
+                background-color: var(--color-dark);  
+                color: white;                
+            };
         }
     }
 }
