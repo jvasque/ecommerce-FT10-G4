@@ -7,6 +7,7 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import { createMuiTheme } from '@material-ui/core/styles';
 import purple from '@material-ui/core/colors/purple';
 import green from '@material-ui/core/colors/green';
+import red from '@material-ui/core/colors/red';
 
 import "./index.css";
 import App from "./App";
@@ -25,7 +26,7 @@ const theme = createMuiTheme({
       main: green[500],
       },
     secondary: {
-      main: purple[500],
+      main: red[500],
     },
   },
 });

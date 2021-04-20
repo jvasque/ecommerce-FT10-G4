@@ -6,7 +6,7 @@ import '../../scss/components/productsForm/_ProductFormCreate.scss';
 import { postProduct } from '../../redux/reducerProductForms/actionsProductForms';
 import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
-import { TextField } from '@material-ui/core';
+import { TextField, CircularProgress } from '@material-ui/core';
 
 const grisPrincipal= "#EFEFEF";
 
@@ -229,7 +229,7 @@ export default function Product_form_create(props) {
                 />
               </div>
             ))}
-            {progress != 100 && <progress value={progress} max="100"></progress>}
+            {progress != 100 && <CircularProgress className="circular" variant="determinate" value={progress}/>}
           </div>
 
           <label className="label">Categoria:</label>
