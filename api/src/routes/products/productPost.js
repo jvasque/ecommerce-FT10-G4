@@ -11,6 +11,10 @@ module.exports = async (req, res) => {
     categoryCheck,
     unitsOnStock,
   } = req.body.params;
+
+  if(unitPrice < 0 ) return res.json({ error: 'unitPrice cannot be negative' })
+  if(unitsOnStock < 0) return res.json({ error: 'unitsOnStock cannot be negative' })
+
   try {
     const [addProduct, created] = await Product.findOrCreate({
       where: {
@@ -19,7 +23,6 @@ module.exports = async (req, res) => {
         unitPrice,
         description,
         picture,
-
         unitsOnStock,
       },
     });

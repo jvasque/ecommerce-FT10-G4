@@ -1,0 +1,45 @@
+.containerOrderDetail{
+    flex-direction: row;
+    height: 100%;
+    width: 100%;
+    .orderDetailPicture {
+        display: inline-block;
+        height: 100%;
+        width: 15%;
+        margin-left: 3%;
+        margin-right: 2%;
+        //border-right: 1px solid var(--color-dark);
+        img {
+            height: 90%;
+            margin: 2.5% 5%;       
+        }
+    }
+    .orderDetailName{
+        display: inline-block;
+        width: 40%;
+        height: 100%;
+        vertical-align: top;
+        margin: 0;
+        //border-right: 1px solid var(--color-dark);
+    }
+    .orderDetailQuantity{
+        display: inline-block;
+        vertical-align: top;
+        width: 10%;
+        height: 100%;
+        //border-right: 1px solid var(--color-dark);
+    }
+    .orderDetailPrice{
+        display: inline-block;
+        vertical-align: top;
+        width: 15%;
+        height: 100%;
+        //border-right: 1px solid var(--color-dark);
+    }
+    .orderDetailCost{
+        display: inline-block;
+        vertical-align: top;
+        width: 15%;
+        height: 100%;
+    }
+}

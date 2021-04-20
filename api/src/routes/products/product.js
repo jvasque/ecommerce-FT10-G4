@@ -7,15 +7,24 @@ const productPutId = require("./productPutId");
 const productDeleteID = require("./productDeleteId");
 const productAddCategory = require("./productAddCategory");
 const productDeleteCategory = require("./productDeleteCategory");
+const reviewGet = require("./reviewsGet");
+const reviewPost = require("./reviewsPost");
+const reviewDelete = require("./reviewsDelete");
+const reviewPut = require("./reviewsPut");
 
 router.use(bodyParser.json());
 
 router.get("/", productGet);
 router.get("/:id", productGetId);
-router.post("/", productPost);
+router.get("/:id/review", reviewGet);
+router.put("/:id/review", reviewPut);
 router.put("/:id", productPutId);
-router.delete("/:id", productDeleteID);
+router.post("/", productPost);
+router.post("/:id/review", reviewPost);
 router.post("/:id/:categoryId", productAddCategory);
+router.delete("/:id/review", reviewDelete);
+router.delete("/:id", productDeleteID);
 router.delete("/:id/:categoryId", productDeleteCategory);
+
 
 module.exports = router;

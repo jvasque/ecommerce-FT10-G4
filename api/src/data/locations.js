@@ -1,0 +1,32 @@
+module.exports = [
+    {
+        name: 'Kappa',
+        address: 'Cl 56 Kr 20',
+        city: 'Santiago de Chile',
+        country: 'Chile',
+        latitud: '4.650655377280689',
+        longitud: '-74.12195112393924',
+        availableDates: [''],
+        unitsOnLocationUnitsOnLocationId: [1, 2, 3],
+    },
+    {
+        name: 'Delta',
+        address: 'Kr 101 Cl 70',
+        city: 'Bogota',
+        country: 'Colombia',
+        latitud: '-33.42816071504707',
+        longitud: '-70.65096128476536',
+        availableDates: [''],
+        unitsOnLocationUnitsOnLocationId: [4, 5],
+    },
+    {
+        name: 'Gamma',
+        address: 'KR 13 CL 50',
+        city: 'Buenos Aires',
+        country: 'Argentina',
+        latitud: '-34.58472005869128',
+        longitud: '-58.58508808246574',
+        availableDates: [''],
+        unitsOnLocationUnitsOnLocationId: [6, 7, 8, 9, 10],
+    },
+]

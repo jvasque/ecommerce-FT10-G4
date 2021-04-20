@@ -1,170 +1,244 @@
 import React from 'react';
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { NavLink } from "react-router-dom";
+import { NavLink } from 'react-router-dom';
 import '../../scss/components/productsForm/_ProductFormCreate.scss';
 import { postProduct } from '../../redux/reducerProductForms/actionsProductForms';
-import { getCategories } from '../../redux/categoryFilterReducer/categoryFilterActions'
-import { getCatalog } from '../../redux/catalogReducer/catalogActions';
-import axios from "axios";
+import axios from 'axios';
+import swal from 'sweetalert';
 
 export default function Product_form_create(props) {
-  const [name, setName] = useState(""); 
-  const [SKU, setSKU] = useState("");
-  const [price, setPrice] = useState("");
-  const [description, setDescription] = useState("");
-  const [pic, setPic] = useState("");
-  const [categoryCheck, setCategoryCheck] = useState([]);
-  const [stock, setStock] = useState(0);
-  
+  const [input, setInput] = useState({
+    name: '',
+    SKU: '',
+    price: '',
+    description: '',
+    categoryCheck: [],
+    stock: '',
+  });
+  const [resPic, setResPic] = useState([]);
+  const [pic, setPic] = useState();
+  const [progress, setProgress] = useState();
+
+  const CLOUDINARY_URL =
+    'https://api.cloudinary.com/v1_1/dxy0hg426/image/upload';
+  const CLOUDINARY_UPLOAD_PRESET = 'iyqdnelg';
+
+  useEffect(() => {
+    const formData = new FormData();
+    formData.append('file', pic);
+    formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+
+    const fetchImg = (async function () {
+      const res = await axios.post(CLOUDINARY_URL, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+        onUploadProgress(e) {
+          console.log(e.loaded);
+          setProgress((e.loaded * 100) / e.total);
+        },
+      });
+      setResPic([...resPic, res.data.secure_url]);
+    })();
+  }, [pic]);
+
+  const handleChangeImg = (e) => {
+    setPic(e.target.files[0]);
+  };
+
+  const handleDeleteImg = (e) => {
+    e.preventDefault();
+    setResPic(resPic.filter((i) => i != e.target.name));
+  };
+
   const dispatch = useDispatch();
-  const category = useSelector(state => state.categoryFilterReducer.categories);
-  
-  var handleName = function (event) {
-    event.preventDefault();
-    setName(event.target.value);
-  };
-  var handleSku = function (event) {
-    event.preventDefault();
-    setSKU(event.target.value);
-  };
-  var handlePrecio = function (event) {
-    event.preventDefault();
-    setPrice(event.target.value);
-  };
-  var handleDescripcion = function (event) {
-    event.preventDefault();
-    setDescription(event.target.value);
-  };
+  const category = useSelector(
+    (state) => state.categoryFilterReducer.categories
+  );
 
-  var handleImg = function (event) {
-    event.preventDefault();
-    setPic(event.target.value);
-  };
-   var handleCategoryCheck = function (event) {
-    
-    if(event.target.checked){
-      setCategoryCheck([...categoryCheck, event.target.value]) 
-
-    }else{
-      setCategoryCheck(categoryCheck.filter((e)=> e != event.target.value))
-    }
-
-  }; 
-  var handleStock = function (event) {
-    event.preventDefault();
-    setStock(event.target.value);
-  };
-
-  var handleClick = function (event) {
-    event.preventDefault();
-    dispatch(postProduct(name, SKU, price, description, pic, categoryCheck, stock));
-    setName("");
-    setSKU("");
-    setPrice("");
-    setDescription("");
-    setPic("");
-    setCategoryCheck([]);
-    setStock("");
-    let inputs = document.querySelectorAll('input[type=checkbox]');
-    inputs.forEach((item) => {
-      item.checked = false;
+  const handleChange = (e) => {
+    setInput({
+      ...input,
+      [e.target.name]: e.target.value,
     });
-  }
-  
+  };
+
+  const handleCategoryCheck = function (e) {
+    if (e.target.checked) {
+      setInput({
+        ...input,
+        categoryCheck: [...input.categoryCheck, e.target.value],
+      });
+    } else {
+      setInput({
+        ...input,
+        categoryCheck: input.categoryCheck.filter(
+          (category) => category !== e.target.value
+        ),
+      });
+    }
+  };
+
+  const handleSubmit = function (event) {
+    event.preventDefault();
+    if (input.categoryCheck.length === 0) {
+      swal('Aviso!','Se requiere al menos UNA categoría', 'warning');
+    } else {
+      dispatch(
+        postProduct(
+          input.name,
+          input.SKU,
+          input.price,
+          input.description,
+          resPic,
+          input.categoryCheck,
+          input.stock
+        )
+      );
+
+      
+      setInput({
+        name: '',
+        SKU: '',
+        price: '',
+        description: '',
+        pic: '',
+        categoryCheck: [],
+        stock: '',
+      });
+      setPic('');
+      setResPic([]);
+      
+      let inputs = document.querySelectorAll('input[type=checkbox]');
+      inputs.forEach((item) => {
+        item.checked = false;
+      });
+      swal('Éxito!',`El producto ${input.name} ha sido creado`, 'success');
+    }
+  };
+
   return (
     <div className="containerProdFormCreate">
       <h1>Agregar productos</h1>
-      <form>
+      <form onSubmit={(e) => handleSubmit(e)}>
         <div className="cont-1">
           <label className="label">Nombre del producto:</label>
           <input
             type="text"
-            id="name"
+            name="name"
             autoComplete="off"
-            placeholder=" Nombre..."
-            value={name}
+            placeholder="Nombre..."
+            value={input.name}
             required
-            onChange={(e) => handleName(e)}
+            onChange={handleChange}
           />
+
           <label className="label">SKU:</label>
           <input
             type="text"
-            id="sku"
+            name="SKU"
             autoComplete="off"
             placeholder=" SKU..."
-            value={SKU}
+            value={input.SKU}
             required
-            onChange={(e) => handleSku(e)}
+            onChange={handleChange}
           />
 
           <label className="label">Precio por unidad:</label>
           <input
-            type="text"
-            id="precio"
+            type="number"
+            min="1"
+            max="99999"
+            name="price"
             autoComplete="off"
-            placeholder=" Precio..."
-            value={price}
+            placeholder="Precio..."
+            value={input.price}
             required
-            onChange={(e) => handlePrecio(e)}
+            onChange={handleChange}
           />
+
           <label className="label">Descripción:</label>
           <textarea
-            id="descripcion"
-            value={description}
+            name="description"
+            value={input.description}
             required
-            onChange={(e) => handleDescripcion(e)} />                   
-
-          <label className="label">
-            Imagen:
-          </label>
-          <input
-            type="text"
-            id="img"
-            autoComplete="off"
-            placeholder=" Agregar url..."
-            value={pic}
-            required="false"
-            onChange={(e) => handleImg(e)}
+            onChange={handleChange}
           />
+
+          <label className="label">Imagen:</label>
+          {resPic.length > 2 ? (
+            <div className="input_file_full">
+              <label className="input_text">
+                Ya se agregaron tres archivos
+              </label>
+              <input type="file" id="pic" disabled="true" />
+            </div>
+          ) : (
+            <div className="input_file">
+              <label className="input_text">Agregar archivo</label>
+              <input
+                className="inputFile"
+                type="file"
+                id="pic"
+                onChange={(e) => handleChangeImg(e)}
+              />
+            </div>
+          )}
+
+          <div className="img-card-pic">
+            {resPic?.map((i) => (
+              <div className="img-card-pic-interno">
+                <img src={i} />
+                <input
+                  type="submit"
+                  value="x"
+                  className="boton"
+                  name={i}
+                  onClick={(e) => handleDeleteImg(e)}
+                />
+              </div>
+            ))}
+            <progress value={progress} max="100"></progress>
+          </div>
+
           <label className="label">Categoria:</label>
           <div className="categoryBoxes">
-           {category&&category.map((c)=>{
-             return(
-               <div key={c.name}>
-                <label>{c.name}</label>                
-                <input type = "checkbox"
-                value = {c.name}                
-                onChange={(e) => handleCategoryCheck(e)}/>
-              </div>
-             )
-            })} 
+            {category &&
+              category.map((c) => {
+                return (
+                  <div key={c.name}>
+                    <label>{c.name}</label>
+                    <input
+                      type="checkbox"
+                      value={c.name}
+                      onChange={(e) => handleCategoryCheck(e)}
+                    />
+                  </div>
+                );
+              })}
           </div>
-          
-          
-          <label className="label">
-            Stock:
-          </label>
+
+          <label className="label">Stock:</label>
           <input
-            type="text"
-            id="stock"
-            autoComplete="off"            
+            type="number"
+            min="0"
+            max="9999"
+            name="stock"
+            autoComplete="off"
             placeholder=" Agregar stock..."
-            value={stock}
-            onChange={(e) => handleStock(e)}
+            value={input.stock}
+            required
+            onChange={handleChange}
           />
-          <button
-          onClick={(e) => handleClick(e)}
-        >
-          Crear producto
-        </button>
+
+          <button type="submit">Crear producto</button>
         </div>
-        
       </form>
-      <NavLink to="/admin/product/form">
+
+      <NavLink to="/user/info">
         <button>Volver</button>
       </NavLink>
     </div>
   );
 }
-

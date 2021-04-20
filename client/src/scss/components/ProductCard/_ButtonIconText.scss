@@ -2,6 +2,7 @@
     flex-direction: row;
     height: 100%;
     width: 100%;
+    margin-left: 10px;
     .iconContainer{
         display: inline-block;
         height: 100%;
@@ -11,12 +12,16 @@
         .icon{
             height: 100%;
             width: 100%;
+            
         }
     }
     .textContainer{
         display: inline-block;
-        width: 75%;
+        width: 70%;
         height: 100%;
+        margin-right: 5%;
         font-size: 14px;
     }
 }
+
+

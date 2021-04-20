@@ -1,59 +1,128 @@
-import React from 'react';
-import { NavLink } from "react-router-dom";
-import { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import { NavLink } from 'react-router-dom';
+import { useState } from 'react';
+import {
+  getProductName,
+  deleteProduct,
+  clearProduct,
+} from '../../redux/reducerProductForms/actionsProductForms';
+import '../../scss/components/productsForm/_ProductFormQuery.scss';
+import ProductCard from '../ProductCard/ProductCard';
+import swal from 'sweetalert';
 import { useDispatch, useSelector } from 'react-redux';
-//import { getProducts } from '../../redux/reducerProductForms/actionsProductForms'
-import '../../scss/components/productsForm/_ProductFormQuery.scss'
-import axios from 'axios';
-import ProductCard from '../ProductCard/ProductCard'
 
 function Product_form_query(props) {
-  const [id, setId] = useState("");
+  const [name, setName] = useState('');
   const [product, setProduct] = useState([]);
 
-  //const product = useSelector(state => state.products);
+  const dispatch = useDispatch();
 
-  async function  handleQuery(id, event) {
+  const productGlobal = useSelector(
+    (state) => state.reducerProductForms.product
+  );
+
+  useEffect(() => {
+    setProduct(productGlobal);
+    async function alerting() {
+      if (productGlobal[0]?.error) {
+        swal('Oops!', 'No existe un producto con ese nombre', 'error');
+      }
+    }
+    alerting();
+  }, [productGlobal, dispatch]);
+
+  function handleQuery(name, event) {
     event.preventDefault();
-    if(!id) return alert('No lo se Rick, parece vacio')
-    let data = await axios.get("http://localhost:3001/products/" + id);
-    setProduct([data]) ;
+    if (!name)
+      return swal('Advertencia', 'No lo se Rick, parece vacio', 'warning');
+    dispatch(getProductName(name));
   }
 
-    return (
-        <div className = "containerProdFormQuery">
-            <h1>Consultar producto</h1>
-            <form>
-        <div className = "cont-1">
-          <label className="label">Id del producto:</label>
+  function handlerPreventButton(e) {
+    if (!product[0] || product[0]?.error) {
+      e.preventDefault();
+      return swal('Oops!', 'No hay un producto seleccionado', 'warning');
+    }
+  }
+
+  function handleDelete(e) {
+    if (!product[0] || product[0]?.error) {
+      e.preventDefault();
+      return swal('Oops!', 'No hay un producto seleccionado', 'warning');
+    }
+    e.preventDefault();
+    swal({
+      title: 'Está seguro de borrar el producto seleccionado?',
+      text: 'Una vez borrado, desaparecerá de su base de datos!',
+      icon: 'warning',
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        dispatch(deleteProduct(product[0]?.id));
+        dispatch(clearProduct());
+        swal('Su producto fue borrado con éxito!', {
+          icon: 'success',
+        }).then((e) => window.location.reload());
+      } else {
+        swal('El producto NO fue borrado');
+      }
+    });
+  }
+
+  return (
+    <div className="containerProdFormQuery">
+      <h1>Consultar producto</h1>
+      <form>
+        <div className="cont-1">
+          <label className="label">Nombre del producto:</label>
           <input
             type="text"
             id="name"
             autoComplete="off"
-            placeholder=" Id..."
-            onChange={ (e) => setId(e.target.value) }
+            placeholder="Nombre . . . "
+            onChange={(e) => setName(e.target.value)}
           />
-         </div> 
+        </div>
         <button
-          onClick={(e) => {handleQuery(id, e)}}
+          onClick={(e) => {
+            handleQuery(name, e);
+          }}
         >
           Consultar producto
         </button>
-         {product[0]?.data.name && product.map((prod)=> {
-           return (
-             <ProductCard product={prod.data}></ProductCard>
-           )
-         })}
+        <NavLink to="/admin/product/form/update">
+          <button
+            onClick={(e) => {
+              handlerPreventButton(e);
+            }}
+          >
+            Modificar
+          </button>
+        </NavLink>
 
-         {product && product[0]?.data.error && <h1>El producto solicitado no existe</h1>}
-        
+        <button
+          onClick={(e) => {
+            handleDelete(e);
+          }}
+        >
+          Eliminar
+        </button>
+
+        {product[0]?.name &&
+          product.map((prod) => {
+            return <ProductCard product={prod}></ProductCard>;
+          })}
+
+        {product && product[0]?.error && (
+          <h1>El producto solicitado no existe</h1>
+        )}
       </form>
-      <NavLink to="/admin/product/form">
-        <button>Volver</button>
+      <NavLink to="/user/info">
+        <button onClick={() => dispatch(clearProduct())}>Volver</button>
       </NavLink>
-        </div>
-        
-    );
+    </div>
+  );
 }
 
 export default Product_form_query;
