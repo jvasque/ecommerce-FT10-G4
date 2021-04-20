@@ -14,6 +14,12 @@ export default (state = initialState, action) => {
       };
     }
     case MODIFY_FAV: {
+      localStorage.setItem('Fav',
+        JSON.stringify(Object.entries({...state.fav, ...action.payload}).filter(pair => {
+          return pair[1]
+        }).map( inFav => {
+          return parseInt(inFav[0].substring(4))
+        })))
       return {
         ...state,
         fav: { ...state.fav, ...action.payload },

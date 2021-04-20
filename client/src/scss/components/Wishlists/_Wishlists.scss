@@ -111,7 +111,7 @@
     height: 40px;
     border: none;
     border-radius: 3px;
-    font-size: 20px;
+    font-size: 1em;
     &:focus {
       outline: none;
       background-color: var(--color-light);
@@ -146,7 +146,7 @@
   text-align: center;
   &:hover {
     color: white;
-    background-color: rgb(201, 67, 94);
+    background-color: var(--color-delete);
   }
   &:focus {
     border: none;

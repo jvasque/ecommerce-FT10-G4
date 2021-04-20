@@ -1,5 +1,8 @@
 .containerPages{       
     height: 50px;
+    margin-left: 44%;
+    margin-top: 5%;
+    cursor: pointer;
     .pagesBar{
         flex-direction: row; 
         vertical-align: middle;
@@ -7,11 +10,17 @@
             display: inline-block;
             height: 100%;
             width: 50px;
-            background: var(--color-brand);
+            background: var(--color-brand-50);
+            &:hover{
+                background-color: var(--color-brand);
+            }
         }
     
         .pageNumber{
             background: var(--color-light);
+            &:hover{
+                background: var(--color-light);
+            }
         }
     }    
 }

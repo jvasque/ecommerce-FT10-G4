@@ -31,4 +31,12 @@
 
 .rendersContainer {
   width: 80%;
+
+  #welcomeUser {
+    margin: 0 10vw 0 3vw;
+
+    p {
+      margin: 10px auto;
+    }
+  }
 }

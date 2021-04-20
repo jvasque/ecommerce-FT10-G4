@@ -20,10 +20,10 @@ function AdminOrderDetail({product}){
                     <DivText content={product.quantity} /> 
                 </div> 
                 <div className='orderAdminDetailPrice'>   
-                    <DivText content={product.product.unitPrice} /> 
+                    <DivText content={product.unitPrice} /> 
                 </div> 
                 <div className='orderAdminDetailCost'>   
-                    <DivText content={(product.product.unitPrice*product.quantity).toFixed(2)} /> 
+                    <DivText content={(product.unitPrice*product.quantity).toFixed(2)} /> 
                 </div>           
             </div>
         )    

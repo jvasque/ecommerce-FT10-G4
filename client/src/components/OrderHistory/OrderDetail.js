@@ -17,10 +17,10 @@ function OrderDetail({product}){
                     <DivText content={product.quantity} /> 
                 </div> 
                 <div className='orderDetailPrice'>   
-                    <DivText content={product.product.unitPrice} /> 
+                    <DivText content={product.unitPrice} /> 
                 </div> 
                 <div className='orderDetailCost'>   
-                    <DivText content={(product.product.unitPrice*product.quantity).toFixed(2)} /> 
+                    <DivText content={(product.unitPrice*product.quantity).toFixed(2)} /> 
                 </div>           
             </div>
         )    
