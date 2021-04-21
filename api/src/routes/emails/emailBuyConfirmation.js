@@ -28,18 +28,52 @@ module.exports = async (req, res)=> {
     });
 
     let htmlCreator = `
+    <html>
+    <head>
+    <style type="text/css">
+    .containergral {
+        align-content: center;
+        justify-content: center;
+        padding: 30px;
+        position: relative;
+        background: #EFEFEF;
+        }
+    h1 {
+        color: #378A19;
+    }
+    .unorderlist {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        background: #F7F7F7;
+        color: #378A19;
+      }
+    .img-card {
+        margin-left: 25%;
+        margin-top: 20px    
+    }
+    </style>
+    </head>
+    <body>
+    <div class="containergral">
     <h1>Hola ${userName}!, confirmamos la compra de su producto</h1>
     <p>Confirmación de compra de su producto ! ! !</p>
-    </br>
+    </hr>
     <b>Tu lista de productos:</b>
+    <div class="unorderlist">
     <ul>
     ${products.map(e => `<li>${e}</li>`)}
     </ul>
-    </br>
+    </div>
+    </hr>
     <b>Gracias por confiar en nosotros!</b>
-    <div>
+    <div class="img-card">
     <img src="https://i.ibb.co/qnDz2D5/apus.png" alt="apus" border="0"/>
     </div>
+    </div>
+    </body>
+    </html>
     `
 
     let mailOptions = {
