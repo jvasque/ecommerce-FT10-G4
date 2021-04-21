@@ -4,12 +4,13 @@ import {useDispatch, useSelector} from "react-redux"
 import { emptyCart } from '../../redux/cartReducer/cartActions'
 import axios from 'axios'
 import { reset } from '../../redux/iconReducer/iconActions'
+import { useHistory } from 'react-router';
 
 export default function Successful() {
     const userId = localStorage.getItem("user")
     const dispatch = useDispatch()
     const productBuy = useSelector(state => state.cartReducer.cart)
-
+    const history = useHistory();
 
     useEffect(() => {
     async function stock(){
@@ -34,6 +35,9 @@ export default function Successful() {
       console.log(productSaved);
      }
    stock()
+    history.push({
+        pathname: '/catalog',
+    });
     },[])
 
     return (
