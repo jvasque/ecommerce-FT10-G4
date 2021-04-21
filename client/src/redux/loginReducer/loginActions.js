@@ -67,7 +67,7 @@ export function postFbUser({ firstName, lastName, email, facebookUser }) {
           password: 'Default@12#$', // crear hashFunction
         },
       });
-      dispatch({ type: LOGIN_FB, payload: json.data });
+      dispatch({ type: LOGIN_ACTION_KEY, payload: json.data });
     }
   };
 }

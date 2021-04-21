@@ -32,6 +32,7 @@ const Signup = () => {
   const [password, setPassword] = useState('');
 
   const responseFacebook = (response) => {
+    console.log(response);
     if (!response.status) {
       dispatch(
         postFbUser({
@@ -44,8 +45,6 @@ const Signup = () => {
     } else {
       alert('No se pudo loguear a Facebook');
     }
-
-    console.log(response);
   };
 
   const sessionChange = (e) => {
@@ -227,9 +226,25 @@ const Signup = () => {
               <button type="submit">Registrarse</button>
             </form>
           </div>
+
           <div className="form-container sign-in-container">
+            <div className="social-container">
+              <FacebookLogin
+                // appId="381446742973563"
+                appId="311325910426887"
+                autoLoad={false}
+                fields="name,email,picture,first_name,last_name"
+                textButton=""
+                // onClick={componentClicked}
+                cssClass="my-facebook-button-class"
+                icon="fa-facebook"
+                callback={responseFacebook}
+              />
+            </div>
+
             <form action="#" onSubmit={sessionSubmit}>
               <h1>Inicia Sesion</h1>
+
               {/* <div className="social-container">
                 <a href="#" className="social">
                   <i className="fab fa-facebook-f">
@@ -264,16 +279,6 @@ const Signup = () => {
                 placeholder="Contraseña"
               />
               {/* <a href="#">olvidaste tu clave?</a> */}
-              <FacebookLogin
-                appId="311325910426887"
-                autoLoad={false}
-                fields="name,email,picture,first_name,last_name"
-                // onClick={componentClicked}
-                callback={responseFacebook}
-              />
-              {/* <a href="localhost:3001/auth/facebook" target="_blank">
-                Login with Facebook
-              </a> */}
               <button type="submit">INICIA SESION</button>
             </form>
           </div>

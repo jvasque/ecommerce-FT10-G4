@@ -45,16 +45,16 @@ export default (state = initialState, action) => {
       return {
         errorLogin: false,
       };
-    case LOGIN_FB:
-      localStorage.setItem('user', JSON.stringify(action.payload.id));
-      return {
-        ...state,
-        user: action.payload,
-        isLogin: true,
-        isAdmin: action.payload.type.includes('admin'),
-        errorLogin: false,
-        error: {},
-      };
+    // case LOGIN_FB:
+    //   localStorage.setItem('user', JSON.stringify(action.payload.id));
+    //   return {
+    //     ...state,
+    //     user: action.payload,
+    //     isLogin: true,
+    //     isAdmin: action.payload.type.includes('admin'),
+    //     errorLogin: false,
+    //     error: {},
+    //   };
     default:
       return { ...state };
   }
