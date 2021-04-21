@@ -41,7 +41,6 @@ const Wishlists = (props) => {
 
   function handleRemove(e, wishlistId) {
     e.preventDefault(e);
-    dispatch(deleteWishlist(wishlistId));
     swal({
       title: 'Está seguro de eliminar la wishlist?',
       text: 'Una vez borrada, desaparecerá de su base de datos!',
@@ -53,7 +52,7 @@ const Wishlists = (props) => {
         dispatch(deleteWishlist(wishlistId));
         swal('La wishlist fue borrada con éxito!', {
           icon: 'success',
-        })
+        });
       } else {
         swal('La wishlist NO fue borrada');
       }
@@ -74,9 +73,13 @@ const Wishlists = (props) => {
     if (input) {
       dispatch(createWishlist(login.user.id, input));
       dispatch(getWishlists(login.user.id));
-      swal('Éxito!',`Se ha se ha creado la lista ${input} correctamente`, 'success');
+      swal(
+        'Éxito!',
+        `Se ha se ha creado la lista ${input} correctamente`,
+        'success'
+      );
     } else {
-      swal('Aviso!','Se requiere un nombre para la lista', 'warning');
+      swal('Aviso!', 'Se requiere un nombre para la lista', 'warning');
     }
   }
 
