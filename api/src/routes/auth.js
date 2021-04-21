@@ -38,10 +38,11 @@ server.get('/facebook', passport.authenticate('facebook'));
 // access was granted, the user will be logged in.  Otherwise,
 // authentication has failed.
 server.get(
-  '/facebook/Agroplace',
+  '/facebook/callback',
   passport.authenticate('facebook', {
-    successRedirect: '/user/info ',
-    failureRedirect: '/user/login',
+    successRedirect: 'http://localhost:3000/',
+    failureRedirect: 'http://localhost:3000/user/login',
+    session: false,
   })
 );
 

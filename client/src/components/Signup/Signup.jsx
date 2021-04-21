@@ -12,16 +12,13 @@ import {
   LoginAction,
   LogOut,
   SwalBoo,
+  postFbUser,
 } from '../../redux/loginReducer/loginActions';
 import { useHistory } from 'react-router';
 import { totalPrice, userLogged } from '../../redux/cartReducer/cartActions';
 import { modifyCart } from '../../redux/iconReducer/iconActions';
 import axios from 'axios';
 import FacebookLogin from 'react-facebook-login';
-
-const responseFacebook = (response) => {
-  console.log(response);
-};
 
 const Signup = () => {
   const dispatch = useDispatch();
@@ -33,6 +30,23 @@ const Signup = () => {
   const productCart = useSelector((state) => state.cartReducer.cart);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+
+  const responseFacebook = (response) => {
+    if (!response.status) {
+      dispatch(
+        postFbUser({
+          firstName: response.first_name,
+          lastName: response.last_name,
+          email: response.email,
+          facebookUser: response.id,
+        })
+      );
+    } else {
+      alert('No se pudo loguear a Facebook');
+    }
+
+    console.log(response);
+  };
 
   const sessionChange = (e) => {
     return e.target.name === 'uname'
@@ -253,10 +267,13 @@ const Signup = () => {
               <FacebookLogin
                 appId="311325910426887"
                 autoLoad={false}
-                fields="name,email,picture"
+                fields="name,email,picture,first_name,last_name"
                 // onClick={componentClicked}
                 callback={responseFacebook}
               />
+              {/* <a href="localhost:3001/auth/facebook" target="_blank">
+                Login with Facebook
+              </a> */}
               <button type="submit">INICIA SESION</button>
             </form>
           </div>

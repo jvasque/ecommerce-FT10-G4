@@ -43,22 +43,47 @@ passport.use(
       clientID: CLIENT_ID_FB,
       clientSecret: CLIENT_SECRET_FB,
       callbackURL: CALLBACK_URL_FB,
+      profileFields: ['email', 'name'],
     },
-    function (accessToken, refreshToken, profile, done) {
+
+    //     function (accessToken, refreshToken, profile, done) {
+    //       console.log(profile);
+    //       User.findOne(
+    //         { where: { facebookUser: profile.id } },
+    //         function (err, oldUser) {
+    //           if (oldUser) {
+    //             done(null, oldUser);
+    //           } else {
+    //             var newUser = new User({
+    //               facebookUser: profile.id,
+    //               email: profile.emails[0].value,
+    //               type: 'user',
+    //               firstName: profile.name.givenName,
+    //               lastName: profile.name.familyName,
+    //               password: 'Default@12#$',
+    //             }).save(function (err, newUser) {
+    //               if (err) throw err;
+    //               done(null, newUser);
+    //             });
+    //           }
+    //         }
+    //       );
+    //     }
+    //   )
+    // );
+    async function (accessToken, refreshToken, profile, done) {
       console.log(profile);
 
-      User.findOrCreate(
-        {
-          where: { facebookUser: profile.id },
-          default: {},
+      const newUser = await User.findOrCreate({
+        where: {
+          facebookUser: profile.id,
+          firstName: profile.name.givenName,
+          lastName: profile.name.familyName,
+          email: profile.emails[0].value,
+          password: 'Default@12#$',
         },
-        function (err, user) {
-          if (err) {
-            return done(err);
-          }
-          done(null, user);
-        }
-      );
+      });
+      done(err, newUser);
     }
   )
 );

@@ -1,4 +1,10 @@
-import { LOGIN_ACTION_KEY, LOG_FAIL, LOG_OUT, LOG_SWAL } from './loginActions';
+import {
+  LOGIN_ACTION_KEY,
+  LOGIN_FB,
+  LOG_FAIL,
+  LOG_OUT,
+  LOG_SWAL,
+} from './loginActions';
 import decode from 'jwt-decode';
 
 const initialState = {
@@ -39,16 +45,16 @@ export default (state = initialState, action) => {
       return {
         errorLogin: false,
       };
-    // case LOGIN_FACEBOOK:
-    //   localStorage.setItem('user', JSON.stringify(action.payload.id));
-    //   return {
-    //     ...state,
-    //     user: action.payload,
-    //     isLogin: true,
-    //     isAdmin: action.payload.type.includes('admin'),
-    //     errorLogin: false,
-    //     error: {},
-    //   };
+    case LOGIN_FB:
+      localStorage.setItem('user', JSON.stringify(action.payload.id));
+      return {
+        ...state,
+        user: action.payload,
+        isLogin: true,
+        isAdmin: action.payload.type.includes('admin'),
+        errorLogin: false,
+        error: {},
+      };
     default:
       return { ...state };
   }
