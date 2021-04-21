@@ -83,7 +83,7 @@ server.post("/google/login", async (req, res) => {
       res.status(401).json({message: "email no verificado"})
     }
   } catch (e) {
-    console.log(e);
+   res.status(401).json({message: 'no fue autorizado'})
   }
 });
 
