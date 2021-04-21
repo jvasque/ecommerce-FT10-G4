@@ -8,18 +8,12 @@ import { NavLink, useHistory } from "react-router-dom";
 import swal from "sweetalert";
 import {
   FormControl,
-  Input,
-  InputLabel,
-  FormHelperText,
 } from "@material-ui/core";
-import {
-  saveId,
-  returnProductCart,
-} from "../../redux/formPaymentReducer/formPaymentActions";
+
 
 const FormPayment = () => {
   const history = useHistory();
-  const dispatch = useDispatch();
+
 
   // useEffect(() => {
   //   async function getId() {
