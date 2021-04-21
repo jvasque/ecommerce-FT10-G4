@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { TextField } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
@@ -11,15 +11,16 @@ import {
   InputLabel,
   FormHelperText,
 } from "@material-ui/core";
+import { saveId ,returnProductCart } from "../../redux/formPaymentReducer/formPaymentActions";
 
 const FormPayment = () => {
   const history = useHistory();
-
+  const dispatch = useDispatch();
   const [input, setInput] = useState({
     firstName: "",
     lastName: "",
-    address: "", 
-    phoneNumber:0  
+    address: "",
+    phoneNumber: 0,
   });
   const [id, setId] = useState(0);
 
@@ -36,15 +37,13 @@ const FormPayment = () => {
     async function getId() {
       let data = await axios.get("http://localhost:3001/order/users/orders/");
       setId(await data.data[0]?.id);
-    
+      dispatch(saveId(await data.data[0]?.id));
     }
-    
-    getId();
 
+    getId();
   }, []);
 
   const onSubmit = async (e) => {
-    console.log('onsubmit')
     e.preventDefault();
     await axios.put(`http://localhost:3001/order/orders/${id}`, {
       firstName: user.firstName,
@@ -52,11 +51,17 @@ const FormPayment = () => {
       state: "processing",
       paymentDate: "pending",
       address: input.address,
-      email: input.email ||user.email,
-      phoneNumber : input.phoneNumber,
+      email: input.email || user.email,
+      phoneNumber: input.phoneNumber,
       totalPrice: total,
     });
-     history.push("/user/cart/order/");
+    history.push("/user/cart/order/");
+  };
+
+  const returnToCart = (e) => {
+    e.preventDefault();
+    dispatch(returnProductCart(user,id,total))
+    history.push("/product/cart");
   };
 
   return (
@@ -83,24 +88,27 @@ const FormPayment = () => {
           type="email"
           name="email"
           onChange={handleChange}
-          label="Email"
+          label={user.email}
           variant="outlined"
-          placeholder = {user.email}
+          placeholder={user.email}
         />
 
         <Typography>Precio Total: {total}</Typography>
-       
+
         <TextField
           type="submit"
           value="Pagar"
           variant="outlined"
           onClick={onSubmit}
         />
-         
       </FormControl>
-      <NavLink to="/product/cart">
-        <TextField type="submit" value="Volver" variant="outlined" />
-      </NavLink>
+
+      <TextField
+        type="submit"
+        value="Volver"
+        variant="outlined"
+        onClick={returnToCart}
+      />
     </div>
   );
 };
