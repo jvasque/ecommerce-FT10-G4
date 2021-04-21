@@ -33,7 +33,6 @@ export default function Signup() {
  //social
 
  const responseGoogle = (response) => {
-  console.log(response);
   dispatch(GLogin(response))
 }
   //Session iniciada D:
