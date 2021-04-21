@@ -45,7 +45,7 @@ const FormPayment = () => {
     await axios.put(`http://localhost:3001/order/orders/${id}`, {
       firstName: user.firstName,
       lastName: user.lastName,
-      state: "processing",
+      state: "cart",
       paymentDate: "Mercadopago",
       address: input.address,
       email: input.email || user.email,
@@ -128,7 +128,7 @@ const FormPayment = () => {
         type="submit"
         value="Volver"
         variant="outlined"
-        onClick={returnToCart}
+       
       />
     </div>
   );

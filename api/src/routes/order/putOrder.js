@@ -9,6 +9,7 @@ module.exports = async (req, res) => {
       state,
       paymentDate,
       totalPrice,
+      phoneNumber,
     } = req.body;
 
     let order = await Order.findOne({
@@ -25,6 +26,7 @@ module.exports = async (req, res) => {
     order.totalPrice = totalPrice;
     order.paymentDate = paymentDate;
     order.address = address;
+    order.phoneNumber = phoneNumber;
     await order.save();
 
     res.send(order);

@@ -40,10 +40,12 @@ function Order() {
       let orderDetails = await axios.get(
         `http://localhost:3001/cart/${user.id}/cart`
       );
+      console.log(orderDetails.data);
       orderDetails &&
         orderDetails.data.map(
           (order, i) => (products[i]["quantity"] = order.quantity)
         );
+        
     }
 
     postOrder();
