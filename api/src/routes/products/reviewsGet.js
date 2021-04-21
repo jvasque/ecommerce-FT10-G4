@@ -27,9 +27,18 @@ module.exports = async (req, res, next) => {
           }]
         }, {model: User}]
       });
+      let usersCommented = await Review.findAll({
+        where: {
+          productId: id
+        },
+        attributes: ['userId']
+      });
+
+      let arrUsersCommented = usersCommented?.map(e => e.userId);
+
 
       if(!data) return res.json({error: "there are not reviews for this product"})
-      return res.json(data);
+      return res.json({data, arrUsersCommented});
     } catch (err) {
       res.json(err);
       return console.log(err);

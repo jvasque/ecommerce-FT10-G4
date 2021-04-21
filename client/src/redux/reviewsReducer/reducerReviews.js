@@ -1,4 +1,4 @@
-import { SUBMIT_COMMENTARY, GET_COMMENTARY, HAS_BUY, GET_PRODUCT_SCORE } from "./actionsReviews";
+import { GET_COMMENTARY, HAS_BUY, GET_PRODUCT_SCORE } from "./actionsReviews";
 
 const initialState = {
   reviews: [],

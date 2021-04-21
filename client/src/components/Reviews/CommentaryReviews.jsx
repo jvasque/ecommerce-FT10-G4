@@ -16,7 +16,7 @@ import CancelIcon from '@material-ui/icons/Cancel';
 
 const verdePrincipal="#378A19";
 const grisPrincipal= "#EFEFEF";
-const grisClaro= "#F7F7F7";
+//const grisClaro= "#F7F7F7";
 
 const useStyles = makeStyles((theme) =>({
     root: {
