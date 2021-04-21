@@ -1,37 +1,37 @@
 const { Order } = require("../../db.js");
 
 module.exports = async (req, res) => {
-
   try {
-    let {      
-      userId,
+    let {
+      address,
       firstName,
       lastName,
       state,
       paymentDate,
       totalPrice,
+      phoneNumber,
     } = req.body;
 
     let order = await Order.findOne({
       where: {
-        id: parseInt(req.params.id),
+        userId: req.params.id,
+        state: "cart",
       },
     });
+    console.log(order);
 
-  
-    order.userId = userId;
     order.firstName = firstName;
     order.lastName = lastName;
-    order.state= state;
+    order.state = state;
     order.totalPrice = totalPrice;
     order.paymentDate = paymentDate;
-
+    order.address = address;
+    order.phoneNumber = phoneNumber;
     await order.save();
 
-    
     res.send(order);
   } catch (error) {
-    console.log('error', error)
+    console.log("error", error);
     res.json(error.error);
   }
 };

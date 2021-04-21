@@ -16,8 +16,11 @@ router.post("/", async (req, res) => {
       },
     ],
     back_urls: {
-      success: "http://localhost:3000/",
+      success: "http://localhost:3000/order/completada",
+      failure: "http://localhost:3000/",
+      pending: "http://localhost:3000/",
     },
+    auto_return: "approved",
   };
 
   const link = await mercadopago.preferences.create(preference);
