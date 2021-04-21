@@ -19,9 +19,13 @@ export function submitCommentary(text, rate, productId, userId){
     }
 }
 
-export function getCommentary(id){
+export function getCommentary(id, pagination){
     return async function(dispatch){
-        let json = await axios.get(`http://localhost:3001/products/${id}/review`)
+        let json = await axios.get(`http://localhost:3001/products/${id}/review`,{
+            params: {
+                pagination,
+            }
+          })
         return dispatch({type: GET_COMMENTARY, payload: json});
     }
 }

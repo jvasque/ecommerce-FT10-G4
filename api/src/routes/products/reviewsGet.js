@@ -3,7 +3,8 @@ const { Op } = require("sequelize");
 
 module.exports = async (req, res, next) => {
 
-    let id = req.params.id;
+    let { id } = req.params;
+    let { pagination } = req.query;
 
     if(!id) return res.json({error: "please, give us an id"})
     try {
@@ -11,6 +12,8 @@ module.exports = async (req, res, next) => {
         where:{
           productId:id
         },
+        offset: pagination || 0,
+        limit: 2,
         order: [
           ['createdAt', 'DESC']
         ],
