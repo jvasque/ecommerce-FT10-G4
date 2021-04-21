@@ -14,7 +14,7 @@ function Order() {
   const user = useSelector((state) => state.loginReducer.user);
   const isLogin = useSelector((state) => state.loginReducer.isLogin);
 
-  const [url, setUrl] = useState("")
+
 
   useEffect(() => {
     async function postOrder() {
@@ -49,15 +49,7 @@ function Order() {
     postOrder();
   }, [isLogin, products]);
 
-  const mercadopago = async (e) => {
-     e.preventDefault()
-    const urlMercadopago = await axios.post("http://localhost:3001/cart/checkout", {
-      title: "Pago AgroPlace",
-      totalPrice: total
-     })
-    setUrl(urlMercadopago.data.url)
-    window.location = urlMercadopago.data.url
-  }
+ 
 
   return (
     <div>
@@ -73,12 +65,13 @@ function Order() {
       </div>
 
       <div className="total">
-        {total ? <h2>Total ${total}</h2> : ""}
-        <Button onClick={(e) => mercadopago(e)}><a href={url}>Continuar Compra</a></Button>
+    
             <FormPayment />
       </div>
     </div>
   );
 }
+/* {total ? <h2>Total ${total}</h2> : ""}
+<Button onClick={(e) => mercadopago(e)}><a href={url}>Continuar Compra</a></Button> */
 
 export default Order;

@@ -2,29 +2,16 @@ const { Order } = require("../../db.js");
 
 module.exports = async (req, res) => {
   try {
-    let {
-      address,
-      firstName,
-      lastName,
-      state,
-      paymentDate,
-      totalPrice,
-    } = req.body;
+    let { state } = req.body;
 
     let order = await Order.findOne({
       where: {
         userId: req.params.id,
-        state: "cart",
+        state: "processing",
       },
     });
-    console.log(order);
 
-    order.firstName = firstName;
-    order.lastName = lastName;
     order.state = state;
-    order.totalPrice = totalPrice;
-    order.paymentDate = paymentDate;
-    order.address = address;
     await order.save();
 
     res.send(order);

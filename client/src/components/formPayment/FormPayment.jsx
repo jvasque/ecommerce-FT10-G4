@@ -3,8 +3,9 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import { TextField } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
-//import {  } from "react-router";
+import "../../scss/components/FormPayment/_FormPayment.scss"
 import { NavLink, useHistory } from "react-router-dom";
+import swal from 'sweetalert';
 import {
   FormControl,
   Input,
@@ -13,14 +14,16 @@ import {
 } from "@material-ui/core";
 
 const FormPayment = () => {
-  const history = useHistory();
+  //const history = useHistory();
 
   const [input, setInput] = useState({
     firstName: "",
     lastName: "",
     address: "",   
   });
-  const [id, setId] = useState(0);
+  const [url, setUrl] = useState("")
+  const id = JSON.parse(localStorage.getItem("user"))
+
 
   const total = useSelector((state) => state.cartReducer.total);
   const user = useSelector((state) => state.loginReducer.user);
@@ -31,44 +34,63 @@ const FormPayment = () => {
     });
   };
 
-  useEffect(() => {
-    async function getId() {
-      let data = await axios.get("http://localhost:3001/order/users/orders/");
-      setId(await data.data[0]?.id);
-    
-    }
-    
-    getId();
-
-  }, []);
 
   const onSubmit = async (e) => {
-    console.log('onsubmit')
     e.preventDefault();
+    if (input.firstName.length === 0 || input.lastName.length === 0 || input.address.length === 0) {
+     return swal('Aviso!','Todos los datos son obligatorios', 'warning');
+    }
     await axios.put(`http://localhost:3001/order/orders/${id}`, {
       firstName: input.firstName,
       lastName: input.lastName,
       state: "processing",
-      paymentDate: "pending",
+      paymentDate: "Mercadopago",
       address: input.address,
       email: input.email ||user.email,
       totalPrice: total,
     });
-     history.push("/user/cart/order/");
+     //history.push("/user/cart/order/");
+     const urlMercadopago = await axios.post("http://localhost:3001/cart/checkout", {
+      title: "Pago AgroPlace",
+      totalPrice: total
+     })
+    setUrl(urlMercadopago.data.url)
+    window.location = urlMercadopago.data.url
   };
 
   return (
-    <div>
+    <div className="container-payment">
       <Typography variant="h5">
-        Nombres y Apellidos : {user.firstName} {user.lastName}
+    
       </Typography>
       <FormControl className="" noValidate autoComplete="off">
+      <TextField
+          type="text"
+          name="firstName"
+          onChange={handleChange}
+          label="Nombre"
+          variant="outlined"
+          style={{marginBottom: 5}}
+          required
+        
+        />
+        <TextField
+          type="text"
+          name="lastName"
+          onChange={handleChange}
+          label="Apellido"
+          variant="outlined"
+          style={{marginBottom: 5}}
+          required
+        />
         <TextField
           type="number"
           name="phoneNumber"
           label="Telefono de contacto:"
           variant="outlined"
           onChange={handleChange}
+          style={{marginBottom: 5}}
+          required
         />
         <TextField
           type="text"
@@ -76,6 +98,8 @@ const FormPayment = () => {
           onChange={handleChange}
           label="Dirección de envío:"
           variant="outlined"
+          style={{marginBottom: 5}}
+          required
         />
         <TextField
           type="email"
@@ -84,6 +108,7 @@ const FormPayment = () => {
           label="Email"
           variant="outlined"
           placeholder = {user.email}
+          style={{marginBottom: 5}}
         />
 
         <Typography>Precio Total: {total}</Typography>
