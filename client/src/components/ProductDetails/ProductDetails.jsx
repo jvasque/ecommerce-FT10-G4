@@ -75,6 +75,7 @@ const ProductDetails = (props) => {
   });
   const [logged, setLogged] = useState('');
   const [hasBuy, setHasBuy] = useState([]);
+  const [productScore, setProductScore] = useState(0);
   const [hasComment, setHasComment] = useState([]);
 
   const Wish = () => {
@@ -131,11 +132,14 @@ const ProductDetails = (props) => {
       );
       
       let userHasBuy = await axios.get(`http://localhost:3001/products/${parseInt(productId)}/review-order-details/`);
+      let resProductScore = await axios.get(`http://localhost:3001/products/${parseInt(productId)}/review-product-score`);
       
       dispatch({ type: 'GET_COMMENTARY', payload: json });
       dispatch({type: 'HAS_BUY', payload: userHasBuy});
+      dispatch({type: 'GET_PRODUCT_SCORE', payload: resProductScore});
       setHasComment(json.data?.map((e) => e.userId)); //Saco los ID de los que tienen al menos una review en el producto
       setHasBuy(userHasBuy.data?.map(e => e.order.userId)); //Saco los ID de los usuarios que tienen una Order Detail con el produco
+      setProductScore(resProductScore.data);
     })();
     
     setLogged(loggin);
@@ -173,7 +177,7 @@ const ProductDetails = (props) => {
                     <Rating
                       size="large"
                       name="customized-icons"
-                      value={productDetail.score ? productDetail.score : 1}
+                      value={productScore ? productScore : 1}
                       getLabelText={(value) => customIcons[value].label}
                       IconContainerComponent={IconContainer}
                       readOnly

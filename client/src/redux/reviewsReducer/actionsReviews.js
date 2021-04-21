@@ -5,6 +5,7 @@ export const SUBMIT_COMMENTARY = "SUBMIT_COMMENTARY";
 export const DELETE_COMMENTARY = "DELETE_COMMENTARY";
 export const MODIFY_COMMENTARY = "MODIFY_COMMENTARY";
 export const HAS_BUY = "HAS_BUY";
+export const GET_PRODUCT_SCORE = "GET_PRODUCT_SCORE";
 
 export function submitCommentary(text, rate, productId, userId){
     return async function(dispatch){
@@ -46,5 +47,12 @@ export function getHasBuy(id){
     return async function (dispatch){
         let json = await axios.get(`http://localhost:3001/products/${id}/review-order-details/`);
         return dispatch({type: HAS_BUY, payload: json});
+    }
+}
+
+export function getProductScore(id){
+    return async function (dispatch){
+        let json = await axios.get(`http://localhost:3001/products/${id}/review-product-score`);
+        return dispatch({type: GET_PRODUCT_SCORE, payload: json});
     }
 }

@@ -12,6 +12,7 @@ const reviewPost = require("./reviewsPost");
 const reviewDelete = require("./reviewsDelete");
 const reviewPut = require("./reviewsPut");
 const reviewOrderDetail = require("./reviewOrderDetail");
+const reviewAverage = require("./reviewAverage");
 
 router.use(bodyParser.json());
 
@@ -19,6 +20,7 @@ router.get("/", productGet);
 router.get("/:id", productGetId);
 router.get("/:id/review", reviewGet);
 router.get("/:id/review-order-details/", reviewOrderDetail);
+router.get("/:id/review-product-score", reviewAverage);
 router.put("/:id/review", reviewPut);
 router.put("/:id", productPutId);
 router.post("/", productPost);
