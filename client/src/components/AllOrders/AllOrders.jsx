@@ -150,7 +150,7 @@ function AllOrders(){
                 </label>
                 </div>
                 <input className='filterState' type='submit' value='Filtrar'/>
-                <input className='modifyState' name='modify' type='button' value={filter.modify ? 'Desabilitar Modificación' : 'Habilitar Modificación'} onClick={handleFilter}/>
+                <input className='modifyState' name='modify' type='button' value={filter.modify ? 'Deshabilitar Modificación' : 'Habilitar Modificación'} onClick={handleFilter}/>
             </form>
              <div className='containerAdminFilterOrder'>
                 <div className='registerAdminFilter' onClick={sortId}><DivText content='Registro'/></div>
