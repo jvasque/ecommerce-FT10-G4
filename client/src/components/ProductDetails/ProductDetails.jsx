@@ -73,8 +73,7 @@ const ProductDetails = (props) => {
     [`Fav-${productDetail.id}`]: iconState.fav[`Fav-${productDetail.id}}`],
     [`Cart-${productDetail.id}}`]: iconState.cart[`Cart-${productDetail.id}}`],
   });
-  const [logged, setLogged] = useState('');
-  const [hasBuy, setHasBuy] = useState([]);
+  
   const [hasComment, setHasComment] = useState([]);
 
   const Wish = () => {
@@ -92,7 +91,7 @@ const ProductDetails = (props) => {
     );
   };
 
-  const Cart = (productId, state, handleHeart) => {
+  const Cart = (productId, handleHeart) => {
     return (
       <FormControlLabel
         control={
@@ -133,7 +132,7 @@ const ProductDetails = (props) => {
       setHasComment(json.data?.map((e) => e.userId)); //Saco los ID de los que tienen al menos una review en el producto
     })();
     //setHasBuy(reviews[0]?.map(e => e.orderDetail.order.userId)); //Me fijo quienes tienen una orden de compra con este producto, saco sus ID
-    setLogged(loggin);
+   
     dispatch(getDetail(parseInt(productId)));
   }, [productId, dispatch]);
 

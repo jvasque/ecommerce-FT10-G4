@@ -11,13 +11,12 @@ export default function Successful() {
 
 
     useEffect(() => {
-        console.log(userId);
     swal("Tu compra ha sido completada!", "Gracias por confiar en nosotros", "success")
     dispatch(emptyCart())
      axios.put(`http://localhost:3001/order/${userId}/state`, {
          state: "completed"
      })
-    }, [])
+    }, [dispatch])
 
     return (
         <div>
