@@ -14,17 +14,16 @@ const OrderModify = () => {
   const [quantity, setQuantity] = useState(1);
   const [stock, setStock] = useState(true);
 
-
   const onSubmitForm = (e) => {
     e.preventDefault();
   };
-  const handleChange = (value, unitsOnStock) => { 
+  const handleChange = (value, unitsOnStock) => {
     setQuantity(value);
     if (value > unitsOnStock) {
       setStock(false);
       return setQuantity(1);
-    }  
-   
+    }
+
     setStock(true);
     //setQuantity(0);
     dispatch(incrementQ(productToModify[0], value));
@@ -74,8 +73,10 @@ const OrderModify = () => {
                   value={quantity}
                   onChange={(e) => {
                     let value =
-                      parseInt(e.target.value) <= 0 ? 1 : e.target.value;
-                    console.log(typeof e.target.value);
+                      parseInt(e.target.value) <= 0
+                        ? 1
+                        : parseInt(e.target.value);
+
                     handleChange(value, productToModify[0]["unitsOnStock"]);
                   }}
                 ></input>

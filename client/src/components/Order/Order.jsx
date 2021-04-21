@@ -1,16 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import OrderDetail from "./OrderDetail";
 import { useSelector } from "react-redux";
 import "../../scss/components/Order/_Order.scss";
 import "../../scss/components/formCategories/_Form.scss";
-import { Button } from "@material-ui/core";
-import OrderModify from "./OrderModify";
 import axios from "axios";
 import FormPayment from "../formPayment/FormPayment";
 
 function Order() {
   let products = useSelector((state) => state.cartReducer.cart);
-  const total = useSelector((state) => state.cartReducer.total);
   const user = useSelector((state) => state.loginReducer.user);
   const isLogin = useSelector((state) => state.loginReducer.isLogin);
 
@@ -49,7 +46,7 @@ function Order() {
     }
 
     postOrder();
-  }, [isLogin, products]);
+  }, [isLogin, products,user.id]);
 
  
 
