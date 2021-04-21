@@ -9,6 +9,7 @@ import {
 } from "../../redux/postUserReducer/postUserActions";
 import Swal from "sweetalert2";
 import {
+  GLogin,
   LoginAction,
   LogOut,
   SwalBoo,
@@ -17,15 +18,24 @@ import { useHistory } from "react-router";
 import { totalPrice, userLogged } from "../../redux/cartReducer/cartActions";
 import { modifyCart } from "../../redux/iconReducer/iconActions";
 import axios from "axios";
+import { GoogleLogin } from 'react-google-login';
+
+
+
 
 
 export default function Signup() {
- 
+  
   const dispatch = useDispatch();
   const history = useHistory();
   const log = useSelector((state) => state.loginReducer);
   const post = useSelector((state) => state.postUserReducer);
+ //social
 
+ const responseGoogle = (response) => {
+  console.log(response);
+  dispatch(GLogin(response))
+}
   //Session iniciada D:
   const productCart = useSelector((state) => state.cartReducer.cart);
   const [input, setInput] = useState({
@@ -209,7 +219,9 @@ export default function Signup() {
   }, [post.errorMail]);
  
 
-    
+    const googleClick = async() => {
+// dispatch(GoogleLogin())
+    }
   
 
   return (
@@ -226,8 +238,8 @@ export default function Signup() {
                   </i>
                 </a>
                 <a
-                  href="http://localhost:3001/auth/google"
-                  target="_blank"
+                  // href={}
+                  // onClick={googleClick}
                   className="social"
                 >
                   <i className="fab fa-google-plus-g">
@@ -301,15 +313,13 @@ export default function Signup() {
                     <FaFacebookF />
                   </i>
                 </a>
-                <a
-                  href="http://localhost:3001/auth/google"
-                  target="_blank"
-                  className="social"
-                >
-                  <i className="fab fa-google-plus-g">
-                    <FaGoogle />
-                  </i>
-                </a>
+                <GoogleLogin
+    clientId="926134963488-27qle0uk3423ed3dt2jlkd20rtht66g6.apps.googleusercontent.com"
+    buttonText="Login"
+    onSuccess={responseGoogle}
+    onFailure={responseGoogle}
+    cookiePolicy={'single_host_origin'}
+  />
                 {/* <a href="#" className="social">
                   <i className="fab fa-linkedin-in">
                     <FaLinkedinIn />
@@ -337,6 +347,7 @@ export default function Signup() {
               />
               {errors.password && <p className="danger">{errors.password}</p>}
               <a href="#">olvidaste tu clave?</a>
+     
               <button type="submit">INICIA SESION</button>
             </form>
           </div>

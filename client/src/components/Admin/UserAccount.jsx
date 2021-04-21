@@ -44,7 +44,7 @@ const UserAccount = ({user}) => {
     //     setSort(newSort)
     //     setOrdersDetails(newOrdersDetails)
     // }
-        console.log(user)
+       
     if(!!user){
         return (
             <div className='containerOrder'>

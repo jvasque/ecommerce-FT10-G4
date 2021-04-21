@@ -1,4 +1,4 @@
-import { LOGIN_ACTION_KEY, LOG_FAIL, LOG_OUT, LOG_SWAL } from './loginActions';
+import { LOGIN_ACTION_KEY, LOG_FAIL, LOG_GOOGLE, LOG_OUT, LOG_SWAL } from './loginActions';
 import decode from 'jwt-decode';
 
 const initialState = {
@@ -39,6 +39,12 @@ export default (state = initialState, action) => {
       return {
         errorLogin: false,
       };
+      case LOG_GOOGLE:
+        return{
+          ...state,
+user:action.payload,
+isLogin:true
+        };
     default:
       return { ...state };
   }

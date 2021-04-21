@@ -7,6 +7,9 @@ const passport = require("passport");
 
 require("./passport.js");
 require("./db.js");
+const {
+  COOKIE_KEY
+} = process.env;
 
 const server = express();
 
@@ -25,6 +28,9 @@ server.use((req, res, next) => {
   );
   next();
 });
+
+
+
 
 server.use(passport.initialize());
 server.use(passport.session());

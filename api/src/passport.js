@@ -1,11 +1,16 @@
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const BearerStrategy = require("passport-http-bearer").Strategy;
-const FacebookStrategy = require('passport-facebook').Strategy;
+
 const { User } = require("./db.js");
 const jwt = require("jsonwebtoken");
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const { SECRET_KEY, CLIENT_SECRET,URL, CLIENT_ID, GOOGLE_CONSUMER_KEY, GOOGLE_CONSUMER_SECRET, GOOGLE_URL_CB } = process.env;
+const GoogleStrategy = require("passport-google-oauth20").Strategy;
+const {
+  SECRET_KEY,
+  GOOGLE_CONSUMER_KEY,
+  GOOGLE_CONSUMER_SECRET,
+  GOOGLE_URL_CB,
+} = process.env;
 
 passport.use(
   new LocalStrategy(
@@ -13,7 +18,6 @@ passport.use(
     async (email, password, done) => {
       const user = await User.findOne({ where: { email: email } });
       if (!user || !user.correctPassword(password)) return done(null, false);
-      
       const {
         id,
         firstName,
@@ -23,8 +27,7 @@ passport.use(
         type,
         status,
       } = user;
-      
-      if(status === 'banned') return done(null, false)
+      if (status === "banned") return done(null, false);
       return done(null, {
         id,
         firstName,
@@ -47,64 +50,45 @@ passport.use(
   })
 );
 
-// passport.use(new FacebookStrategy({
-//   clientID: CLIENT_ID,
-//   clientSecret: CLIENT_SECRET,
-//   callbackURL: URL
-// },
-//  function(accessToken, refreshToken, profile, done) {
-//   console.log(profile)
-//     const user = User.findOne({ where: { facebookUser: profile.id } });
-// }
-// ));
 
-passport.use(new GoogleStrategy({
-  clientID: GOOGLE_CONSUMER_KEY,
-  clientSecret: GOOGLE_CONSUMER_SECRET,
-  // followRedirects: true,
-      // requestTokenURL: "https://accounts.google.com/OAuthGetRequestToken",
-  callbackURL: GOOGLE_URL_CB
-},
 
-    // User.findOne({where: {email: profile.emails[0].value} }, function (err, user) {
-    //   return done(err, user);
-    // });
-    // console.log(accessToken);
-    // console.log(profile);
-   async (acessToken, refreshToken, profile, cb) => {
-console.log(await User.findOne({where:{ email: profile.emails[0].value}}))
-      User.findOne({email:profile.emails[0].value}, (err, user) => { // find the user
-      console.log(user)
-      // if the 'user' array is empty (meaning no users were found)
-        if (!user.length) {
-          
-          // creates a user with the accessToken given by Google,
-          // the google account id and displayName stored in the 
-          // profile argument 
-          User.create({
-            accessToken,
-            googleId: profile.id,
-            name: profile.displayName,
-          }, (err, user) => {
-            return cb(err, user);
-          });
-        }
-        
-        return cb(err, user);
+
+passport.use(
+  new GoogleStrategy(
+    {
+      clientID: GOOGLE_CONSUMER_KEY,
+      clientSecret: GOOGLE_CONSUMER_SECRET,
+      callbackURL: GOOGLE_URL_CB,
+    },
+
+    async (accessToken, refreshToken, profile, cb) => {
+      // console.log("profile", profile);
+
+      //check if user already exists
+
+      const find = await User.findOne({
+        where: {
+          email: profile.emails[0].value,
+        },
       });
+
+      await find.update({ googleId: profile.id });
+      await find.update({ registrationToken: accessToken });
+      console.log(find);
+      const user = {
+        id: find.dataValues.id,
+        firstName: find.dataValues.firstName,
+        lastName: find.dataValues.lastName,
+        email: find.dataValues.email,
+        type: find.dataValues.email,
+        photoURL: find.dataValues.photoURL,
+        status: find.dataValues.status,
+        token: accessToken,
+      };
+      // console.log(find)
+      return cb(null, user);
     }
-    // return cb(null, profile)
-//  await User.findOne({where:{ email: profile.emails[0].value}},function (err, user) {
-//       return cb(err, user);
-//     })
-  // await user.update({googleId:profile.id})
-  // await user.update({registrationToken:accessToken})
-  // console.log(user)
-    // console.log(profile);
-    // console.log(profile.emails[0].value);
-    // return cb(null, user)
-
-));
-
+  )
+);
 
 module.exports = passport;
