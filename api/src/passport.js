@@ -37,14 +37,14 @@ passport.use(
   )
 );
 
-passport.use(
-  new FacebookStrategy(
-    {
-      clientID: CLIENT_ID_FB,
-      clientSecret: CLIENT_SECRET_FB,
-      callbackURL: CALLBACK_URL_FB,
-      profileFields: ['email', 'name'],
-    },
+// passport.use(
+//   new FacebookStrategy(
+//     {
+//       clientID: CLIENT_ID_FB,
+//       clientSecret: CLIENT_SECRET_FB,
+//       callbackURL: CALLBACK_URL_FB,
+//       profileFields: ['email', 'name'],
+//     },
 
     //     function (accessToken, refreshToken, profile, done) {
     //       console.log(profile);
@@ -71,22 +71,22 @@ passport.use(
     //     }
     //   )
     // );
-    async function (accessToken, refreshToken, profile, done) {
-      console.log(profile);
+//     async function (accessToken, refreshToken, profile, done) {
+//       console.log(profile);
 
-      const newUser = await User.findOrCreate({
-        where: {
-          facebookUser: profile.id,
-          firstName: profile.name.givenName,
-          lastName: profile.name.familyName,
-          email: profile.emails[0].value,
-          password: 'Default@12#$',
-        },
-      });
-      done(err, newUser);
-    }
-  )
-);
+//       const newUser = await User.findOrCreate({
+//         where: {
+//           facebookUser: profile.id,
+//           firstName: profile.name.givenName,
+//           lastName: profile.name.familyName,
+//           email: profile.emails[0].value,
+//           password: 'Default@12#$',
+//         },
+//       });
+//       done(err, newUser);
+//     }
+//   )
+// );
 
 passport.use(
   new BearerStrategy((token, done) => {
