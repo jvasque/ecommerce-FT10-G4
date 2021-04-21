@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import axios from "axios";
 import AdminOrderDetail from './AdminOrderDetail'
 import { sortById, sortByName, sortByQuantity, sortByPrice, sortByCost } from '../OrderHistory/FilterOrderDetail'
+import swal from 'sweetalert';
 
 import DivText from '../ProductCard/DivText'
 import "../../scss/components/AllOrders/_AdminOrderDetail.scss"
@@ -54,10 +56,27 @@ function SingleOrder({order, modify}){
         setOrdersDetails(newOrdersDetails)
     }      
     
-    async function handleSubmit(e){
+    function handleSubmit(e){
         e.preventDefault();
-        console.log(e.target.name)
-
+        swal({
+            title: `Esta seguro de modificar la orden ${order.id}?`,
+            text: "Una vez modificada, debera refrescar la pagina para ver los cambios!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+          })
+          .then(async (willDelete) => {
+            if (willDelete) {
+                await axios.post(`http://localhost:3001/orders/${order.id}?state=${status}`)
+                swal('Éxito!',`La orden ${order.id} ha sido modificada.`, 'success');        
+            } else {
+                setStatus(order.state)
+              swal("La modificación ha sido cancelada!");
+            }
+          })
+        
+        
+        
     }
 
     function handleStatusChange(event){
@@ -74,7 +93,7 @@ function SingleOrder({order, modify}){
                         <option value="cancelled">Cancelada</option>
                     </select>
                     <input disabled={status===order.state} type='submit' value='Guardar'></input>
-                    <input type='button' value='Cancelar' onClick={() => setStatus(order.state)}/>
+                    {/* <input type='button' value='Cancelar' onClick={() => setStatus(order.state)}/> */}
                 </form>
             )
         }else if(modify && (order.state === "processing" || order.state === "cancelled" || order.state === "completed")){
@@ -86,7 +105,7 @@ function SingleOrder({order, modify}){
                         <option value="completed">Completada</option>
                     </select>
                     <input disabled={status===order.state} type='submit' value='Guardar'></input>
-                    <input type='button' value='Cancelar' onClick={() => setStatus(order.state)}/>
+                    {/* <input type='button' value='Cancelar' onClick={() => setStatus(order.state)}/> */}
                 </form>
             )
         }else if(status==="created"){
@@ -132,7 +151,7 @@ function SingleOrder({order, modify}){
                             <DivText content={order.paymentMethod.type}/>
                         </div>
                         <div className='orderAdminTotal' onClick={toggle}>
-                            <DivText content={order.totalPrice}/>
+                            <DivText content={`USD$${order.totalPrice}`}/>
                         </div>
                         <div className='orderAdminStatus'>
                             {

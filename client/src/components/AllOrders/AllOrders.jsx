@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import "../../scss/components/AllOrders/_AdminOrders.scss"
 import "../../scss/components/AllOrders/_AdminFilterOrders.scss"
 import { sortById, sortByState, sortByCreation, sortByUpdate, sortByPayment, sortByTotal, sortByFirstName, sortByLastName } from '../OrderHistory/FilterOrder'
+import swal from 'sweetalert';
 
 function AllOrders(){
     const userId = useSelector(state => state.loginReducer.user.id)
@@ -103,8 +104,9 @@ function AllOrders(){
 
     return (
         <div className='containerAdminOrders'>            
-            <form onSubmit={onFilter}>
-                <label>
+            <form className='filterAdmin' onSubmit={onFilter}>
+                <div className='created'>
+                <label >
                 Creada
                     <input 
                         name='created'
@@ -113,7 +115,9 @@ function AllOrders(){
                         onChange={handleFilter}
                     />
                 </label>
-                <label>
+                </div>
+                <div className='processing'>
+                <label >
                 Procesando
                     <input 
                         name='processing'
@@ -122,6 +126,8 @@ function AllOrders(){
                         onChange={handleFilter}
                     />
                 </label>
+                </div>
+                <div className='completed'>
                 <label>
                 Completada
                     <input 
@@ -131,6 +137,8 @@ function AllOrders(){
                         onChange={handleFilter}
                     />
                 </label>
+                </div>
+                <div className='cancelled'>
                 <label>
                 Cancelada
                     <input 
@@ -140,8 +148,9 @@ function AllOrders(){
                         onChange={handleFilter}
                     />
                 </label>
-                <input type='submit' value='Filtrar'/>
-                <input name='modify' type='button' value={filter.modify ? 'Desabilitar Modificación' : 'Habilitar Modificación'} onClick={handleFilter}/>
+                </div>
+                <input className='filterState' type='submit' value='Filtrar'/>
+                <input className='modifyState' name='modify' type='button' value={filter.modify ? 'Desabilitar Modificación' : 'Habilitar Modificación'} onClick={handleFilter}/>
             </form>
              <div className='containerAdminFilterOrder'>
                 <div className='registerAdminFilter' onClick={sortId}><DivText content='Registro'/></div>
