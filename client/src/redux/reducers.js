@@ -10,7 +10,7 @@ import reviewsReducer from './reviewsReducer/reducerReviews';
 import wishlistReducer from './wishlistReducer/wishlistReducer';
 import loginReducer from './loginReducer/loginReducer'
 import postUserReducer from './postUserReducer/postUserReducer'
-
+import paymentIdReducer from './formPaymentReducer/formPaymentReducer'
 
 const rootReducer = combineReducers({
   
@@ -25,6 +25,8 @@ const rootReducer = combineReducers({
   wishlistReducer,
   loginReducer,
   postUserReducer,
+  paymentIdReducer
+
 });
 
 export default rootReducer;
