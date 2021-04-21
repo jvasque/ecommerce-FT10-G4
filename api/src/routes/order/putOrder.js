@@ -10,6 +10,7 @@ module.exports = async (req, res) => {
       state,
       paymentDate,
       totalPrice,
+      phoneNumber
     } = req.body; 
 
     let order = await Order.findOne({
@@ -22,6 +23,7 @@ module.exports = async (req, res) => {
     order.firstName = firstName;
     order.lastName = lastName;
     order.state= state;
+    order.phoneNumber= phoneNumber;
     order.totalPrice = totalPrice;
     order.paymentDate = paymentDate;
     order.address = address

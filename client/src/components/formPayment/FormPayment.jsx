@@ -18,7 +18,8 @@ const FormPayment = () => {
   const [input, setInput] = useState({
     firstName: "",
     lastName: "",
-    address: "",   
+    address: "", 
+    phoneNumber:0  
   });
   const [id, setId] = useState(0);
 
@@ -46,12 +47,13 @@ const FormPayment = () => {
     console.log('onsubmit')
     e.preventDefault();
     await axios.put(`http://localhost:3001/order/orders/${id}`, {
-      firstName: input.firstName,
-      lastName: input.lastName,
+      firstName: user.firstName,
+      lastName: user.lastName,
       state: "processing",
       paymentDate: "pending",
       address: input.address,
       email: input.email ||user.email,
+      phoneNumber : input.phoneNumber,
       totalPrice: total,
     });
      history.push("/user/cart/order/");
