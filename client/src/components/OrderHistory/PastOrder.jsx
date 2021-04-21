@@ -66,7 +66,7 @@ function PastOrder({order}){
                             <DivText content={order.paymentMethod.type}/>
                         </div>
                         <div className='orderTotal'>
-                            <DivText content={order.totalPrice}/>
+                            <DivText content={`USD$${order.totalPrice}`}/>
                         </div>
                     </div>
                     <div className="folding-pannel filter">
