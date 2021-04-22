@@ -29,7 +29,7 @@ const ManageAccount = () => {
     const info = await axios.get("http://localhost:3001/admin", {
       headers: { Authorization: `Bearer ${token}` },
     });
-    setUsers(info.data);
+    // setUsers(info.data);
   }
   // llamar estado de redux y ejecutar y setear los comps
   useEffect(() => {
