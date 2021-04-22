@@ -86,11 +86,13 @@ function CommentaryReviews({ id, content, score, userId,
     const [toggle, setToggle] = useState(false);
     const [hidden, setHidden] = React.useState(false);
 
+    const token = localStorage.getItem("token");
+
     const handleVisibility = () => {
       setHidden((prevHidden) => !prevHidden);
     };
      
-    function deleteRev(e, id){
+    function deleteRev(e, id, token){
       e.preventDefault(e);
       swal({
         title: "Está seguro de borrar el comentario seleccionado?",
@@ -101,7 +103,7 @@ function CommentaryReviews({ id, content, score, userId,
       })
       .then((willDelete) => {  
         if (willDelete) {  
-          dispatch(deleteCommentary(id))
+          dispatch(deleteCommentary(id, token))
           
           swal("Su comentario fue borrado con éxito!", 
           {icon: "success"})
@@ -112,7 +114,7 @@ function CommentaryReviews({ id, content, score, userId,
         }});
     }
 
-    function modifRev(e, id, text, rate){
+    function modifRev(e, id, text, rate, token){
       //e.preventDefault();
       swal({
         title: "Está seguro de modificar su comentario?",
@@ -122,7 +124,7 @@ function CommentaryReviews({ id, content, score, userId,
       })
       .then((willModify) => {  
         if (willModify) {  
-          dispatch(modifyCommentary(id, text, rate.toString()));
+          dispatch(modifyCommentary(id, text, rate.toString(), token));
           
           swal("Su comentario fue modificado con éxito!", 
           {icon: "success"})
@@ -182,10 +184,10 @@ function CommentaryReviews({ id, content, score, userId,
       {!toggle && content}
       {toggle && <input className="input-textarea" type="textarea" value={input.text} onChange={(e)=> setInput({...input, text:e.target.value})}/>}
       { validateModify() && <DeleteIcon className={classes.delete} 
-      onClick ={(e) => deleteRev(e, id)}/>}
+      onClick ={(e) => deleteRev(e, id, token)}/>}
       {toggle && 
       <div>
-        <CheckCircleIcon className={classes.checkIcon} onClick={(e)=>{modifRev(e, id, input.text, input.rate)}}/>
+        <CheckCircleIcon className={classes.checkIcon} onClick={(e)=>{modifRev(e, id, input.text, input.rate, token)}}/>
         <CancelIcon className={classes.cancelIcon} onClick={(e) => {handleCancelModif(e)}}/>
        
       </div>}

@@ -7,15 +7,16 @@ export const MODIFY_COMMENTARY = "MODIFY_COMMENTARY";
 export const HAS_BUY = "HAS_BUY";
 export const GET_PRODUCT_SCORE = "GET_PRODUCT_SCORE";
 
-export function submitCommentary(text, rate, productId, userId){
+export function submitCommentary(text, rate, productId, userId, token){
     return async function(dispatch){
         await axios.post(`http://localhost:3001/products/${productId}/review`, {
             params: {
                 text,
                 rate,
                 userId
-            }
-        });
+            },
+        }, {headers: { Authorization: `Bearer ${token}` }});
+        
     }
 }
 
@@ -30,20 +31,23 @@ export function getCommentary(id, pagination){
     }
 }
 
-export function deleteCommentary(id){
+export function deleteCommentary(id, token){
     return async function (){
-        await axios.delete(`http://localhost:3001/products/${id}/review`)
+        await axios.delete(`http://localhost:3001/products/${id}/review`, {
+            headers: { Authorization: `Bearer ${token}` },
+        })
     }
 }
 
-export function modifyCommentary(id, text, rate){
+export function modifyCommentary(id, text, rate, token){
     return async function (){
         await axios.put(`http://localhost:3001/products/${id}/review`, {
             params:{
                 text,
                 rate
-            }
-        })
+            },
+            
+        }, {headers: { Authorization: `Bearer ${token}` }})
     }
 }
 
