@@ -34,7 +34,7 @@ export default function Signup() {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "No voy a mentirte marge, tus datos estan mal",
+        text: "algo ha salido mal!",
         confirmButtonColor: "#378a19",
       });
     }
@@ -44,7 +44,7 @@ export default function Signup() {
     Swal.fire({
       icon: "error",
       title: "Oops...",
-      text: "No voy a mentirte marge, tus datos estan mal",
+      text: "algo ha salido mal!",
       confirmButtonColor: "#378a19",
     });
   };
@@ -186,7 +186,6 @@ export default function Signup() {
     if (
       user.firstName.length &&
       user.lastName.length &&
-      user.email.length &&
       !errorsCreate.email &&
       !errorsCreate.password &&
       !errorsCreate.confirmPassword
@@ -225,9 +224,7 @@ export default function Signup() {
     }
   }, [post.errorMail]);
 
-  const googleClick = async () => {
-    // dispatch(GoogleLogin())
-  };
+  
 
   return (
     <div className="Signup">

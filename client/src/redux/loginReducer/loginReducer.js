@@ -5,7 +5,6 @@ import {
   LOG_OUT,
   LOG_SWAL,
 } from "./loginActions";
-import decode from "jwt-decode";
 
 const initialState = {
   user: {},

@@ -2,91 +2,61 @@ const server = require("express").Router();
 const { User } = require("../db.js");
 const passport = require("passport");
 const jwt = require("jsonwebtoken");
-const { OAuth2Client } = require("google-auth-library");
-const { SECRET_KEY, GOOGLE_CONSUMER_KEY } = process.env;
+const googleLogin = require("./auth/googleLogin.js");
+const me = require("./auth/me.js");
+const login = require("./auth/login.js");
+const express = require("express");
+const { SECRET_KEY} = process.env;
 
-const client = new OAuth2Client(
-  GOOGLE_CONSUMER_KEY
-);
+// Middlewares
+server.use(express.json());
 
-server.get("/me", async (req, res, next) => {
-  try {
-    if (req.user) {
-      const { id } = req.user;
-      const result = await User.findByPk(id);
-      res.json(result);
-    } else res.sendStatus(401);
-  } catch (error) {
-    next(error);
-  }
+// User routes
+server.get("/me", me);
+server.post("/login", login);
+server.post("/google/login", googleLogin);
+
+server.post('/forgot', async (req, res, next) => {
+  const {email} = req.body
+  const user = await User.findOne({where:{email:email}})
+  if(!user) return  res.status(401).json({message: "Usuario no encontrado"})
+  const token = jwt.sign({id:user.id}, SECRET_KEY)
+  
+  res.json(token)
+  
+
+  // if (!user) {
+  //  
+    // return res.redirect('/forgot');
+  // }
+//logica de DB 
+  // user.resetPasswordToken = token;
+  // user.resetPasswordExpires = Date.now() + 3600000;
+
+  // const resetEmail = {
+  //   to: user.email,
+  //   from: 'passwordreset@example.com',
+  //   subject: 'Node.js Password Reset',
+  //   text: `
+  //     You are receiving this because you (or someone else) have requested the reset of the password for your account.
+  //     Please click on the following link, or paste this into your browser to complete the process:
+  //     http://${req.headers.host}/reset/${token}
+  //     If you did not request this, please ignore this email and your password will remain unchanged.
+  //   `,
+  // };
+
+  // await transport.sendMail(resetEmail);
+  // req.flash('info', `An e-mail has been sent to ${user.email} with further instructions.`);
+
+  // res.redirect('/forgot');
 });
 
-server.post("/login", function (req, res, next) {
-  passport.authenticate(
-    "local",
-    { session: false },
-    function (err, user, message) {
-      if (err) return next(err);
-      else if (!user) return res.sendStatus(401);
-      else return res.send(jwt.sign(user, SECRET_KEY));
-    }
-  )(req, res, next);
-});
-
-server.post("/google/login", async (req, res) => {
-  const { tokenId } = req.body;
-  (console.log(req.user))
-  try {
-    const response = await client.verifyIdToken({
-      idToken: tokenId,
-      audience:
-      GOOGLE_CONSUMER_KEY,
-    });
-    // console.log(response)
-    const {
-      email_verified,
-      sub,
-      given_name,
-      family_name,
-      email,
-      picture,
-    } = response.payload;
-    if (email_verified) {
-      const find = await User.findOne({
-        where: {
-          email: email,
-        },
-      });
-      if (find) {
-        
-        if (!find.firstName) await find.update({ firstName: given_name });
-        if (!find.lastName) await find.update({ lastName: family_name });
-        if (!find.googleId) await find.update({ googleId: sub });
-        if (!find.photoURL) await find.update({ photoURL: picture });
-        const token = jwt.sign(find.toJSON(), SECRET_KEY)
-        
-        res.json(token);
-      } else {
-        
-        const newUser = await User.create({
-          firstName: given_name,
-          lastName: family_name,
-          email: email,
-          password: "Henry@12#$",
-          googleId: sub,
-          photoURL: picture
-        });
-        const token = jwt.sign(newUser.toJSON(), SECRET_KEY)
-        res.json(token)
-      }
-    } else {
-      res.status(401).json({message: "email no verificado"})
-    }
-  } catch (e) {
-   res.status(401).json({message: 'no fue autorizado'})
-  }
-});
-
-
+server.post('/forgot/reset',passport.authenticate('bearer', {session:false}), async (req,res)=>{
+  
+  const user = await User.findByPk(req.user.id)
+  console.log(user)
+  // se debe mirar la logica de DB
+  res.send('ok')
+})
 
 module.exports = server;
