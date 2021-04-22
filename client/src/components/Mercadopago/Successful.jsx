@@ -32,7 +32,7 @@ export default function Successful() {
           
      }
 
-      console.log(productSaved);
+   
      }
    stock()
     },[])

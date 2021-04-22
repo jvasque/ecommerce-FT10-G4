@@ -12,7 +12,7 @@ import {
   createMuiTheme,
   ThemeProvider,
 } from "@material-ui/core/styles";
-import Paypal from "../../components/paypal/Paypal";
+import Paypal from "../Paypal/Paypal"
 
 const useStyles = makeStyles({
   root: {
@@ -157,10 +157,7 @@ const FormPayment = () => {
           </Button>
           {/* <Button onClick={(e) => onSubmit(e, "paypal")}>Paypal</Button> */}
         <div className='button-paypal'>
-        {input.firstName.length !== 0 &&
-            input.lastName.length !== 0 &&
-            input.email.includes("@") &&
-            input.address.length !== 0 && <Paypal total={total} />}
+         <Paypal total={total} />
 
         </div>
           

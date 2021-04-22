@@ -10,18 +10,19 @@
 
   button {
     margin-top: 10px;
-    margin-left: 5px;
-
-    background-color: var(--color-brand);
-    color: #f7f7f7;
+    margin-left: 1px;
+    height: 3.25rem;
+    background-color: #009ee3;
+    color: #fff;
+    margin-left: none;
 
     &:hover {
-      background-color: var(--color-brand);
-      box-shadow: 2px 2px 2px #164b03;
-      position: relative;
-      top: -3px;
+      background-color: #009ee3;
+      box-shadow: 2px 2px 2px #009ee3;
     }
   }
 
-
+  .button-paypal {
+    width: 100%;
+  }
 }
