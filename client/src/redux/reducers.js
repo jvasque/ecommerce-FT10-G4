@@ -11,7 +11,7 @@ import wishlistReducer from './wishlistReducer/wishlistReducer';
 import loginReducer from './loginReducer/loginReducer'
 import postUserReducer from './postUserReducer/postUserReducer'
 import AdminReducer from './AdminReducer/AdminReducer'
-
+import paymentIdReducer from './formPaymentReducer/formPaymentReducer'
 
 const rootReducer = combineReducers({  
   detailReducer,
@@ -26,6 +26,7 @@ const rootReducer = combineReducers({
   loginReducer,
   postUserReducer,
   AdminReducer,
+  paymentIdReducer,
 });
 
 export default rootReducer;

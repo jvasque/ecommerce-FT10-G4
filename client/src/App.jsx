@@ -22,6 +22,7 @@ import ManageAccount from './components/Admin/ManageAccount';
 import AuthRoute from './components/FrontAuth/AuthRoute';
 import UserScreen from './components/UserScreen/UserScreen';
 import Newsletter from './components/Newsletter/Newsletter';
+import Successful from './components/Mercadopago/Successful';
 
 function App() {
   return (
@@ -33,10 +34,12 @@ function App() {
         <Route exact path="/catalog" component={Catalog} />
         <Route exact path="/:id" component={ProductDetails} />
         <Route exact path="/user/login" component={Signup} />
+        <Route exact path="/order/completada" component={Successful}/>
         <AuthRoute path="/admin" type="admin">
           <Route exact path="/admin/categories" component={Form} />
           <Route exact path="/admin/orders" component={AllOrders} />
           <Route exact path="/admin/product/form" component={ProductForm} />
+         
           <Route
             exact
             path="/admin/product/form/create"
@@ -59,6 +62,7 @@ function App() {
           <Route exact path="/user/info" component={UserScreen} />
           <Route exact path="/user/admin" component={ManageAccount} />
           <Route exact path="/user/newsletter" component={Newsletter} />
+          
         </AuthRoute>
       </Switch>
       <Route path="/" component={Footer} />

@@ -2,6 +2,12 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
+//PRUEBA MUI
+import { ThemeProvider } from '@material-ui/core/styles';
+import { createMuiTheme } from '@material-ui/core/styles';
+import purple from '@material-ui/core/colors/purple';
+import green from '@material-ui/core/colors/green';
+import red from '@material-ui/core/colors/red';
 
 import "./index.css";
 import App from "./App";
@@ -14,14 +20,25 @@ import store from "./redux/store";
 store.dispatch(getCatalog());
 store.dispatch(getCategories());
 
-
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: green[500],
+      },
+    secondary: {
+      main: red[500],
+    },
+  },
+});
 
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
-        <App />
+        <ThemeProvider theme={theme}>
+          <App />
+        </ThemeProvider>
       </BrowserRouter>
     </Provider>
   </React.StrictMode>,

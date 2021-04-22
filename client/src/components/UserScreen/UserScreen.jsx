@@ -30,8 +30,8 @@ export function UserScreen() {
       dispatch(LogOut());
       dispatch(emptyCart());
       dispatch(reset());
-      alert("Se cerró sesión");
-      localStorage.setItem("user", 0);
+      alert('Se cerró sesión');
+     localStorage.removeItem("user")
     }
   };
 

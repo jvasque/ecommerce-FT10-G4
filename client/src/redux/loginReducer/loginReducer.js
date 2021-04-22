@@ -1,10 +1,12 @@
 import {
   LOGIN_ACTION_KEY,
+  LOGIN_FB,
   LOG_FAIL,
-  LOG_GOOGLE,
   LOG_OUT,
   LOG_SWAL,
-} from "./loginActions";
+  LOG_GOOGLE,
+} from './loginActions';
+import decode from 'jwt-decode';
 
 const initialState = {
   user: {},
@@ -44,6 +46,16 @@ export default (state = initialState, action) => {
       return {
         errorLogin: false,
       };
+    // case LOGIN_FB:
+    //   localStorage.setItem('user', JSON.stringify(action.payload.id));
+    //   return {
+    //     ...state,
+    //     user: action.payload,
+    //     isLogin: true,
+    //     isAdmin: action.payload.type.includes('admin'),
+    //     errorLogin: false,
+    //     error: {},
+    //   };
     default:
       return { ...state };
   }
