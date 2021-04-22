@@ -32,6 +32,11 @@
     align-items: center;
     float: right;
 
+    div {
+      text-align: center;
+      padding: 2px;
+    }
+
     .link-redirect {
       text-decoration: none;
     }
