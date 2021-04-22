@@ -1,40 +1,36 @@
-import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import axios from "axios";
-import { Button, colors, TextField } from "@material-ui/core";
+import { Button, TextField } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import "../../scss/components/FormPayment/_FormPayment.scss";
-import { NavLink, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import swal from "sweetalert";
+import { FormControl } from "@material-ui/core";
 import {
-  FormControl,
-} from "@material-ui/core";
-import {makeStyles, createMuiTheme, ThemeProvider} from "@material-ui/core/styles"
-
+  makeStyles,
+  createMuiTheme,
+  ThemeProvider,
+} from "@material-ui/core/styles";
+import Paypal from '../../components/paypal/Paypal'
 
 const useStyles = makeStyles({
   root: {
     borderColor: "green",
     fontWeight: 525,
   },
-
- 
-
-})
+});
 
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main:  "rgba(47, 126, 19, 1)"
-    }
+      main: "rgba(47, 126, 19, 1)",
+    },
   },
- 
-})
-
+});
 
 const FormPayment = () => {
-  
-  const classes = useStyles()
+  const classes = useStyles();
 
   const history = useHistory();
 
@@ -43,13 +39,13 @@ const FormPayment = () => {
     lastName: "",
     address: "",
     phoneNumber: 0,
-    email:""
+    email: "",
   });
   const [url, setUrl] = useState("");
   const id = JSON.parse(localStorage.getItem("user"));
 
   const total = useSelector((state) => state.cartReducer.total);
- 
+
   const handleChange = (e) => {
     setInput({
       ...input,
@@ -57,16 +53,16 @@ const FormPayment = () => {
     });
   };
 
-  const onSubmit = async (e) => {
+  const onSubmit = async (e, value) => {
     e.preventDefault();
     if (
       input.firstName.length === 0 ||
       input.lastName.length === 0 ||
-      input.address.length === 0 
+      input.address.length === 0
     ) {
-     return swal("Aviso!", "Todos los datos son obligatorios", "warning");
+      return swal("Aviso!", "Todos los datos son obligatorios", "warning");
     }
-    if(!input.email.includes("@")){
+    if (!input.email.includes("@")) {
       return swal("Aviso!", "Ingrese un Email valido", "warning");
     }
     await axios.put(`http://localhost:3001/order/orders/${id}`, {
@@ -79,17 +75,22 @@ const FormPayment = () => {
       phoneNumber: input.phoneNumber,
       totalPrice: total,
     });
-    //history.push("/user/cart/order/");
-    const urlMercadopago = await axios.post(
-      "http://localhost:3001/cart/checkout",
-      {
-        title: "Pago AgroPlace",
-        totalPrice: total,
-      }
-    );
+    if (value === "paypal") {
 
-    setUrl(urlMercadopago.data.url);
-    window.location = urlMercadopago.data.url;
+      history.push("/product/cart");
+    } else {
+     
+      const urlMercadopago = await axios.post(
+        "http://localhost:3001/cart/checkout",
+        {
+          title: "Pago AgroPlace",
+          totalPrice: total,
+        }
+      );
+
+      setUrl(urlMercadopago.data.url);
+      window.location = urlMercadopago.data.url;
+    }
   };
 
   // const returnToCart = (e) => {
@@ -97,73 +98,70 @@ const FormPayment = () => {
   //   dispatch(returnProductCart(user, id, total));
   //   history.push("/product/cart");
   // };
-  
 
   return (
     <ThemeProvider theme={theme}>
-    <div className="container-payment">
-      <Typography variant="h5"></Typography>
-      <FormControl  noValidate autoComplete="off">
-        <TextField
-          type="text"
-          name="firstName"
-          inputProps= {{className: classes.root}}
-          onChange={handleChange}
-          label="Nombre"
-          variant="filled"
-          style={{ marginBottom: 5}}
-          required
-         
-        />
-        <TextField
-          type="text"
-          name="lastName"
-          onChange={handleChange}
-          label="Apellido"
-          variant="filled"
-          style={{ marginBottom: 5, width: 500 }}
-          required
-        />
-        <TextField
-          type="number"
-          name="phoneNumber"
-          label="Telefono de contacto:"
-          variant="filled"
-          onChange={handleChange}
-          style={{ marginBottom: 5 }}
-          required
-          
-        />
-        <TextField
-          type="text"
-          name="address"
-          onChange={handleChange}
-          label="Dirección de envío:"
-          variant="filled"
-          style={{ marginBottom: 5 }}
-          required
-        />
-        <TextField
-          type="email"
-          name="email"
-          onChange={handleChange}
-          label={"Email"}
-          variant="filled"
-          
-          style={{ marginBottom: 5 }}
-        />
+      <div className="container-payment">
+        <Typography variant="h5"></Typography>
+        <FormControl noValidate autoComplete="off">
+          <TextField
+            type="text"
+            name="firstName"
+            inputProps={{ className: classes.root }}
+            onChange={handleChange}
+            label="Nombre"
+            variant="filled"
+            style={{ marginBottom: 5 }}
+            required
+          />
+          <TextField
+            type="text"
+            name="lastName"
+            onChange={handleChange}
+            label="Apellido"
+            variant="filled"
+            style={{ marginBottom: 5, width: 500 }}
+            required
+          />
+          <TextField
+            type="number"
+            name="phoneNumber"
+            label="Telefono de contacto:"
+            variant="filled"
+            onChange={handleChange}
+            style={{ marginBottom: 5 }}
+            required
+          />
+          <TextField
+            type="text"
+            name="address"
+            onChange={handleChange}
+            label="Dirección de envío:"
+            variant="filled"
+            style={{ marginBottom: 5 }}
+            required
+          />
+          <TextField
+            type="email"
+            name="email"
+            onChange={handleChange}
+            label={"Email"}
+            variant="filled"
+            style={{ marginBottom: 5 }}
+          />
 
-        <h3 > Total: ${total}</h3>
+          <h3> Total: ${total}</h3>
 
-      <Button onClick={onSubmit}>Pagar</Button>
-      </FormControl>
-
-      
-      
-    </div>
+          <Button onClick={(e) => onSubmit(e, "mercadopago")}>
+            Mercadopago
+          </Button>
+          {/* <Button onClick={(e) => onSubmit(e, "paypal")}>Paypal</Button> */}
+          <Paypal />
+        </FormControl>
+      </div>
     </ThemeProvider>
   );
 };
-//<Button className="test" onClick={()=>{ history.push("/product/cart")}} >Volver</Button>
+
 
 export default FormPayment;
