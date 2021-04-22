@@ -3,10 +3,10 @@ const { User } = require("../db.js");
 const passport = require("passport");
 const jwt = require("jsonwebtoken");
 const { OAuth2Client } = require("google-auth-library");
-const { SECRET_KEY } = process.env;
+const { SECRET_KEY, GOOGLE_CONSUMER_KEY } = process.env;
 
 const client = new OAuth2Client(
-  "926134963488-27qle0uk3423ed3dt2jlkd20rtht66g6.apps.googleusercontent.com"
+  GOOGLE_CONSUMER_KEY
 );
 
 server.get("/me", async (req, res, next) => {
@@ -34,15 +34,15 @@ server.post("/login", function (req, res, next) {
 });
 
 server.post("/google/login", async (req, res) => {
-  // const { tokenId } = req.body;
+  const { tokenId } = req.body;
   (console.log(req.user))
   try {
     const response = await client.verifyIdToken({
       idToken: tokenId,
       audience:
-        "926134963488-27qle0uk3423ed3dt2jlkd20rtht66g6.apps.googleusercontent.com",
+      GOOGLE_CONSUMER_KEY,
     });
-    console.log(response)
+    // console.log(response)
     const {
       email_verified,
       sub,
@@ -58,49 +58,35 @@ server.post("/google/login", async (req, res) => {
         },
       });
       if (find) {
+        
         if (!find.firstName) await find.update({ firstName: given_name });
         if (!find.lastName) await find.update({ lastName: family_name });
         if (!find.googleId) await find.update({ googleId: sub });
         if (!find.photoURL) await find.update({ photoURL: picture });
-        console.log(find.toJSON());
-        res.json(find);
+        const token = jwt.sign(find.toJSON(), SECRET_KEY)
+        
+        res.json(token);
       } else {
         
-        const newUser = User.Create({
+        const newUser = await User.create({
           firstName: given_name,
           lastName: family_name,
           email: email,
+          password: "Henry@12#$",
           googleId: sub,
           photoURL: picture
         });
-        res.json(newUser)
+        const token = jwt.sign(newUser.toJSON(), SECRET_KEY)
+        res.json(token)
       }
     } else {
       res.status(401).json({message: "email no verificado"})
     }
   } catch (e) {
-    console.log(e);
+   res.status(401).json({message: 'no fue autorizado'})
   }
 });
 
-// server.get(
-//   "/google",
 
-//   passport.authenticate("google", { scope: ["profile", "email"] })
-// );
-
-// server.get(
-//   "/google/callback",
-//   passport.authenticate("google", {
-//     failureRedirect: "http://localhost:3000/user/login",
-//     session: false,
-//   }),
-//   function (req, res) {
-//     console.log(req.user);
-//     // res.json(req.user)
-//     res.redirect("http://localhost:3001/auth/me");
-//     // res.json(req.user)
-//   }
-// );
 
 module.exports = server;

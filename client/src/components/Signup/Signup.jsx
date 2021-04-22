@@ -18,24 +18,36 @@ import { useHistory } from "react-router";
 import { totalPrice, userLogged } from "../../redux/cartReducer/cartActions";
 import { modifyCart } from "../../redux/iconReducer/iconActions";
 import axios from "axios";
-import { GoogleLogin } from 'react-google-login';
-
-
-
-
+import { GoogleLogin } from "react-google-login";
 
 export default function Signup() {
-  
   const dispatch = useDispatch();
   const history = useHistory();
   const log = useSelector((state) => state.loginReducer);
   const post = useSelector((state) => state.postUserReducer);
- //social
+  //social
 
- const responseGoogle = (response) => {
-  console.log(response);
-  dispatch(GLogin(response))
-}
+  const responseSuccessGoogle = (response) => {
+    try {
+      dispatch(GLogin(response));
+    } catch (e) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "No voy a mentirte marge, tus datos estan mal",
+        confirmButtonColor: "#378a19",
+      });
+    }
+  };
+
+  const responseRejectGoogle = (response) => {
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "No voy a mentirte marge, tus datos estan mal",
+      confirmButtonColor: "#378a19",
+    });
+  };
   //Session iniciada D:
   const productCart = useSelector((state) => state.cartReducer.cart);
   const [input, setInput] = useState({
@@ -142,16 +154,12 @@ export default function Signup() {
     }
     if (!user.confirmPassword) {
       errors.confirmPassword = "Contrseña es requerida";
-    } else if (
-      user.password !== user.confirmPassword
-    ) {
+    } else if (user.password !== user.confirmPassword) {
       errors.confirmPassword = "Las contraseñas no coinciden";
     }
-    
+
     return errors;
   }
-
-
 
   const signUpButton = () => {
     setShow("right-panel-active");
@@ -184,7 +192,6 @@ export default function Signup() {
       !errorsCreate.confirmPassword
     ) {
       if (user.password === user.confirmPassword) dispatch(postUser(user));
-     ;
     }
   };
 
@@ -194,7 +201,7 @@ export default function Signup() {
         title: "Listo, El usuario ha sido creado",
         confirmButtonColor: "#378a19",
       });
-      
+
       dispatch(PostSuccess());
       setUser({
         firstName: "",
@@ -217,12 +224,10 @@ export default function Signup() {
       dispatch(SwalBooC());
     }
   }, [post.errorMail]);
- 
 
-    const googleClick = async() => {
-// dispatch(GoogleLogin())
-    }
-  
+  const googleClick = async () => {
+    // dispatch(GoogleLogin())
+  };
 
   return (
     <div className="Signup">
@@ -237,16 +242,13 @@ export default function Signup() {
                     <FaFacebookF />
                   </i>
                 </a>
-                <a
-                  // href={}
-                  // onClick={googleClick}
-                  className="social"
-                >
-                  <i className="fab fa-google-plus-g">
-                    {" "}
-                    <FaGoogle />
-                  </i>
-                </a>
+                <GoogleLogin
+                  clientId="926134963488-27qle0uk3423ed3dt2jlkd20rtht66g6.apps.googleusercontent.com"
+                  buttonText="Login"
+                  onSuccess={responseSuccessGoogle}
+                  onFailure={responseRejectGoogle}
+                  cookiePolicy={"single_host_origin"}
+                />
                 {/* <a href="#" className="social">
                   <i className="fab fa-linkedin-in">
                     <FaLinkedinIn />
@@ -280,7 +282,9 @@ export default function Signup() {
                 onChange={userChange}
                 className={`${errorsCreate.email && "danger"}`}
               />
-              {errorsCreate.email && <p className="danger">{errorsCreate.email}</p>}
+              {errorsCreate.email && (
+                <p className="danger">{errorsCreate.email}</p>
+              )}
               <input
                 type="password"
                 name="password"
@@ -289,7 +293,9 @@ export default function Signup() {
                 onChange={userChange}
                 className={`${errorsCreate.password && "danger"}`}
               />
-              {errorsCreate.password && <p className="danger">{errorsCreate.password}</p>}
+              {errorsCreate.password && (
+                <p className="danger">{errorsCreate.password}</p>
+              )}
               <input
                 type="password"
                 name="confirmPassword"
@@ -298,10 +304,10 @@ export default function Signup() {
                 onChange={userChange}
                 className={`${errorsCreate.confirmPassword && "danger"}`}
               />
-              {errorsCreate.confirmPassword && <p className="danger">{errorsCreate.confirmPassword}</p>}
+              {errorsCreate.confirmPassword && (
+                <p className="danger">{errorsCreate.confirmPassword}</p>
+              )}
               <button type="submit">Registrarse</button>
-            
-      
             </form>
           </div>
           <div className="form-container sign-in-container">
@@ -314,12 +320,12 @@ export default function Signup() {
                   </i>
                 </a>
                 <GoogleLogin
-    clientId="926134963488-27qle0uk3423ed3dt2jlkd20rtht66g6.apps.googleusercontent.com"
-    buttonText="Login"
-    onSuccess={responseGoogle}
-    onFailure={responseGoogle}
-    cookiePolicy={'single_host_origin'}
-  />
+                  clientId="926134963488-27qle0uk3423ed3dt2jlkd20rtht66g6.apps.googleusercontent.com"
+                  buttonText="Login"
+                  onSuccess={responseSuccessGoogle}
+                  onFailure={responseRejectGoogle}
+                  cookiePolicy={"single_host_origin"}
+                />
                 {/* <a href="#" className="social">
                   <i className="fab fa-linkedin-in">
                     <FaLinkedinIn />
@@ -347,7 +353,7 @@ export default function Signup() {
               />
               {errors.password && <p className="danger">{errors.password}</p>}
               <a href="#">olvidaste tu clave?</a>
-     
+
               <button type="submit">INICIA SESION</button>
             </form>
           </div>

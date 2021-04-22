@@ -14,9 +14,7 @@ export const LoginAction = (email, password) => {
         email,
         password,
       });
-
       localStorage.setItem("token", info.data); // guardo mi token encryptado
-
       dispatch({
         type: LOGIN_ACTION_KEY,
         payload: decode(info.data),
@@ -45,14 +43,14 @@ export const SwalBoo = () => {
 export const GLogin = (response) => {
   return async function (dispatch) {
     try {
-      // const info = await axios.get("http://localhost:3001/auth/google/login", {
-      //   headers: { Authorization: `Bearer ${response.tokenId}` },
-      // });
-      const  info = await axios.post('http://localhost:3001/auth/google/login',{tokenId: response.tokenId});
-      console.log(info.data);
+      const info = await axios.post("http://localhost:3001/auth/google/login", {
+        tokenId: response.tokenId,
+      });
+      localStorage.setItem("token", info.data);
+
       dispatch({
-        type: LOG_GOOGLE,
-        payload: info.data,
+        type: LOGIN_ACTION_KEY,
+        payload: decode(info.data),
       });
     } catch (e) {
       dispatch({
