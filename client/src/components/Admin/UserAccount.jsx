@@ -12,6 +12,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
 import { ModPass } from "../../redux/AdminReducer/AdminActions";
+import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -20,6 +21,9 @@ const useStyles = makeStyles((theme) => ({
   },
   selectEmpty: {
     marginTop: theme.spacing(2),
+  },
+  iconControl: {
+    margin: theme.spacing(3),
   },
 }));
 
@@ -43,9 +47,18 @@ const UserAccount = ({ user }) => {
     activeToggle = state ? "active" : "inactive";
   }
 
-  const handleChange = (e) => {
-    setType(e.target.value);
+  const handleTypes = (e) => {
+    setType({...type, name: e.target.value})
   };
+
+  const handleChange = (e) => {
+    
+  }
+
+  const typeSubmit = (e) => {
+    e.preventDefault()
+    dispatch(ModPass(type))
+  }
   // function sortName(){
   //     let [newOrdersDetails, newSort] = sortByName(ordersDetails, sort)
   //     setSort(newSort)
@@ -114,27 +127,35 @@ const UserAccount = ({ user }) => {
                 <Button
                   variant="contained"
                   cursor="pointer"
-                  onClick={dispatch(ModPass(user.id, user.type))}
+                  onClick={() => dispatch(ModPass(type))}
                 >
                   Modificar contraseña
                 </Button>
               </div>
-              <FormControl className={classes.formControl}>
+              <FormControl className={classes.formControl} onSubmit={typeSubmit}>
                 <InputLabel id="demo-simple-select-label">
                   Tipo de usuario
                 </InputLabel>
                 <Select
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
-                  value={user.type}
-                  onChange={handleChange}
+                  value={type.name}
+                  onChange={handleTypes}
                   inputProps={{
                     name: "ModType",
                   }}
                 >
-                  <MenuItem value={"admin"}>Admin</MenuItem>
-                  <MenuItem value={"user"}>Usuario</MenuItem>
+                  <MenuItem name="type" value={"admin"}>
+                    Admin
+                  </MenuItem>
+                  <MenuItem name="type" value={"user"}>
+                    Usuario
+                  </MenuItem>
                 </Select>
+                <CheckCircleIcon
+                type="submit"
+                className={classes.iconControl}                
+              ></CheckCircleIcon>
               </FormControl>
               <FormControl className={classes.formControl}>
                 <InputLabel id="demo-simple-select-label">Estado</InputLabel>
@@ -149,6 +170,10 @@ const UserAccount = ({ user }) => {
                   <MenuItem value={"banned"}>Suspendido</MenuItem>
                 </Select>
               </FormControl>
+              {/* <CheckCircleIcon
+                className={classes.iconControl}
+                onSubmit={console.log("asd")}
+              ></CheckCircleIcon> */}
             </div>
           </div>
         </div>
