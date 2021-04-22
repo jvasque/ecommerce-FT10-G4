@@ -17,10 +17,7 @@ const useStyles = makeStyles({
     borderColor: "green",
     fontWeight: 525,
   },
-  buttns : {
-    border: "none",
-    color: "green"
-  }
+
  
 
 })
@@ -46,6 +43,7 @@ const FormPayment = () => {
     lastName: "",
     address: "",
     phoneNumber: 0,
+    email:""
   });
   const [url, setUrl] = useState("");
   const id = JSON.parse(localStorage.getItem("user"));
@@ -64,12 +62,13 @@ const FormPayment = () => {
     if (
       input.firstName.length === 0 ||
       input.lastName.length === 0 ||
-      input.address.length === 0
+      input.address.length === 0 
     ) {
-      return swal("Aviso!", "Todos los datos son obligatorios", "warning");
-    
+     return swal("Aviso!", "Todos los datos son obligatorios", "warning");
     }
-    console.log(input);
+    if(!input.email.includes("@")){
+      return swal("Aviso!", "Ingrese un Email valido", "warning");
+    }
     await axios.put(`http://localhost:3001/order/orders/${id}`, {
       firstName: input.firstName,
       lastName: input.lastName,
