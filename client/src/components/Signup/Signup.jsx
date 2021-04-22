@@ -121,7 +121,7 @@ export default function Signup() {
         const data = await axios.get(
           `http://localhost:3001/cart/${userId}/cart`
         );
-        const products = await axios.get("http://localhost:3001/products");        
+        //const products = await axios.get("http://localhost:3001/products");        
         const productsId = data.data.map((x) => x.productId)
         const reduxCart = productCart.map(x => x.id)
         const unicId = productsId.concat(reduxCart)
