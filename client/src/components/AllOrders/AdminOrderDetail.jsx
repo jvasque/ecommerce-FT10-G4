@@ -12,7 +12,7 @@ function AdminOrderDetail({product}){
                     <img src={product.product.picture} alt='product'/>
                 </div>
                 <div className='orderAdminDetailName'>
-                    <a href={`/${product.product.id}`} target="_blank">
+                    <a href={`/${product.product.id}`} target="_blank" rel="noopener noreferrer">
                         <DivText content={product.product.name} />
                     </a> 
                 </div> 
