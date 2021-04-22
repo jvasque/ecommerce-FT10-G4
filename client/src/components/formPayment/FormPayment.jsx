@@ -12,7 +12,7 @@ import {
   createMuiTheme,
   ThemeProvider,
 } from "@material-ui/core/styles";
-import Paypal from "../../components/paypal/Paypal";
+import Paypal from "../paypal/Paypal";
 
 const useStyles = makeStyles({
   root: {
@@ -77,9 +77,7 @@ const FormPayment = () => {
       phoneNumber: input.phoneNumber,
       totalPrice: total,
     });
-    if (value === "paypal") {
-      history.push("/product/cart");
-    } else {
+    
       const urlMercadopago = await axios.post(
         "http://localhost:3001/cart/checkout",
         {
@@ -90,7 +88,7 @@ const FormPayment = () => {
 
       setUrl(urlMercadopago.data.url);
       window.location = urlMercadopago.data.url;
-    }
+    
   };
 
   // const returnToCart = (e) => {
