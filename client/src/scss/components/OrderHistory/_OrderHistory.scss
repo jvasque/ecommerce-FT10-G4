@@ -14,11 +14,11 @@
             cursor: pointer;
             &:hover{
                 color:var(--color-brand);
-            }
+            }            
             .orderId{
                 display: inline-block;
                 height: 100%;
-                width: 10%;
+                width: 5%;
             }
             .orderStatus{
                 display: inline-block;
@@ -39,11 +39,17 @@
                 display: inline-block;
                 height: 100%;
                 width: 20%;
-            }
+                
+            }            
             .orderTotal{
                 display: inline-block;
                 height: 100%;
                 width: 15%;
+            }
+            .buttons{
+                display: flex;
+                justify-content: space-around;
+                min-width: 20%;
             }
         }
         .folding-pannel {

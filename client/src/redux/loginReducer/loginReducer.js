@@ -1,4 +1,11 @@
-import { LOGIN_ACTION_KEY, LOG_FAIL, LOG_OUT, LOG_SWAL } from './loginActions';
+import {
+  LOGIN_ACTION_KEY,
+  LOGIN_FB,
+  LOG_FAIL,
+  LOG_OUT,
+  LOG_SWAL,
+  LOG_GOOGLE,
+} from './loginActions';
 import decode from 'jwt-decode';
 
 const initialState = {
@@ -12,12 +19,12 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case LOGIN_ACTION_KEY:
-      localStorage.setItem('user', JSON.stringify(action.payload.id));
+      localStorage.setItem("user", JSON.stringify(action.payload.id));
       return {
         ...state,
         user: action.payload,
         isLogin: true,
-        isAdmin: action.payload.type.includes('admin'),
+        isAdmin: action.payload.type.includes("admin"),
         errorLogin: false,
         error: {},
       };
@@ -28,7 +35,7 @@ export default (state = initialState, action) => {
         error: action.payload,
       };
     case LOG_OUT:
-      localStorage.removeItem('token');
+      localStorage.removeItem("token");
       return {
         ...state,
         user: {},
@@ -39,6 +46,16 @@ export default (state = initialState, action) => {
       return {
         errorLogin: false,
       };
+    // case LOGIN_FB:
+    //   localStorage.setItem('user', JSON.stringify(action.payload.id));
+    //   return {
+    //     ...state,
+    //     user: action.payload,
+    //     isLogin: true,
+    //     isAdmin: action.payload.type.includes('admin'),
+    //     errorLogin: false,
+    //     error: {},
+    //   };
     default:
       return { ...state };
   }

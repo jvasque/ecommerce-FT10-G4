@@ -1,4 +1,4 @@
-const { Order } = require("../../db.js");
+const { Order, PaymentMethod } = require("../../db.js");
 
 module.exports = async (req, res) => {
   try {
@@ -11,8 +11,16 @@ module.exports = async (req, res) => {
       },
     });
 
+    let payment = await PaymentMethod.findOne({
+      where: {
+        type: 'Mercadopago'
+      }
+    }) 
+
     order.state = state;
     await order.save();
+
+    order.setPaymentMethod(payment)
 
     res.send(order);
   } catch (error) {

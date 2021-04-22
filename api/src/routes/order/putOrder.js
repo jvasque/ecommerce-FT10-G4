@@ -18,7 +18,6 @@ module.exports = async (req, res) => {
         state: "cart",
       },
     });
- 
 
     order.firstName = firstName;
     order.lastName = lastName;

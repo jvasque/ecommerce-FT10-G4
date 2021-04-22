@@ -1,26 +1,30 @@
-.swal2-styled{
-    background-color: var(--color-brand);
-  }
+.swal2-styled {
+  background-color: var(--color-brand);
+}
 
 .Signup {
   display: flex;
   justify-content: center;
   margin: 2em 0;
- 
+
   * {
     box-sizing: border-box;
   }
 
-  // body {
-  // 	// background: #f6f5f7;
-  // 	// display: flex;
-  // 	// justify-content: center;
-  // 	// align-items: center;
-  // 	// flex-direction: column;
-  // 	// font-family: 'Montserrat', sans-serif;
-  // 	// height: 100vh;
-  // 	// margin: -20px 0 50px;
-  // }
+  p.danger {
+    color: red;
+    font-size: 14px;
+    user-select: none;
+   
+    font-weight: auto;
+    line-height: 10px;
+    letter-spacing: 0.5px;
+    margin: 0px 0 0px;
+  }
+  
+  input.danger {
+    border: 2px solid red;
+  }
 
   h1 {
     user-select: none;
@@ -65,17 +69,18 @@
     letter-spacing: 1px;
     text-transform: uppercase;
     transition: transform 80ms ease-in;
+    margin: 10px 0 0 0;
   }
 
-  button:active {    
+  button:active {
     transform: scale(0.95);
   }
 
-  button:focus {    
+  button:focus {
     outline: none;
   }
 
-  button.ghost {    
+  button.ghost {
     background-color: transparent;
     border-color: #ffffff;
   }
@@ -94,8 +99,8 @@
   input {
     background-color: #eee;
     border: none;
-    padding: 12px 15px;
-    margin: 8px 0;
+    padding: 10px 15px;
+    margin: 6px 0;
     width: 100%;
   }
 
@@ -115,6 +120,32 @@
     top: 0;
     height: 100%;
     transition: all 0.6s ease-in-out;
+
+    .social-container {
+      position: absolute;
+      width: 100%;
+      text-align: center;
+      color: transparent;
+      margin: 93px 0 0 0;
+
+      .my-facebook-button-class {
+        padding: 8px 12px;
+        background-color: transparent;
+        &:hover {
+          background-color: #3b5998;
+          border: none;
+          border: solid 1px white;
+          .fa-facebook {
+            color: white;
+          }
+        }
+
+        .fa-facebook {
+          font-size: 20px;
+          color: var(--color-brand);
+        }
+      }
+    }
   }
 
   .sign-in-container {
@@ -169,11 +200,19 @@
   .container.right-panel-active .overlay-container {
     transform: translateX(-100%);
   }
-  
+
   .overlay {
     background: var(--color-brand-light);
-    background: -webkit-linear-gradient(to right, var(--color-brand), var(--color-brand-light));
-    background: linear-gradient(to right, var(--color-brand), var(--color-brand-light));
+    background: -webkit-linear-gradient(
+      to right,
+      var(--color-brand),
+      var(--color-brand-light)
+    );
+    background: linear-gradient(
+      to right,
+      var(--color-brand),
+      var(--color-brand-light)
+    );
     background-repeat: no-repeat;
     background-size: cover;
     background-position: 0 0;
@@ -223,7 +262,7 @@
   }
 
   .social-container {
-    margin: 20px 0;
+    margin: 10px 0;
   }
 
   .social-container a {

@@ -4,6 +4,67 @@
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0px 0px 3px 3px #0000001a;
+    .filterAdmin{
+        background:var(--color-brand);
+        flex-direction: row;
+        height: 50px;
+        width: 100%;
+        color: white;
+        label{
+            height: 100%;
+            margin-left: 25%; 
+            input{
+                height: 100%;
+                vertical-align: middle;
+                               
+            }
+        }       
+        
+        .created{
+            display: inline-block;
+            width: 20%;
+            height: 100%;
+        }
+        .processing{
+            display: inline-block;
+            width: 20%;
+            height: 100%;
+        }
+        .completed{
+            display: inline-block;
+            width: 20%;
+            height: 100%;
+        }
+        .cancelled{
+            display: inline-block;
+            width: 20%;
+            height: 100%;
+        }
+        .filterState{
+            display: inline-block;
+            height: 100%;
+            border: none;
+            width: 5%;
+            padding: 0;
+            vertical-align: top;
+            &:hover{
+                background: var(--color-dark);
+                color: white;
+            }
+        }
+        .modifyState{
+            display: inline-block;
+            background: var(--color-sun-85);
+            height: 100%;
+            border: none;
+            width: 15%;
+            padding: 0;
+            vertical-align: top;
+            &:hover{
+                background: var(--color-sun );
+            }
+        }
+    }
     .containerAdminOrder{
         width: 100%;
         animation: 1s ease-out 0s 1 slideInFromLeft;

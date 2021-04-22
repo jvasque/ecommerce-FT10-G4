@@ -11,18 +11,18 @@ import ProductFormUpdate from "./components/product_form/product_form_update";
 import AllOrders from "./components/AllOrders/AllOrders";
 import OrderHistory from "./components/OrderHistory/OrderHistory";
 //import "./App.css";
-import Catalog from "./components/Catalog/Catalog.jsx";
-import Form from "./components/formCategories/Form";
-import "./scss/_App.scss";
-import Footer from "./components/Footer/Footer";
-import Cart from "./components/Cart/Cart";
-import Order from "./components/Order/Order";
-import Signup from "./components/Signup/Signup";
-import Admin from "./components/Admin/Admin";
-import AuthRoute from "./components/FrontAuth/AuthRoute";
-import UserScreen from "./components/UserScreen/UserScreen";
-import Newsletter from "./components/Newsletter/Newsletter";
-import Successful from "./components/Mercadopago/Successful";
+import Catalog from './components/Catalog/Catalog.jsx';
+import Form from './components/formCategories/Form';
+import './scss/_App.scss';
+import Footer from './components/Footer/Footer';
+import Cart from './components/Cart/Cart';
+import Order from './components/Order/Order';
+import Signup from './components/Signup/Signup';
+import ManageAccount from './components/Admin/ManageAccount';
+import AuthRoute from './components/FrontAuth/AuthRoute';
+import UserScreen from './components/UserScreen/UserScreen';
+import Newsletter from './components/Newsletter/Newsletter';
+import Successful from './components/Mercadopago/Successful';
 
 function App() {
   return (
@@ -60,7 +60,7 @@ function App() {
           <Route exact path="/user/orders" component={OrderHistory} />
           <Route exact path="/user/cart/order" component={Order} />
           <Route exact path="/user/info" component={UserScreen} />
-          <Route exact path="/user/admin" component={Admin} />
+          <Route exact path="/user/admin" component={ManageAccount} />
           <Route exact path="/user/newsletter" component={Newsletter} />
         </AuthRoute>
       </Switch>
