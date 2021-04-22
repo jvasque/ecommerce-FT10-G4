@@ -8,6 +8,7 @@ const {
 
 module.exports = async (req, res, next) => {
   const token = req.user;
+  console.log(token)
   try {
     if (token.type === "admin" || token.type === "superadmin") {
       let data = await User.findAll({

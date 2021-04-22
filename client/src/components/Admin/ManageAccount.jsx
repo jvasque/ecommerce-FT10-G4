@@ -1,9 +1,11 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { GetUsers } from "../../redux/AdminReducer/AdminActions";
 import PastOrder from "../OrderHistory/PastOrder";
 import DivText from "../ProductCard/DivText";
 import UserAccount from "./UserAccount";
+
 
 // config general
 // const token =localStorage.getItem("token")
@@ -19,6 +21,7 @@ import UserAccount from "./UserAccount";
 
 const ManageAccount = () => {
   const [users, setUsers] = useState([]);
+  const allUser = useSelector(state => state.AdminReducer);
 
   const dispatch = useDispatch();
   async function getUsers() {
@@ -28,19 +31,21 @@ const ManageAccount = () => {
     });
     setUsers(info.data);
   }
-
+    // llamar estado de redux y ejecutar y setear los comps
   useEffect(() => {
     getUsers();
   }, []);
-//crear filtros
+
+  
+  //crear filtros
   const handleUsers = () => {
-    console.log(users);
+    dispatch(GetUsers());
   };
   return (
         <div className='containerOrderHistory'>
             <div className='containerFilterOrder'>
-                <div className='registerFilter' onClick={()=>console.log('ID')}><DivText content='ID'/></div>
-                <div className='stateFilter' onClick={()=>console.log('NOMBRE')}><DivText content='Nombre'/></div>
+                <div className='registerFilter' onClick={handleUsers}><DivText content='ID'/></div>
+                <div className='stateFilter' onClick={()=>console.log(allUser)}><DivText content='Nombre'/></div>
                 <div className='creationFilter' onClick={()=>console.log('name')}><DivText content='Apellido'/></div>
                 <div className='updateFilter' onClick={()=>console.log('Mail')}><DivText content='Mail'/></div>
                 <div className='paymentFilter' onClick={()=>console.log('name')}><DivText content='Tipo'/></div>

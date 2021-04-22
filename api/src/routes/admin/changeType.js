@@ -11,12 +11,9 @@ module.exports = async (req, res, next) => {
             where:{
                 id: code
             }
-        })
-       
-        if (user.dataValues){
-           
-            await user.update({type: change});
-            
+        })      
+        if (user.dataValues){           
+            await user.update({type: change});            
             res.status(200);
             return res.json(user);
         }

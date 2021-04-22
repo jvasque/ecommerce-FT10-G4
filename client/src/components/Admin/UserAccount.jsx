@@ -1,20 +1,41 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 // import OrderDetail from './OrderDetail'
 // import { sortByName, sortByQuantity, sortByPrice, sortByCost } from './FilterOrderDetail'
 import DivText from "../ProductCard/DivText";
 import "../../scss/components/OrderHistory/_OrderHistory.scss";
 import "../../scss/components/OrderHistory/_FilterOrderDetail.scss";
 import { Select, Button } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import InputLabel from "@material-ui/core/InputLabel";
+import MenuItem from "@material-ui/core/MenuItem";
+import FormHelperText from "@material-ui/core/FormHelperText";
+import FormControl from "@material-ui/core/FormControl";
+import { ModPass } from "../../redux/AdminReducer/AdminActions";
+
+const useStyles = makeStyles((theme) => ({
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
+  },
+}));
 
 const UserAccount = ({ user }) => {
+  const dispatch = useDispatch();
+  const classes = useStyles();
   const [state, setState] = useState(false);
-  // const [ordersDetails, setOrdersDetails] = useState(order.orderDetails)
+  const [type, setType] = useState({ id: user.id, name: user.type });
+
   const [sort, setSort] = useState({
     name: false,
     quantity: false,
     price: false,
     cost: false,
   });
+
   let activeToggle = state ? "active" : "inactive";
 
   function toggle() {
@@ -22,6 +43,9 @@ const UserAccount = ({ user }) => {
     activeToggle = state ? "active" : "inactive";
   }
 
+  const handleChange = (e) => {
+    setType(e.target.value);
+  };
   // function sortName(){
   //     let [newOrdersDetails, newSort] = sortByName(ordersDetails, sort)
   //     setSort(newSort)
@@ -45,19 +69,14 @@ const UserAccount = ({ user }) => {
   //     setSort(newSort)
   //     setOrdersDetails(newOrdersDetails)
   // }
-  console.log(user);
   if (!!user) {
     return (
       <div className="containerOrder">
         <div className={activeToggle}>
           <div className="order" onClick={toggle}>
             <div className="orderId">
-              <Button className="delete" variant="outlined" color="secondary">
-                X
-              </Button>
               <DivText content={user.id} />
             </div>
-
             <div className="orderStatus">
               <DivText content={user.firstName} />
             </div>
@@ -66,17 +85,9 @@ const UserAccount = ({ user }) => {
             </div>
             <div className="orderUpdatedAt">
               <DivText content={user.email} />
-              <Button variant="contained">Modificar</Button>
             </div>
             <div className="orderPayment">
               <DivText content={user.type} />
-            </div>
-            <div>           
-            <Select className="selType">
-                <option>Amin</option>
-                <option>User</option>
-                <option>Banned</option>
-              </Select>
             </div>
             <div className="orderTotal">
               <DivText content={user.status} />
@@ -97,7 +108,49 @@ const UserAccount = ({ user }) => {
                                     </div>
                         })
                     }    */}
-          {/* <div className='order' onClick={toggle}><DivText content={user.id}/></div>  */}
+          <div className="order" onClick={toggle}>
+            <div className="buttons">
+              <div className="buttons">
+                <Button
+                  variant="contained"
+                  cursor="pointer"
+                  onClick={dispatch(ModPass(user.id, user.type))}
+                >
+                  Modificar contraseña
+                </Button>
+              </div>
+              <FormControl className={classes.formControl}>
+                <InputLabel id="demo-simple-select-label">
+                  Tipo de usuario
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={user.type}
+                  onChange={handleChange}
+                  inputProps={{
+                    name: "ModType",
+                  }}
+                >
+                  <MenuItem value={"admin"}>Admin</MenuItem>
+                  <MenuItem value={"user"}>Usuario</MenuItem>
+                </Select>
+              </FormControl>
+              <FormControl className={classes.formControl}>
+                <InputLabel id="demo-simple-select-label">Estado</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={user.status}
+                  onChange={handleChange}
+                >
+                  <MenuItem value={"active"}>Activo</MenuItem>
+                  <MenuItem value={"disabled"}>Desactivado</MenuItem>
+                  <MenuItem value={"banned"}>Suspendido</MenuItem>
+                </Select>
+              </FormControl>
+            </div>
+          </div>
         </div>
       </div>
     );
