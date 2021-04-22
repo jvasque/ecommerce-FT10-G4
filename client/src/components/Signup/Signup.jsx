@@ -12,11 +12,13 @@ import {
   LoginAction,
   LogOut,
   SwalBoo,
+  postFbUser,
 } from '../../redux/loginReducer/loginActions';
 import { useHistory } from 'react-router';
 import { addProduct, emptyCart, emptyDb, totalPrice, userLogged } from '../../redux/cartReducer/cartActions';
 import { modifyCart } from '../../redux/iconReducer/iconActions';
 import axios from 'axios';
+import FacebookLogin from 'react-facebook-login';
 
 
 const Signup = () => {
@@ -29,6 +31,22 @@ const Signup = () => {
   const productCart = useSelector((state) => state.cartReducer.cart);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+
+  const responseFacebook = (response) => {
+    console.log(response);
+    if (!response.status) {
+      dispatch(
+        postFbUser({
+          firstName: response.first_name,
+          lastName: response.last_name,
+          email: response.email,
+          facebookUser: response.id,
+        })
+      );
+    } else {
+      alert('No se pudo loguear a Facebook');
+    }
+  };
 
   const sessionChange = (e) => {
     return e.target.name === 'uname'
@@ -215,9 +233,25 @@ const Signup = () => {
               <button type="submit">Registrarse</button>
             </form>
           </div>
+
           <div className="form-container sign-in-container">
+            <div className="social-container">
+              <FacebookLogin
+                // appId="381446742973563"
+                appId="311325910426887"
+                autoLoad={false}
+                fields="name,email,picture,first_name,last_name"
+                textButton=""
+                // onClick={componentClicked}
+                cssClass="my-facebook-button-class"
+                icon="fa-facebook"
+                callback={responseFacebook}
+              />
+            </div>
+
             <form action="#" onSubmit={sessionSubmit}>
               <h1>Inicia Sesion</h1>
+
               {/* <div className="social-container">
                 <a href="#" className="social">
                   <i className="fab fa-facebook-f">
