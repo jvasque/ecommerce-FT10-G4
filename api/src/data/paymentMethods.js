@@ -14,4 +14,7 @@ module.exports = [
     {
         type: 'Tarjeta de Debito',
     },
+    {
+        type: 'Mercadopago',
+    },
 ]

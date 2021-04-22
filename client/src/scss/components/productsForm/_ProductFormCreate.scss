@@ -28,6 +28,14 @@ body {
       margin: 4vh auto;
     }
   }
+  .input {
+    width: 90%;
+    height: 30px;
+    &:focus {
+      background-color: var(--color-sun);
+      box-shadow: 2px 2px 2px orange;
+    }
+  }
 }
 .input_file {
   position: relative;
@@ -89,10 +97,10 @@ body {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-between;
-  border: 1px solid rgba(0, 0, 0, 0.404);
+  /* border: 1px solid rgba(0, 0, 0, 0.404); */
   width: 90%;
   height: 200px;
-  background-color: rgba(255, 235, 205, 0.295);
+  border-radius: 5px;
   position: relative;
 
   .img-card-pic-interno {
@@ -119,8 +127,15 @@ body {
     position: absolute;
     bottom: 0;
     background-color: var(--color-brand-light);
+
     width: 100%;
-    height: 4px;
+    height: 3px;
+  }
+  .circular {
+    position: absolute;
+
+    bottom: 100px;
+    left: 390px;
   }
 }
 

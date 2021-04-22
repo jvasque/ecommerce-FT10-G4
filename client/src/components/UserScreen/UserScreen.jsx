@@ -31,7 +31,7 @@ export function UserScreen() {
       dispatch(emptyCart());
       dispatch(reset());
       alert('Se cerró sesión');
-      localStorage.setItem('user', 0);
+     localStorage.removeItem("user")
     }
   };
 

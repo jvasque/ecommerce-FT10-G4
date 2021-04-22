@@ -13,7 +13,7 @@ server.get('/me', async (req, res, next) => {
     } else res.sendStatus(401);
   } catch (error) {
     next(error);
-  }
+  } 
 });
 
 server.post('/login', function (req, res, next) {

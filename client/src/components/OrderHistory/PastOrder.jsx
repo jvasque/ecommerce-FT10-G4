@@ -44,6 +44,13 @@ function PastOrder({order}){
         setSort(newSort)
         setOrdersDetails(newOrdersDetails)
     }
+
+    function toSpanish(estado){
+        if(estado === 'çreated'){return 'Creada'}
+        if(estado === 'processing'){return 'Procesando'}
+        if(estado === 'completed'){return 'Completada'}
+        if(estado === 'cancelled'){return 'Cancelada'}
+    }
         
     if(!!order){
         return (
@@ -54,7 +61,7 @@ function PastOrder({order}){
                             <DivText content={order.id}/>
                         </div>
                         <div className='orderStatus'>
-                            <DivText content={order.state}/>
+                            <DivText content={toSpanish(order.state)}/>
                         </div>
                         <div className='orderCreatedAt'>
                             <DivText content={order.createdAt.substring(0,19).split('T').join(' ')}/>
@@ -66,7 +73,7 @@ function PastOrder({order}){
                             <DivText content={order.paymentMethod.type}/>
                         </div>
                         <div className='orderTotal'>
-                            <DivText content={order.totalPrice}/>
+                            <DivText content={`USD$${order.totalPrice}`}/>
                         </div>
                     </div>
                     <div className="folding-pannel filter">
