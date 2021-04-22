@@ -58,7 +58,7 @@ function App() {
           <Route exact path="/user/cart/order" component={Order} />
           <Route exact path="/user/info" component={UserScreen} />
           <Route exact path="/user/admin" component={Admin} />
-          <Route exact path="/user/newsletter" component={Newsletter} />
+          {/* <Route exact path="/user/newsletter" component={Newsletter} /> */}
         </AuthRoute>
       </Switch>
       <Route path="/" component={Footer} />

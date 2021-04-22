@@ -6,7 +6,7 @@ const server = require("express").Router();
 
 const enviarEmail = require('./../../handlers/email');
 
-//Inicia el proceso de suscripción, por el momento no maneja token
+//Inicia el proceso de suscripción del usuario guest, por el momento no maneja token
 server.post('/email', async (req, res, next) => {
 
     try 
@@ -30,7 +30,7 @@ server.post('/email', async (req, res, next) => {
         });  
         
         if (created)
-        {
+        {            
             const url = `http://localhost:3001/newsLetter/suscripcion?id=${newsLetter.id}&boletinesInformativos=${boletinesInformativos}&promociones=${promociones}&nuevosLanzamientos=${nuevosLanzamientos}`;
             //const urlBaja = `http://localhost:3001/newsLetter/desuscribir?id=${newsLetter.id}&boletinesInformativos=true&promociones=false&nuevosLanzamientos=false`;
 
@@ -40,7 +40,7 @@ server.post('/email', async (req, res, next) => {
                 name,
                 subject: 'Suscripción Agro Place',
                 url,
-                archivo: 'layout-suscription' // aqui va la plantilla               
+                archivo: 'layoutEmail1' // aqui va la plantilla               
 
             });
 
@@ -97,19 +97,23 @@ server.get('/suscripcion', async (req, res, next) => {
                 }
             });
 
-            const html = `
-                            <html>
-                                <head>
-                                    <title>Suscription</title>
-                                </head>
-                                <body>
-                                <h3>${newsLetter.name} Usted está suscrito a nuestros boletines </h3>
-                                <a href="http://localhost:3000"> para terminar haga click aquí </a>
-                                </body>
-                            </html>
-                        `;
+            //    
 
-            res.send(html);
+            const html = "layoutPagActivation";
+            
+            // `
+            //                 <html>
+            //                     <head>
+            //                         <title>Suscription</title>
+            //                     </head>
+            //                     <body>
+            //                     <h3>${newsLetter.name} Usted está suscrito a nuestros boletines </h3>
+            //                     <a href="http://localhost:3000"> para terminar haga click aquí </a>
+            //                     </body>
+            //                 </html>
+            //             `;
+
+            res.sendFile(html);
         }
         else
         {
@@ -163,7 +167,6 @@ server.get('/desuscribir', async (req, res, next) => {
 
         if (newsLetter !== null)
         {
-            console.log("Que pasa pues?", boletinesInformativos, promociones, nuevosLanzamientos);
 
             if ((boletinesInformativos === "false" && promociones === "false" && nuevosLanzamientos === "false") || 
                 (boletinesInformativos === false && promociones === false && nuevosLanzamientos === false))
@@ -185,7 +188,7 @@ server.get('/desuscribir', async (req, res, next) => {
                                         <title>Desuscripción total</title>
                                     </head>
                                     <body>
-                                    <h3>${newsLetter.name} Usted se desuscribio de nustros boletines, ya no recibiras correos</h3>
+                                    <h3>${newsLetter.name} Usted se desuscribio de nustros boletines</h3>
                                     <a href="http://localhost:3000/home"> Vuela a nuestra Agro Place </a>
                                     </body>
                                 </html>

@@ -67,6 +67,7 @@ const Home = () => {
           </section>
         </div>
       </div>
+      <Newsletter/>
     </div>
   );
 };

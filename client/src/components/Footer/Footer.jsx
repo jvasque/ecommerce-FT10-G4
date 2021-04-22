@@ -7,6 +7,7 @@ import {
   FaInstagram,
 } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import NewsletterFooter from '../Newsletter/NewsletterFooter'
 
 const Footer = () => {
   return (
@@ -34,6 +35,9 @@ const Footer = () => {
               </li>
               <li>
                 <Link to="/">Politica de Privacidad</Link>
+              </li>
+              <li> Newsletter
+                <NewsletterFooter />
               </li>
             </ul>
           </div>
