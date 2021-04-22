@@ -76,6 +76,7 @@ const ProductDetails = (props) => {
     [`Fav-${productDetail.id}`]: iconState.fav[`Fav-${productDetail.id}}`],
     [`Cart-${productDetail.id}}`]: iconState.cart[`Cart-${productDetail.id}}`],
   });
+
   const [logged, setLogged] = useState("");
   const [hasBuy, setHasBuy] = useState([]);
   const [productScore, setProductScore] = useState(0);
@@ -96,7 +97,7 @@ const ProductDetails = (props) => {
     );
   };
 
-  const Cart = (productId, state, handleHeart) => {
+  const Cart = (productId, handleHeart) => {
     return (
       <FormControlLabel
         control={
@@ -156,8 +157,8 @@ const ProductDetails = (props) => {
       setHasBuy(userHasBuy.data?.map((e) => e.order.userId)); //Saco los ID de los usuarios que tienen una Order Detail con el produco
       setProductScore(resProductScore.data);
     })();
-    
     setLogged(loggin);
+
     dispatch(getDetail(parseInt(productId)));
   }, [productId, dispatch, pagination]);
 

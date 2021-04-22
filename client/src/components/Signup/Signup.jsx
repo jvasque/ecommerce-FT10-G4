@@ -12,22 +12,41 @@ import {
   LoginAction,
   LogOut,
   SwalBoo,
+  postFbUser,
 } from '../../redux/loginReducer/loginActions';
 import { useHistory } from 'react-router';
-import { totalPrice, userLogged } from '../../redux/cartReducer/cartActions';
+import { addProduct, emptyCart, emptyDb, totalPrice, userLogged } from '../../redux/cartReducer/cartActions';
 import { modifyCart } from '../../redux/iconReducer/iconActions';
 import axios from 'axios';
+import FacebookLogin from 'react-facebook-login';
+
 
 const Signup = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const log = useSelector((state) => state.loginReducer);
   const post = useSelector((state) => state.postUserReducer);
-
+  const products = useSelector(state => state.catalogReducer.products)
   //Session iniciada D:
   const productCart = useSelector((state) => state.cartReducer.cart);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+
+  const responseFacebook = (response) => {
+    console.log(response);
+    if (!response.status) {
+      dispatch(
+        postFbUser({
+          firstName: response.first_name,
+          lastName: response.last_name,
+          email: response.email,
+          facebookUser: response.id,
+        })
+      );
+    } else {
+      alert('No se pudo loguear a Facebook');
+    }
+  };
 
   const sessionChange = (e) => {
     return e.target.name === 'uname'
@@ -52,19 +71,25 @@ const Signup = () => {
           pathname: '/',
         });
         dispatch(totalPrice());
-
+     
         const data = await axios.get(
           `http://localhost:3001/cart/${userId}/cart`
         );
-        const products = await axios.get('http://localhost:3001/products');
-        const productsId = data.data.map((x) => x.productId);
-        const cartSaved = products.data.filter((x) =>
-          productsId.includes(x.id)
+        const productsId = data.data.map((x) => x.productId)
+        const reduxCart = productCart.map(x => x.id)
+        const unicId = productsId.concat(reduxCart)
+        let unic = [...new Set(unicId)]
+        const cartSaved = products.filter((x) =>
+          unic.includes(x.id)
         );
-        dispatch(userLogged(cartSaved));
-
+         
+        dispatch(emptyCart())
+        
         for (let i = 0; i < cartSaved.length; i++) {
           dispatch(modifyCart({ [`Cart-${cartSaved[i].id}`]: true }));
+          dispatch(addProduct(cartSaved[i]))
+
+         
         }
       }
     }
@@ -208,9 +233,25 @@ const Signup = () => {
               <button type="submit">Registrarse</button>
             </form>
           </div>
+
           <div className="form-container sign-in-container">
+            <div className="social-container">
+              <FacebookLogin
+                // appId="381446742973563"
+                appId="311325910426887"
+                autoLoad={false}
+                fields="name,email,picture,first_name,last_name"
+                textButton=""
+                // onClick={componentClicked}
+                cssClass="my-facebook-button-class"
+                icon="fa-facebook"
+                callback={responseFacebook}
+              />
+            </div>
+
             <form action="#" onSubmit={sessionSubmit}>
               <h1>Inicia Sesion</h1>
+
               {/* <div className="social-container">
                 <a href="#" className="social">
                   <i className="fab fa-facebook-f">

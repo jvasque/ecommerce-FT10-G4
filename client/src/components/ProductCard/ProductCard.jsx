@@ -40,9 +40,11 @@ function ProductCard({product}){
                     </div>
                 </div>                     
                 <div className='addCartButton'>   
-                    <div className='cardIcon'>
+
+                {product.unitsOnStock !== 0 ? <div className='cardIcon'>
                         <ButtonIconText product={product} productId={product.id}/>
-                    </div>
+                    </div> : "" }
+                  
                 </div>                     
             </div>
         </div>

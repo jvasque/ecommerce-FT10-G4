@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import '../../scss/components/Cart/_ProductCart.scss';
 import ScoreIcon from '../ProductCard/ScoreIcon';
 import DeleteButton from '@material-ui/icons/Delete';

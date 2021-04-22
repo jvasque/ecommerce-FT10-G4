@@ -2,6 +2,7 @@ import axios from 'axios';
 import decode from 'jwt-decode';
 
 export const LOGIN_ACTION_KEY = 'LOGIN_ACTION_KEY';
+export const LOGIN_FB = 'LOGIN_FB';
 export const LOG_OUT = 'LOG_OUT';
 export const LOG_FAIL = 'LOG_FAIL';
 export const LOG_SWAL = 'LOG_SWAL';
@@ -41,3 +42,32 @@ export const SwalBoo = () => {
     type: LOG_SWAL,
   };
 };
+
+export function postFbUser({ firstName, lastName, email, facebookUser }) {
+  return async function (dispatch) {
+    try {
+      let json = await axios.get(
+        `http://localhost:3001/users/facebook/${facebookUser}`
+      );
+
+      dispatch({
+        type: LOGIN_ACTION_KEY,
+        payload: json.data,
+      });
+    } catch (err) {
+      // users/facebook/:id
+      console.log(err);
+
+      let json = await axios.post('http://localhost:3001/users/post', {
+        data: {
+          firstName,
+          lastName,
+          email,
+          facebookUser,
+          password: 'Default@12#$', // crear hashFunction
+        },
+      });
+      dispatch({ type: LOGIN_ACTION_KEY, payload: json.data });
+    }
+  };
+}
