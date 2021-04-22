@@ -140,6 +140,7 @@ const UserAccount = ({ user }) => {
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
                   value={type.name}
+                  // () => {if(type.name.includes('admin')){return 'admin'}else{return 'user'}}
                   onChange={handleTypes}
                   inputProps={{
                     name: "ModType",

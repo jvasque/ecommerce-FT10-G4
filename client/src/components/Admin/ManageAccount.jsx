@@ -20,7 +20,7 @@ import UserAccount from "./UserAccount";
 // )
 
 const ManageAccount = () => {
-  const [users, setUsers] = useState([]);
+  // const [users, setUsers] = useState([]);
   const allUser = useSelector(state => state.AdminReducer);
 
   const dispatch = useDispatch();
@@ -31,7 +31,7 @@ const ManageAccount = () => {
     });
     setUsers(info.data);
   }
-    // llamar estado de redux y ejecutar y setear los comps
+  // llamar estado de redux y ejecutar y setear los comps
   useEffect(() => {
     getUsers();
   }, []);
@@ -41,6 +41,7 @@ const ManageAccount = () => {
   const handleUsers = () => {
     dispatch(GetUsers());
   };
+
   return (
         <div className='containerOrderHistory'>
             <div className='containerFilterOrder'>
@@ -52,8 +53,8 @@ const ManageAccount = () => {
                 <div className='totalFilter' onClick={()=>console.log('name')}><DivText content='Estatus'/></div>
             </div>
             
-              {users.length > 0
-        ? users.map((user) => <UserAccount user={user} key={users.indexOf(user)}/>)
+              {allUser.length > 0
+        ? allUser.map((user) => <UserAccount user={user} key={allUser.indexOf(user)}/>)
         : ""}
             
         </div>
