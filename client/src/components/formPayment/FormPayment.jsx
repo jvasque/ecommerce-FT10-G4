@@ -149,6 +149,7 @@ const FormPayment = () => {
           onChange={handleChange}
           label={"Email"}
           variant="filled"
+          required
           
           style={{ marginBottom: 5 }}
         />
