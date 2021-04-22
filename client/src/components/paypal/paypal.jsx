@@ -2,6 +2,7 @@ import React, { useState, useEffect, useLayoutEffect } from "react";
 import ReactDOM from "react-dom";
 import scriptLoader from "react-async-script-loader";
 import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 let PayPalButton = null;
 const Paypal = ({ isScriptLoaded, isScriptLoadSucceed, total }) => {
 const user = useSelector(state=>state.cartReducer.cart)
@@ -10,6 +11,8 @@ const user = useSelector(state=>state.cartReducer.cart)
     loading: true,
     paid: false,
   });
+const history = useHistory()
+  
 
   useLayoutEffect(() => {
     const scriptJustLoaded = !state.showButtons && !isScriptLoaded;
@@ -50,6 +53,7 @@ const user = useSelector(state=>state.cartReducer.cart)
         payerID: data.payerID,
         orderID: data.orderID,
       };
+    history.push("/order/completada");
 
       setState({ showButtons: false, paid: true });
     });
