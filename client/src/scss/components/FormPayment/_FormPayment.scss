@@ -1,0 +1,24 @@
+.container-payment {
+  text-align: center;
+
+  h3 {
+    color: #333;
+    font-family: Proxima Nova, -apple-system, Helvetica Neue, Helvetica, Roboto,
+      Arial, sans-serif;
+    font-weight: 700;
+  }
+
+  button {
+    margin-top: 10px;
+    margin-left: 5px;
+    font-weight: 550;
+    background-color: var(--color-brand);
+
+    &:hover {
+      background-color: var(--color-brand);
+      box-shadow: 2px 2px 2px #164b03;
+      position: relative;
+      top: -3px;
+    }
+  }
+}

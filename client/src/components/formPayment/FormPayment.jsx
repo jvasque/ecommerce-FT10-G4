@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
-import { TextField } from "@material-ui/core";
+import { Button, colors, TextField } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import "../../scss/components/FormPayment/_FormPayment.scss";
 import { NavLink, useHistory } from "react-router-dom";
@@ -9,21 +9,37 @@ import swal from "sweetalert";
 import {
   FormControl,
 } from "@material-ui/core";
+import {makeStyles, createMuiTheme, ThemeProvider} from "@material-ui/core/styles"
+
+
+const useStyles = makeStyles({
+  root: {
+    borderColor: "green",
+    fontWeight: 525,
+  },
+  buttns : {
+    border: "none",
+    color: "green"
+  }
+ 
+
+})
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main:  "rgba(47, 126, 19, 1)"
+    }
+  },
+ 
+})
 
 
 const FormPayment = () => {
+  
+  const classes = useStyles()
+
   const history = useHistory();
-
-
-  // useEffect(() => {
-  //   async function getId() {
-  //     let data = await axios.get("http://localhost:3001/order/users/orders/");
-  //     setId(await data.data[0]?.id);
-  //     dispatch(saveId(await data.data[0]?.id));
-  //   }
-
-  //   getId();
-  // }, []);
 
   const [input, setInput] = useState({
     firstName: "",
@@ -35,7 +51,7 @@ const FormPayment = () => {
   const id = JSON.parse(localStorage.getItem("user"));
 
   const total = useSelector((state) => state.cartReducer.total);
-  const user = useSelector((state) => state.loginReducer.user);
+ 
   const handleChange = (e) => {
     setInput({
       ...input,
@@ -51,14 +67,16 @@ const FormPayment = () => {
       input.address.length === 0
     ) {
       return swal("Aviso!", "Todos los datos son obligatorios", "warning");
+    
     }
+    console.log(input);
     await axios.put(`http://localhost:3001/order/orders/${id}`, {
-      firstName: user.firstName,
-      lastName: user.lastName,
+      firstName: input.firstName,
+      lastName: input.lastName,
       state: "cart",
       paymentDate: "Mercadopago",
       address: input.address,
-      email: input.email || user.email,
+      email: input.email,
       phoneNumber: input.phoneNumber,
       totalPrice: total,
     });
@@ -80,44 +98,49 @@ const FormPayment = () => {
   //   dispatch(returnProductCart(user, id, total));
   //   history.push("/product/cart");
   // };
+  
 
   return (
+    <ThemeProvider theme={theme}>
     <div className="container-payment">
       <Typography variant="h5"></Typography>
-      <FormControl className="" noValidate autoComplete="off">
+      <FormControl  noValidate autoComplete="off">
         <TextField
           type="text"
           name="firstName"
+          inputProps= {{className: classes.root}}
           onChange={handleChange}
           label="Nombre"
-          variant="outlined"
-          style={{ marginBottom: 5 }}
+          variant="filled"
+          style={{ marginBottom: 5}}
           required
+         
         />
         <TextField
           type="text"
           name="lastName"
           onChange={handleChange}
           label="Apellido"
-          variant="outlined"
-          style={{ marginBottom: 5 }}
+          variant="filled"
+          style={{ marginBottom: 5, width: 500 }}
           required
         />
         <TextField
           type="number"
           name="phoneNumber"
           label="Telefono de contacto:"
-          variant="outlined"
+          variant="filled"
           onChange={handleChange}
           style={{ marginBottom: 5 }}
           required
+          
         />
         <TextField
           type="text"
           name="address"
           onChange={handleChange}
           label="Dirección de envío:"
-          variant="outlined"
+          variant="filled"
           style={{ marginBottom: 5 }}
           required
         />
@@ -125,30 +148,23 @@ const FormPayment = () => {
           type="email"
           name="email"
           onChange={handleChange}
-          label={user.email}
-          variant="outlined"
-          placeholder={user.email}
+          label={"Email"}
+          variant="filled"
+          
           style={{ marginBottom: 5 }}
         />
 
-        <Typography>Precio Total: {total}</Typography>
+        <h3 > Total: ${total}</h3>
 
-        <TextField
-          type="submit"
-          value="Pagar"
-          variant="outlined"
-          onClick={onSubmit}
-        />
+      <Button onClick={onSubmit}>Pagar</Button>
       </FormControl>
 
-      <TextField
-        type="submit"
-        value="Volver"
-        variant="outlined"
-        onClick={()=>{ history.push("/product/cart")}}
-      />
+      
+      
     </div>
+    </ThemeProvider>
   );
 };
+//<Button className="test" onClick={()=>{ history.push("/product/cart")}} >Volver</Button>
 
 export default FormPayment;

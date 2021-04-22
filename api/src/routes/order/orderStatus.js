@@ -7,7 +7,7 @@ module.exports = async (req, res) => {
     let order = await Order.findOne({
       where: {
         userId: req.params.id,
-        state: "processing",
+        state: "cart",
       },
     });
 

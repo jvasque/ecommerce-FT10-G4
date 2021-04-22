@@ -23,6 +23,7 @@ export default function Successful() {
 
      for(let i =0; i<productSaved.length; i++) {
          const stock = productSaved[i].unitsOnStock - productSaved[i].quantity
+         console.log(stock);
         await axios.put(`http://localhost:3001/products/${productSaved[i].id}`, {
             params: {
                 unitsOnStock: stock
