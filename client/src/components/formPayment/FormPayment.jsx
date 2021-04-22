@@ -12,7 +12,7 @@ import {
   createMuiTheme,
   ThemeProvider,
 } from "@material-ui/core/styles";
-import Paypal from '../../components/paypal/Paypal'
+import Paypal from "../../components/paypal/Paypal";
 
 const useStyles = makeStyles({
   root: {
@@ -45,6 +45,7 @@ const FormPayment = () => {
   const id = JSON.parse(localStorage.getItem("user"));
 
   const total = useSelector((state) => state.cartReducer.total);
+  const [showButtons, setShowButtons] = useState(false);
 
   const handleChange = (e) => {
     setInput({
@@ -65,6 +66,7 @@ const FormPayment = () => {
     if (!input.email.includes("@")) {
       return swal("Aviso!", "Ingrese un Email valido", "warning");
     }
+    setShowButtons(true);
     await axios.put(`http://localhost:3001/order/orders/${id}`, {
       firstName: input.firstName,
       lastName: input.lastName,
@@ -76,10 +78,8 @@ const FormPayment = () => {
       totalPrice: total,
     });
     if (value === "paypal") {
-
       history.push("/product/cart");
     } else {
-     
       const urlMercadopago = await axios.post(
         "http://localhost:3001/cart/checkout",
         {
@@ -156,12 +156,18 @@ const FormPayment = () => {
             Mercadopago
           </Button>
           {/* <Button onClick={(e) => onSubmit(e, "paypal")}>Paypal</Button> */}
-          <Paypal />
+        <div className='button-paypal'>
+        {input.firstName.length !== 0 &&
+            input.lastName.length !== 0 &&
+            input.email.includes("@") &&
+            input.address.length !== 0 && <Paypal total={total} />}
+
+        </div>
+          
         </FormControl>
       </div>
     </ThemeProvider>
   );
 };
-
 
 export default FormPayment;

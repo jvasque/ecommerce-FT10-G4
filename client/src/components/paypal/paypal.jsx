@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import scriptLoader from "react-async-script-loader";
 import { useSelector } from "react-redux";
 let PayPalButton = null;
-const Paypal = ({ isScriptLoaded, isScriptLoadSucceed, product , total }) => {
+const Paypal = ({ isScriptLoaded, isScriptLoadSucceed, total }) => {
 const user = useSelector(state=>state.cartReducer.cart)
   const [state, setState] = useState({
     showButtons: false,
@@ -33,10 +33,10 @@ const user = useSelector(state=>state.cartReducer.cart)
     return actions.order.create({
       purchase_units: [
         {
-          description: product,
+          description: 'Productos del Agro',
           amount: {
             currency_code: "USD",
-            value: 200,
+            value: total,
           },
         },
       ],
