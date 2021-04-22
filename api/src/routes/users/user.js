@@ -2,8 +2,6 @@ const express = require('express');
 const router = require('express').Router();
 const userGet = require('./userGet');
 const userPost = require('./userPost');
-const userDelete = require('./userDelete');
-const userLogin = require('./userLogin');
 const fbUserLogin = require('./fbUserGet');
 const userPut = require('./userPut');
 const userOrderHistory = require('./getOrderHistory');
@@ -18,11 +16,9 @@ router.use(express.json());
 
 // User routes
 router.get('/', userGet);
-router.get('/login', userLogin);
 router.get('/facebook/:id', fbUserLogin);
 router.post('/post', userPost);
 router.put('/update/:id', userPut);
-router.put('/delete/:id', userDelete);
 
 router.get('/:id/orders', userOrderHistory);
 
