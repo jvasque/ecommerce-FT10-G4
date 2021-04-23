@@ -23,6 +23,8 @@ import AuthRoute from './components/FrontAuth/AuthRoute';
 import UserScreen from './components/UserScreen/UserScreen';
 import Newsletter from './components/Newsletter/Newsletter';
 import Successful from './components/Mercadopago/Successful';
+import ResetPassword from "./components/Admin/ResetPassword";
+import EmailPassword from "./components/Admin/EmailPassword";
 
 function App() {
   return (
@@ -34,6 +36,8 @@ function App() {
         <Route exact path="/catalog" component={Catalog} />
         <Route exact path="/:id" component={ProductDetails} />
         <Route exact path="/user/login" component={Signup} />
+        <Route  exact path="/reset/password/:token" component={ResetPassword}/> 
+        <Route  exact path="/forgot/email" component={EmailPassword}/> 
         <Route exact path="/order/completada" component={Successful} />
         <AuthRoute path="/admin" type="admin">
           <Route exact path="/admin/categories" component={Form} />

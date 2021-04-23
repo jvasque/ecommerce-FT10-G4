@@ -21,6 +21,7 @@ import { modifyCart } from '../../redux/iconReducer/iconActions';
 import axios from 'axios';
 import FacebookLogin from 'react-facebook-login';
 import { GoogleLogin } from "react-google-login";
+import { Link } from "react-router-dom";
 
 
 export default function Signup() {
@@ -370,6 +371,7 @@ export default function Signup() {
                     <FaLinkedinIn />
                   </i>
                 </a> */}
+                <Link to='/forgot/email'>olvidaste tu clave?</Link>
               </div>
               <span>o usa tu cuenta</span>
               <input
@@ -391,7 +393,7 @@ export default function Signup() {
                 required
               />
               {errors.password && <p className="danger">{errors.password}</p>}
-              <a href="#">olvidaste tu clave?</a>
+             
 
               <button type="submit">INICIA SESION</button>
             </form>
