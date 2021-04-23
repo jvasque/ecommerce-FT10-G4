@@ -1,22 +1,22 @@
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
-import axios from "axios";
-import { Button, TextField } from "@material-ui/core";
-import Typography from "@material-ui/core/Typography";
-import "../../scss/components/FormPayment/_FormPayment.scss";
-import { useHistory } from "react-router-dom";
-import swal from "sweetalert";
-import { FormControl } from "@material-ui/core";
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import axios from 'axios';
+import { Button, TextField } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
+import '../../scss/components/FormPayment/_FormPayment.scss';
+import { useHistory } from 'react-router-dom';
+import swal from 'sweetalert';
+import { FormControl } from '@material-ui/core';
 import {
   makeStyles,
   createMuiTheme,
   ThemeProvider,
-} from "@material-ui/core/styles";
-import Paypal from "../Paypal/Paypal"
+} from '@material-ui/core/styles';
+import Paypal from '../Paypal/Paypal';
 
 const useStyles = makeStyles({
   root: {
-    borderColor: "green",
+    borderColor: 'green',
     fontWeight: 525,
   },
 });
@@ -24,7 +24,7 @@ const useStyles = makeStyles({
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: "rgba(47, 126, 19, 1)",
+      main: 'rgba(47, 126, 19, 1)',
     },
   },
 });
@@ -35,14 +35,14 @@ const FormPayment = () => {
   const history = useHistory();
 
   const [input, setInput] = useState({
-    firstName: "",
-    lastName: "",
-    address: "",
+    firstName: '',
+    lastName: '',
+    address: '',
     phoneNumber: 0,
-    email: "",
+    email: '',
   });
-  const [url, setUrl] = useState("");
-  const id = JSON.parse(localStorage.getItem("user"));
+  const [url, setUrl] = useState('');
+  const id = JSON.parse(localStorage.getItem('user'));
 
   const total = useSelector((state) => state.cartReducer.total);
   const [showButtons, setShowButtons] = useState(false);
@@ -61,34 +61,33 @@ const FormPayment = () => {
       input.lastName.length === 0 ||
       input.address.length === 0
     ) {
-      return swal("Aviso!", "Todos los datos son obligatorios", "warning");
+      return swal('Aviso!', 'Todos los datos son obligatorios', 'warning');
     }
-    if (!input.email.includes("@")) {
-      return swal("Aviso!", "Ingrese un Email valido", "warning");
+    if (!input.email.includes('@')) {
+      return swal('Aviso!', 'Ingrese un Email valido', 'warning');
     }
     setShowButtons(true);
     await axios.put(`http://localhost:3001/order/orders/${id}`, {
       firstName: input.firstName,
       lastName: input.lastName,
-      state: "cart",
-      paymentDate: "Mercadopago",
+      state: 'cart',
+      paymentDate: 'Mercadopago',
       address: input.address,
       email: input.email,
       phoneNumber: input.phoneNumber,
       totalPrice: total,
     });
-    
-      const urlMercadopago = await axios.post(
-        "http://localhost:3001/cart/checkout",
-        {
-          title: "Pago AgroPlace",
-          totalPrice: total,
-        }
-      );
 
-      setUrl(urlMercadopago.data.url);
-      window.location = urlMercadopago.data.url;
-    
+    const urlMercadopago = await axios.post(
+      'http://localhost:3001/cart/checkout',
+      {
+        title: 'Pago AgroPlace',
+        totalPrice: total,
+      }
+    );
+
+    setUrl(urlMercadopago.data.url);
+    window.location = urlMercadopago.data.url;
   };
 
   // const returnToCart = (e) => {
@@ -143,22 +142,20 @@ const FormPayment = () => {
             type="email"
             name="email"
             onChange={handleChange}
-            label={"Email"}
+            label={'Email'}
             variant="filled"
             style={{ marginBottom: 5 }}
           />
 
           <h3> Total: ${total}</h3>
 
-          <Button onClick={(e) => onSubmit(e, "mercadopago")}>
+          <Button onClick={(e) => onSubmit(e, 'mercadopago')}>
             Mercadopago
           </Button>
           {/* <Button onClick={(e) => onSubmit(e, "paypal")}>Paypal</Button> */}
-        <div className='button-paypal'>
-         <Paypal total={total} />
-
-        </div>
-          
+          <div className="button-paypal">
+            <Paypal total={total} />
+          </div>
         </FormControl>
       </div>
     </ThemeProvider>
