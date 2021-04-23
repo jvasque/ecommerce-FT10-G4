@@ -4,9 +4,9 @@ const { user, pass } = process.env;
 module.exports = async (req, res)=> {
     const { products } = req.body;
     const { email, firstName } = req.user
-    console.log(req.user, "USEER")
+  /*   console.log(req.user, "USEER")
     console.log(email, "USEER Email")
-    console.log(firstName, "USEER Firstname")
+    console.log(firstName, "USEER Firstname") */
    /*  console.log(products, "PRODUCTSSSSS");
     console.log(userName, "userName");
     console.log(userMail, "userMail"); */
