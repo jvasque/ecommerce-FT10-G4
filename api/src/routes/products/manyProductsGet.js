@@ -6,7 +6,6 @@ const { Product } = require('../../db.js');
 
 module.exports = async (req, res, next) => {
   let { array } = req.body;
-  console.log(req.body);
 
   try {
     let data = await Product.findAll({
@@ -14,7 +13,6 @@ module.exports = async (req, res, next) => {
         id: { [Sequelize.Op.in]: array },
       },
     });
-    console.log(data);
 
     return res.json(data);
   } catch (err) {
