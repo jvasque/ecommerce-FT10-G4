@@ -2,7 +2,8 @@ const nodemailer = require("nodemailer");
 const { user, pass } = process.env;
 
 module.exports = async (req, res)=> {
-    const { products, userName, userMail } = req.body;
+    const { products } = req.body;
+    const { email, firstName } = req.user
     console.log(products, "PRODUCTSSSSS");
     console.log(userName, "userName");
     console.log(userMail, "userMail");
@@ -10,8 +11,8 @@ module.exports = async (req, res)=> {
 
     if(!products) return res.status(500).json({error: "product missing"});
     if(!Array.isArray(products)) return res.status(500).json({error: "products should be an array"});
-    if(!userName) return res.status(500).json({error: "userName missing"});
-    if(!userMail) return res.status(500).json({error: "userMail missing"});
+    if(!firstName) return res.status(500).json({error: "userName missing"});
+    if(!email) return res.status(500).json({error: "userMail missing"});
     
     if(products.length === 1) product = `${products[0]} !`;
     if(products.length === 2) product = `${products[0]} y ${products[1]}!`;
@@ -28,7 +29,7 @@ module.exports = async (req, res)=> {
     });
 
     let htmlCreator = `
-    <h1>Hola ${userName}!, confirmamos la compra de su producto</h1>
+    <h1>Hola ${firstName}!, confirmamos la compra de su producto</h1>
     <p>Confirmación de compra de su producto ! ! !</p>
     </br>
     <b>Tu lista de productos:</b>
@@ -44,7 +45,7 @@ module.exports = async (req, res)=> {
 
     let mailOptions = {
         from: "AgroPlace <agroplaceofficial@gmail.com>",
-        to: userMail,
+        to: email,
         subject: `Has comprado ${product}`,
         html: htmlCreator
     };

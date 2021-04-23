@@ -24,7 +24,9 @@ passport.use(
         email: userEmail,
         photoURL,
         type,
+        status,
       } = user;
+      if (status === "banned") return done(null, false);
       return done(null, {
         id,
         firstName,
@@ -32,6 +34,7 @@ passport.use(
         email: userEmail,
         photoURL,
         type,
+        status,
       });
     }
   )

@@ -26,6 +26,9 @@ server.use((req, res, next) => {
   next();
 });
 
+
+
+
 server.use(passport.initialize());
 server.use(passport.session());
 

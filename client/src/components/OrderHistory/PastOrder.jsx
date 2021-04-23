@@ -46,7 +46,7 @@ function PastOrder({order}){
     }
 
     function toSpanish(estado){
-        if(estado === 'çreated'){return 'Creada'}
+        if(estado === 'created'){return 'Creada'}
         if(estado === 'processing'){return 'Procesando'}
         if(estado === 'completed'){return 'Completada'}
         if(estado === 'cancelled'){return 'Cancelada'}

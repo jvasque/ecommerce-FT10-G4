@@ -9,7 +9,7 @@ function OrderDetail({product}){
                     <img src={product.product.picture} alt='product'/>
                 </div>
                 <div className='orderDetailName'>
-                    <a href={`/${product.product.id}`} target="_blank">
+                    <a href={`/${product.product.id}`} target="_blank" rel="noopener noreferrer">
                         <DivText content={product.product.name} />
                     </a> 
                 </div> 
