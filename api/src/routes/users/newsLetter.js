@@ -34,6 +34,9 @@ server.post('/email', async (req, res, next) => {
             const url = `http://localhost:3001/newsLetter/suscripcion?id=${newsLetter.id}&boletinesInformativos=${boletinesInformativos}&promociones=${promociones}&nuevosLanzamientos=${nuevosLanzamientos}`;
             //const urlBaja = `http://localhost:3001/newsLetter/desuscribir?id=${newsLetter.id}&boletinesInformativos=true&promociones=false&nuevosLanzamientos=false`;
 
+
+            //Envía al correo la plantilla, para verificar el email y el cambio
+            // de estado de false a true en la base de datos
             await enviarEmail.enviar({
 
                 email,
@@ -97,29 +100,26 @@ server.get('/suscripcion', async (req, res, next) => {
                 }
             });
 
+            // página de confirmación e información a los boletines que se esta registrando y
+            //envia nuevamente al home de Agroplace
             return res.render(`${__dirname}/../../views/emails/layoutPagActivation.pug`, {
                 name: newsLetter.name,
-                url: "http://localhost:3000/"                
+                url: `http://localhost:3001/newsletter/primerNewsLetter?id=${id}&name=${newsLetter.name}&email=${newsLetter.email}&boletinesInformativos=${boletinesInformativos}&promociones=${promociones}&nuevosLanzamientos=${nuevosLanzamientos}`
+                       
             });
         }
         else
-        {
-            const html = `
-                            <html>
-                                <head>
-                                    <title>Error</title>
-                                </head>
-                                <body>
-                                Usuario no válido
-                                </body>
-                            </html>
-                        `;
-
-            res.send(html);
+        {   
+            //página de error         
+            return res.render(`${__dirname}/../../views/emails/layoutError.pug`, {
+                name: newsLetter.name,
+                url: "http://localhost:3000/"
+            });         
         }           
     } 
     catch (error) 
     {
+        //Página de error
         return res.render(`${__dirname}/../../views/emails/layoutError.pug`, {
             name: newsLetter.name,
             error,
@@ -130,12 +130,29 @@ server.get('/suscripcion', async (req, res, next) => {
 
 server.get('/primerNewsLetter', async (req, res, next) => {
 
+        const {
+            id,
+            name,
+            email
+        } = req.query;
+
+     await enviarEmail.enviar({
+
+         email, 
+         name,
+         subject: 'Boletin No 1 Agro Place',
+         url: "http://leonpeleador.com",
+         archivo: 'layoutEmail2' // aqui va la plantilla               
+
+     });
+
+
     res.redirect("http://localhost:3000");
 
 });
 
 server.get('/desuscribir', async (req, res, next) => {
-
+const urlBaja = `http://localhost:3001/newsLetter/desuscribir?id=${newsLetter.id}&boletinesInformativos=true&promociones=false&nuevosLanzamientos=false`;
     try 
     {
         const {
@@ -168,19 +185,14 @@ server.get('/desuscribir', async (req, res, next) => {
                     }
                 });
 
-                const html = `
-                                <html>
-                                    <head>
-                                        <title>Desuscripción total</title>
-                                    </head>
-                                    <body>
-                                    <h3>${newsLetter.name} Usted se desuscribio de nustros boletines</h3>
-                                    <a href="http://localhost:3000/home"> Vuela a nuestra Agro Place </a>
-                                    </body>
-                                </html>
-                            `;
+                //Página que informa la desuscripción a los boletines y vuelve al home AgroPlace
+                return res.render(`${__dirname}/../../views/emails/layoutPagUnsubscribe.pug`, {
+                    name: newsLetter.name,
+                    error,
+                    url: "http://localhost:3000",
+                    urlBaja
+                });
 
-                res.send(html);
             }    
             else
             { 
@@ -211,18 +223,12 @@ server.get('/desuscribir', async (req, res, next) => {
         }
         else
         {
-            const html = `
-                            <html>
-                                <head>
-                                    <title>Error</title>
-                                </head>
-                                <body>
-                                Usuario no válido
-                                </body>
-                            </html>
-                        `;
-
-            res.send(html);
+            //Página de error
+            return res.render(`${__dirname}/../../views/emails/layoutError.pug`, {
+                name: newsLetter.name,
+                error,
+                url: "http://localhost:3000"
+            });
         }
     } 
     catch (error) 

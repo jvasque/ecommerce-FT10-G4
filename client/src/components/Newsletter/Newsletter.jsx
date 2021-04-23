@@ -140,7 +140,7 @@ export default function Newsletter() {
         </Typography>
 
         <form onSubmit={handleSubmit}>
-          <input
+          {/* <input
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
@@ -152,7 +152,7 @@ export default function Newsletter() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Email"
-          />
+          /> */}
           <br />
 
           <input
@@ -179,9 +179,9 @@ export default function Newsletter() {
           <label>Nuevos lanzamientos</label>
           <br />
           <br />
-          <button>Suscribirse</button>
+          {/* <button>Suscribirse</button> */}
 
-          {/* <Button
+          <Button
             variant="outlined"
             color="secondary"
             className={classes.vlado}
@@ -189,7 +189,7 @@ export default function Newsletter() {
             onSubmit={handleSubmit}  />}
           >
             Guardar
-          </Button> */}
+          </Button>
         </form>
       </TabPanel>
       {/* Cierre Primera pestaña Newsletter */}
