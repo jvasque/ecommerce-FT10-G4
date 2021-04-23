@@ -6,13 +6,14 @@ const { SECRET_KEY, user, pass } = process.env;
 const nodemailer = require("nodemailer");
 
 module.exports = async (req, res) => {
+ 
   const id = req.params.id;
   const usuario = await User.findByPk(id);
   if (!usuario) res.status(404).json({ message: "Usuario no encontrado" });
 
-  
+ 
 
-  if (req.user.type.includes("admin")) {
+  if (req.user.type.includes( "admin")) {
     const token = jwt.sign({ id: usuario.toJSON().id }, SECRET_KEY);
     await usuario.update({ recoveryToken: token });
     await usuario.update({
