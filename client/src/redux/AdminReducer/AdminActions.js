@@ -27,7 +27,7 @@ export const ModPass = (id) => {
     return async function (dispatch) {
       try {
         const token = localStorage.getItem("token");
-        const info = await axios.post(`http://localhost:3001/auth/password/reset/${id}`, {
+        const info = await axios.post(`http://localhost:3001/auth/password/reset/${id}`, {} , {
           headers: { Authorization: `Bearer ${token}` },
         });
         console.log(info.data);
