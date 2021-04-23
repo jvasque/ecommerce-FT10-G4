@@ -14,6 +14,7 @@ import FormControl from "@material-ui/core/FormControl";
 import { ModPass } from "../../redux/AdminReducer/AdminActions";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 
+
 const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(1),
@@ -30,6 +31,9 @@ const useStyles = makeStyles((theme) => ({
       margin: theme.spacing(1),
     },
   },
+  buttonreset: {
+    color: "white"
+  }
 }));
 
 const UserAccount = ({ user }) => {
@@ -37,6 +41,7 @@ const UserAccount = ({ user }) => {
   const classes = useStyles();
   const [state, setState] = useState(false);
   const [type, setType] = useState({ id: user.id, name: user.type });
+  const [status, setStatus] = useState({id : user.id, statu: user.status});
 
   const [sort, setSort] = useState({
     name: false,
@@ -56,35 +61,17 @@ const UserAccount = ({ user }) => {
     setType({ ...type, name: e.target.value });
   };
 
+  const handleStatus = (e) => {
+    setStatus({...status, statu: e.target.value })
+  }
+
   const handleChange = (e) => {};
 
   const typeSubmit = (e) => {
     e.preventDefault();
     dispatch(ModPass(type));
   };
-  // function sortName(){
-  //     let [newOrdersDetails, newSort] = sortByName(ordersDetails, sort)
-  //     setSort(newSort)
-  //     setOrdersDetails(newOrdersDetails)
-  // }
-
-  // function sortQuantity(){
-  //     let [newOrdersDetails, newSort] = sortByQuantity(ordersDetails, sort)
-  //     setSort(newSort)
-  //     setOrdersDetails(newOrdersDetails)
-  // }
-
-  // function sortPrice(){
-  //     let [newOrdersDetails, newSort] = sortByPrice(ordersDetails, sort)
-  //     setSort(newSort)
-  //     setOrdersDetails(newOrdersDetails)
-  // }
-
-  // function sortCost(){
-  //     let [newOrdersDetails, newSort] = sortByCost(ordersDetails, sort)
-  //     setSort(newSort)
-  //     setOrdersDetails(newOrdersDetails)
-  // }
+  
   if (!!user) {
     return (
       <div className="containerOrder">
@@ -127,7 +114,7 @@ const UserAccount = ({ user }) => {
           <div className="order" onClick={toggle}>
             <div className="buttons">
               <div className="buttons">
-                <Button variant="contained" color="primary">
+                <Button classes="buttonreset" variant="contained" color="primary" onClick={() => dispatch(ModPass(user.id))}>
                   Forzar contraseña
                 </Button>
               </div>
@@ -139,10 +126,7 @@ const UserAccount = ({ user }) => {
                   labelId="demo-simple-select-outlined-label"
                   id="demo-simple-select-outlined"
                   value={type.name}
-                  onChange={handleTypes}
-                  inputProps={{
-                    name: "ModType",
-                  }}
+                  onChange={handleTypes}                  
                 >
                   <MenuItem name="type" value={"admin"}>
                     Admin
@@ -159,12 +143,12 @@ const UserAccount = ({ user }) => {
                 <Select
                   labelId="demo-simple-select-outlined-label"
                   id="demo-simple-select-outlined"
-                  value={user.status}
-                  onChange={handleChange}
+                  value={status.statu}
+                  onChange={handleStatus}
                 >
-                  <MenuItem value={"active"}>Activo</MenuItem>
-                  <MenuItem value={"disabled"}>Desactivado</MenuItem>
-                  <MenuItem value={"banned"}>Suspendido</MenuItem>
+                  <MenuItem type="status" value={"active"}>Activo</MenuItem>
+                  <MenuItem type="status" value={"disabled"}>Desactivado</MenuItem>
+                  <MenuItem type="status" value={"banned"}>Suspendido</MenuItem>
                 </Select>
               </FormControl>
               {/* <CheckCircleIcon
