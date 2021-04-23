@@ -11,7 +11,7 @@ import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
-import { ModPass, ChangeType } from "../../redux/AdminReducer/AdminActions";
+import { ModPass, ChangeType, ChangeStatus } from "../../redux/AdminReducer/AdminActions";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 
 const useStyles = makeStyles((theme) => ({
@@ -40,7 +40,7 @@ const UserAccount = ({ user }) => {
   const classes = useStyles();
   const [state, setState] = useState(false);
   const [type, setType] = useState(user.type);
-  const [status, setStatus] = useState({ id: user.id, statu: user.status });
+  const [status, setStatus] = useState(user.status);
 
   const [sort, setSort] = useState({
     name: false,
@@ -61,7 +61,7 @@ const UserAccount = ({ user }) => {
   };
 
   const handleStatus = (e) => {
-    setStatus({ ...status, statu: e.target.value });
+    setStatus(e.target.value);
   };
 
   const handleChange = (e) => {};
@@ -70,6 +70,12 @@ const UserAccount = ({ user }) => {
     e.preventDefault();
     dispatch(ChangeType(user.id, type));
   };
+
+  const statusSubmit = (e) => {
+    e.preventDefault();
+    dispatch(ChangeStatus(user.id, status))
+  }
+
 
   if (!!user) {
     return (
@@ -144,14 +150,14 @@ const UserAccount = ({ user }) => {
                 </form>
               </FormControl>
               <FormControl variant="outlined" className={classes.formControl}>
-                <form>
+                <form onSubmit={statusSubmit}>
                   <InputLabel id="demo-simple-select-outlined-label">
                     Estado
                   </InputLabel>
                   <Select
                     labelId="demo-simple-select-outlined-label"
                     id="demo-simple-select-outlined"
-                    value={status.statu}
+                    value={status.name}
                     onChange={handleStatus}
                   >
                     <MenuItem type="status" value={"active"}>
@@ -164,6 +170,7 @@ const UserAccount = ({ user }) => {
                       Suspendido
                     </MenuItem>
                   </Select>
+                  <button type="submit">Enviar</button>
                 </form>
               </FormControl>
               {/* <CheckCircleIcon
