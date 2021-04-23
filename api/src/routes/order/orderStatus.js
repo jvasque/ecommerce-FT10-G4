@@ -2,7 +2,13 @@ const { Order, PaymentMethod } = require("../../db.js");
 
 module.exports = async (req, res) => {
   try {
-    let { state } = req.body;
+    let { state , paypal} = req.body;
+let type=''
+    if(paypal){
+type='paypal'
+    }else{
+      type='Mercadopago'
+    }
 
     let order = await Order.findOne({
       where: {
@@ -13,9 +19,11 @@ module.exports = async (req, res) => {
 
     let payment = await PaymentMethod.findOne({
       where: {
-        type: 'Mercadopago'
+        type: type
       }
     }) 
+
+    
 
     order.state = state;
     await order.save();

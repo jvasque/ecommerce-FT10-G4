@@ -9,20 +9,22 @@
   }
 
   button {
-    margin-top: 10px;
-    margin-left: 1px;
-    height: 3.25rem;
-    background-color: #009ee3;
+    
+    margin: 10px 1px;
+    height: 3.7rem;
+    background-color: #0070ba;
     color: #fff;
     margin-left: none;
+    font-weight: bolder;
 
     &:hover {
       background-color: #009ee3;
-      box-shadow: 2px 2px 2px #009ee3;
+      box-shadow: 2px 2px 2px #0070ba;
     }
   }
 
   .button-paypal {
     width: 100%;
+    
   }
 }
