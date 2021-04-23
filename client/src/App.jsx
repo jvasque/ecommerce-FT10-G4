@@ -23,7 +23,9 @@ import AuthRoute from './components/FrontAuth/AuthRoute';
 import UserScreen from './components/UserScreen/UserScreen';
 import Newsletter from './components/Newsletter/Newsletter';
 import Successful from './components/Mercadopago/Successful';
-import SuccessfulPaypal from './components/Paypal/Successful';
+import SuccessfulPaypal from './components/paypal/Successful';
+
+
 
 function App() {
   return (

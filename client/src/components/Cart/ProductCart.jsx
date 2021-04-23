@@ -16,7 +16,6 @@ function ProductCard({ product }) {
   const dispatch = useDispatch();
 
   const handleChange = (e, unitsOnStock) => {
-    console.log(e.target.value);
     setQuantity(e.target.value);
     if (e.target.value > unitsOnStock) {
       setStock(false);
@@ -60,11 +59,11 @@ function ProductCard({ product }) {
             <DeleteButton />
           </Button>
         </div>
+        
         <div className="stockOptions">
           <Input
             type="number"
-            min="0"
-            max={product.unitsOnStock}
+            InputProps={{ inputProps: { min: 0, max: 99999 } }}
             defaultValue={quantity}
             onChange={(e) => handleChange(e, product.unitsOnStock)}
           />
