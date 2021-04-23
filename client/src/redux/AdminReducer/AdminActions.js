@@ -1,8 +1,9 @@
 import axios from "axios";
-import jwtDecode from "jwt-decode";
+
 
 export const GET_USERS = "GET_USERS";
 export const MOD_PASS = "MOD_PASS";
+export const CHANGE_TYPE = "CHANGE_TYPE"
 
 export const GetUsers = () => {
   return async function (dispatch) {
@@ -39,4 +40,23 @@ export const ModPass = (id) => {
       console.log(e);
     }
   };
+};
+
+export const ChangeType = ( id, type) => {
+  console.log(type)
+//   return async function (dispatch) {
+//     try {
+//       const token = localStorage.getItem("token");
+//       const info = await axios.put(`http://localhost:3001/admin/promote/${type.id}`, {change: type.name} , {
+//         headers: { Authorization: `Bearer ${token}` },
+//       }
+//     );
+//     console.log(info.data);
+//     dispatch({
+//       type: CHANGE_TYPE,
+//     });
+//   } catch (e) {
+//     console.log(e);
+//   }
+// };
 };

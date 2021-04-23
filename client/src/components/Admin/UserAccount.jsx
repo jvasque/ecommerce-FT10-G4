@@ -11,9 +11,8 @@ import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
-import { ModPass } from "../../redux/AdminReducer/AdminActions";
+import { ModPass, ChangeType } from "../../redux/AdminReducer/AdminActions";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
-
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -27,13 +26,13 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(3),
   },
   root: {
-    '& > *': {
+    "& > *": {
       margin: theme.spacing(1),
     },
   },
   buttonreset: {
-    color: "white"
-  }
+    color: "white",
+  },
 }));
 
 const UserAccount = ({ user }) => {
@@ -41,7 +40,7 @@ const UserAccount = ({ user }) => {
   const classes = useStyles();
   const [state, setState] = useState(false);
   const [type, setType] = useState({ id: user.id, name: user.type });
-  const [status, setStatus] = useState({id : user.id, statu: user.status});
+  const [status, setStatus] = useState({ id: user.id, statu: user.status });
 
   const [sort, setSort] = useState({
     name: false,
@@ -62,16 +61,16 @@ const UserAccount = ({ user }) => {
   };
 
   const handleStatus = (e) => {
-    setStatus({...status, statu: e.target.value })
-  }
+    setStatus({ ...status, statu: e.target.value });
+  };
 
   const handleChange = (e) => {};
 
   const typeSubmit = (e) => {
     e.preventDefault();
-    dispatch(ModPass(type));
+    dispatch(ChangeType(type.id, type.name));
   };
-  
+
   if (!!user) {
     return (
       <div className="containerOrder">
@@ -114,42 +113,58 @@ const UserAccount = ({ user }) => {
           <div className="order" onClick={toggle}>
             <div className="buttons">
               <div className="buttons">
-                <Button classes="buttonreset" variant="contained" color="primary" onClick={() => dispatch(ModPass(user.id))}>
+                <Button
+                  classes="buttonreset"
+                  variant="contained"
+                  color="primary"
+                  onClick={() => dispatch(ModPass(user.id))}
+                >
                   Forzar contraseña
                 </Button>
               </div>
               <FormControl variant="outlined" className={classes.formControl}>
-                <InputLabel id="demo-simple-select-outlined-label">
-                  Tipo de usuario
-                </InputLabel>
-                <Select
-                  labelId="demo-simple-select-outlined-label"
-                  id="demo-simple-select-outlined"
-                  value={type.name}
-                  onChange={handleTypes}                  
-                >
-                  <MenuItem name="type" value={"admin"}>
-                    Admin
-                  </MenuItem>
-                  <MenuItem name="type" value={"user"}>
-                    Usuario
-                  </MenuItem>
-                </Select>
+                <form onSubmit={typeSubmit}>
+                  <InputLabel id="demo-simple-select-outlined-label">
+                    Tipo de usuario
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-outlined-label"
+                    id="demo-simple-select-outlined"
+                    value={type.name}
+                    onChange={handleTypes}
+                  >
+                    <MenuItem name="type" value={"admin"}>
+                      Admin
+                    </MenuItem>
+                    <MenuItem name="type" value={"user"}>
+                      Usuario
+                    </MenuItem>
+                  </Select>
+                  <button type="submit">Enviar</button>
+                </form>
               </FormControl>
               <FormControl variant="outlined" className={classes.formControl}>
-                <InputLabel id="demo-simple-select-outlined-label">
-                  Estado
-                </InputLabel>
-                <Select
-                  labelId="demo-simple-select-outlined-label"
-                  id="demo-simple-select-outlined"
-                  value={status.statu}
-                  onChange={handleStatus}
-                >
-                  <MenuItem type="status" value={"active"}>Activo</MenuItem>
-                  <MenuItem type="status" value={"disabled"}>Desactivado</MenuItem>
-                  <MenuItem type="status" value={"banned"}>Suspendido</MenuItem>
-                </Select>
+                <form>
+                  <InputLabel id="demo-simple-select-outlined-label">
+                    Estado
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-outlined-label"
+                    id="demo-simple-select-outlined"
+                    value={status.statu}
+                    onChange={handleStatus}
+                  >
+                    <MenuItem type="status" value={"active"}>
+                      Activo
+                    </MenuItem>
+                    <MenuItem type="status" value={"disabled"}>
+                      Desactivado
+                    </MenuItem>
+                    <MenuItem type="status" value={"banned"}>
+                      Suspendido
+                    </MenuItem>
+                  </Select>
+                </form>
               </FormControl>
               {/* <CheckCircleIcon
                 className={classes.iconControl}
