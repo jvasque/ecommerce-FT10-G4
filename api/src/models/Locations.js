@@ -4,23 +4,29 @@ const { DataTypes } = require('sequelize');
 module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define('location', {
-    name: {
+    label: {
       type: DataTypes.STRING,
+      unique: true,
+      allowNull: false,
     },
     address: {
       type: DataTypes.STRING,
+      unique: true,
+      allowNull: false,
     },
     city: {
       type: DataTypes.STRING,
+      allowNull: false,
     },
     country: {
       type: DataTypes.STRING,
+      allowNull: false,
     },
     latitud: {
-      type: DataTypes.STRING,
+      type: DataTypes.FLOAT,
     },
     longitud: {
-      type: DataTypes.STRING,
+      type: DataTypes.FLOAT,
     },
   });
 };
