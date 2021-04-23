@@ -57,7 +57,7 @@ const UserAccount = ({ user }) => {
   }
 
   const handleTypes = (e) => {
-    setType( e.target.value);
+    setType(e.target.value);
   };
 
   const handleStatus = (e) => {
