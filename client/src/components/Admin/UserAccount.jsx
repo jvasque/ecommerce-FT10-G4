@@ -25,6 +25,11 @@ const useStyles = makeStyles((theme) => ({
   iconControl: {
     margin: theme.spacing(3),
   },
+  root: {
+    '& > *': {
+      margin: theme.spacing(1),
+    },
+  },
 }));
 
 const UserAccount = ({ user }) => {
@@ -48,17 +53,15 @@ const UserAccount = ({ user }) => {
   }
 
   const handleTypes = (e) => {
-    setType({...type, name: e.target.value})
+    setType({ ...type, name: e.target.value });
   };
 
-  const handleChange = (e) => {
-    
-  }
+  const handleChange = (e) => {};
 
   const typeSubmit = (e) => {
-    e.preventDefault()
-    dispatch(ModPass(type))
-  }
+    e.preventDefault();
+    dispatch(ModPass(type));
+  };
   // function sortName(){
   //     let [newOrdersDetails, newSort] = sortByName(ordersDetails, sort)
   //     setSort(newSort)
@@ -124,23 +127,18 @@ const UserAccount = ({ user }) => {
           <div className="order" onClick={toggle}>
             <div className="buttons">
               <div className="buttons">
-                <Button
-                  variant="contained"
-                  cursor="pointer"
-                  onClick={() => dispatch(ModPass(type))}
-                >
-                  Modificar contraseña
+                <Button variant="contained" color="primary">
+                  Forzar contraseña
                 </Button>
               </div>
-              <FormControl className={classes.formControl} onSubmit={typeSubmit}>
-                <InputLabel id="demo-simple-select-label">
+              <FormControl variant="outlined" className={classes.formControl}>
+                <InputLabel id="demo-simple-select-outlined-label">
                   Tipo de usuario
                 </InputLabel>
                 <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
+                  labelId="demo-simple-select-outlined-label"
+                  id="demo-simple-select-outlined"
                   value={type.name}
-                  // () => {if(type.name.includes('admin')){return 'admin'}else{return 'user'}}
                   onChange={handleTypes}
                   inputProps={{
                     name: "ModType",
@@ -153,16 +151,14 @@ const UserAccount = ({ user }) => {
                     Usuario
                   </MenuItem>
                 </Select>
-                <CheckCircleIcon
-                type="submit"
-                className={classes.iconControl}                
-              ></CheckCircleIcon>
               </FormControl>
-              <FormControl className={classes.formControl}>
-                <InputLabel id="demo-simple-select-label">Estado</InputLabel>
+              <FormControl variant="outlined" className={classes.formControl}>
+                <InputLabel id="demo-simple-select-outlined-label">
+                  Estado
+                </InputLabel>
                 <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
+                  labelId="demo-simple-select-outlined-label"
+                  id="demo-simple-select-outlined"
                   value={user.status}
                   onChange={handleChange}
                 >

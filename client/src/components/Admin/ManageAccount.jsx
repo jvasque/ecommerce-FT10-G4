@@ -5,7 +5,8 @@ import { GetUsers } from "../../redux/AdminReducer/AdminActions";
 import PastOrder from "../OrderHistory/PastOrder";
 import DivText from "../ProductCard/DivText";
 import UserAccount from "./UserAccount";
-
+import { makeStyles } from "@material-ui/core/styles";
+import TextField from '@material-ui/core/TextField';
 
 // config general
 // const token =localStorage.getItem("token")
@@ -18,9 +19,18 @@ import UserAccount from "./UserAccount";
 //         return Promise.reject(error)
 //     }
 // )
+const useStyles = makeStyles((theme) => ({
+  root: {
+    '& > *': {
+      margin: theme.spacing(1),
+      width: '25ch',
+    },
+  },
+}));
+
 
 const ManageAccount = () => {
-  // const [users, setUsers] = useState([]);
+  const classes = useStyles();
   const allUser = useSelector(state => state.AdminReducer);
 
   const dispatch = useDispatch();
@@ -44,6 +54,9 @@ const ManageAccount = () => {
 
   return (
         <div className='containerOrderHistory'>
+        <form className={classes.root} noValidate autoComplete="off">
+          <TextField id="outlined-basic" label="Buscar usuario" variant="outlined" />
+        </form>
             <div className='containerFilterOrder'>
                 <div className='registerFilter' onClick={handleUsers}><DivText content='ID'/></div>
                 <div className='stateFilter' onClick={()=>console.log(allUser)}><DivText content='Nombre'/></div>
@@ -53,8 +66,8 @@ const ManageAccount = () => {
                 <div className='totalFilter' onClick={()=>console.log('name')}><DivText content='Estatus'/></div>
             </div>
             
-              {allUser.length > 0
-        ? allUser.map((user) => <UserAccount user={user} key={allUser.indexOf(user)}/>)
+              {allUser.users?.length > 0
+        ? allUser.users?.map((user) => <UserAccount user={user} key={allUser.users.indexOf(user)}/>)
         : ""}
             
         </div>
