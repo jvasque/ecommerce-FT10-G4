@@ -19,7 +19,7 @@ server.use(express.json());
 server.get("/me", me);
 server.post("/login", login);
 server.post("/google/login", googleLogin);
-server.post(
+server.get(
   "/password/reset/:id",
   passport.authenticate("bearer", { session: false }),
   adminResetPassword
