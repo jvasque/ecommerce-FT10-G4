@@ -17,4 +17,10 @@ module.exports = [
     {
         type: 'Mercadopago',
     },
+    {
+        type: 'Paypal',
+    },
+    {
+        type: 'Agropago',
+    },
 ]
