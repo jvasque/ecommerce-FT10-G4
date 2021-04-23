@@ -4,9 +4,9 @@ const { user, pass } = process.env;
 module.exports = async (req, res) => {
   const { products } = req.body;
   const { email, firstName } = req.user;
-  console.log(products, "PRODUCTSSSSS");
+  /* console.log(products, "PRODUCTSSSSS");
   console.log(userName, "userName");
-  console.log(userMail, "userMail");
+  console.log(userMail, "userMail"); */
   let product;
 
   if (!products) return res.status(500).json({ error: "product missing" });
@@ -29,12 +29,76 @@ module.exports = async (req, res) => {
     },
   });
 
+  //Defino las fechas
+
+
+  function sumarDias(fecha, dias){
+    fecha.setDate(fecha.getDate() + dias);
+    return fecha;
+  }
+  
+  var currentDate1 = new Date();
+  var currentDate2 = new Date();
+
+  var day1 = sumarDias(currentDate1, 2);
+  var day2 = sumarDias(currentDate2, 4);
+
+  function dayOftheWeek(date){
+    switch (date) {
+        case 0:
+            return "Domingo";
+        case 1:
+            return "Lunes";
+        case 2:
+            return "Martes";
+        case 3:
+            return "Miércoles";
+        case 4:
+            return "Jueves";
+        case 5:
+            return "Viernes";
+        case 6:
+            return "Sábado";
+    
+        default:
+            break;
+    }
+  }
+
+  function monthOfTheYear(date){
+    switch (date) {
+        case 0:
+            return "Enero";
+        case 1:
+            return "Febrero";
+        case 2:
+            return "Marzo";
+        case 3:
+            return "Abril";
+        case 4:
+            return "Mayo";
+        case 5:
+            return "Junio";
+        case 6:
+            return "Julio";
+        case 7:
+            return "Agosto";
+        case 8:
+            return "Septiembre";
+        case 9:
+            return "Octubre";
+        case 10:
+            return "Noviembre";
+        case 11:
+            return "Diciembre";
+    
+        default:
+            break;
+    }
+  }
+
   let htmlCreator = `
-  <html lang="en">
   <head>
-      <meta charset="UTF-8">
-      <meta http-equiv="X-UA-Compatible" content="IE=edge">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <style>
           .email-container {
     background-color: rgba(239, 239, 239, 1);
@@ -100,26 +164,25 @@ module.exports = async (req, res) => {
              <h1>Agroplace</h1> 
           </div>
           <div class="banner">
-              Hola ${userName}! Tu paquete llegará entre el ${day1} y el ${day2} de ${month}
+              Hola ${firstName}! Tu paquete llegará entre el ${dayOftheWeek(day1.getUTCDay())} ${day1.getUTCDate()} de ${monthOfTheYear(day1.getUTCMonth())} y el ${dayOftheWeek(day2.getUTCDay())} ${day2.getUTCDate()} de ${monthOfTheYear(day2.getUTCMonth())}
           </div>
           <div class="body-email-container">
               
               <div class="details">
                   Detalle de envio:
-                  <div class="image">${img}</div>
-                  <div class="detItem">${Direccion}</div>
-                  <div class="detItem">${producto}</div>
-                  <div class="detItem">${linkaalgunlado}</div>
+                  <div class="image">${"Imagen" || img}</div>
+                  <div class="detItem">${"Direccion" || Direccion}</div>
+                  <div class="detItem">${"Producto" || producto}</div>
+                  <div class="detItem">${"Link" || linkaalgunlado}</div>
               </div>
           </div>
           </div>
           <footer>
               <h4>Titulo</h4>
               <div>Necesitas ayuda? Contactanos</div>
-              <div>${nustrosdatoslinkeados}</div>
+              <div>${"Algun dato nuestro linkeado" || nustrosdatoslinkeados}</div>
           </footer>
   </body>
-  </html>
     `;
 
   let mailOptions = {
