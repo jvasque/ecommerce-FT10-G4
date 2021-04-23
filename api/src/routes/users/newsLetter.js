@@ -97,23 +97,10 @@ server.get('/suscripcion', async (req, res, next) => {
                 }
             });
 
-            //    
-
-            const html = "layoutPagActivation";
-            
-            // `
-            //                 <html>
-            //                     <head>
-            //                         <title>Suscription</title>
-            //                     </head>
-            //                     <body>
-            //                     <h3>${newsLetter.name} Usted está suscrito a nuestros boletines </h3>
-            //                     <a href="http://localhost:3000"> para terminar haga click aquí </a>
-            //                     </body>
-            //                 </html>
-            //             `;
-
-            res.sendFile(html);
+            return res.render(`${__dirname}/../../views/emails/layoutPagActivation.pug`, {
+                name: newsLetter.name,
+                url: "http://localhost:3000/"                
+            });
         }
         else
         {
@@ -133,19 +120,18 @@ server.get('/suscripcion', async (req, res, next) => {
     } 
     catch (error) 
     {
-        const html = `
-                        <html>
-                            <head>
-                                <title>Error</title>
-                            </head>
-                            <body>
-                            ${Error}
-                            </body>
-                        </html>
-                    `;    
-
-        res.send(html);    
+        return res.render(`${__dirname}/../../views/emails/layoutError.pug`, {
+            name: newsLetter.name,
+            error,
+            url: "http://localhost:3000"
+        });
     }    
+});
+
+server.get('/primerNewsLetter', async (req, res, next) => {
+
+    res.redirect("http://localhost:3000");
+
 });
 
 server.get('/desuscribir', async (req, res, next) => {
