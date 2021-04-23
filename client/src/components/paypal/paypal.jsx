@@ -21,6 +21,8 @@ const Paypal = ({ dataClient }) => {
       phoneNumber: dataClient.phoneNumber,
       totalPrice: cart.total,
     })
+
+    a()
   })
 
   return (
@@ -60,7 +62,7 @@ style={{color:"blue"}}
     //   });
     // });
 
-    history.push('/order/completada')
+    history.push('/order/complete')
   }}
 /> 
     </div>

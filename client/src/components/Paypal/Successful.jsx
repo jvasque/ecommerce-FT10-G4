@@ -22,7 +22,7 @@ export default function Successful({payment}) {
      dispatch(emptyCart())
      await axios.put(`http://localhost:3001/order/${userId}/state`, {
          state: "created",
-         paypal:'paypal'
+         paypal:'Paypal'
         })
         dispatch(reset())
         

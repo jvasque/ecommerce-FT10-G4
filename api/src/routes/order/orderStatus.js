@@ -3,9 +3,10 @@ const { Order, PaymentMethod } = require("../../db.js");
 module.exports = async (req, res) => {
   try {
     let { state , paypal} = req.body;
+    console.log(paypal)
 let type=''
     if(paypal){
-type='paypal'
+type='Paypal'
     }else{
       type='Mercadopago'
     }
