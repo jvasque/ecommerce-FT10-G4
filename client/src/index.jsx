@@ -1,4 +1,4 @@
-import React from "react";
+import React, {Fragment} from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
@@ -31,9 +31,9 @@ const theme = createMuiTheme({
   },
 });
 
-
+{/**Leave in fragment*/}
 ReactDOM.render(
-  <React.StrictMode>
+  <Fragment> 
     <Provider store={store}>
       <BrowserRouter>
         <ThemeProvider theme={theme}>
@@ -41,7 +41,7 @@ ReactDOM.render(
         </ThemeProvider>
       </BrowserRouter>
     </Provider>
-  </React.StrictMode>,
+  </Fragment>,
   document.getElementById("root")
 );
 
