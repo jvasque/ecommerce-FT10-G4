@@ -39,7 +39,7 @@ const UserAccount = ({ user }) => {
   const dispatch = useDispatch();
   const classes = useStyles();
   const [state, setState] = useState(false);
-  const [type, setType] = useState({ id: user.id, name: user.type });
+  const [type, setType] = useState(user.type);
   const [status, setStatus] = useState({ id: user.id, statu: user.status });
 
   const [sort, setSort] = useState({
@@ -57,7 +57,7 @@ const UserAccount = ({ user }) => {
   }
 
   const handleTypes = (e) => {
-    setType({ ...type, name: e.target.value });
+    setType( e.target.value);
   };
 
   const handleStatus = (e) => {
@@ -68,7 +68,7 @@ const UserAccount = ({ user }) => {
 
   const typeSubmit = (e) => {
     e.preventDefault();
-    dispatch(ChangeType(type.id, type.name));
+    dispatch(ChangeType(user.id, type));
   };
 
   if (!!user) {

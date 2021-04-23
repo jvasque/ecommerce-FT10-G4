@@ -43,20 +43,20 @@ export const ModPass = (id) => {
 };
 
 export const ChangeType = ( id, type) => {
-  console.log(type)
-//   return async function (dispatch) {
-//     try {
-//       const token = localStorage.getItem("token");
-//       const info = await axios.put(`http://localhost:3001/admin/promote/${type.id}`, {change: type.name} , {
-//         headers: { Authorization: `Bearer ${token}` },
-//       }
-//     );
-//     console.log(info.data);
-//     dispatch({
-//       type: CHANGE_TYPE,
-//     });
-//   } catch (e) {
-//     console.log(e);
-//   }
-// };
+  console.log(id, type)
+  return async function (dispatch) {
+    try {
+      const token = localStorage.getItem("token");
+      const info = await axios.put(`http://localhost:3001/admin/promote/${id}`, {change: type} , {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+    console.log(info.data);
+    dispatch({
+      type: CHANGE_TYPE,
+    });
+  } catch (e) {
+    console.log(e);
+  }
+};
 };
