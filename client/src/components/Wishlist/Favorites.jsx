@@ -1,20 +1,50 @@
 import React, { useState, useEffect } from 'react';
-import ProductCard from '../ProductCard/ProductCard.jsx';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import Pages from '../Catalog/Pages';
+import { getFavs } from '../../redux/wishlistReducer/wishlistActions';
 import '../../scss/components/Wishlists/_Favorites.scss';
 
 function Favorites() {
-  const userFavorites = useSelector((state) => state.iconReducer.fav);
+  const favData = useSelector((state) => state.wishlistReducer.favorites);
+  const dispatch = useDispatch();
+
+  let favList = JSON.parse(localStorage.getItem('Fav'));
+  console.log(favList);
+
+  useEffect(() => {
+    dispatch(getFavs(favList));
+    return () => {};
+  }, []);
+
+  const handleButton = (e, id) => {
+    e.preventDefault();
+    localStorage.removeItem('Fav');
+    favList.filter((elem) => elem.id !== id);
+    localStorage.setItem('Fav', JSON.stringify(favList));
+  };
 
   return (
-    <div className="favoriteBoard">
-      <h1 className="title">Componente Favoritos</h1>
-      <div className="favoriteCards">
-        {/*
-          {userFavorites.map}
-           */}
-      </div>
+    <div className="favBoard">
+      {favData &&
+        favData.map((favorite, i) => (
+          <div className="favProducts">
+            <Link to={`/${favorite.id}`}>
+              <button
+                onClick={(e) => handleButton(e, favorite.id)}
+                className="deleteButton"
+              >
+                X
+              </button>
+              <img className="favPic" src={favorite.picture[0]}></img>
+              <div className="favInfo">
+                <div className="favTitle">{favorite.name}</div>
+                <div>Precio: {favorite.unitPrice}</div>
+                <div>Stock: {favorite.unitsOnStock}</div>
+              </div>
+            </Link>
+          </div>
+        ))}
     </div>
   );
 }
