@@ -23,6 +23,7 @@ import AuthRoute from './components/FrontAuth/AuthRoute';
 import UserScreen from './components/UserScreen/UserScreen';
 import Newsletter from './components/Newsletter/Newsletter';
 import Successful from './components/Mercadopago/Successful';
+import MapContainer from './components/LocationStock/MapContainer'
 
 function App() {
   return (
@@ -32,9 +33,10 @@ function App() {
       <Switch>
         <Route exact path="/product/cart" component={Cart} />
         <Route exact path="/catalog" component={Catalog} />
-        <Route exact path="/:id" component={ProductDetails} />
+        <Route exact path="/map" component={MapContainer}/>
         <Route exact path="/user/login" component={Signup} />
-        <Route exact path="/order/completada" component={Successful} />
+        <Route exact path="/:id" component={ProductDetails} />
+        <Route exact path="/order/completada" component={Successful}/>
         <AuthRoute path="/admin" type="admin">
           <Route exact path="/admin/categories" component={Form} />
           <Route exact path="/admin/orders" component={AllOrders} />
