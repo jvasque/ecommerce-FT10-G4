@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import DivText from "../ProductCard/DivText";
-import "../../scss/components/OrderHistory/_OrderHistory.scss";
-import "../../scss/components/OrderHistory/_FilterOrderDetail.scss";
+import "../../scss/components/AllOrders/_AdminOrderDetail.scss";
+import "../../scss/components/Admin/_UserAccount.scss";
 import { Select, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -88,29 +88,29 @@ const UserAccount = ({ user }) => {
 
   if (!!user) {
     return (
-      <div className="containerOrder">
-        <div className={activeToggle}>
-          <div className="order" onClick={toggle}>
-            <div className="orderId">
+      <div className="containerOrder">        
+          <div className="order">
+            <div className="orderId" onClick={toggle}>
               <DivText content={user.id} />
             </div>
-            <div className="orderStatus">
+            <div className="orderStatus" onClick={toggle}>
               <DivText content={user.firstName} />
             </div>
-            <div className="orderCreatedAt">
+            <div className="orderCreatedAt" onClick={toggle}>
               <DivText content={user.lastName} />
             </div>
-            <div className="orderUpdatedAt">
+            <div className="orderUpdatedAt" onClick={toggle}>
               <DivText content={user.email} />
             </div>
-            <div className="orderPayment">
+            <div className="orderPayment" onClick={toggle}> 
               <DivText content={user.type} />
             </div>
-            <div className="orderTotal">
+            <div className="orderTotal" onClick={toggle}>
               <DivText content={user.status} />
             </div>
           </div>
-          <div className="order" onClick={toggle}>
+
+          <div className={activeToggle}>
             <div className="buttons">
               <div>
                 <Button
@@ -120,7 +120,7 @@ const UserAccount = ({ user }) => {
                   color="primary"
                   onClick={() => dispatch(ModPass(user.id))}
                 >
-                  Forzar contraseña
+                  Cambiar contraseña
                 </Button>
               </div>
               <FormControl variant="outlined" className={classes.formControl}>
@@ -181,7 +181,7 @@ const UserAccount = ({ user }) => {
               </Button>
             </div>
           </div>
-        </div>
+        
       </div>
     );
   } else {

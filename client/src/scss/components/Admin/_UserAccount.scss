@@ -1,0 +1,22 @@
+.active{
+    height: 100%;
+    .folding-pannel{
+        background: white;
+        //transform: perspective(350px) rotateX(0deg);
+        transition: all 0.4s ease-in-out;
+        height: 100px;                
+    }
+    .filter{
+        height: 50px;
+    }
+} 
+.inactive {   
+    background: var(--color-brand-lights); 
+    height: 100%;    
+    .folding-pannel{
+        transform-origin: 50% 0%;
+        transform: perspective(250px) rotateX(-90deg);
+        transition: all 0.4s ease-in-out;
+        height: 0;
+    }
+}
