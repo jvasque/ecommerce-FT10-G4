@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-// import OrderDetail from './OrderDetail'
-// import { sortByName, sortByQuantity, sortByPrice, sortByCost } from './FilterOrderDetail'
 import DivText from "../ProductCard/DivText";
 import "../../scss/components/OrderHistory/_OrderHistory.scss";
 import "../../scss/components/OrderHistory/_FilterOrderDetail.scss";
@@ -9,10 +7,13 @@ import { Select, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
-import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
-import { ModPass, ChangeType, ChangeStatus } from "../../redux/AdminReducer/AdminActions";
-import CheckCircleIcon from "@material-ui/icons/CheckCircle";
+import {
+  ModPass,
+  ChangeType,
+  ChangeStatus,
+} from "../../redux/AdminReducer/AdminActions";
+
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -28,10 +29,12 @@ const useStyles = makeStyles((theme) => ({
   root: {
     "& > *": {
       margin: theme.spacing(1),
+      
     },
   },
   buttonreset: {
     color: "white",
+    
   },
 }));
 
@@ -42,13 +45,7 @@ const UserAccount = ({ user }) => {
   const [type, setType] = useState(user.type);
   const [status, setStatus] = useState(user.status);
 
-  const [sort, setSort] = useState({
-    name: false,
-    quantity: false,
-    price: false,
-    cost: false,
-  });
-
+ 
   let activeToggle = state ? "active" : "inactive";
 
   function toggle() {
@@ -57,14 +54,12 @@ const UserAccount = ({ user }) => {
   }
 
   const handleTypes = (e) => {
-    setType( e.target.value);
+    setType(e.target.value);
   };
 
   const handleStatus = (e) => {
     setStatus(e.target.value);
-  };
-
-  const handleChange = (e) => {};
+  };  
 
   const typeSubmit = (e) => {
     e.preventDefault();
@@ -73,9 +68,8 @@ const UserAccount = ({ user }) => {
 
   const statusSubmit = (e) => {
     e.preventDefault();
-    dispatch(ChangeStatus(user.id, status))
-  }
-
+    dispatch(ChangeStatus(user.id, status));
+  };
 
   if (!!user) {
     return (
@@ -101,26 +95,12 @@ const UserAccount = ({ user }) => {
               <DivText content={user.status} />
             </div>
           </div>
-          {/* <div className="folding-pannel filter">
-                        <div className='containerFilterOrderDetail'>
-                            <div className='orderFilterDetailName' onClick={sortName}><DivText content='Producto'/></div>
-                            <div className='orderFilterDetailQuantity' onClick={sortQuantity}><DivText content='Cantidad'/></div>
-                            <div className='orderFilterDetailPrice' onClick={sortPrice}><DivText content='Precio Unidad'/></div>
-                            <div className='orderFilterDetailCost' onClick={sortCost}><DivText content='Costo por Item'/></div>
-                        </div>  
-                    </div> */}
-          {/* {
-                        ordersDetails?.map(orderDetail => {
-                            return <div className="folding-pannel answer" key={`OrderDetail-${orderDetail.id}-${order.id}`}>
-                                        <OrderDetail product={orderDetail}/>
-                                    </div>
-                        })
-                    }    */}
           <div className="order" onClick={toggle}>
             <div className="buttons">
               <div className="buttons">
                 <Button
-                  classes="buttonreset"
+                size= 'small'
+                  className={classes.buttonreset}
                   variant="contained"
                   color="primary"
                   onClick={() => dispatch(ModPass(user.id))}
