@@ -46,6 +46,7 @@ const ResetPassword = () => {
   };
   return (
     <div className="container-reset">
+    <div className="container-todo">
       <div className="container-title-reset">
         <Typography variant="h6" color="primary" gutterBottom>
           Favor ingrese su nueva constraseña, esta debe contener al menos 8
@@ -64,13 +65,13 @@ const ResetPassword = () => {
               name="password"
               onChange={passwordChange}
             />
-            {/* <TextField
+            <TextField
               classname={classes.input}
               id="filled-basic"
-              label="Contrseña"
+              label="Repita Contrseña"
               name="password"
               onChange={passwordChange}
-            /> */}
+            />
           </div>
           <Button
             className={classes.button}
@@ -81,6 +82,7 @@ const ResetPassword = () => {
             Enviar
           </Button>
         </form>
+      </div>
       </div>
     </div>
   );

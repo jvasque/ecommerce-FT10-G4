@@ -42,6 +42,7 @@ const EmailPassword = () => {
   };
   return (
     <div className="container-reset">
+    <div className="container-todo">
       <div className="container-title-reset">
         <Typography variant="h6" color="primary" gutterBottom>
           Favor ingrese su correo electronico, se enviara un correo con las instrucciones para reestablecer su contrseña
@@ -59,13 +60,7 @@ const EmailPassword = () => {
               name="password"
               onChange={emailChange}
             />
-            {/* <TextField
-              classname={classes.input}
-              id="filled-basic"
-              label="Contrseña"
-              name="password"
-              onChange={passwordChange}
-            /> */}
+           
           </div>
           <Button
             className={classes.button}
@@ -76,6 +71,7 @@ const EmailPassword = () => {
             Enviar
           </Button>
         </form>
+      </div>
       </div>
     </div>
   );
