@@ -1,58 +1,139 @@
 const Sequelize = require('sequelize');
-const { Product, Category } = require("../../db.js");
+const { Product, Category } = require('../../db.js');
 // /products/filter?recommended=[true/false]
 
 module.exports = async (req, res, next) => {
-  let { array } = req.body;
+  let array = req.body.array;
+  let isRecommended = req.query.recommended;
+  let favProducts,
+    recCategories,
+    recProducts = [],
+    pickRandom = [];
+
+  // TOTAL DE PRODUCTOS EN LA DB
+  let totalProducts = await Product.count();
+  console.log('Products have: ', totalProducts, ' items');
+
+  console.log(array);
+  console.log(isRecommended);
 
   try {
-    //devuelve todos los favoritos
-    let favProducts = await Product.findAll({
-      attributes: ['id','name','description','unitPrice', 'picture','score'],      
-      where: {
-        id: { [Sequelize.Op.in]: array },
-      },
-      include: {
-        model: Category,
-        through: {
-          attributes: [],
-        },        
-      }
-    });
-    
-    //si hay que buscar recomendados
-    if (req.query.recommended === "true") {
-      let data = favProducts.map((product) => {
-        return product.categories[0].id
-      })
-      
-      let newData = [];      
-      for (let i = 0; i < data.length; i++) {
-        const category = data[i];
-        let search = await Category.findOne({
-          where: {
-            id: category
+    //pide recommended pero tiene favoritos
+    if (array) {
+      favProducts = await Product.findAll({
+        attributes: [
+          'id',
+          'name',
+          'description',
+          'unitPrice',
+          'picture',
+          'score',
+        ],
+        where: {
+          id: { [Sequelize.Op.in]: array },
+        },
+        include: {
+          model: Category,
+          through: {
+            attributes: [],
           },
-          include: {
-            model: Product,
-            attributes: ['id','name','description','unitPrice', 'picture','score'],
-            through: {
-              attributes: [],
-            }, 
-          }
+        },
+      });
+
+      //pide favoritos, tiene y no pide recommended, devuelvo favoritos
+      if (isRecommended !== 'true') {
+        console.log(favProducts);
+        return res.json(favProducts).status(200); // CASE 1
+      }
+
+      //pide recommended y tiene favoritos
+      if (req.query.recommended === 'true') {
+        recCategories = favProducts.map((product) => {
+          return product.categories[0].id;
         });
-        newData.push(search.products[Math.floor(Math.random() * search.products.length)])
-        
+
+        console.log('Initial categories: ', recCategories);
+
+        // subCase 2: mas de 4
+        if (recCategories.length > 4) {
+          let randomN = Math.floor(Math.random() * recCategories.length - 3);
+
+          recCategories = recCategories.slice(randomN, randomN + 4);
+
+          console.log('Reduced categories: ', recCategories);
+
+          // recCategories = [
+          //   recCategories[Math.floor(Math.random() * recCategories.length)],
+          //   recCategories[Math.floor(Math.random() * recCategories.length)],
+          //   recCategories[Math.floor(Math.random() * recCategories.length)],
+          //   recCategories[Math.floor(Math.random() * recCategories.length)]
+          // ]
+        }
+
+        for (let i = 0; i < recCategories.length; i++) {
+          const category = recCategories[i];
+          pickRandom = await Category.findOne({
+            where: {
+              id: category,
+            },
+            include: {
+              model: Product,
+              attributes: [
+                'id',
+                'name',
+                'description',
+                'unitPrice',
+                'picture',
+                'score',
+              ],
+              through: {
+                attributes: [],
+              },
+            },
+          });
+
+          recProducts.push(
+            pickRandom.products[
+              Math.floor(Math.random() * pickRandom.products.length)
+            ]
+          );
+        }
+
+        // subCase 1: menos de 4
+
+        while (recProducts.length < 4) {
+          recProducts.push(
+            pickRandom.products[
+              Math.floor(Math.random() * pickRandom.products.length)
+            ]
+          );
+        }
+
+        return res.json(recProducts); // CASE 2
+      }
+    } else {
+      // no tiene favoritos y no pide recommended
+      if (isRecommended !== 'true') {
+        return res.send(null).status(204); // CASE 3
       }
 
-      while (newData.length < 3) {        
-        newData.push(favProducts[Math.floor(Math.random() * favProducts.length)])
-      }
-      
-      return res.json(newData)      
-    } 
+      // no tiene favoritos y pide recommended
 
-    return res.json(favProducts);
+      let randomProducts = [
+        Math.floor(Math.random() * totalProducts),
+        Math.floor(Math.random() * totalProducts),
+        Math.floor(Math.random() * totalProducts),
+        Math.floor(Math.random() * totalProducts),
+      ];
+
+      recProducts = await Product.findAll({
+        where: {
+          id: { [Sequelize.Op.in]: randomProducts },
+        },
+      });
+
+      return res.send(recProducts); // CASE 4
+    }
   } catch (err) {
     res.json(err);
     return console.log(err);
