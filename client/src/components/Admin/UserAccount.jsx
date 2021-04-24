@@ -14,27 +14,38 @@ import {
   ChangeStatus,
 } from "../../redux/AdminReducer/AdminActions";
 
-
 const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(1),
-    minWidth: 120,
+    width: "200px",
   },
+
   selectEmpty: {
     marginTop: theme.spacing(2),
+    width: "100px",
   },
+
   iconControl: {
     margin: theme.spacing(3),
+    width: "100%",
   },
+  buttons: {
+    justifyContent: "center",
+  },
+
   root: {
     "& > *": {
       margin: theme.spacing(1),
-      
     },
   },
+  selectuser: {
+    width: "100%",
+    height: "80%",
+  },
   buttonreset: {
+    margin: "15px",
     color: "white",
-    
+    height: "40%",
   },
 }));
 
@@ -45,7 +56,6 @@ const UserAccount = ({ user }) => {
   const [type, setType] = useState(user.type);
   const [status, setStatus] = useState(user.status);
 
- 
   let activeToggle = state ? "active" : "inactive";
 
   function toggle() {
@@ -59,7 +69,7 @@ const UserAccount = ({ user }) => {
 
   const handleStatus = (e) => {
     setStatus(e.target.value);
-  };  
+  };
 
   const typeSubmit = (e) => {
     e.preventDefault();
@@ -69,6 +79,11 @@ const UserAccount = ({ user }) => {
   const statusSubmit = (e) => {
     e.preventDefault();
     dispatch(ChangeStatus(user.id, status));
+  };
+
+  const handleSubmit = (e) => {
+    typeSubmit(e);
+    statusSubmit(e);
   };
 
   if (!!user) {
@@ -97,9 +112,9 @@ const UserAccount = ({ user }) => {
           </div>
           <div className="order" onClick={toggle}>
             <div className="buttons">
-              <div className="buttons">
+              <div>
                 <Button
-                size= 'small'
+                  size="small"
                   className={classes.buttonreset}
                   variant="contained"
                   color="primary"
@@ -114,11 +129,13 @@ const UserAccount = ({ user }) => {
                     Tipo de usuario
                   </InputLabel>
                   <Select
+                    className={classes.selectuser}
                     labelId="demo-simple-select-outlined-label"
                     id="demo-simple-select-outlined"
                     value={type.name}
                     onChange={handleTypes}
                   >
+                    <MenuItem name="type" value=""></MenuItem>
                     <MenuItem name="type" value={"admin"}>
                       Admin
                     </MenuItem>
@@ -126,7 +143,6 @@ const UserAccount = ({ user }) => {
                       Usuario
                     </MenuItem>
                   </Select>
-                  <button type="submit">Enviar</button>
                 </form>
               </FormControl>
               <FormControl variant="outlined" className={classes.formControl}>
@@ -135,6 +151,7 @@ const UserAccount = ({ user }) => {
                     Estado
                   </InputLabel>
                   <Select
+                    className={classes.selectuser}
                     labelId="demo-simple-select-outlined-label"
                     id="demo-simple-select-outlined"
                     value={status.name}
@@ -150,13 +167,18 @@ const UserAccount = ({ user }) => {
                       Suspendido
                     </MenuItem>
                   </Select>
-                  <button type="submit">Enviar</button>
                 </form>
               </FormControl>
-              {/* <CheckCircleIcon
-                className={classes.iconControl}
-                onSubmit={console.log("asd")}
-              ></CheckCircleIcon> */}
+              <Button
+                type="submit"
+                size="small"
+                className={classes.buttonreset}
+                variant="contained"
+                color="primary"
+                onClick={(e) => handleSubmit(e)}
+              >
+                Enviar
+              </Button>
             </div>
           </div>
         </div>
