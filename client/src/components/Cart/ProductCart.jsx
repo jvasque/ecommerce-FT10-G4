@@ -8,7 +8,7 @@ import { deleteProduct } from '../../redux/cartReducer/cartActions';
 import { totalPrice, incrementQ } from '../../redux/cartReducer/cartActions';
 import { modifyCart } from '../../redux/iconReducer/iconActions';
 
-function ProductCard({ product }) {
+function ProductCard({ product, setValidation}) {
   const [quantity, setQuantity] = useState(1);
   const [stock, setStock] = useState(true);
   const [negative, setNegative] = useState(true);
@@ -18,14 +18,17 @@ function ProductCard({ product }) {
   const handleChange = (e, unitsOnStock) => {
     setQuantity(e.target.value);
     if (e.target.value > unitsOnStock) {
+      setValidation(false)
       setStock(false);
       return setQuantity(1);
     }
     if (e.target.value && e.target.value < 1) {
+      setValidation(false)
       setQuantity(1);
       setNegative(false);
       return;
     }
+    setValidation(true)
     setNegative(true);
     setStock(true);
     dispatch(incrementQ(product, e.target.value));
@@ -70,7 +73,7 @@ function ProductCard({ product }) {
           <p className="stockUp">Disponibles:{product.unitsOnStock}</p>
 
           {stock ? '' : <p className="stock">No hay stock disponible</p>}
-          {negative ? '' : <p className="stock">Ingrese un valor valido</p>}
+          {negative ? '' : <p className="stock">Ingrese un valor valido</p>} 
         </div>
       </div>
     </div>
