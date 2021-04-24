@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Pages from '../Catalog/Pages';
@@ -10,12 +10,13 @@ import {
 import '../../scss/components/Home/_HomeRecommend.scss';
 import ProductCard from '../ProductCard/ProductCard';
 
-function Favorites() {
-  const recommends = useSelector((state) => state.wishlistReducer.recommended);
-  const dispatch = useDispatch();
+function HomeRecommend() {
   let favList = JSON.parse(localStorage.getItem('Fav'));
   console.log(favList);
-  dispatch(addRecommended(favList));
+
+  const recommends = useSelector((state) => state.wishlistReducer.recommended);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(addRecommended(favList));
@@ -35,4 +36,4 @@ function Favorites() {
   );
 }
 
-export default Favorites;
+export default HomeRecommend;

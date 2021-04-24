@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
 const { Product, Category } = require('../../db.js');
+
 // /products/filter?recommended=[true/false]
 
 module.exports = async (req, res, next) => {
@@ -14,12 +15,20 @@ module.exports = async (req, res, next) => {
   let totalProducts = await Product.count();
   console.log('Products have: ', totalProducts, ' items');
 
-  console.log(array);
-  console.log(isRecommended);
+  let randomProdIndices = [
+    Math.floor(Math.random() * totalProducts),
+    Math.floor(Math.random() * totalProducts),
+    Math.floor(Math.random() * totalProducts),
+    Math.floor(Math.random() * totalProducts),
+  ];
+  console.log('Random indices', randomProdIndices);
+
+  console.log('Array de fav indices: ', array);
+  console.log('Se pide recommend: ', isRecommended);
 
   try {
-    //pide recommended pero tiene favoritos
-    if (array) {
+    //CASE 1: pide recommended y tiene favoritos
+    if (array && array.length) {
       favProducts = await Product.findAll({
         attributes: [
           'id',
@@ -40,13 +49,15 @@ module.exports = async (req, res, next) => {
         },
       });
 
-      //pide favoritos, tiene y no pide recommended, devuelvo favoritos
+      console.log('Favoritos de DB:', favProducts);
+
+      //Pide favoritos, tiene y no pide recommended, devuelvo favoritos
       if (isRecommended !== 'true') {
         console.log(favProducts);
-        return res.json(favProducts).status(200); // CASE 1
+        return res.json(favProducts).status(200); // CASE 1 return
       }
 
-      //pide recommended y tiene favoritos
+      //Pide recommended y tiene favoritos
       if (req.query.recommended === 'true') {
         recCategories = favProducts.map((product) => {
           return product.categories[0].id;
@@ -56,18 +67,17 @@ module.exports = async (req, res, next) => {
 
         // subCase 2: mas de 4
         if (recCategories.length > 4) {
-          let randomN = Math.floor(Math.random() * recCategories.length - 3);
+          // let randomN = Math.floor(Math.random() * recCategories.length - 3);
+          // recCategories = recCategories.slice(randomN, randomN + 4);
 
-          recCategories = recCategories.slice(randomN, randomN + 4);
+          recCategories = [
+            recCategories[Math.floor(Math.random() * recCategories.length)],
+            recCategories[Math.floor(Math.random() * recCategories.length)],
+            recCategories[Math.floor(Math.random() * recCategories.length)],
+            recCategories[Math.floor(Math.random() * recCategories.length)],
+          ];
 
           console.log('Reduced categories: ', recCategories);
-
-          // recCategories = [
-          //   recCategories[Math.floor(Math.random() * recCategories.length)],
-          //   recCategories[Math.floor(Math.random() * recCategories.length)],
-          //   recCategories[Math.floor(Math.random() * recCategories.length)],
-          //   recCategories[Math.floor(Math.random() * recCategories.length)]
-          // ]
         }
 
         for (let i = 0; i < recCategories.length; i++) {
@@ -118,17 +128,9 @@ module.exports = async (req, res, next) => {
       }
 
       // no tiene favoritos y pide recommended
-
-      let randomProducts = [
-        Math.floor(Math.random() * totalProducts),
-        Math.floor(Math.random() * totalProducts),
-        Math.floor(Math.random() * totalProducts),
-        Math.floor(Math.random() * totalProducts),
-      ];
-
       recProducts = await Product.findAll({
         where: {
-          id: { [Sequelize.Op.in]: randomProducts },
+          id: { [Sequelize.Op.in]: randomProdIndices },
         },
       });
 
