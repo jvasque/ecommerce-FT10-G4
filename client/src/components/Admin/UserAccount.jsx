@@ -61,6 +61,7 @@ const UserAccount = ({ user }) => {
   function toggle() {
     setState(!state);
     activeToggle = state ? "active" : "inactive";
+    console.log(activeToggle)
   }
 
   const handleTypes = (e) => {
@@ -88,8 +89,8 @@ const UserAccount = ({ user }) => {
 
   if (!!user) {
     return (
-      <div className="containerOrder">        
-          <div className="order">
+        <div className="containerOrder">        
+          <div className="order inactive">
             <div className="orderId" onClick={toggle}>
               <DivText content={user.id} />
             </div>
@@ -111,78 +112,79 @@ const UserAccount = ({ user }) => {
           </div>
 
           <div className={activeToggle}>
-            <div className="buttons">
-              <div>
+            <div className='folding-pannel'>
+              <div className="buttons">
+                <div>
+                  <Button
+                    size="small"
+                    className={classes.buttonreset}
+                    variant="contained"
+                    color="primary"
+                    onClick={() => dispatch(ModPass(user.id))}
+                  >
+                    Cambiar contraseña
+                  </Button>
+                </div>
+                <FormControl variant="outlined" className={classes.formControl}>
+                  <form onSubmit={typeSubmit}>
+                    <InputLabel id="demo-simple-select-outlined-label">
+                      Tipo de usuario
+                    </InputLabel>
+                    <Select
+                      className={classes.selectuser}
+                      labelId="demo-simple-select-outlined-label"
+                      id="demo-simple-select-outlined"
+                      value={type.name}
+                      onChange={handleTypes}
+                    >
+                      <MenuItem name="type" value=""></MenuItem>
+                      <MenuItem name="type" value={"admin"}>
+                        Admin
+                      </MenuItem>
+                      <MenuItem name="type" value={"user"}>
+                        Usuario
+                      </MenuItem>
+                    </Select>
+                  </form>
+                </FormControl>
+                <FormControl variant="outlined" className={classes.formControl}>
+                  <form onSubmit={statusSubmit}>
+                    <InputLabel id="demo-simple-select-outlined-label">
+                      Estado
+                    </InputLabel>
+                    <Select
+                      className={classes.selectuser}
+                      labelId="demo-simple-select-outlined-label"
+                      id="demo-simple-select-outlined"
+                      value={status.name}
+                      onChange={handleStatus}
+                    >
+                      <MenuItem type="status" value={"active"}>
+                        Activo
+                      </MenuItem>
+                      <MenuItem type="status" value={"disabled"}>
+                        Desactivado
+                      </MenuItem>
+                      <MenuItem type="status" value={"banned"}>
+                        Suspendido
+                      </MenuItem>
+                    </Select>
+                  </form>
+                </FormControl>
                 <Button
+                  type="submit"
                   size="small"
                   className={classes.buttonreset}
                   variant="contained"
                   color="primary"
-                  onClick={() => dispatch(ModPass(user.id))}
+                  onClick={(e) => handleSubmit(e)}
                 >
-                  Cambiar contraseña
+                  Enviar
                 </Button>
               </div>
-              <FormControl variant="outlined" className={classes.formControl}>
-                <form onSubmit={typeSubmit}>
-                  <InputLabel id="demo-simple-select-outlined-label">
-                    Tipo de usuario
-                  </InputLabel>
-                  <Select
-                    className={classes.selectuser}
-                    labelId="demo-simple-select-outlined-label"
-                    id="demo-simple-select-outlined"
-                    value={type.name}
-                    onChange={handleTypes}
-                  >
-                    <MenuItem name="type" value=""></MenuItem>
-                    <MenuItem name="type" value={"admin"}>
-                      Admin
-                    </MenuItem>
-                    <MenuItem name="type" value={"user"}>
-                      Usuario
-                    </MenuItem>
-                  </Select>
-                </form>
-              </FormControl>
-              <FormControl variant="outlined" className={classes.formControl}>
-                <form onSubmit={statusSubmit}>
-                  <InputLabel id="demo-simple-select-outlined-label">
-                    Estado
-                  </InputLabel>
-                  <Select
-                    className={classes.selectuser}
-                    labelId="demo-simple-select-outlined-label"
-                    id="demo-simple-select-outlined"
-                    value={status.name}
-                    onChange={handleStatus}
-                  >
-                    <MenuItem type="status" value={"active"}>
-                      Activo
-                    </MenuItem>
-                    <MenuItem type="status" value={"disabled"}>
-                      Desactivado
-                    </MenuItem>
-                    <MenuItem type="status" value={"banned"}>
-                      Suspendido
-                    </MenuItem>
-                  </Select>
-                </form>
-              </FormControl>
-              <Button
-                type="submit"
-                size="small"
-                className={classes.buttonreset}
-                variant="contained"
-                color="primary"
-                onClick={(e) => handleSubmit(e)}
-              >
-                Enviar
-              </Button>
             </div>
           </div>
-        
-      </div>
+        </div>
     );
   } else {
     return () => {};

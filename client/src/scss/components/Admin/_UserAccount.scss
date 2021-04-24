@@ -1,22 +1,45 @@
-.active{
-    height: 100%;
-    .folding-pannel{
-        background: white;
-        //transform: perspective(350px) rotateX(0deg);
-        transition: all 0.4s ease-in-out;
-        height: 100px;                
+
+.containerOrder{
+    width: 100%;
+    animation: 1s ease-out 0s 1 slideInFromLeft;
+    .active{
+        height: 100%;
+        .folding-pannel{
+            background: white;
+            //transform: perspective(350px) rotateX(0deg);
+            transition: all 0.4s ease-in-out;
+            height: 100px;                
+        }
+        .filter{
+            height: 50px;
+        }
+    } 
+    .inactive {   
+        background: var(--color-brand-lights); 
+        height: 100%;    
+        .folding-pannel{
+            transform-origin: 50% 0%;
+            transform: perspective(250px) rotateX(-90deg);
+            transition: all 0.4s ease-in-out;
+            height: 0;
+        }
     }
-    .filter{
-        height: 50px;
-    }
-} 
-.inactive {   
-    background: var(--color-brand-lights); 
-    height: 100%;    
-    .folding-pannel{
-        transform-origin: 50% 0%;
-        transform: perspective(250px) rotateX(-90deg);
-        transition: all 0.4s ease-in-out;
-        height: 0;
-    }
+}
+
+
+@keyframes slideInFromLeft {
+    0%{
+        display: none;
+        opacity: 0;
+        transform: rotateX(90deg);
+
+      }
+      50%{
+        opacity: 0.5;
+
+      }
+      100%{
+        opacity: 1;
+        transform: rotateX(0deg);
+      } 
 }
