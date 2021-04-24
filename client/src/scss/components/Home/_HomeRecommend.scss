@@ -1,0 +1,15 @@
+
+.homeRecommend{
+    display: flex;
+    flex-direction: column;
+    .productsRecommended {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-evenly;
+      
+      width: 85%;
+      margin: 40px auto;
+      
+    };
+}

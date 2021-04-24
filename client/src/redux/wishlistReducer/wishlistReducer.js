@@ -5,11 +5,13 @@ import {
   REMOVE_FROM_WISHLIST,
   DELETE_WISHLIST,
   GET_FAVS,
+  ADD_RECOMMENDED
 } from './wishlistActions';
 
 const initialState = {
   wishlists: [],
   favorites: [],
+  recommended: [],
   changedWishlist: {},
   changedProduct: {},
 };
@@ -45,6 +47,11 @@ const wishlistReducer = (state = initialState, action) => {
       return {
         ...state,
         favorites: [...action.payload],
+      };
+    case ADD_RECOMMENDED:
+      return {
+        ...state,
+        recommended: action.payload,
       };
     default:
       return { ...state };

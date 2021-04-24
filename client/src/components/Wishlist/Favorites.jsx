@@ -26,6 +26,7 @@ function Favorites() {
     localStorage.setItem('Fav', JSON.stringify(favList));
     dispatch(modifyFav({ [`Fav-${id}`]: false }));
     dispatch(getFavs(favList));
+    // dispatch(addRecommended())
   };
 
   return (

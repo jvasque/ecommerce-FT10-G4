@@ -5,6 +5,7 @@ export const CREATE_WISHLIST = 'CREATE_WISHLIST';
 export const REMOVE_FROM_WISHLIST = 'REMOVE_FROM_WISHLIST';
 export const DELETE_WISHLIST = 'DELETE_WISHLIST';
 export const GET_FAVS = 'GET_FAVS';
+export const ADD_RECOMMENDED = 'ADD_RECOMMENDED';
 
 // users/wishlist?id=
 export function getWishlists(id) {
@@ -61,9 +62,19 @@ export function deleteWishlist(wishlistId) {
 export function getFavs(array) {
   return function (dispatch) {
     return axios
-      .post(`http://localhost:3001/products/filter`, { array: array })
+      .post(`http://localhost:3001/products/filter?recommended=false`, { array: array })
       .then((json) => {
         dispatch({ type: GET_FAVS, payload: json.data });
       });
+  };
+}
+
+export function addRecommended(array) {
+  return function (dispatch) {
+    return axios
+      .post(`http://localhost:3001/products/filter?recommended=true`, { array: array })
+      .then((json) => {
+      dispatch({ type: ADD_RECOMMENDED, payload: json.data });
+    });
   };
 }
