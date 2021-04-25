@@ -70,14 +70,14 @@ export default function Newsletter() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    var user_id = localStorage.getItem("user");
+    const id = localStorage.getItem("user");
     //alert(user);
 
-    // if (!boletinesInformativos && !promociones && !nuevosLanzamientos) {
-    //   alert("Para suscribirte seleccion al menos un tipo de suscripción");
+    if (!boletinesInformativos && !promociones && !nuevosLanzamientos) {
+      alert("Para suscribirte seleccion al menos un tipo de suscripción");
 
-    //   return;
-    // }
+      return;
+    }
 
     // if (name === "") {
     //   alert("Digita el nombre");
@@ -92,8 +92,7 @@ export default function Newsletter() {
     var url = "http://localhost:3001/newsLetter/email";
 
     let newsLetter = {
-      name: name,
-      email: email,
+      id,
       boletinesInformativos: boletinesInformativos,
       promociones: promociones,
       nuevosLanzamientos: nuevosLanzamientos,
@@ -108,12 +107,12 @@ export default function Newsletter() {
       .then((res) => {
         alert(res.data.message);
 
-        setName("");
-        setEmail("");
+        //setName("");
+        //setEmail("");
 
-        setBoletinesInformativos(true);
+        setBoletinesInformativos(false);
         setPromociones(true);
-        setNuevosLanzamientos(true);
+        setNuevosLanzamientos(false);
       });
   };
 
@@ -139,7 +138,7 @@ export default function Newsletter() {
       {/* Inicio Primera pestaña Newsletter */}
       <TabPanel value={value} index="one">
         <Typography variant="h4" color="initial" align="center">
-          Darse de baja de alguno o todos los boletines
+          Suscribase a nuestros Boletines
         </Typography>
 
         <form onSubmit={handleSubmit}>
@@ -180,6 +179,9 @@ export default function Newsletter() {
           >
             Guardar
           </Button> */}
+          <br />
+          <br />
+          <h6>Para de suscribirse de nuestros boletines, se debe hacerse desde los boletines que le llegan al correo que nos suministro </h6>
         </form>
       </TabPanel>
       {/* Cierre Primera pestaña Newsletter */}

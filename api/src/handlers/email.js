@@ -8,9 +8,20 @@ const util = require('util');
 //Posiblemente pasar a mailtrap
 
 const {
+    host,
+    port,
     user,
-    pass,
+    pass
 } = process.env;
+
+// var transporter = nodemailer.createTransport({
+//     host,
+//     port,
+//     auth: {
+//         user,
+//         pass
+//     }
+// });
 
 let transporter = nodemailer.createTransport({
     service: 'gmail',

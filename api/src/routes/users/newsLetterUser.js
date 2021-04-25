@@ -1,92 +1,75 @@
 //const path = require("path");
 
-const { NewsletterOption, User } = require("../../db.js");
+const {
+    NewsletterOption,
+    User
+} = require("../../db.js");
 
 const server = require("express").Router();
 
 const enviarEmail = require('../../handlers/email');
 
-// //Inicia el proceso de suscripción del usuario guest, por el momento no maneja token
-server.post('/email', async (req, res, next) => {
-
+// //Inicia el proceso de suscripción del usuario logueado, por el momento no maneja token
+server.post('/emailUser', async (req, res, next) => 
+{
     try 
     {
-        let id = 0;
+        const {
+            id
+        } = req.body;
 
-        let name = '';
-        let email = '';
+        const nl = await NewsletterOption.findOne({
+            where: {
+                id
+            }
+        });
 
-        if (req.body.id) 
+        if (nl !== null)
         {
-            id = req.body.id;
-
-            const user = await User.findOne({
+            const [newsLetter, created] = await NewsletterOption.findOrCreate({
                 where: {
-                    id
+                    email: nl.email
+                },
+                defaults: {
+                    name: nl.firstName,
+                    email: nl.email
                 }
             });
 
-            if (user !== null)
+            if (created) 
             {
-                name = user.firstName;
-                email = user.email;
-            }            
-            else
+                const url = `http://localhost:3001/newsLetterUser/suscripcion?id=${newsLetter.id}&boletinesInformativos=${boletinesInformativos}&promociones=${promociones}&nuevosLanzamientos=${nuevosLanzamientos}`;
+                //const urlBaja = `http://localhost:3001/newsLetter/desuscribir?id=${newsLetter.id}&boletinesInformativos=true&promociones=false&nuevosLanzamientos=false`;
+
+
+                //Envía al correo la plantilla, para verificar el email y el cambio
+                // de estado de false a true en la base de datos
+                await enviarEmail.enviar({
+
+                    email: nl.email,
+                    name: nl.firstName,
+                    subject: 'Suscripción Agro Place',
+                    url,
+                    archivo: 'layoutEmail1' // aqui va la plantilla               
+
+                });
+
+                return res.json({
+                    message: `En su bandeja de entrada llegará la autorización para la suscripción, 
+                            por favor verifique su correo no deseado y agreguenos a sus favoritos`
+                });
+            } 
+            else 
             {
                 return res.json({
-                    message: "Ese usuario no existe"
+                    message: "El email ya está en nuestra base de datos"
                 });
             }
-        }    
-        else
-        {
-            name = req.body.name;
-            email = req.body.email;
-        }
-
-        const {
-            boletinesInformativos,
-            promociones,
-            nuevosLanzamientos
-        } = req.body;
-
-        const [newsLetter, created] = await NewsletterOption.findOrCreate({
-            where: {
-                email
-            },
-            defaults: {
-                name,
-                email
-            }
-        });  
-        
-        if (created)
-        {            
-            const url = `http://localhost:3001/newsLetter/suscripcion?id=${newsLetter.id}&boletinesInformativos=${boletinesInformativos}&promociones=${promociones}&nuevosLanzamientos=${nuevosLanzamientos}`;
-            //const urlBaja = `http://localhost:3001/newsLetter/desuscribir?id=${newsLetter.id}&boletinesInformativos=true&promociones=false&nuevosLanzamientos=false`;
-
-
-            //Envía al correo la plantilla, para verificar el email y el cambio
-            // de estado de false a true en la base de datos
-            await enviarEmail.enviar({
-
-                email,
-                name,
-                subject: 'Suscripción Agro Place',
-                url,
-                archivo: 'layoutEmail1' // aqui va la plantilla               
-
-            });
-
-            return res.json({
-                message: `En su bandeja de entrada llegará la autorización para la suscripción, 
-                          por favor verifique su correo no deseado y agreguenos a sus favoritos`
-            });            
         }
         else
         {
             return res.json({
-                message: "El email ya está en nuestra base de datos"
+                message: "Ese usuario no existe"
             });
         }
     } 
@@ -96,15 +79,15 @@ server.post('/email', async (req, res, next) => {
             newsLetther: {},
             message: error.message
         });
-        console.log(error.message);        
+
+        console.log(error.message);
     }
 });
 
 //Aca termina el proceso de suscripción desde el correo electrónico
 server.get('/suscripcion', async (req, res, next) => {
 
-    try 
-    {
+    try {
         const {
             id,
             boletinesInformativos,
@@ -118,8 +101,7 @@ server.get('/suscripcion', async (req, res, next) => {
             }
         });
 
-        if (newsLetter !== null)
-        {
+        if (newsLetter !== null) {
             await NewsletterOption.update({
                 active: true,
                 boletinesInformativos,
@@ -135,47 +117,43 @@ server.get('/suscripcion', async (req, res, next) => {
             //envia nuevamente al home de Agroplace
             return res.render(`${__dirname}/../../views/emails/layoutPagActivation.pug`, {
                 name: newsLetter.name,
-                url: `http://localhost:3001/newsletter/primerNewsLetter?id=${id}&name=${newsLetter.name}&email=${newsLetter.email}&boletinesInformativos=${boletinesInformativos}&promociones=${promociones}&nuevosLanzamientos=${nuevosLanzamientos}`
-                       
+                url: `http://localhost:3001/newsletterUser/primerNewsLetter?id=${id}&name=${newsLetter.name}&email=${newsLetter.email}&boletinesInformativos=${boletinesInformativos}&promociones=${promociones}&nuevosLanzamientos=${nuevosLanzamientos}`
+
             });
-        }
-        else
-        {   
+        } else {
             //página de error         
             return res.render(`${__dirname}/../../views/emails/layoutError.pug`, {
                 name: newsLetter.name,
                 url: "http://localhost:3000/"
-            });         
-        }           
-    } 
-    catch (error) 
-    {
+            });
+        }
+    } catch (error) {
         //Página de error
         return res.render(`${__dirname}/../../views/emails/layoutError.pug`, {
             name: newsLetter.name,
             error,
             url: "http://localhost:3000"
         });
-    }    
+    }
 });
 
 server.get('/primerNewsLetter', async (req, res, next) => {
 
-        const {
-            id,
-            name,
-            email
-        } = req.query;
+    const {
+        id,
+        name,
+        email
+    } = req.query;
 
-     await enviarEmail.enviar({
+    await enviarEmail.enviar({
 
-         email, 
-         name,
-         subject: 'Boletin No 1 Agro Place',
-         urlBaja: `http://localhost:3001/newsLetter/desuscribir?id=${id}&boletinesInformativos=false&promociones=false&nuevosLanzamientos=false`,
-         archivo: 'layoutEmail2' // aqui va la plantilla               
+        email,
+        name,
+        subject: 'Boletin No 1 Agro Place',
+        urlBaja: `http://localhost:3001/newsLetterUser/desuscribir?id=${id}&boletinesInformativos=false&promociones=false&nuevosLanzamientos=false`,
+        archivo: 'layoutEmail2' // aqui va la plantilla               
 
-     });
+    });
 
 
     res.redirect("http://localhost:3000");
@@ -184,8 +162,7 @@ server.get('/primerNewsLetter', async (req, res, next) => {
 
 server.get('/desuscribir', async (req, res, next) => {
 
-    try 
-    {
+    try {
         const {
             id,
             boletinesInformativos,
@@ -199,11 +176,10 @@ server.get('/desuscribir', async (req, res, next) => {
             }
         });
 
-        if (newsLetter !== null)
+        if (newsLetter !== null) 
         {
-            if ((boletinesInformativos === "false" && promociones === "false" && nuevosLanzamientos === "false") || 
-                (boletinesInformativos === false && promociones === false && nuevosLanzamientos === false))
-            {
+            if ((boletinesInformativos === "false" && promociones === "false" && nuevosLanzamientos === "false") ||
+                (boletinesInformativos === false && promociones === false && nuevosLanzamientos === false)) {
                 await NewsletterOption.update({
                     active: false,
                     boletinesInformativos,
@@ -220,9 +196,9 @@ server.get('/desuscribir', async (req, res, next) => {
                     name: newsLetter.name,
                     url: "http://localhost:3000"
                 });
-            }    
-            else
-            { 
+            } 
+            else 
+            {
                 await NewsletterOption.update({
                     boletinesInformativos,
                     promociones,
@@ -231,16 +207,15 @@ server.get('/desuscribir', async (req, res, next) => {
                     where: {
                         id
                     }
-                });    
-                
+                });
+
                 return res.render(`${__dirname}/../../views/emails/layoutPagUnsubscribe.pug`, {
                     name: newsLetter.name,
                     url: "http://localhost:3000"
                 });
-            }    
-        }
-        else
-        {
+            }
+        } 
+        else {
             //Página de error
             return res.render(`${__dirname}/../../views/emails/layoutError.pug`, {
                 name: newsLetter.name,
@@ -263,12 +238,10 @@ server.get('/correo-masivo-de-prueba', async (req, res, next) => {
     const promociones = true;
     const nuevosLanzamientos = true;
 
-    try 
-    {
+    try {
         const users = await User.findAll();
 
-        for (let i = 0; i < users.length; i++) 
-        {
+        for (let i = 0; i < users.length; i++) {
             const url = `http://localhost:3001/newsLetter/suscripcion?id=${users[i].id}&boletinesInformativos=${boletinesInformativos}&promociones=${promociones}&nuevosLanzamientos=${nuevosLanzamientos}`;
             //const urlBaja = `http://localhost:3001/newsLetter/desuscribir?id=${newsLetter.id}&boletinesInformativos=true&promociones=false&nuevosLanzamientos=false`;
 
@@ -286,9 +259,7 @@ server.get('/correo-masivo-de-prueba', async (req, res, next) => {
         return res.json({
             message: "Los correos han sido enviados"
         });
-    } 
-    catch (error) 
-    {
+    } catch (error) {
         return res.json({
             message: "Error " + error
         });
