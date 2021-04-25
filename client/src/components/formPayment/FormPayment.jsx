@@ -1,22 +1,24 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
-import axios from 'axios';
-import { Button, TextField } from '@material-ui/core';
-import Typography from '@material-ui/core/Typography';
-import '../../scss/components/FormPayment/_FormPayment.scss';
-import { useHistory } from 'react-router-dom';
-import swal from 'sweetalert';
-import { FormControl } from '@material-ui/core';
+import React, { useState, useLayoutEffect, useEffect } from "react";
+import { useSelector } from "react-redux";
+import axios from "axios";
+import { Button, TextField } from "@material-ui/core";
+import Typography from "@material-ui/core/Typography";
+import "../../scss/components/FormPayment/_FormPayment.scss";
+import { useHistory } from "react-router-dom";
+import swal from "sweetalert";
+import { FormControl } from "@material-ui/core";
 import {
   makeStyles,
   createMuiTheme,
   ThemeProvider,
+
 } from '@material-ui/core/styles';
-import Paypal from '../paypal/paypal';
+import Paypal from '../Paypal/Paypal';
+
 
 const useStyles = makeStyles({
   root: {
-    borderColor: 'green',
+    borderColor: "green",
     fontWeight: 525,
   },
 });
@@ -24,7 +26,7 @@ const useStyles = makeStyles({
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: 'rgba(47, 126, 19, 1)',
+      main: "rgba(47, 126, 19, 1)",
     },
   },
 });
@@ -35,17 +37,17 @@ const FormPayment = () => {
   const history = useHistory();
 
   const [input, setInput] = useState({
-    firstName: '',
-    lastName: '',
-    address: '',
+    firstName: "",
+    lastName: "",
+    address: "",
     phoneNumber: 0,
-    email: '',
+    email: "",
   });
-  const [url, setUrl] = useState('');
-  const id = JSON.parse(localStorage.getItem('user'));
+  const [url, setUrl] = useState("");
+  const id = JSON.parse(localStorage.getItem("user"));
 
   const total = useSelector((state) => state.cartReducer.total);
-  const [showButtons, setShowButtons] = useState(false);
+  const [showPaypal, setShowPaypal] = useState(false);
 
   const handleChange = (e) => {
     setInput({
@@ -54,24 +56,36 @@ const FormPayment = () => {
     });
   };
 
+  useEffect(() => {
+    input.firstName.length !== 0 &&
+    input.lastName.length !== 0 &&
+    input.address.length !== 0 &&
+    input.email.includes("@")
+      ? setShowPaypal(true)
+      : setShowPaypal(false);
+  }, [showPaypal, input]);
+
   const onSubmit = async (e, value) => {
     e.preventDefault();
+
     if (
       input.firstName.length === 0 ||
       input.lastName.length === 0 ||
       input.address.length === 0
     ) {
-      return swal('Aviso!', 'Todos los datos son obligatorios', 'warning');
+      setShowPaypal(false);
+      return swal("Aviso!", "Todos los datos son obligatorios", "warning");
     }
-    if (!input.email.includes('@')) {
-      return swal('Aviso!', 'Ingrese un Email valido', 'warning');
+    if (!input.email.includes("@")) {
+      setShowPaypal(false);
+      return swal("Aviso!", "Ingrese un Email valido", "warning");
     }
-    setShowButtons(true);
+
     await axios.put(`http://localhost:3001/order/orders/${id}`, {
       firstName: input.firstName,
       lastName: input.lastName,
-      state: 'cart',
-      paymentDate: 'Mercadopago',
+      state: "cart",
+      paymentDate: "mercadopago",
       address: input.address,
       email: input.email,
       phoneNumber: input.phoneNumber,
@@ -79,9 +93,9 @@ const FormPayment = () => {
     });
 
     const urlMercadopago = await axios.post(
-      'http://localhost:3001/cart/checkout',
+      "http://localhost:3001/cart/checkout",
       {
-        title: 'Pago AgroPlace',
+        title: "Pago AgroPlace",
         totalPrice: total,
       }
     );
@@ -90,11 +104,6 @@ const FormPayment = () => {
     window.location = urlMercadopago.data.url;
   };
 
-  // const returnToCart = (e) => {
-  //   e.preventDefault();
-  //   dispatch(returnProductCart(user, id, total));
-  //   history.push("/product/cart");
-  // };
 
   return (
     <ThemeProvider theme={theme}>
@@ -142,20 +151,22 @@ const FormPayment = () => {
             type="email"
             name="email"
             onChange={handleChange}
-            label={'Email'}
+            label={"Email"}
             variant="filled"
             style={{ marginBottom: 5 }}
           />
 
           <h3> Total: ${total}</h3>
 
-          <Button onClick={(e) => onSubmit(e, 'mercadopago')}>
+          <Button onClick={(e) => onSubmit(e, "mercadopago")}>
             Mercadopago
           </Button>
-          {/* <Button onClick={(e) => onSubmit(e, "paypal")}>Paypal</Button> */}
-          <div className="button-paypal">
-            <Paypal total={total} />
-          </div>
+
+          {showPaypal ? (
+            <Paypal dataClient={input} />
+          ) : (
+            <Button onClick={(e) => onSubmit(e, "paypal")}>Paypal</Button>
+          )}
         </FormControl>
       </div>
     </ThemeProvider>
