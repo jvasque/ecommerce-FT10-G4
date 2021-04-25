@@ -1,7 +1,9 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
-import { Provider } from 'react-redux';
+
+import React, {Fragment} from "react";
+import ReactDOM from "react-dom";
+import { BrowserRouter } from "react-router-dom";
+import { Provider } from "react-redux";
+
 //PRUEBA MUI
 import { ThemeProvider } from '@material-ui/core/styles';
 import { createMuiTheme } from '@material-ui/core/styles';
@@ -32,8 +34,9 @@ const theme = createMuiTheme({
   },
 });
 
+
 ReactDOM.render(
-  <React.StrictMode>
+  <Fragment> 
     <Provider store={store}>
       <BrowserRouter>
         <ThemeProvider theme={theme}>
@@ -41,8 +44,9 @@ ReactDOM.render(
         </ThemeProvider>
       </BrowserRouter>
     </Provider>
-  </React.StrictMode>,
-  document.getElementById('root')
+  </Fragment>,
+  document.getElementById("root")
+
 );
 
 // If you want your app to work offline and load faster, you can change
