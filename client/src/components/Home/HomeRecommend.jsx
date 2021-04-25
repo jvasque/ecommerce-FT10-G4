@@ -14,21 +14,24 @@ function HomeRecommend() {
   let favList = JSON.parse(localStorage.getItem('Fav'));
   console.log(favList);
 
-  const recommends = useSelector((state) => state.wishlistReducer.recommended);
 
+  const recommends = useSelector((state) => state.wishlistReducer.recommended);
   const dispatch = useDispatch();
 
+  const [products, setProducts] = useState(recommends);
+
   useEffect(() => {
+    dispatch(getFavs(favList));
     dispatch(addRecommended(favList));
     return () => {};
-  }, []);
+  }, [products]);
 
   return (
     <div className="homeRecommend">
       <h2>Recomendados para vos</h2>
       <div className="productsRecommended">
-        {recommends &&
-          recommends.map((product) => (
+        {products &&
+          products.map((product) => (
             <ProductCard product={product} key={product.id} />
           ))}
       </div>

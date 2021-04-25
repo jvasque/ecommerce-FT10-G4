@@ -19,6 +19,7 @@ import { addRecommended } from './redux/wishlistReducer/wishlistActions';
 
 store.dispatch(getCatalog());
 store.dispatch(getCategories());
+store.dispatch(addRecommended());
 
 const theme = createMuiTheme({
   palette: {

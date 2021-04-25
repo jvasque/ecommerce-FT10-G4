@@ -9,17 +9,17 @@ module.exports = async (req, res, next) => {
   let favProducts,
     recCategories,
     recProducts = [],
-    pickRandom = [];
+    pickRandom = [],
+    randomDic = {};
 
   // TOTAL DE PRODUCTOS EN LA DB
-  let totalProducts = await Product.count();
-  console.log('Products have: ', totalProducts, ' items');
+  let totalProducts = await Product.findAndCountAll(); 
 
   let randomProdIndices = [
-    Math.floor(Math.random() * totalProducts),
-    Math.floor(Math.random() * totalProducts),
-    Math.floor(Math.random() * totalProducts),
-    Math.floor(Math.random() * totalProducts),
+    Math.floor(Math.random() * totalProducts.count),
+    Math.floor(Math.random() * totalProducts.count),
+    Math.floor(Math.random() * totalProducts.count),
+    Math.floor(Math.random() * totalProducts.count),
   ];
   console.log('Random indices', randomProdIndices);
 
@@ -49,7 +49,7 @@ module.exports = async (req, res, next) => {
         },
       });
 
-      console.log('Favoritos de DB:', favProducts);
+      // console.log('Favoritos de DB:', favProducts);
 
       //Pide favoritos, tiene y no pide recommended, devuelvo favoritos
       if (isRecommended !== 'true') {
@@ -101,22 +101,33 @@ module.exports = async (req, res, next) => {
               },
             },
           });
+          
+          let randomIndex = Math.floor(Math.random() * pickRandom.products.length)
+          let randomProd = pickRandom.products[randomIndex]
 
-          recProducts.push(
-            pickRandom.products[
-              Math.floor(Math.random() * pickRandom.products.length)
-            ]
-          );
+         if (randomDic[randomProd.id]) {
+              continue;
+          } else {
+            randomDic[randomProd.id] = true;
+            recProducts.push(randomProd);
+          }
         }
 
         // subCase 1: menos de 4
 
         while (recProducts.length < 4) {
-          recProducts.push(
-            pickRandom.products[
-              Math.floor(Math.random() * pickRandom.products.length)
-            ]
-          );
+
+          let randomIndex = Math.floor(Math.random() * totalProducts.rows.length)
+          let randomProd = totalProducts.rows[randomIndex]
+
+         if (randomDic[randomProd.id]) {
+              continue;
+          } else {
+            randomDic[randomProd.id] = true;
+            recProducts.push(randomProd);
+          }
+        
+
         }
 
         return res.json(recProducts); // CASE 2
