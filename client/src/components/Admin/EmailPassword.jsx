@@ -20,10 +20,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const EmailPassword = () => {
+
   const classes = useStyles();
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
-  const [alert, setAlert] = useState(false);
 
   ///validate
   function validateMail(mail) {
@@ -36,16 +36,16 @@ const EmailPassword = () => {
     return errors;
   }
   ////////
+
   const emailChange = (e) => {
     setEmail(e.target.value);
     setError(validateMail(e.target.value));
   };
   const emailSubmit = async (e) => {
     e.preventDefault();
-
     if (/\S+@\S+\.\S+/.test(email)) {
       try {
-        const post = await axios.post(
+        await axios.post(
           "http://localhost:3001/auth/forgot/email",
           {
             email: email,
@@ -91,7 +91,6 @@ const EmailPassword = () => {
               }
               onChange={emailChange}
             />
-
             <Button
               className={classes.button}
               variant="contained"

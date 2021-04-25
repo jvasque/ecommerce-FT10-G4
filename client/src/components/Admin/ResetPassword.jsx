@@ -59,6 +59,7 @@ const ResetPassword = () => {
       })
     );
   };
+  
   const passwordSubmit = async (e) => {
     e.preventDefault();
 
@@ -71,6 +72,7 @@ const ResetPassword = () => {
     );
     console.log(post.data);
   };
+
   return (
     <div className="container-reset">
       <div className="container-todo">

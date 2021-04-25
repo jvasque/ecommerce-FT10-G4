@@ -11,7 +11,7 @@ const user = useSelector(state=>state.cartReducer.cart)
     loading: true,
     paid: false,
   });
-const history = useHistory()
+const history = useHistory();
   
 
   useLayoutEffect(() => {
