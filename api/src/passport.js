@@ -16,8 +16,8 @@ passport.use(
     { usernameField: 'email', passwordField: 'password', session: false },
     async (email, password, done) => {
       const user = await User.findOne({ where: { email: email } });
-      if (!user || !user.correctPassword(password)) return done(null, false);
-      if (user.resetPassword) return done(null, false);
+      if (!user || !user.correctPassword(password)) return done(null, false, {message: "Su email o contraseña no es valida"});
+      if (user.resetPassword) return done(null, false, {message: "Ud. tiene un token de reset activo, favor siga las instrucciones"});
       const {
         id,
         firstName,

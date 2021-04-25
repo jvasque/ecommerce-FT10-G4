@@ -6,6 +6,10 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import "../../scss/components/Admin/_ResetPassword.scss";
+import Swal from "sweetalert2";
+
+import { useHistory } from 'react-router';
+
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -21,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ResetPassword = () => {
   const { token } = useParams();
+  const history = useHistory();
   const classes = useStyles();
   const [input, setInput] = useState({
     password: "",
@@ -62,7 +67,8 @@ const ResetPassword = () => {
   
   const passwordSubmit = async (e) => {
     e.preventDefault();
-
+if(input.password === input.repeatPassword){
+  try{
     const post = await axios.post(
       "http://localhost:3001/auth/reset",
       { password: input.password },
@@ -70,7 +76,26 @@ const ResetPassword = () => {
         headers: { Authorization: `Bearer ${token}` },
       }
     );
+    Swal.fire({
+      title: "¡Su contraseña ha sido modificada con éxito!",
+      confirmButtonColor: "#378a19",
+    });
+    history.push({
+      pathname: "/user/login",
+    });
     console.log(post.data);
+  } catch(e){
+    Swal.fire({
+      icon: "error",
+      title: "algo ha salido mal, favor vuelve a pedir una solicitud para cambiar contraseña",
+      confirmButtonColor: "red",
+    });
+    history.push({
+      pathname: "/forgot/email",
+    });
+  }
+   
+  }
   };
 
   return (
@@ -95,17 +120,17 @@ const ResetPassword = () => {
               error={
                 /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/.test(
                   input.password
-                )
+                ) || input.password.length < 8
                   ? false
                   : true
               }
               value={input.password}
               helperText={
-                !/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/.test(
+                /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/.test(
                   input.password
-                )
-                  ? errors.password
-                  : ""
+                )  || input.password.length < 8
+                  ? ""
+                  : errors.password
               }
               onChange={passwordChange}
             />
@@ -115,12 +140,12 @@ const ResetPassword = () => {
               label="Repita Contrseña"
               name="repeatPassword"
               margin="dense"
-              error={input.repeatPassword === input.password ? false : true}
+              error={input.repeatPassword === input.password || input.repeatPassword.length < 8? false : true}
               value={input.repeatPassword}
               helperText={
-                input.repeatPassword !== input.password
-                  ? errors.repeatPassword
-                  : ""
+                input.repeatPassword === input.password || input.repeatPassword.length < 8
+                  ? ""
+                  : errors.repeatPassword
               }
               onChange={passwordChange}
             />
