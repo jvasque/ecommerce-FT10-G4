@@ -10,7 +10,8 @@ const {
 
 module.exports = async (req, res, next) => {
   const token = req.user;
-  
+  const query = req.query.name
+  if(!query){
   try {
     if (token.type === "admin" || token.type === "superadmin") {
       let data = await User.findAll({
@@ -33,5 +34,14 @@ module.exports = async (req, res, next) => {
     }
   } catch (e) {
     next(e);
+  }}
+  else{
+   // que hago con la query
+   try{
+
+   }
+   catch(e){
+     
+   }
   }
 };
