@@ -28,59 +28,46 @@ const Nav = () => {
       pathname: '/catalog',
     });
   }
+  let imgURL =
+    'https://cdn.discordapp.com/attachments/803407061203025931/835991187286130698/AgroPlace-logo_new_png.png';
 
   return (
     <div className="Nav">
-      <div className="header">
-        <div className="headerSection">
-          <div className="headerSection__bg"></div>
-          <div className="headerSection__logo">
+      <div className="navTitles">
+        <div className="menu">
+          <div className="logo">
             <Link to="/">
-              <img
-                id="logo"
-                src="https://cdn.discordapp.com/attachments/803407061203025931/830813714487181382/AgroPlace-logo_png.png"
-                alt=""
-              />
+              <img alt="logo" src={imgURL} />
             </Link>
-            {/* <svg viewBox="0 0 24 24">                   
-            </svg> */}
           </div>
-          <h1 className="headerSection__title">Sembremos futuro</h1>
-          {/* <div className="headerSection__log">
-             <svg className="headerSection__log--icon" width="24" height="24" viewBox="0 0 24 24">
-              FaInstagram, AiOutlineFacebook, AiOutlineTwitter
-            </svg> 
-          </div> */}
+          <div id="home">
+            <Link to="/">
+              <h2>Home</h2>
+            </Link>
+          </div>
+          <div className="products-title">
+            <h2 onClick={() => handleClick('')}>Productos</h2>
+            <ul>
+              {categories.map((category, index) => {
+                return (
+                  <li key={index} onClick={() => handleClick(category.name)}>
+                    {category.name}
+                  </li>
+                );
+              })}
+              <li id="lastItem" onClick={() => handleClick('')}>
+                Ver todas
+              </li>
+            </ul>
+          </div>
+          <div className="exchange">
+            <span className="exchange__usd">$USD 1 = </span>
+            <span className="exchange__ars">$ARS 148</span>
+          </div>
+          <SearchBar />
+
+          <AdminMenu />
         </div>
-      </div>
-
-      <div className="navElements">
-        <div className="dropdown">
-          <ul className="hList">
-            <div className="menu">
-              <h2 className="menu-title" onClick={() => handleClick('')}>
-                Productos
-              </h2>
-              <ul className="menu-dropdown">
-                {categories.map((category, index) => {
-                  return (
-                    <div
-                      className="categoriesLoaded"
-                      key={index}
-                      onClick={() => handleClick(category.name)}
-                    >
-                      <li>{category.name}</li>
-                    </div>
-                  );
-                })}
-              </ul>
-            </div>
-          </ul>
-        </div>
-
-        <SearchBar />
-
-        <AdminMenu />
       </div>
     </div>
   );

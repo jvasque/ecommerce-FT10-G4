@@ -1,10 +1,7 @@
 .searchBarForm {
-  // display: flex;
-  // align-items: center;
-  // justify-content: center;
   form {
     position: relative;
-    width: 30rem;
+    width: 36rem;
     background: var(--color-brand);
     border-radius: var(--rad);
     :hover {
@@ -12,6 +9,7 @@
       background: var(--color-brand);
     }
   }
+
   input,
   button {
     height: var(--height);
@@ -20,6 +18,7 @@
     color: var(--color-black);
     font-size: 1.5rem;
   }
+
   input[type='search'] {
     vertical-align: 3.5px;
     width: 15rem;
@@ -33,23 +32,24 @@
     z-index: 1;
     position: relative;
   }
+
   button {
     display: none;
     position: relative;
-    top: 0;
-    right: 0;
     width: var(--btn-width);
     font-weight: bold;
     background: var(--color-brand);
     border-radius: 0 var(--rad) var(--rad) 0;
   }
+
   input:not(:placeholder-shown) {
     border-radius: var(--rad) 0 0 var(--rad);
     width: 20vw;
     // width: calc(500px - var(--btn-width));
     + button {
       outline: none;
-      display: inline-block;
+      position: absolute;
+      display: inline;
       line-height: 0px;
     }
     + button:hover {

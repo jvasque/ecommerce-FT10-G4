@@ -20,7 +20,7 @@ export default function AdminMenu() {
               to="/user/info"
               style={
                 colorChange === 'User'
-                  ? { color: 'rgba(243, 208, 11, 0.87)' }
+                  ? { color: 'rgba(255, 153, 0, 0.87)' }
                   : { color: '' }
               }
               onClick={() => setColorChange('User')}
@@ -34,7 +34,7 @@ export default function AdminMenu() {
               to="/product/cart"
               style={
                 colorChange === 'Cart'
-                  ? { color: 'rgba(243, 208, 11, 0.87)' }
+                  ? { color: 'rgba(255, 153, 0, 0.87)' }
                   : { color: '' }
               }
               onClick={() => setColorChange('Cart')}
@@ -43,7 +43,7 @@ export default function AdminMenu() {
               <span
                 style={
                   colorChange === 'Cart'
-                    ? { backgroundColor: 'rgba(243, 208, 11, 0.87)' }
+                    ? { backgroundColor: 'rgba(255, 153, 0, 0.87)' }
                     : { backgroundColor: '' }
                 }
                 onClick={() => setColorChange('Cart')}

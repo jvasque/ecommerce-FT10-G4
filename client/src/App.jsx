@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router';
 
 import Home from './components/Home/Home';
 import Nav from './components/Nav/Nav';
+import NavBanner from './components/Nav/NavBanner';
 import ProductDetails from './components/ProductDetails/ProductDetails';
 import ProductForm from './components/product_form/product_form';
 import ProductFormCreate from './components/product_form/product_form_create';
@@ -30,6 +31,7 @@ function App() {
   return (
     <div className="App">
       <Route path="/" component={Nav} />
+      <Route exact path="/" component={NavBanner} />
       <Route exact path="/" component={Home} />
       <Switch>
         <Route exact path="/product/cart" component={Cart} />

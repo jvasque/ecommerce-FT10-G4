@@ -1,35 +1,34 @@
-const server = require("express").Router();
-const { User } = require("../db.js");
-const passport = require("passport");
-const jwt = require("jsonwebtoken");
-const googleLogin = require("./auth/googleLogin.js");
-const me = require("./auth/me.js");
-const login = require("./auth/login.js");
-const express = require("express");
-const { SECRET_KEY} = process.env;
+const server = require('express').Router();
+const { User } = require('../db.js');
+const passport = require('passport');
+const jwt = require('jsonwebtoken');
+const googleLogin = require('./auth/googleLogin.js');
+const me = require('./auth/me.js');
+const login = require('./auth/login.js');
+const express = require('express');
+const { SECRET_KEY } = process.env;
 
 // Middlewares
 server.use(express.json());
 
 // User routes
-server.get("/me", me);
-server.post("/login", login);
-server.post("/google/login", googleLogin);
+server.get('/me', me);
+server.post('/login', login);
+server.post('/google/login', googleLogin);
 
 server.post('/forgot', async (req, res, next) => {
-  const {email} = req.body
-  const user = await User.findOne({where:{email:email}})
-  if(!user) return  res.status(401).json({message: "Usuario no encontrado"})
-  const token = jwt.sign({id:user.id}, SECRET_KEY)
-  
-  res.json(token)
-  
+  const { email } = req.body;
+  const user = await User.findOne({ where: { email: email } });
+  if (!user) return res.status(401).json({ message: 'Usuario no encontrado' });
+  const token = jwt.sign({ id: user.id }, SECRET_KEY);
+
+  res.json(token);
 
   // if (!user) {
-  //  
-    // return res.redirect('/forgot');
+  //
+  // return res.redirect('/forgot');
   // }
-//logica de DB 
+  //logica de DB
   // user.resetPasswordToken = token;
   // user.resetPasswordExpires = Date.now() + 3600000;
 
@@ -63,18 +62,21 @@ server.get('/facebook', passport.authenticate('facebook'));
 server.get(
   '/facebook/callback',
   passport.authenticate('facebook', {
-    successRedirect: 'http://localhost:3000/',
+    successRedirect: 'http://localhost:3000/user/info',
     failureRedirect: 'http://localhost:3000/user/login',
     session: false,
   })
 );
 
-server.post('/forgot/reset',passport.authenticate('bearer', {session:false}), async (req,res)=>{
-  
-  const user = await User.findByPk(req.user.id)
-  console.log(user)
-  // se debe mirar la logica de DB
-  res.send('ok')
-})
+server.post(
+  '/forgot/reset',
+  passport.authenticate('bearer', { session: false }),
+  async (req, res) => {
+    const user = await User.findByPk(req.user.id);
+    console.log(user);
+    // se debe mirar la logica de DB
+    res.send('ok');
+  }
+);
 
 module.exports = server;

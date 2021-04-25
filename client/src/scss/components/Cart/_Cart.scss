@@ -1,9 +1,9 @@
 .cart-container {
+  margin: 126px auto 40px auto;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  margin: 40px auto 40px auto;
 
   h1 {
     color: var(--color-black);
@@ -39,6 +39,9 @@
 
     .link-redirect {
       text-decoration: none;
+      button {
+        margin-top: 20px;
+      }
     }
     button {
       background-color: #378a19;
