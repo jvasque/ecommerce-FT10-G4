@@ -141,7 +141,7 @@ server.get('/primerNewsLetter', async (req, res, next) => {
          email, 
          name,
          subject: 'Boletin No 1 Agro Place',
-         url: "http://leonpeleador.com",
+         urlBaja: `http://localhost:3001/newsLetter/desuscribir?id=${id}&boletinesInformativos=false&promociones=false&nuevosLanzamientos=false`,
          archivo: 'layoutEmail2' // aqui va la plantilla               
 
      });
@@ -152,7 +152,7 @@ server.get('/primerNewsLetter', async (req, res, next) => {
 });
 
 server.get('/desuscribir', async (req, res, next) => {
-const urlBaja = `http://localhost:3001/newsLetter/desuscribir?id=${newsLetter.id}&boletinesInformativos=true&promociones=false&nuevosLanzamientos=false`;
+
     try 
     {
         const {
@@ -170,7 +170,6 @@ const urlBaja = `http://localhost:3001/newsLetter/desuscribir?id=${newsLetter.id
 
         if (newsLetter !== null)
         {
-
             if ((boletinesInformativos === "false" && promociones === "false" && nuevosLanzamientos === "false") || 
                 (boletinesInformativos === false && promociones === false && nuevosLanzamientos === false))
             {
@@ -188,11 +187,8 @@ const urlBaja = `http://localhost:3001/newsLetter/desuscribir?id=${newsLetter.id
                 //Página que informa la desuscripción a los boletines y vuelve al home AgroPlace
                 return res.render(`${__dirname}/../../views/emails/layoutPagUnsubscribe.pug`, {
                     name: newsLetter.name,
-                    error,
-                    url: "http://localhost:3000",
-                    urlBaja
+                    url: "http://localhost:3000"
                 });
-
             }    
             else
             { 
@@ -204,21 +200,12 @@ const urlBaja = `http://localhost:3001/newsLetter/desuscribir?id=${newsLetter.id
                     where: {
                         id
                     }
-                });             
-
-                const html = `
-                                <html>
-                                    <head>
-                                        <title>Desuscripción parcial</title>
-                                    </head>
-                                    <body>
-                                    <h3>${newsLetter.name} Usted se desuscribio de alguno de nustros boletines </h3>
-                                    <a href="http://localhost:3000/home"> Vuela a nuestra Agro Place</a>
-                                    </body>
-                                </html>
-                            `;
-
-                res.send(html);
+                });    
+                
+                return res.render(`${__dirname}/../../views/emails/layoutPagUnsubscribe.pug`, {
+                    name: newsLetter.name,
+                    url: "http://localhost:3000"
+                });
             }    
         }
         else

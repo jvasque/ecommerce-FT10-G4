@@ -70,21 +70,24 @@ export default function Newsletter() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!boletinesInformativos && !promociones && !nuevosLanzamientos) {
-      alert("Para suscribirte seleccion al menos un tipo de suscripción");
+    var user_id = localStorage.getItem("user");
+    //alert(user);
 
-      return;
-    }
+    // if (!boletinesInformativos && !promociones && !nuevosLanzamientos) {
+    //   alert("Para suscribirte seleccion al menos un tipo de suscripción");
 
-    if (name === "") {
-      alert("Digita el nombre");
-      return;
-    }
+    //   return;
+    // }
 
-    if (email === "") {
-      alert("Digita el email");
-      return;
-    }
+    // if (name === "") {
+    //   alert("Digita el nombre");
+    //   return;
+    // }
+
+    // if (email === "") {
+    //   alert("Digita el email");
+    //   return;
+    // }
 
     var url = "http://localhost:3001/newsLetter/email";
 
@@ -140,19 +143,6 @@ export default function Newsletter() {
         </Typography>
 
         <form onSubmit={handleSubmit}>
-          {/* <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Nombre"
-          />
-
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Email"
-          /> */}
           <br />
 
           <input
@@ -179,9 +169,9 @@ export default function Newsletter() {
           <label>Nuevos lanzamientos</label>
           <br />
           <br />
-          {/* <button>Suscribirse</button> */}
+          <button>Suscribirse</button>
 
-          <Button
+          {/* <Button
             variant="outlined"
             color="secondary"
             className={classes.vlado}
@@ -189,7 +179,7 @@ export default function Newsletter() {
             onSubmit={handleSubmit}  />}
           >
             Guardar
-          </Button>
+          </Button> */}
         </form>
       </TabPanel>
       {/* Cierre Primera pestaña Newsletter */}
