@@ -5,7 +5,7 @@
 .Signup {
   display: flex;
   justify-content: center;
-  margin: 2em 0;
+  margin: 4em 0;
 
   * {
     box-sizing: border-box;
@@ -15,13 +15,13 @@
     color: red;
     font-size: 14px;
     user-select: none;
-   
+
     font-weight: auto;
     line-height: 10px;
     letter-spacing: 0.5px;
     margin: 0px 0 0px;
   }
-  
+
   input.danger {
     border: 2px solid red;
   }
@@ -104,6 +104,10 @@
     width: 100%;
   }
 
+  #loginFrame {
+    margin-top: -40px;
+  }
+
   .container {
     background-color: #fff;
     border-radius: 10px;
@@ -126,23 +130,35 @@
       width: 100%;
       text-align: center;
       color: transparent;
-      margin: 93px 0 0 0;
+      margin: 333px 0 0 0;
 
-      .my-facebook-button-class {
-        padding: 8px 12px;
-        background-color: transparent;
-        &:hover {
-          background-color: #3b5998;
-          border: none;
-          border: solid 1px white;
-          .fa-facebook {
-            color: white;
-          }
+      // * {
+      //   margin: 0 0px 0 5px;
+      // }
+
+      .facebook-login-button {
+        background-color: rgb(59, 89, 152);
+        border: solid 1px rgb(59, 89, 152);
+        border-radius: 0px;
+        padding: 3px 12px 4px 8px;
+        vertical-align: top;
+        line-height: 30px;
+        box-shadow: rgba(59, 89, 152, 0.74) 0px 2px 2px 0px,
+          rgba(0, 0, 0, 0.24) 0px 0px 1px 0px;
+
+        svg {
+          margin-right: 12px;
+          font-size: 32px;
+          vertical-align: bottom;
         }
+      }
 
-        .fa-facebook {
-          font-size: 20px;
-          color: var(--color-brand);
+      .google-login-button {
+        margin-right: 18px;
+        vertical-align: top;
+        svg {
+          margin-left: 10px;
+          vertical-align: bottom;
         }
       }
     }
