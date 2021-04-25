@@ -337,8 +337,10 @@ export default function Signup() {
           </div>
 
           <div className="form-container sign-in-container">
+          <h1>Inicia Sesion</h1>
             <div className="social-container">
-              <FacebookLogin
+           
+            <FacebookLogin
                 // appId="381446742973563"
                 appId="311325910426887"
                 autoLoad={false}
@@ -349,16 +351,6 @@ export default function Signup() {
                 icon="fa-facebook"
                 callback={responseFacebook}
               />
-            </div>
-
-            <form action="#" onSubmit={sessionSubmit}>
-              <h1>Inicia Sesion</h1>
-              <div className="social-container">
-                <a href="#" className="social">
-                  <i className="fab fa-facebook-f">
-                    <FaFacebookF />
-                  </i>
-                </a>
                 <GoogleLogin
                   clientId="926134963488-27qle0uk3423ed3dt2jlkd20rtht66g6.apps.googleusercontent.com"
                   buttonText="Login"
@@ -366,25 +358,23 @@ export default function Signup() {
                   onFailure={responseRejectGoogle}
                   cookiePolicy={"single_host_origin"}
                 />
-                {/* <a href="#" className="social">
-                  <i className="fab fa-linkedin-in">
-                    <FaLinkedinIn />
-                  </i>
-                </a> */}
-                <Link to='/forgot/email'>olvidaste tu clave?</Link>
-              </div>
+            </div>
+           
+            <form action="#" onSubmit={sessionSubmit}>
+            
+            
               <span>o usa tu cuenta</span>
               <input
-                className={`${errors.username && "danger"}`}
+                className={`${input.uname.length< 8 ||errors.username && "danger"}`}
                 type="text"
                 value={input.uname}
                 name="uname"
                 onChange={sessionChange}
                 placeholder="Email"
               />
-              {errors.username && <p className="danger">{errors.username}</p>}
+              {input.uname.length< 8 || errors.username  && <p className="danger">{errors.username}</p>}
               <input
-                className={`${errors.password && "danger"}`}
+                className={`${input.psw.length< 8 ||errors.password && "danger"}`}
                 type="password"
                 value={input.psw}
                 name="psw"
@@ -392,8 +382,8 @@ export default function Signup() {
                 placeholder="Contraseña"
                 required
               />
-              {errors.password && <p className="danger">{errors.password}</p>}
-             
+              {input.psw.length< 8 ||errors.password && <p className="danger">{errors.password}</p>}
+              <Link to='/forgot/email'>olvidaste tu clave?</Link>
 
               <button type="submit">INICIA SESION</button>
             </form>

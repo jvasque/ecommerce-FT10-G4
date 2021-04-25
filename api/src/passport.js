@@ -27,8 +27,8 @@ passport.use(
         type,
         status,
       } = user;
-      
-      if (status === "banned") return done(null, false);
+      if (status === "disabled") return done(null, false, {message: "Su cuenta se encuentra desactiva, favor siga las instrucciones enviadas a su correo electronico o vuelva a solicitar un enlace para reactivar su clave"})
+      if (status === "banned") return done(null, false, {message: "Su cuenta se encuentra Suspendida"});
       return done(null, {
         id,
         firstName,

@@ -13,6 +13,9 @@ import {
   ChangeType,
   ChangeStatus,
 } from "../../redux/AdminReducer/AdminActions";
+import Swal from "sweetalert2";
+
+
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -90,10 +93,85 @@ const UserAccount = ({ user }) => {
   };
 
   const handleSubmit = (e) => {
-    typeSubmit(e);
-    statusSubmit(e);
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-success',
+        cancelButton: 'btn btn-danger'
+      },
+      buttonsStyling: false
+    })
+    
+    
+    swalWithBootstrapButtons.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, cancel!',
+      reverseButtons: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        typeSubmit(e);
+        statusSubmit(e);
+        swalWithBootstrapButtons.fire(
+          'Deleted!',
+          'Your file has been deleted.',
+          'success'
+        )
+      } else if (
+        /* Read more about handling dismissals below */
+        result.dismiss === Swal.DismissReason.cancel
+      ) {
+        swalWithBootstrapButtons.fire(
+          'Cancelled',
+          'Your imaginary file is safe :)',
+          'error'
+        )
+      }
+    })
+   
   };
 
+
+const handleResetPassword = (e) => {
+  const swalWithBootstrapButtons = Swal.mixin({
+    customClass: {
+      confirmButton: 'btn btn-success',
+      cancelButton: 'btn btn-danger'
+    },
+    buttonsStyling: false
+  })
+  
+  
+  swalWithBootstrapButtons.fire({
+    title: 'Are you sure?',
+    text: "You won't be able to revert this!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Yes, delete it!',
+    cancelButtonText: 'No, cancel!',
+    reverseButtons: true
+  }).then((result) => {
+    if (result.isConfirmed) {
+      dispatch(ModPass(user.id))
+      swalWithBootstrapButtons.fire(
+        'Deleted!',
+        'Your file has been deleted.',
+        'success'
+      )
+    } else if (
+      /* Read more about handling dismissals below */
+      result.dismiss === Swal.DismissReason.cancel
+    ) {
+      swalWithBootstrapButtons.fire(
+        'Cancelled',
+        'Your imaginary file is safe :)',
+        'error'
+      )
+    }
+  })
+}  
   if (!!user) {
     return (
         <div className="containerOrder">        
@@ -126,7 +204,7 @@ const UserAccount = ({ user }) => {
                     className={classes.buttonreset}
                     variant="contained"
                     color="primary"
-                    onClick={() => dispatch(ModPass(user.id))}
+                    onClick={handleResetPassword}
                   >
                     Cambiar contraseña
                   </Button>
