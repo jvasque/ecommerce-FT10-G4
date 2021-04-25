@@ -29,23 +29,30 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(3),
     width: "100%",
   },
-  buttons: {
-    justifyContent: "center",
-  },
+  // buttons: {
+  //   justifyContent: "center",
+  // },
 
   root: {
     "& > *": {
       margin: theme.spacing(1),
+      minHeight: "90%",
     },
   },
   selectuser: {
     width: "100%",
-    height: "80%",
+    height: "100%",
+      
   },
   buttonreset: {
-    margin: "15px",
+    margin: "10px",
     color: "white",
-    height: "40%",
+    height: "70%",
+  },
+  buttonsend: {
+    margin: "10px",
+    color: "white",
+  
   },
 }));
 
@@ -115,8 +122,7 @@ const UserAccount = ({ user }) => {
             <div className='folding-pannel'>
               <div className="buttons">
                 <div>
-                  <Button
-                    size="small"
+                  <Button                    
                     className={classes.buttonreset}
                     variant="contained"
                     color="primary"
@@ -127,7 +133,7 @@ const UserAccount = ({ user }) => {
                 </div>
                 <FormControl variant="outlined" className={classes.formControl}>
                   <form onSubmit={typeSubmit}>
-                    <InputLabel id="demo-simple-select-outlined-label">
+                    <InputLabel className="inside" id="demo-simple-select-outlined-label">
                       Tipo de usuario
                     </InputLabel>
                     <Select
@@ -149,7 +155,7 @@ const UserAccount = ({ user }) => {
                 </FormControl>
                 <FormControl variant="outlined" className={classes.formControl}>
                   <form onSubmit={statusSubmit}>
-                    <InputLabel id="demo-simple-select-outlined-label">
+                    <InputLabel className="inside" id="demo-simple-select-outlined-label">
                       Estado
                     </InputLabel>
                     <Select
@@ -172,14 +178,13 @@ const UserAccount = ({ user }) => {
                   </form>
                 </FormControl>
                 <Button
-                  type="submit"
-                  size="small"
-                  className={classes.buttonreset}
+                  type="submit"                  
+                  className={classes.buttonsend}
                   variant="contained"
                   color="primary"
                   onClick={(e) => handleSubmit(e)}
                 >
-                  Enviar
+                   Enviar 
                 </Button>
               </div>
             </div>

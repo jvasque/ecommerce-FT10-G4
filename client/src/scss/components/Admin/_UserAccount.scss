@@ -2,26 +2,34 @@
 .containerOrder{
     width: 100%;
     animation: 1s ease-out 0s 1 slideInFromLeft;
+    .buttons{
+        display: flex;
+        justify-content: space-around;
+        align-items: content;
+    }
+    .selectuser{
+        align-items: center
+    }
+    
     .active{
-        height: 100%;
-        .folding-pannel{
+        height: 10%;
+        .folding-pannel{               
             background: white;
             //transform: perspective(350px) rotateX(0deg);
             transition: all 0.4s ease-in-out;
-            height: 100px;                
-        }
-        .filter{
-            height: 50px;
-        }
+            height: 20px;
+            justify-content: space-around;          
+        }      
     } 
     .inactive {   
         background: var(--color-brand-lights); 
-        height: 100%;    
+        height: 10%;    
         .folding-pannel{
             transform-origin: 50% 0%;
             transform: perspective(250px) rotateX(-90deg);
             transition: all 0.4s ease-in-out;
             height: 0;
+            height: 20px; 
         }
     }
 }
