@@ -5,12 +5,9 @@ import "../../scss/components/Home/_Home.scss";
 
 const Home = () => {
   return (
-    <div id="HomeMain">      
+    <div className="HomeMain">      
       <HomeRecommend />
       <HomeCategories />
-      <div id="HomeBest">
-        <h2>Más Vendidos...</h2>
-      </div>
     </div>
   );
 };

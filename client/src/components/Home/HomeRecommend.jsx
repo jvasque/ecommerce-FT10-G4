@@ -1,8 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
-import Pages from '../Catalog/Pages';
-import { modifyFav } from '../../redux/iconReducer/iconActions';
 import {
   getFavs,
   addRecommended,
