@@ -1,8 +1,22 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "../../scss/components/Home/_HomeCategories.scss";
+import { useHistory } from "react-router";
+import { useDispatch } from "react-redux";
+
+import { filterCategory } from "../../redux/categoryFilterReducer/categoryFilterActions";
 
 const HomeCategories = () => {
+
+  const history = useHistory();
+  const dispatch = useDispatch();
+
+  const handleClick = (cat) => {
+    dispatch(filterCategory(cat));
+    history.push({
+      pathname: "/catalog",
+    });
+  };
   return (
    
  <div className="containerHome">
@@ -52,7 +66,7 @@ const HomeCategories = () => {
               <h2>Proteccion de Cultivos</h2>
               <p>
                 En nuestra página reunimos la mejor y más amplia variedad de protección de cultivos, pudiendo encontrar productos agroquímicos para diferentes necesidades, que van desde fungicidas hasta herbicidas y otros insumos.
-                <Link className='verMas' to='/catalog'>Ver más</Link>
+                <div className='verMas' onClick={()=>handleClick('Proteccion de Cultivos')}>Ver más</div>
               </p>
           </div>
        </div>
@@ -63,7 +77,7 @@ const HomeCategories = () => {
             <h2>Fertilizantes</h2>
               <p>
                 En nuestra página vas a encontrar una inmensa variedad de insumos para fertilizar a nivel nutricional, estimular el crecimiento y mejorar la calidad de tus cultivos!
-                <Link className='verMas' to='/catalog'>Ver más</Link>
+                <div className='verMas' onClick={(e)=>handleClick('Fertilizantes')}>Ver más</div>
               </p>
           </div>
         </div>  
@@ -74,7 +88,7 @@ const HomeCategories = () => {
             <h2>Semillas e Hibridos</h2>
               <p>
                 Si estás buscando cultivar, ¡AgroPlace es el sitio indicado para vos!. Tenemos la más amplia variedad de semillas de las mejores marcas y calidad, para mejorar la producción extensiva de tu campo
-                <Link className='verMas' to='/catalog'>Ver más</Link>
+                <div className='verMas' onClick={()=>handleClick('Semillas e Hibridos')}>Ver más</div>
               </p>
           </div>
         </div>     
@@ -85,7 +99,7 @@ const HomeCategories = () => {
           <h2>Otros Insumos Agricolas</h2>
               <p>
                 Variedad de insumos agrícolas desde silobolsas hasta tratamientos de semillas para mejorar y personalizar el cultivo de tu campo.
-                <Link className='verMas' to='/catalog'>Ver más</Link>
+                <div className='verMas' onClick={()=>handleClick('Otros Insumos Agricolas')}>Ver más</div>
               </p>
           </div>
         </div>      
