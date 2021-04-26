@@ -12,7 +12,7 @@ import {
   createMuiTheme,
   ThemeProvider,
 } from "@material-ui/core/styles";
-import Paypal from "../paypal/paypal";
+import Paypal from "../Paypal/Paypal";
 
 const useStyles = makeStyles({
   root: {
