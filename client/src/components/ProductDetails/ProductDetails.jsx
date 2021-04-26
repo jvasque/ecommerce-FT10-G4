@@ -125,9 +125,12 @@ const ProductDetails = (props) => {
     let { name, checked } = event.target;
     setState({ ...state, [name]: checked });
 
-    dispatch(modifyFav({ [name]: checked }));
-    
+    if (name.includes("Fav")) {
+      dispatch(modifyFav({ [name]: checked }));
+    }
+    // dispatch(modifyFav({ [name]: checked }));   
   }
+
   function handleCart(event) {
     const test = iconState.cart[`Cart-${productDetail.id}`];
     if (test === false || test === undefined) {
