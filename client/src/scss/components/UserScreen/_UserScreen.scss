@@ -1,9 +1,11 @@
 .infoContainer {
+  margin-top: 100px;
   padding: 40px 0;
   background-color: var(--color-gray);
   display: flex;
   flex-direction: row;
   align-items: flex-start;
+
   .selectScreen {
     background-color: white;
     width: 20%;

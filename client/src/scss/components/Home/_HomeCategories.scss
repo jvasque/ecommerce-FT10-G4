@@ -1,9 +1,9 @@
 @import 'https://fonts.googleapis.com/css?family=Montserrat:400,700|Raleway:300,400';
 
 .containerHome {
-  margin: 40px 0;
+  margin: 5% 0;
 
-  $accent-inactive: desaturate(#378a19, 85%);
+  $accent-inactive: desaturate(#c3ecb3, 85%);
   $secondary: $accent-inactive;
 
   /* tab setting */
@@ -45,7 +45,7 @@
   }
 
   title {
-    color: var(--color-brand);
+    color: white;
   }
   html {
     width: 100%;
@@ -55,13 +55,13 @@
   body {
     margin-top: 20px;
     background: var(--color-light);
-    color: var(--color-brand);
+    color: white;
     font-family: 'Raleway';
     height: 100%;
 
     h1 {
       text-align: center;
-      color: var(--color-brand);
+      color: white;
       font-weight: 300;
       padding: 40px 0 20px 0;
       margin: 0;
@@ -73,13 +73,14 @@
     transform: translateX(-50%);
     position: relative;
     background: white;
-    padding: 50px;
-    padding-bottom: 80px;
-    width: 70%;
-    height: 500px;
+    padding: 10px 0 40px 0;
+    // padding-bottom: 5px;
+    width: 90%;
+    height: 100%;
     box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
     border-radius: 5px;
     min-width: #{$tab-count * 60px};
+    background-color: var(--color-brand);
     input[name='tab-control'] {
       display: none;
     }
@@ -89,8 +90,7 @@
       font-family: 'Montserrat';
       font-weight: bold;
       font-size: 18px;
-      color: var(--color-brand);
-      
+      color: white;
     }
 
     ul {
@@ -98,7 +98,7 @@
       padding-left: 0;
       display: flex;
       flex-direction: row;
-      margin-bottom: 10px;
+      margin-bottom: 5px;
       justify-content: space-between;
       align-items: flex-end;
       flex-wrap: wrap;
@@ -107,13 +107,13 @@
         box-sizing: border-box;
         flex: 1;
         width: #{100% / $tab-count};
-        padding: 0 10px;
+        padding: 0 5px;
         text-align: center;
 
         label {
           transition: all 0.3s ease-in-out;
           color: $secondary;
-          padding: 5px auto;
+          padding: 2px auto;
           overflow: hidden;
           text-overflow: ellipsis;
           display: block;
@@ -158,16 +158,14 @@
         max-width: 100%;
         margin: 0 auto;
         height: $indicator-height;
-        background: var(--color-brand);
+        background: white;
         border-radius: 1px;
       }
     }
 
     .content {
-      margin-top: 30px;
-
       section {
-        background: white;
+        background: var(--color-brand);
         display: none;
         animation: {
           name: content;
@@ -177,13 +175,120 @@
           iteration-count: 1;
           height: 250px;
         }
-        line-height: 1.4;
-
-        img {
-          width: 300px;
-          height: 300px;
-          margin-top: 40px;
-          float: right;
+        height: 220px;
+        .cardContent1 {
+          display: flex;
+          .text1 {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            p {
+              color: white;
+              font-size: 25px;
+              padding: 2%;
+              height: 200px;
+              width: 85%;
+              background: url('https://images.unsplash.com/photo-1519897831810-a9a01aceccd1?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1189&q=80'),
+                rgba(0, 0, 0, 0.315);
+              border-radius: 7px;
+              background-repeat: no-repeat;
+              background-size: cover;
+              background-position-y: center;
+              background-blend-mode: darken;
+              .verMas {
+                float: right;
+                margin-top: 130px;
+                text-decoration: none;
+                color: white;
+                font-size: 15px;
+              }
+            }
+          }
+        }
+        .cardContent2 {
+          display: flex;
+          .text2 {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            p {
+              color: white;
+              font-size: 25px;
+              padding: 2%;
+              height: 200px;
+              width: 85%;
+              background: url('https://images.unsplash.com/photo-1523349312806-f5dde0a01c32?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1050&q=80'),
+                rgba(0, 0, 0, 0.336);
+              border-radius: 7px;
+              background-repeat: no-repeat;
+              background-size: cover;
+              background-blend-mode: darken;
+              .verMas {
+                float: right;
+                margin-top: 130px;
+                text-decoration: none;
+                color: white;
+                font-size: 15px;
+              }
+            }
+          }
+        }
+        .cardContent3 {
+          display: flex;
+          .text3 {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            p {
+              color: white;
+              font-size: 25px;
+              padding: 2%;
+              height: 200px;
+              width: 85%;
+              background: url('https://images.unsplash.com/photo-1536153635972-1fc2e818f642?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=633&q=80'),
+                rgba(0, 0, 0, 0.219);
+              background-repeat: no-repeat;
+              background-size: cover;
+              background-position-y: center;
+              border-radius: 7px;
+              background-blend-mode: darken;
+              .verMas {
+                float: right;
+                margin-top: 130px;
+                text-decoration: none;
+                color: white;
+                font-size: 15px;
+              }
+            }
+          }
+        }
+        .cardContent4 {
+          display: flex;
+          .text4 {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            p {
+              color: white;
+              font-size: 25px;
+              padding: 2%;
+              height: 200px;
+              width: 85%;
+              background: url('https://images.unsplash.com/photo-1581615760599-bbfa598a0b88?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1050&q=80'),
+                rgba(0, 0, 0, 0.219);
+              background-repeat: no-repeat;
+              background-size: cover;
+              border-radius: 7px;
+              background-blend-mode: darken;
+              .verMas {
+                float: right;
+                margin-top: 130px;
+                text-decoration: none;
+                color: white;
+                font-size: 15px;
+              }
+            }
+          }
         }
 
         h2 {
@@ -207,7 +312,7 @@
       @include tabs {
         > label {
           cursor: default;
-          color: var(--color-brand);
+          color: white;
 
           svg {
             fill: var(--color-brand);
@@ -247,7 +352,7 @@
 
     @media (max-width: map-get($breakpoints, small)) {
       ul li label {
-        padding: 5px;
+        padding: 2px;
         border-radius: 5px;
 
         span {
