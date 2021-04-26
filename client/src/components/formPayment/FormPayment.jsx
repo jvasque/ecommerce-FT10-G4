@@ -5,7 +5,7 @@ import { Button, TextField } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import "../../scss/components/FormPayment/_FormPayment.scss";
 import swal from "sweetalert";
-import { FormControl, Modal, Zoom ,Backdrop} from "@material-ui/core";
+import { FormControl, Modal, Zoom} from "@material-ui/core";
 
 import {
   makeStyles,
@@ -64,7 +64,8 @@ const FormPayment = () => {
     input.firstName.length !== 0 &&
     input.lastName.length !== 0 &&
     input.address.length !== 0 &&
-    input.email.includes("@")
+    input.email.includes("@") &&
+    input.phoneNumber.length !== 0 
       ? setShowPaypal(true)
       : setShowPaypal(false);
   }, [showPaypal, input]);
@@ -75,7 +76,8 @@ const FormPayment = () => {
     if (
       input.firstName.length === 0 ||
       input.lastName.length === 0 ||
-      input.address.length === 0
+      input.address.length === 0 ||
+      input.phoneNumber.length === 0
     ) {
       setShowPaypal(false);
       return swal("Aviso!", "Todos los datos son obligatorios", "warning");
