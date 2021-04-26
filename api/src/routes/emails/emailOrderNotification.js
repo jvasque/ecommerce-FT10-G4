@@ -2,22 +2,17 @@ const nodemailer = require("nodemailer");
 const { user, pass } = process.env;
 
 module.exports = async (req, res) => {
-  const { products } = req.body;
+  const { products, address } = req.body;
   const { email, firstName } = req.user;
   /* console.log(products, "PRODUCTSSSSS");
   console.log(userName, "userName");
   console.log(userMail, "userMail"); */
-  let product;
 
   if (!products) return res.status(500).json({ error: "product missing" });
   if (!Array.isArray(products))
     return res.status(500).json({ error: "products should be an array" });
   if (!firstName) return res.status(500).json({ error: "userName missing" });
   if (!email) return res.status(500).json({ error: "userMail missing" });
-
-  if (products.length === 1) product = `${products[0]} !`;
-  if (products.length === 2) product = `${products[0]} y ${products[1]}!`;
-  if (products.length > 2) product = `${products[0]}, ${products[1]} y más !`;
 
   let transporter = nodemailer.createTransport({
     service: "Gmail",
@@ -140,7 +135,7 @@ module.exports = async (req, res) => {
   margin-right: auto;
   margin-top: 3%;
   margin-bottom: 3%;
-  height: 300px;
+  height: fit-content;
   width: 400px;
   background-color: rgba(105, 104, 104, 0.322);
   color: rgba(42, 46, 42, 1);
@@ -158,10 +153,10 @@ module.exports = async (req, res) => {
   margin-right: auto;
   margin-top: 4%;
   margin-bottom: 4%;
-  height: 40%;
-  width: 40%;
-  background-color: rgb(224, 192, 8);
-  color: rgba(105, 104, 104, 1);
+  height: 175px;
+  width: 175px;
+  background: url("https://i.ibb.co/5v1VxrH/green-truck-Este-ES-LA-POSTA.png");
+  background-size: cover;
 }
 footer {
   background-color: rgba(42, 46, 42, 1);
@@ -189,17 +184,19 @@ footer {
             
             <div class="details">
                 Detalle de envio:
-                <div class="image">${"Imagen" || img}</div>
-                <div class="detItem">${"Direccion" || Direccion}</div>
-                <div class="detItem">${"Producto" || producto}</div>
-                <div class="detItem">${"Link" || linkaalgunlado}</div>
+                <div class="image"></div>
+                <div class="detItem">Dirección de entrega: ${address}</div>
+                <div class="detItem">Tus productos: 
+                  <ul>
+                    ${products?.map(e => `<li>${e}</li>`)}
+                  </ul>
+                </div>
             </div>
         </div>
         </div>
         <footer>
-            <h4>Titulo</h4>
-            <div>Necesitas ayuda? Contactanos</div>
-            <div>${"Algun dato nuestro linkeado" || nustrosdatoslinkeados}</div>
+            <div>Necesitas ayuda? Contáctanos: agroplaceofficial@gmail.com </div>
+            <div><a href="http://localhost:3000/" target="_blank" rel="noopener noreferrer">Visítanos</a></div>
         </footer>
 </body>
 </html>
