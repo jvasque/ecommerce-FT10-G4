@@ -19,7 +19,7 @@ module.exports = async (req, res) => {
                 [Op.in] : filter
             }
         }, 
-        attributes: ['id', 'state','createdAt', 'updatedAt', 'totalPrice'],
+        attributes: ['id', 'state','createdAt', 'updatedAt', 'totalPrice', 'address'],
         include: [{
             model: OrderDetail,
             attributes: ['id','quantity', 'unitPrice'],
