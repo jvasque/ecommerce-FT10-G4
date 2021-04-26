@@ -45,6 +45,15 @@ $font2: var(--font-fam);
           &:active,
           &:hover {
             color: inherit;
+
+            &:after {
+              content: '';
+              position: absolute;
+              margin: -15px 18px 0 17px;
+              height: 1px;
+              width: 40px;
+              border-bottom: solid 4px $brandlight2;
+            }
           }
         }
       }
@@ -52,6 +61,16 @@ $font2: var(--font-fam);
       .products-title {
         h2 {
           cursor: pointer;
+          &:hover {
+            &:after {
+              content: '';
+              position: absolute;
+              margin: 32px 36px 0 -90px;
+              height: 1px;
+              width: 63px;
+              border-bottom: solid 4px $brandlight2;
+            }
+          }
         }
 
         ul {
@@ -70,6 +89,16 @@ $font2: var(--font-fam);
             background-color: white;
             border-radius: 5px;
             box-shadow: 1px 1px 2px $black50;
+
+            &:after {
+              content: '';
+              position: absolute;
+              margin: -10px 0 0 20px;
+              height: 1px;
+              width: 40px;
+              border-bottom: solid 4px $brandlight2;
+            }
+
             li {
               border-bottom: solid 2px $separator;
               padding: 10px 22px 10px 14px;
