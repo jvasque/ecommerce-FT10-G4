@@ -165,13 +165,16 @@ const ProductDetails = (props) => {
           productId
         )}/review-product-score`
       );
-      
+      console.log(userHasBuy, "Product Details Usuario compro?");
       dispatch({ type: "GET_COMMENTARY", payload: json.data });
       dispatch({ type: "HAS_BUY", payload: userHasBuy });
       dispatch({ type: "GET_PRODUCT_SCORE", payload: resProductScore });
 
       setHasComment(json.data.arrUsersCommented); //Saco los ID de los que tienen al menos una review en el producto
-      setHasBuy(userHasBuy.data?.map((e) => e.order.userId)); //Saco los ID de los usuarios que tienen una Order Detail con el produco
+      setHasBuy(userHasBuy.data?.map((e) => {
+        if(e.order.state === "cart") return;
+        return e.order.userId;
+      })); //Saco los ID de los usuarios que tienen una Order Detail con el produco
       setProductScore(resProductScore.data);
     })();    
 
