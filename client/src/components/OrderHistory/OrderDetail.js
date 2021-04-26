@@ -9,7 +9,7 @@ function OrderDetail({product}){
                     <img src={product.product.picture} alt='product'/>
                 </div>
                 <div className='orderDetailName'>
-                    <a href={`/${product.product.id}`} target="_blank">
+                    <a href={`/${product.product.id}`} target="_blank" rel="noopener noreferrer">
                         <DivText content={product.product.name} />
                     </a> 
                 </div> 
@@ -17,10 +17,10 @@ function OrderDetail({product}){
                     <DivText content={product.quantity} /> 
                 </div> 
                 <div className='orderDetailPrice'>   
-                    <DivText content={product.unitPrice} /> 
+                    <DivText content={`USD$${product.unitPrice}`} /> 
                 </div> 
                 <div className='orderDetailCost'>   
-                    <DivText content={(product.unitPrice*product.quantity).toFixed(2)} /> 
+                    <DivText content={`USD$${(product.unitPrice*product.quantity).toFixed(2)}`} /> 
                 </div>           
             </div>
         )    

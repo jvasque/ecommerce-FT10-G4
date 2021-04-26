@@ -1,11 +1,21 @@
-const { User, Order, OrderDetail, Product, PaymentMethod } = require("../../db");
+const { Op } = require("sequelize");
 
-module.exports = async(req,res,next)=>{
-   
-    const token = req.user
-    try{
-if(token.type === 'admin' || token.type==='superadmin'){
-    let data = await User.findAll({
+const {
+  User,
+  Order,
+  OrderDetail,
+  Product,
+  PaymentMethod,
+} = require("../../db");
+
+module.exports = async (req, res, next) => {
+  const token = req.user;
+  console.log(token);
+  try {
+    if (token.type === "admin" || token.type === "superadmin") {
+      let data = await User.findAll({
+        where: { type: { [Op.in]: ["admin", "user"] } },
+        order: [["id", "ASC"]],
         include: {
           model: Order,
           include: [
@@ -16,13 +26,12 @@ if(token.type === 'admin' || token.type==='superadmin'){
           ],
         },
       });
-      
-      return res.json(data)
-}else{
-    return res.status(401).json({message: "Unauthorized"})
-}
-    }catch(e){
-        next(e)
+
+      return res.json(data);
+    } else {
+      return res.status(401).json({ message: "Unauthorized" });
     }
-}
-  
+  } catch (e) {
+    next(e);
+  }
+};

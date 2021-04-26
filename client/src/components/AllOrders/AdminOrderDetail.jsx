@@ -12,7 +12,7 @@ function AdminOrderDetail({product}){
                     <img src={product.product.picture} alt='product'/>
                 </div>
                 <div className='orderAdminDetailName'>
-                    <a href={`/${product.product.id}`} target="_blank">
+                    <a href={`/${product.product.id}`} target="_blank" rel="noopener noreferrer">
                         <DivText content={product.product.name} />
                     </a> 
                 </div> 
@@ -20,10 +20,10 @@ function AdminOrderDetail({product}){
                     <DivText content={product.quantity} /> 
                 </div> 
                 <div className='orderAdminDetailPrice'>   
-                    <DivText content={product.unitPrice} /> 
+                    <DivText content={`USD$${product.unitPrice}`} /> 
                 </div> 
                 <div className='orderAdminDetailCost'>   
-                    <DivText content={(product.unitPrice*product.quantity).toFixed(2)} /> 
+                    <DivText content={`USD$${(product.unitPrice*product.quantity).toFixed(2)}`} /> 
                 </div>           
             </div>
         )    
