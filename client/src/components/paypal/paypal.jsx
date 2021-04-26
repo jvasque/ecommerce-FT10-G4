@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useLayoutEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { PayPalButton } from 'react-paypal-button-v2';
 import '../../scss/components/FormPayment/_FormPayment.scss';
@@ -28,6 +28,8 @@ const Paypal = ({ dataClient }) => {
 
   return (
     <div>
+   
+  
       <PayPalButton
         style={{ color: 'blue' }}
         createOrder={(data, actions) => {
@@ -63,6 +65,8 @@ const Paypal = ({ dataClient }) => {
           history.push('/order/complete');
         }}
       />
+     
+     
     </div>
   );
 };

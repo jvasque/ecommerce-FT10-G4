@@ -63,12 +63,23 @@ function Cart() {
         {products.length ? (
             <Button onClick={handleNext}>Continuar Compra</Button>
         ) : (
+          <div className="defaultResponse">
           <div>
-          <div >¿Aún no llenas tu carrito? ¡Anímate a hacerlo!</div>
-          <Link className="link-redirect" to="/catalog">
-            <Button>Regresar al catálogo</Button>
-          </Link>
+            <img
+              alt="	Winking Face"
+              src="https://uc-emoji.azureedge.net/orig/55/ceb7ce388c8b07ffa8495e9d8905bd.png"
+              width="150"
+              height="150"
+            />
           </div>
+          <h4>
+            ¿Todavía no llenas tu carrito? ¡Échale un vistazo al{' '}
+            <stronge>listado de productos</stronge>!
+          </h4>
+          <Link to="/catalog">
+            <button>Ir al catálogo</button>
+          </Link>
+        </div>
         )}
       </div>
     </div>
