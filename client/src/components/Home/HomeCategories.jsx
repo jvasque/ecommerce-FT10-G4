@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import "../../scss/components/Home/_HomeCategories.scss";
 import { useHistory } from "react-router";
@@ -11,20 +11,42 @@ const HomeCategories = () => {
   const history = useHistory();
   const dispatch = useDispatch();
 
+  
   const handleClick = (cat) => {
     dispatch(filterCategory(cat));
     history.push({
       pathname: "/catalog",
     });
   };
+
+  let arr=['tab1', 'tab2', 'tab3', 'tab4'];
+    let index=0
+    let interval= setInterval(function(){
+    if(index>2){index=0}else{
+      index=index+1;
+    }
+    let element = document.getElementById(arr[index]);
+    element.checked=true;   
+  }, 2000);
+
+  const handleCheck = () => {
+    clearInterval(interval);
+  }
+
+  useEffect(() => {
+    return () => {
+      clearInterval(interval);
+    }
+  }, [])
+
   return (
    
  <div className="containerHome">
  <div className="tabs">
-   <input type="radio" id="tab1" name="tab-control" defaultChecked />
-   <input type="radio" id="tab2" name="tab-control" />
-   <input type="radio" id="tab3" name="tab-control" />
-   <input type="radio" id="tab4" name="tab-control" />
+   <input type="radio" id="tab1" name="tab-control" defaultChecked onClick={()=>handleCheck()}/>
+   <input type="radio" id="tab2" name="tab-control" onClick={()=>handleCheck()}/>
+   <input type="radio" id="tab3" name="tab-control" onClick={()=>handleCheck()}/>
+   <input type="radio" id="tab4" name="tab-control" onClick={()=>handleCheck()}/>
    <ul>
      <li title="Features">
        <label htmlFor="tab1" role="button">              
