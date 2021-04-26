@@ -165,7 +165,6 @@ const ProductDetails = (props) => {
           productId
         )}/review-product-score`
       );
-      console.log(userHasBuy, "Product Details Usuario compro?");
       dispatch({ type: "GET_COMMENTARY", payload: json.data });
       dispatch({ type: "HAS_BUY", payload: userHasBuy });
       dispatch({ type: "GET_PRODUCT_SCORE", payload: resProductScore });
