@@ -248,7 +248,7 @@ const ProductDetails = (props) => {
                 <div className="addCart">
                   <div className="text">Agregar al Carrito</div>
                   <div className="icon">
-                    {Cart(productId,  handleCart)}
+                    {productDetail.unitsOnStock>0 && Cart(productId,  handleCart)}
                   </div>
                 </div>
                 <div className="addWishlist">

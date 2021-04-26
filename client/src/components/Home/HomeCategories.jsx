@@ -25,9 +25,10 @@ const HomeCategories = () => {
     if(index>2){index=0}else{
       index=index+1;
     }
-    let element = document.getElementById(arr[index]);
-    element.checked=true;   
-  }, 2000);
+    let element = document.getElementById(arr[index]).checked = true;
+  //   console.log(element)
+  // ( element ? (element.checked=true ): null  ) 
+  }, 5000);
 
   const handleCheck = () => {
     clearInterval(interval);
