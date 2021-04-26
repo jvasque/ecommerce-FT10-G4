@@ -5,15 +5,14 @@ import { Button, TextField } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import "../../scss/components/FormPayment/_FormPayment.scss";
 import swal from "sweetalert";
-import { FormControl, Modal } from "@material-ui/core";
+import { FormControl, Modal, Zoom ,Backdrop} from "@material-ui/core";
 
 import {
   makeStyles,
   createMuiTheme,
   ThemeProvider,
-
-} from '@material-ui/core/styles';
-import Paypal from '../Paypal/Paypal';
+} from "@material-ui/core/styles";
+import Paypal from "../Paypal/Paypal";
 
 const useStyles = makeStyles({
   root: {
@@ -25,8 +24,7 @@ const useStyles = makeStyles({
     marginBottom: 10,
     backgroundColor: "white",
     width: 500,
-  
-  }
+  },
 });
 
 const theme = createMuiTheme({
@@ -40,10 +38,9 @@ const theme = createMuiTheme({
 const FormPayment = () => {
   const classes = useStyles();
   const total = useSelector((state) => state.cartReducer.total);
-  const user = useSelector((state) => state.loginReducer.user)
+  const user = useSelector((state) => state.loginReducer.user);
 
-
-  const [modal, setModal] = useState(false)
+  const [modal, setModal] = useState(false);
   const [input, setInput] = useState({
     firstName: user.firstName,
     lastName: user.lastName,
@@ -53,7 +50,6 @@ const FormPayment = () => {
   });
   const [url, setUrl] = useState("");
   const id = JSON.parse(localStorage.getItem("user"));
-
 
   const [showPaypal, setShowPaypal] = useState(false);
 
@@ -112,90 +108,90 @@ const FormPayment = () => {
     window.location = urlMercadopago.data.url;
   };
 
-  
-
-
- const onCloseModal = () => {
-   setModal(!modal)
- }
+  const onCloseModal = () => {
+    setModal(!modal);
+  };
 
   return (
-
-  <div> 
-    <Button style={{backgroundColor: "#378a19", color:"#f7f7f7"}} onClick={onCloseModal}>Metodo de Pago</Button>
-    <Modal 
-    open={modal}
-    onClose={onCloseModal}
-    >
-       <ThemeProvider theme={theme}>
-  <div className="container-payment">
-    <Typography variant="h5"></Typography>
-
-    <FormControl noValidate autoComplete="off">
-      <TextField
-        type="text"
-        name="firstName"
-        onChange={handleChange}
-        className= {classes.input}
-        label="Nombre"
-        variant="filled"
-        defaultValue={user.firstName}
-        
-        required
-      />
-      <TextField
-        type="text"
-        name="lastName"
-        onChange={handleChange}
-        label="Apellido"
-        variant="filled"
-        className= {classes.input}
-        defaultValue={user.lastName}
-        required
-      />
-      <TextField
-        type="number"
-        name="phoneNumber"
-        label="Telefono de contacto:"
-        variant="filled"
-        onChange={handleChange}
-        className= {classes.input}
-        required
-      />
-      <TextField
-        type="text"
-        name="address"
-        onChange={handleChange}
-        label="Dirección de envío:"
-        variant="filled"
-        className= {classes.input}
-        required
-      />
-      <TextField
-        type="email"
-        name="email"
-        onChange={handleChange}
-        label={"Email"}
-        variant="filled"
-        className= {classes.input}
-        defaultValue={user.email}
-      />
-
-      <h3> Total: ${total}</h3>
-
-      <Button onClick={(e) => onSubmit(e, "mercadopago")}>
-        Mercadopago
+    <div>
+      <Button
+        style={{ backgroundColor: "#378a19", color: "#f7f7f7" }}
+        onClick={onCloseModal}
+      >
+        Metodo de Pago
       </Button>
+      <Modal open={modal} onClose={onCloseModal} >
+        
+          <ThemeProvider theme={theme}>
+            <div className="container-payment">
+              <Typography variant="h5"></Typography>
+              <Zoom in={true} timeout={500}>
+              <FormControl noValidate autoComplete="off">
+                <TextField
+                  type="text"
+                  name="firstName"
+                  onChange={handleChange}
+                  className={classes.input}
+                  label="Nombre"
+                  variant="filled"
+                  defaultValue={user.firstName}
+                  required
+                />
+                <TextField
+                  type="text"
+                  name="lastName"
+                  onChange={handleChange}
+                  label="Apellido"
+                  variant="filled"
+                  className={classes.input}
+                  defaultValue={user.lastName}
+                  required
+                />
+                <TextField
+                  type="number"
+                  name="phoneNumber"
+                  label="Telefono de contacto:"
+                  variant="filled"
+                  onChange={handleChange}
+                  className={classes.input}
+                  required
+                />
+                <TextField
+                  type="text"
+                  name="address"
+                  onChange={handleChange}
+                  label="Dirección de envío:"
+                  variant="filled"
+                  className={classes.input}
+                  required
+                />
+                <TextField
+                  type="email"
+                  name="email"
+                  onChange={handleChange}
+                  label={"Email"}
+                  variant="filled"
+                  className={classes.input}
+                  defaultValue={user.email}
+                />
 
-      {showPaypal ? (
-        <Paypal dataClient={input} />
-      ) : (
-        <Button onClick={(e) => onSubmit(e, "paypal")}>Paypal</Button>
-      )}
-    </FormControl>
-  </div>
-</ThemeProvider>
-    </Modal>
+                <h3> Total: ${total}</h3>
+
+                <Button onClick={(e) => onSubmit(e, "mercadopago")}>
+                  Mercadopago
+                </Button>
+
+                {showPaypal ? (
+                  <Paypal dataClient={input} />
+                ) : (
+                  <Button onClick={(e) => onSubmit(e, "paypal")}>Paypal</Button>
+                )}
+              </FormControl>
+              </Zoom>
+            </div>
+          </ThemeProvider>
+       
+      </Modal>
     </div>
   );
 };
