@@ -13,8 +13,7 @@ import {
   ThemeProvider,
 
 } from '@material-ui/core/styles';
-import Paypal from '../paypal/paypal';
-
+import Paypal from '../Paypal/paypal';
 
 const useStyles = makeStyles({
   root: {
@@ -161,7 +160,6 @@ const FormPayment = () => {
           <Button onClick={(e) => onSubmit(e, "mercadopago")}>
             Mercadopago
           </Button>
-
           {showPaypal ? (
             <Paypal dataClient={input} />
           ) : (
