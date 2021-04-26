@@ -44,7 +44,9 @@
     "sequelize": "^6.6.2"
   },
   "devDependencies": {
+    "babel-eslint": "^10.1.0",
     "chai": "^4.2.0",
+    "eslint": "^7.5.0",
     "mocha": "^8.1.1",
     "nodemon": "^2.0.4",
     "supertest": "^4.0.2",
