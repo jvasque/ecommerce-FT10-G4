@@ -51,7 +51,7 @@ export const FLogin = (token, id) => {
         userID: id
    
       });
-      console.log(info)
+      // console.log(info)
       localStorage.setItem("token", info.data);
 
       dispatch({

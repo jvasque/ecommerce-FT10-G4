@@ -28,7 +28,7 @@ module.exports= async(req,res)=> {
     });
    
     if (find) {
-      //  console.log(find)
+      //  console.log(find) // hay que preguntar por el status
       if (!find.firstName) await find.update({ firstName: first_name });
       if (!find.lastName) await find.update({ lastName: last_name });
       if (!find.facebookUser) await find.update({ facebookUser: id });
