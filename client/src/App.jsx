@@ -42,7 +42,7 @@ function App() {
         <Route exact path="/product/cart" component={Cart} />
         <Route exact path="/catalog" component={Catalog} />
 
-        <Route exact path="/map" component={MapContainer} />
+        {/* <Route exact path="/map" component={MapContainer} /> */}
 
         <Route exact path="/user/login" component={Signup} />
         <Route  exact path="/reset/password/:token" component={ResetPassword}/> 
