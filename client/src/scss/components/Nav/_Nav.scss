@@ -35,17 +35,17 @@ $font2: var(--font-fam);
       justify-content: space-evenly;
       align-items: center;
 
-      #home,
-      .products-title {
+      #home {
         a {
           cursor: pointer;
           text-decoration: none;
           color: inherit;
           &:visited,
-          &:active,
-          &:hover {
+          &:active {
             color: inherit;
+          }
 
+          &:hover {
             &:after {
               content: '';
               position: absolute;
@@ -90,15 +90,6 @@ $font2: var(--font-fam);
             border-radius: 5px;
             box-shadow: 1px 1px 2px $black50;
 
-            &:after {
-              content: '';
-              position: absolute;
-              margin: -10px 0 0 20px;
-              height: 1px;
-              width: 40px;
-              border-bottom: solid 4px $brandlight2;
-            }
-
             li {
               border-bottom: solid 2px $separator;
               padding: 10px 22px 10px 14px;
@@ -113,6 +104,9 @@ $font2: var(--font-fam);
 
             #lastItem {
               border-bottom: none;
+              &:after {
+                border-bottom: none;
+              }
             }
           }
         }
