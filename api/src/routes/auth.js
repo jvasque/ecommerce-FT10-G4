@@ -12,8 +12,16 @@ const postPassword = require("./auth/postPassword.js");
 const nodemailer = require("nodemailer");
 const resetPassword = require("./auth/resetPassword.js");
 
-const { SECRET_KEY } = process.env;
+const { SECRET_KEY, GOOGLE_CONSUMER_KEY, CLIENT_ID_FB } = process.env;
+const { OAuth2Client } = require("google-auth-library");
+const axios = require('axios')
+const fetch = require('node-fetch');
+const facebookLogin = require("./auth/facebookLogin.js");
+const client = new OAuth2Client(
 
+    GOOGLE_CONSUMER_KEY,
+    CLIENT_ID_FB
+  );
 // Middlewares
 server.use(express.json());
 
@@ -22,6 +30,7 @@ server.use(express.json());
 server.get("/me", me);
 server.post("/login", login);
 server.post("/google/login", googleLogin);
+server.post("/facebook/login", facebookLogin);
 server.get(
   "/password/reset/:id",
   passport.authenticate("bearer", { session: false }),

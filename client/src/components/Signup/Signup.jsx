@@ -10,6 +10,7 @@ import {
 import Swal from 'sweetalert2';
 import {
   GLogin,
+  FLogin,
   LoginAction,
   LogOut,
   SwalBoo,
@@ -87,18 +88,20 @@ export default function Signup() {
   }
   const responseFacebook = (response) => {
     console.log(response);
-    if (!response.status) {
-      dispatch(
-        postFbUser({
-          firstName: response.first_name,
-          lastName: response.last_name,
-          email: response.email,
-          facebookUser: response.id,
-        })
-      );
-    } else {
-      alert('No se pudo loguear a Facebook');
-    }
+    dispatch(FLogin(response.accessToken, response.userID));
+    // if (!response.status) {
+      
+    //   dispatch(
+    //     postFbUser({
+    //       firstName: response.first_name,
+    //       lastName: response.last_name,
+    //       email: response.email,
+    //       facebookUser: response.id,
+    //     })
+    //   );
+    // } else {
+    //   alert('No se pudo loguear a Facebook');
+    // }
   };
 
   const sessionChange = (e) => {
