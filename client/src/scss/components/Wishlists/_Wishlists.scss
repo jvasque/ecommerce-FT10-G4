@@ -1,11 +1,13 @@
 .allcontent {
   width: 85%;
 
+  // margin-bottom: 10px;
   margin-left: 7%;
   padding: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-around;
 
   .title {
     color: var(--color-black);
@@ -17,17 +19,23 @@
   display: flex;
   flex-direction: column;
   width: 70%;
+  margin-bottom: 10px;
   background-color: white;
   border-radius: 10px;
   padding-bottom: 27px;
 
   .deleteButton {
-    margin: 0.01vw 0 0 1vw;
+    margin-left: 30%;
+    // margin: 0.01vw 0 0 1vw;
+
   }
 
   h3 {
     margin-left: 5%;
     cursor: pointer;
+    &:hover{
+      color: var(--color-brand)
+    }
   }
   margin-left: 5%;
 

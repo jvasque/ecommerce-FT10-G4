@@ -65,10 +65,10 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
     },
     recoveryToken: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
     },
     passwordResetExpires: {
-      type: DataTypes.DATE,
+      type: DataTypes.REAL,
     },
     resetPassword: {
       type: DataTypes.BOOLEAN,

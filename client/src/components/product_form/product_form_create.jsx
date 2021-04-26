@@ -33,9 +33,6 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-
-
-
 export default function Product_form_create(props) {
   const classes = useStyles();
   const [input, setInput] = useState({

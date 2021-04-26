@@ -11,8 +11,9 @@ import {
   makeStyles,
   createMuiTheme,
   ThemeProvider,
-} from "@material-ui/core/styles";
-import Paypal from "../Paypal/Paypal";
+
+} from '@material-ui/core/styles';
+import Paypal from '../Paypal/paypal';
 
 const useStyles = makeStyles({
   root: {
@@ -119,6 +120,7 @@ const FormPayment = () => {
  }
 
   return (
+
   <div> 
     <Button style={{backgroundColor: "#378a19", color:"#f7f7f7"}} onClick={onCloseModal}>Metodo de Pago</Button>
     <Modal 
@@ -193,15 +195,8 @@ const FormPayment = () => {
     </FormControl>
   </div>
 </ThemeProvider>
-
-
-    
-
     </Modal>
     </div>
-
-   
-  
   );
 };
 

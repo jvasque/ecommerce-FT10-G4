@@ -1,13 +1,13 @@
-import React, { createRef, useEffect, useState } from "react";
-import { FaFacebookF, FaLinkedinIn, FaGoogle } from "react-icons/fa";
-import "../../scss/components/Signup/_Signup.scss";
-import { useDispatch, useSelector } from "react-redux";
+import React, { createRef, useEffect, useState } from 'react';
+import { FaFacebookF, FaLinkedinIn, FaGoogle } from 'react-icons/fa';
+import '../../scss/components/Signup/_Signup.scss';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   PostSuccess,
   postUser,
   SwalBooC,
-} from "../../redux/postUserReducer/postUserActions";
-import Swal from "sweetalert2";
+} from '../../redux/postUserReducer/postUserActions';
+import Swal from 'sweetalert2';
 import {
   GLogin,
   LoginAction,
@@ -16,11 +16,20 @@ import {
   postFbUser,
 } from '../../redux/loginReducer/loginActions';
 import { useHistory } from 'react-router';
-import { addProduct, emptyCart, emptyDb, totalPrice, userLogged } from '../../redux/cartReducer/cartActions';
+import {
+  addProduct,
+  emptyCart,
+  emptyDb,
+  totalPrice,
+  userLogged,
+} from '../../redux/cartReducer/cartActions';
 import { modifyCart } from '../../redux/iconReducer/iconActions';
 import axios from 'axios';
 import FacebookLogin from 'react-facebook-login';
-import { GoogleLogin } from "react-google-login";
+import { TiSocialFacebookCircular } from 'react-icons/ti';
+import { GoogleLogin } from 'react-google-login';
+import { Link } from "react-router-dom";
+
 
 
 export default function Signup() {
@@ -35,44 +44,44 @@ export default function Signup() {
       dispatch(GLogin(response));
     } catch (e) {
       Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "algo ha salido mal!",
-        confirmButtonColor: "#378a19",
+        icon: 'error',
+        title: 'Oops...',
+        text: 'algo ha salido mal!',
+        confirmButtonColor: '#378a19',
       });
     }
   };
 
   const responseRejectGoogle = (response) => {
     Swal.fire({
-      icon: "error",
-      title: "Oops...",
-      text: "algo ha salido mal!",
-      confirmButtonColor: "#378a19",
+      icon: 'error',
+      title: 'Oops...',
+      text: 'algo ha salido mal!',
+      confirmButtonColor: '#378a19',
     });
   };
-  const products = useSelector(state => state.catalogReducer.products)
+  const products = useSelector((state) => state.catalogReducer.products);
   //Session iniciada D:
   const productCart = useSelector((state) => state.cartReducer.cart);
   const [input, setInput] = useState({
-    uname: "",
-    psw: "",
+    uname: '',
+    psw: '',
   });
   const [errors, setErrors] = useState({});
 
   function validateLogin(input) {
     let errors = {};
     if (!input.uname) {
-      errors.username = "Email es requerido";
+      errors.username = 'Email es requerido';
     } else if (!/\S+@\S+\.\S+/.test(input.uname)) {
-      errors.username = "Email no es valido";
+      errors.username = 'Email no es valido';
     }
     if (!input.psw) {
-      errors.password = "Contrseña es requerida";
+      errors.password = 'Contrseña es requerida';
     } else if (
       !/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/.test(input.psw)
     ) {
-      errors.password = "Contraseña no es valida";
+      errors.password = 'Contraseña no es valida';
     }
     return errors;
   }
@@ -112,31 +121,27 @@ export default function Signup() {
   useEffect(() => {
     async function test() {
       if (log.isLogin) {
-        const userId = localStorage.getItem("user");
+        const userId = localStorage.getItem('user');
         history.push({
-          pathname: "/",
+          pathname: '/',
         });
         dispatch(totalPrice());
-     
+
         const data = await axios.get(
           `http://localhost:3001/cart/${userId}/cart`
         );
-        //const products = await axios.get("http://localhost:3001/products");        
-        const productsId = data.data.map((x) => x.productId)
-        const reduxCart = productCart.map(x => x.id)
-        const unicId = productsId.concat(reduxCart)
-        let unic = [...new Set(unicId)]
-        const cartSaved = products.filter((x) =>
-          unic.includes(x.id)
-        );
-         
-        dispatch(emptyCart())
-        
+        //const products = await axios.get("http://localhost:3001/products");
+        const productsId = data.data.map((x) => x.productId);
+        const reduxCart = productCart.map((x) => x.id);
+        const unicId = productsId.concat(reduxCart);
+        let unic = [...new Set(unicId)];
+        const cartSaved = products.filter((x) => unic.includes(x.id));
+
+        dispatch(emptyCart());
+
         for (let i = 0; i < cartSaved.length; i++) {
           dispatch(modifyCart({ [`Cart-${cartSaved[i].id}`]: true }));
-          dispatch(addProduct(cartSaved[i]))
-
-         
+          dispatch(addProduct(cartSaved[i]));
         }
       }
     }
@@ -146,10 +151,10 @@ export default function Signup() {
   useEffect(() => {
     if (log.errorLogin) {
       Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "No voy a mentirte marge, tus datos estan mal",
-        confirmButtonColor: "#378a19",
+        icon: 'error',
+        title: 'Oops...',
+        text: 'No voy a mentirte marge, tus datos estan mal',
+        confirmButtonColor: '#378a19',
       });
       dispatch(SwalBoo());
     }
@@ -158,38 +163,38 @@ export default function Signup() {
   //////// post user && cambio de form
   const [show, setShow] = useState(null);
   const [user, setUser] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
   });
   const [errorsCreate, setErrorsCreate] = useState({});
   function validateCreate(user) {
     let errors = {};
     if (!user.email) {
-      errors.username = "Email es requerido";
+      errors.username = 'Email es requerido';
     } else if (!/\S+@\S+\.\S+/.test(user.email)) {
-      errors.email = "Email no es valido";
+      errors.email = 'Email no es valido';
     }
     if (!user.password) {
-      errors.password = "Contrseña es requerida";
+      errors.password = 'Contrseña es requerida';
     } else if (
       !/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/.test(user.password)
     ) {
       errors.password = "Debe contener 'a' 'A' '1' !' y largo 8 ";
     }
     if (!user.confirmPassword) {
-      errors.confirmPassword = "Contrseña es requerida";
+      errors.confirmPassword = 'Contrseña es requerida';
     } else if (user.password !== user.confirmPassword) {
-      errors.confirmPassword = "Las contraseñas no coinciden";
+      errors.confirmPassword = 'Las contraseñas no coinciden';
     }
 
     return errors;
   }
 
   const signUpButton = () => {
-    setShow("right-panel-active");
+    setShow('right-panel-active');
   };
   const signInButton = () => {
     setShow(null);
@@ -224,17 +229,17 @@ export default function Signup() {
   useEffect(() => {
     if (post.success) {
       Swal.fire({
-        title: "Listo, El usuario ha sido creado",
-        confirmButtonColor: "#378a19",
+        title: 'Listo, El usuario ha sido creado',
+        confirmButtonColor: '#378a19',
       });
 
       dispatch(PostSuccess());
       setUser({
-        firstName: "",
-        lastName: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
       });
     }
   }, [post.success]);
@@ -242,16 +247,14 @@ export default function Signup() {
   useEffect(() => {
     if (post.errorMail) {
       Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "No lo se rick, parece que este mail se encuentra registrado",
-        confirmButtonColor: "#378a19",
+        icon: 'error',
+        title: 'Oops...',
+        text: 'No lo se rick, parece que este mail se encuentra registrado',
+        confirmButtonColor: '#378a19',
       });
       dispatch(SwalBooC());
     }
   }, [post.errorMail]);
-
-  
 
   return (
     <div className="Signup">
@@ -261,18 +264,6 @@ export default function Signup() {
             <form action="#" onSubmit={userSubmit}>
               <h1>Crea tu cuenta</h1>
               <div className="social-container">
-                <a href="#" className="social">
-                  <i className="fab fa-facebook-f">
-                    <FaFacebookF />
-                  </i>
-                </a>
-                <GoogleLogin
-                  clientId="926134963488-27qle0uk3423ed3dt2jlkd20rtht66g6.apps.googleusercontent.com"
-                  buttonText="Login"
-                  onSuccess={responseSuccessGoogle}
-                  onFailure={responseRejectGoogle}
-                  cookiePolicy={"single_host_origin"}
-                />
                 {/* <a href="#" className="social">
                   <i className="fab fa-linkedin-in">
                     <FaLinkedinIn />
@@ -304,7 +295,7 @@ export default function Signup() {
                 placeholder="Email..."
                 value={user.email}
                 onChange={userChange}
-                className={`${errorsCreate.email && "danger"}`}
+                className={`${errorsCreate.email && 'danger'}`}
               />
               {errorsCreate.email && (
                 <p className="danger">{errorsCreate.email}</p>
@@ -315,7 +306,7 @@ export default function Signup() {
                 placeholder="contraseña"
                 value={user.password}
                 onChange={userChange}
-                className={`${errorsCreate.password && "danger"}`}
+                className={`${errorsCreate.password && 'danger'}`}
               />
               {errorsCreate.password && (
                 <p className="danger">{errorsCreate.password}</p>
@@ -326,7 +317,7 @@ export default function Signup() {
                 placeholder="confirme contraseña..."
                 value={user.confirmPassword}
                 onChange={userChange}
-                className={`${errorsCreate.confirmPassword && "danger"}`}
+                className={`${errorsCreate.confirmPassword && 'danger'}`}
               />
               {errorsCreate.confirmPassword && (
                 <p className="danger">{errorsCreate.confirmPassword}</p>
@@ -336,53 +327,52 @@ export default function Signup() {
           </div>
 
           <div className="form-container sign-in-container">
+          <h1>Inicia Sesion</h1>
             <div className="social-container">
+
+              <GoogleLogin
+                clientId="926134963488-27qle0uk3423ed3dt2jlkd20rtht66g6.apps.googleusercontent.com"
+                autoLoad={false}
+                type="button"
+                icon={true}
+                buttonText="Google"
+                loginHint="Hola"
+                onSuccess={responseSuccessGoogle}
+                onFailure={responseRejectGoogle}
+                cookiePolicy={'single_host_origin'}
+                className="google-login-button"
+              />
               <FacebookLogin
-                // appId="381446742973563"
+
                 appId="311325910426887"
                 autoLoad={false}
                 fields="name,email,picture,first_name,last_name"
-                textButton=""
+                textButton="Facebook"
                 // onClick={componentClicked}
-                cssClass="my-facebook-button-class"
-                icon="fa-facebook"
+                cssClass="facebook-login-button"
+                // icon="fa-facebook"
+                icon={<TiSocialFacebookCircular />}
                 callback={responseFacebook}
               />
+
             </div>
 
-            <form action="#" onSubmit={sessionSubmit}>
+            <form id="loginFrame" action="#" onSubmit={sessionSubmit}>
               <h1>Inicia Sesion</h1>
-              <div className="social-container">
-                <a href="#" className="social">
-                  <i className="fab fa-facebook-f">
-                    <FaFacebookF />
-                  </i>
-                </a>
-                <GoogleLogin
-                  clientId="926134963488-27qle0uk3423ed3dt2jlkd20rtht66g6.apps.googleusercontent.com"
-                  buttonText="Login"
-                  onSuccess={responseSuccessGoogle}
-                  onFailure={responseRejectGoogle}
-                  cookiePolicy={"single_host_origin"}
-                />
-                {/* <a href="#" className="social">
-                  <i className="fab fa-linkedin-in">
-                    <FaLinkedinIn />
-                  </i>
-                </a> */}
-              </div>
+
               <span>o usa tu cuenta</span>
               <input
-                className={`${errors.username && "danger"}`}
+                className={`${errors.username && 'danger'}`}
+
                 type="text"
                 value={input.uname}
                 name="uname"
                 onChange={sessionChange}
                 placeholder="Email"
               />
-              {errors.username && <p className="danger">{errors.username}</p>}
+              {input.uname.length< 8 || errors.username  && <p className="danger">{errors.username}</p>}
               <input
-                className={`${errors.password && "danger"}`}
+                className={`${input.psw.length< 8 ||errors.password && "danger"}`}
                 type="password"
                 value={input.psw}
                 name="psw"
@@ -390,8 +380,8 @@ export default function Signup() {
                 placeholder="Contraseña"
                 required
               />
-              {errors.password && <p className="danger">{errors.password}</p>}
-              <a href="#">olvidaste tu clave?</a>
+              {input.psw.length< 8 ||errors.password && <p className="danger">{errors.password}</p>}
+              <Link to='/forgot/email'>olvidaste tu clave?</Link>
 
               <button type="submit">INICIA SESION</button>
             </form>

@@ -1,0 +1,68 @@
+.favBoard {
+  margin-left: 7%;
+  margin-right: 7%;
+  display: flex;
+  flex-direction: column;
+
+  .favProducts {
+    border-radius: 7px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin-bottom: 10px;
+    background-color: var(--color-gray);
+    -webkit-box-shadow: 5px 4px 11px 0px rgba(0, 0, 0, 0.24);
+    box-shadow: 5px 4px 11px 0px rgba(0, 0, 0, 0.24);
+    height: 150px;
+    width: 90%;
+    margin-left: 20px;
+    // height: max-content;
+    :link{
+      display: flex;
+      flex-direction: row;
+      text-decoration: none;
+      .deleteButton{
+        margin-left: 50%;
+        margin-top: 0.5%;
+      }
+    }
+
+    .favPic {
+      
+      height: 80%;
+      width: 18%;
+      margin: 1% 5% 0% 5%;
+    }
+    .favInfo {
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      .favTitle {
+        margin-bottom: 10px;
+        font-weight: 600;
+        color: var(--color-brand);
+      }
+    }
+    &:hover {
+      background-color: white;
+      .favTitle {
+        color: black;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .favBoard{
+    .favProducts {
+      :link{
+        height: 200px;
+        width: 300px;
+        margin-left: 5%;
+        display: flex;
+        flex-direction: column;
+      }
+    }
+  }
+}
