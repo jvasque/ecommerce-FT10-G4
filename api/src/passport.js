@@ -16,8 +16,8 @@ passport.use(
     { usernameField: 'email', passwordField: 'password', session: false },
     async (email, password, done) => {
       const user = await User.findOne({ where: { email: email } });
-      if (!user || !user.correctPassword(password)) return done(null, false, {message: "Su email o contraseña no es valida"});
-      if (user.resetPassword) return done(null, false, {message: "Ud. tiene un token de reset activo, favor siga las instrucciones"});
+      if (!user || !user.correctPassword(password)) return done(null, false);
+      if (user.resetPassword) return done(null, false);
       const {
         id,
         firstName,
@@ -27,8 +27,8 @@ passport.use(
         type,
         status,
       } = user;
-      if (status === "disabled") return done(null, false, {message: "Su cuenta se encuentra desactiva, favor siga las instrucciones enviadas a su correo electronico o vuelva a solicitar un enlace para reactivar su clave"})
-      if (status === "banned") return done(null, false, {message: "Su cuenta se encuentra Suspendida"});
+      if (status === "disabled") return done(null, false)
+      if (status === "banned") return done(null, false);
       return done(null, {
         id,
         firstName,

@@ -81,7 +81,7 @@ function SingleOrder({order, modify}){
                             headers: {Authorization: `Bearer ${token}`}
                          })
                     }
-                    window.location.reload();       
+                    //window.location.reload();       
                 }) 
             } else {
                 setStatus(order.state)

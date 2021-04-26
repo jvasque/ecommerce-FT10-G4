@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
-import ProductCard from "../ProductCard/ProductCard.jsx";
-import { useSelector } from "react-redux";
-import Pages from "./Pages.jsx";
-import CategoryFilter from "./CategoryFilter.jsx";
-import "../../scss/components/Catalog/_Catalog.scss";
+import React, { useState, useEffect } from 'react';
+import ProductCard from '../ProductCard/ProductCard.jsx';
+import { useSelector } from 'react-redux';
+import Pages from './Pages.jsx';
+import CategoryFilter from './CategoryFilter.jsx';
+import '../../scss/components/Catalog/_Catalog.scss';
 
 function Catalog() {
   const query = useSelector((state) => state.searchReducer.query);
@@ -64,6 +64,19 @@ function Catalog() {
         </div>
         {!catalog[0]?.error && (
           <Pages totalProducts={catalog.length} totalCards={totalCards} />
+        )}
+        {catalog[0]?.error && (
+          <div className="defaultResponse">
+            <div>
+              <img
+                alt="worriedFace"
+                src="https://uc-emoji.azureedge.net/orig/a4/fc17106eab2c38b5ebf71273b6a790.png"
+                width="150"
+                height="150"
+              />
+            </div>
+            <h4>No se encontraron resultados...</h4>
+          </div>
         )}
       </div>
     </div>

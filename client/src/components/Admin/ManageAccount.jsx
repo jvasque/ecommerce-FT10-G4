@@ -32,17 +32,18 @@ const useStyles = makeStyles((theme) => ({
 const ManageAccount = () => {
   const classes = useStyles();
   const allUser = useSelector(state => state.AdminReducer);
-
+const [users, setUsers] = useState([])
   const dispatch = useDispatch();
   async function getUsers() {
     const token = localStorage.getItem("token");
     const info = await axios.get("http://localhost:3001/admin", {
       headers: { Authorization: `Bearer ${token}` },
     });
-    // setUsers(info.data);
+    setUsers(info.data);
   }
   // llamar estado de redux y ejecutar y setear los comps
   useEffect(() => {
+    setUsers([])
     getUsers();
   }, []);
 
@@ -67,7 +68,7 @@ const ManageAccount = () => {
             </div>
             
               {allUser.users?.length > 0
-        ? allUser.users?.map((user) => <UserAccount user={user} key={allUser.users.indexOf(user)}/>)
+        ? users?.map((user) => <UserAccount user={user} key={users.indexOf(user)}/>)
         : ""}
             
         </div>

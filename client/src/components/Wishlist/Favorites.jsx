@@ -31,6 +31,7 @@ function Favorites() {
 
   return (
     <div className="favBoard">
+      <h1 className="title">Favoritos</h1>
       {favData &&
         favData.map((favorite, i) => (
           <div className="favProducts">
@@ -50,6 +51,25 @@ function Favorites() {
             </Link>
           </div>
         ))}
+      {favData.length === 0 && (
+        <div className="defaultResponse">
+          <div>
+            <img
+              alt="worriedFace"
+              src="https://uc-emoji.azureedge.net/orig/53/03d44c77129782799bc1f0134e5279.png"
+              width="150"
+              height="150"
+            />
+          </div>
+          <h4>
+            ¿Todavía no elegiste tus preferidos? ¡Échale un vistazo al{' '}
+            <strong>listado de productos</strong>!
+          </h4>
+          <Link to="/catalog">
+            <button>Ir al catálogo</button>
+          </Link>
+        </div>
+      )}
     </div>
   );
 }
