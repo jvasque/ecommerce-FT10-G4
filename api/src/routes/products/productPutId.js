@@ -26,7 +26,7 @@ module.exports = async (req, res, next) => {
     if (SKU) await product.update({ SKU: SKU });
     if (unitPrice) await product.update({ unitPrice: unitPrice });
     if (description) await product.update({ description: description });
-    if (unitsOnStock) await product.update({ unitsOnStock: unitsOnStock });
+    if (unitsOnStock || unitsOnStock===0) await product.update({ unitsOnStock: unitsOnStock });
     if (picture) await product.update({ picture: picture });
 
     if (categoriesIds) {
