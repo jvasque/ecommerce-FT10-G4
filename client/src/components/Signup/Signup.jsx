@@ -95,7 +95,12 @@ export default function Signup() {
         })
       );
     } else {
-      alert('No se pudo loguear a Facebook');
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'No se pudo conectar a Facebook',
+        confirmButtonColor: '#378a19',
+      });
     }
   };
 

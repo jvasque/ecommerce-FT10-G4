@@ -14,6 +14,7 @@ import { reset } from '../../redux/iconReducer/iconActions';
 import { LogOut } from '../../redux/loginReducer/loginActions';
 import { getFavs } from '../../redux/wishlistReducer/wishlistActions';
 import ManageAccount from '../Admin/ManageAccount';
+import Swal from 'sweetalert2';
 export function UserScreen() {
   const [render, setRender] = useState('miCuenta');
 
@@ -35,7 +36,7 @@ export function UserScreen() {
       dispatch(LogOut());
       dispatch(emptyCart());
       dispatch(reset());
-      alert('Se cerró sesión');
+      Swal.fire('Se ha cerrado sesión');
       localStorage.removeItem('user');
     }
   };
