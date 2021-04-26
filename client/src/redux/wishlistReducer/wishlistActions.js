@@ -6,6 +6,7 @@ export const REMOVE_FROM_WISHLIST = 'REMOVE_FROM_WISHLIST';
 export const DELETE_WISHLIST = 'DELETE_WISHLIST';
 export const GET_FAVS = 'GET_FAVS';
 export const ADD_RECOMMENDED = 'ADD_RECOMMENDED';
+export const GET_HIGHER = 'GET_HIGHER';
 
 // users/wishlist?id=
 export function getWishlists(id) {
@@ -75,6 +76,15 @@ export function addRecommended(array) {
       .post(`http://localhost:3001/products/filter?recommended=true`, { array: array })
       .then((json) => {
       dispatch({ type: ADD_RECOMMENDED, payload: json.data });
+    });
+  };
+}
+export function getHigher() {
+  return function (dispatch) {
+    return axios
+      .get(`http://localhost:3001/products/higher`)
+      .then((json) => {
+      dispatch({ type: GET_HIGHER, payload: json.data });
     });
   };
 }

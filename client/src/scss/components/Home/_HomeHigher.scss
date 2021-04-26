@@ -1,0 +1,21 @@
+.HomeHigher{
+    margin-top: 2%;
+    margin-bottom: 3%;
+    display: flex;
+    flex-direction: column;
+    margin-left: 7%;
+    margin-right: 7%;
+    margin-top: 3%;
+    background-color: var(--color-gray);
+    h2{
+      margin-bottom: 3%;
+    };
+    
+    .productsHigher{
+        padding: 10px;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content:space-between;  
+    };
+  }
