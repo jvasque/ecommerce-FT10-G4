@@ -13,6 +13,14 @@
     color: var(--color-black);
     text-align: center;
   }
+
+  .defaultResponse {
+    margin: 3rem 1rem 1rem 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 }
 
 .wishlist {
@@ -27,14 +35,13 @@
   .deleteButton {
     margin-left: 30%;
     // margin: 0.01vw 0 0 1vw;
-
   }
 
   h3 {
     margin-left: 5%;
     cursor: pointer;
-    &:hover{
-      color: var(--color-brand)
+    &:hover {
+      color: var(--color-brand);
     }
   }
   margin-left: 5%;
@@ -88,13 +95,12 @@
 }
 
 .createButton {
-  list-style: none;
-  text-align: center;
-  margin-top: 5%;
+  width: 120px;
+  height: fit-content;
   padding: 1%;
   border-radius: 3px;
-  width: 9vw;
-  height: 10%;
+  list-style: none;
+  text-align: center;
   cursor: pointer;
   background-color: var(--color-brand);
   opacity: 70%;

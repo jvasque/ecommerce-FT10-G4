@@ -13,7 +13,7 @@ module.exports = async (req, res, next) => {
     randomDic = {};
 
   // TOTAL DE PRODUCTOS EN LA DB
-  let totalProducts = await Product.findAndCountAll(); 
+  let totalProducts = await Product.findAndCountAll();
 
   let randomProdIndices = [
     Math.floor(Math.random() * totalProducts.count),
@@ -21,10 +21,10 @@ module.exports = async (req, res, next) => {
     Math.floor(Math.random() * totalProducts.count),
     Math.floor(Math.random() * totalProducts.count),
   ];
-  console.log('Random indices', randomProdIndices);
+  // console.log('Random indices', randomProdIndices);
 
-  console.log('Array de fav indices: ', array);
-  console.log('Se pide recommend: ', isRecommended);
+  // console.log('Array de fav indices: ', array);
+  // console.log('Se pide recommend: ', isRecommended);
 
   try {
     //CASE 1: pide recommended y tiene favoritos
@@ -53,7 +53,7 @@ module.exports = async (req, res, next) => {
 
       //Pide favoritos, tiene y no pide recommended, devuelvo favoritos
       if (isRecommended !== 'true') {
-        console.log(favProducts);
+        // console.log(favProducts);
         return res.json(favProducts).status(200); // CASE 1 return
       }
 
@@ -63,7 +63,7 @@ module.exports = async (req, res, next) => {
           return product.categories[0].id;
         });
 
-        console.log('Initial categories: ', recCategories);
+        // console.log('Initial categories: ', recCategories);
 
         // subCase 2: mas de 4
         if (recCategories.length > 4) {
@@ -77,7 +77,7 @@ module.exports = async (req, res, next) => {
             recCategories[Math.floor(Math.random() * recCategories.length)],
           ];
 
-          console.log('Reduced categories: ', recCategories);
+          // console.log('Reduced categories: ', recCategories);
         }
 
         for (let i = 0; i < recCategories.length; i++) {
@@ -101,12 +101,14 @@ module.exports = async (req, res, next) => {
               },
             },
           });
-          
-          let randomIndex = Math.floor(Math.random() * pickRandom.products.length)
-          let randomProd = pickRandom.products[randomIndex]
 
-         if (randomDic[randomProd.id]) {
-              continue;
+          let randomIndex = Math.floor(
+            Math.random() * pickRandom.products.length
+          );
+          let randomProd = pickRandom.products[randomIndex];
+
+          if (randomDic[randomProd.id]) {
+            continue;
           } else {
             randomDic[randomProd.id] = true;
             recProducts.push(randomProd);
@@ -116,18 +118,17 @@ module.exports = async (req, res, next) => {
         // subCase 1: menos de 4
 
         while (recProducts.length < 4) {
+          let randomIndex = Math.floor(
+            Math.random() * totalProducts.rows.length
+          );
+          let randomProd = totalProducts.rows[randomIndex];
 
-          let randomIndex = Math.floor(Math.random() * totalProducts.rows.length)
-          let randomProd = totalProducts.rows[randomIndex]
-
-         if (randomDic[randomProd.id]) {
-              continue;
+          if (randomDic[randomProd.id]) {
+            continue;
           } else {
             randomDic[randomProd.id] = true;
             recProducts.push(randomProd);
           }
-        
-
         }
 
         return res.json(recProducts); // CASE 2
