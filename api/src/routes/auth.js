@@ -9,10 +9,10 @@ const login = require("./auth/login.js");
 const express = require("express");
 const adminResetPassword = require("./auth/adminResetPassword.js");
 const postPassword = require("./auth/postPassword.js");
-const nodemailer = require("nodemailer");
-const resetPassword = require("./auth/resetPassword.js");
 
-const { SECRET_KEY } = process.env;
+const resetPassword = require("./auth/resetPassword.js");
+const facebookLogin = require("./auth/facebookLogin.js");
+
 
 // Middlewares
 server.use(express.json());
@@ -22,6 +22,7 @@ server.use(express.json());
 server.get("/me", me);
 server.post("/login", login);
 server.post("/google/login", googleLogin);
+server.post("/facebook/login", facebookLogin);
 server.get(
   "/password/reset/:id",
   passport.authenticate("bearer", { session: false }),
