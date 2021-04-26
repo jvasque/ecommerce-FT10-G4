@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import '../../scss/components/Nav/_Nav.scss';
 
@@ -6,7 +6,7 @@ import { useHistory } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { filterCategory } from '../../redux/categoryFilterReducer/categoryFilterActions';
 import { resetQuery } from '../../redux/searchReducer/searchActions';
-import { setPage } from '../../redux/catalogReducer/catalogActions';
+import { setPage, setDollar } from '../../redux/catalogReducer/catalogActions';
 // npm install --save-dev @iconify/react @iconify-icons/mdi
 //import { Icon, InlineIcon } from "@iconify/react";
 //import loginIcon from "@iconify-icons/mdi/login";
@@ -17,8 +17,15 @@ const Nav = () => {
   const categories = useSelector(
     (state) => state.categoryFilterReducer.categories
   );
+  const dollar = useSelector((state) => state.catalogReducer.dollar);
+
   const history = useHistory();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setDollar());
+    return () => {};
+  }, [dispatch]);
 
   function handleClick(cat) {
     dispatch(filterCategory(cat));
@@ -62,7 +69,9 @@ const Nav = () => {
           </div>
           <div className="exchange">
             <span className="exchange__usd">$USD 1 = </span>
-            <span className="exchange__ars">$ARS 148</span>
+            <span className="exchange__ars">
+              {dollar ? `$ARS ${dollar}` : '...'}
+            </span>
           </div>
           <SearchBar />
 

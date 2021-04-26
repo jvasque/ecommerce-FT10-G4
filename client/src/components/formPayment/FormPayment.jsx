@@ -13,7 +13,7 @@ import {
   ThemeProvider,
 
 } from '@material-ui/core/styles';
-import Paypal from '../Paypal/paypal';
+import Paypal from '../Paypal/Paypal';
 
 const useStyles = makeStyles({
   root: {

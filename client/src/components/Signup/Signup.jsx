@@ -29,9 +29,7 @@ import axios from 'axios';
 import FacebookLogin from 'react-facebook-login';
 import { TiSocialFacebookCircular } from 'react-icons/ti';
 import { GoogleLogin } from 'react-google-login';
-import { Link } from "react-router-dom";
-
-
+import { Link } from 'react-router-dom';
 
 export default function Signup() {
   const dispatch = useDispatch();
@@ -88,6 +86,7 @@ export default function Signup() {
   }
   const responseFacebook = (response) => {
     console.log(response);
+<<<<<<< HEAD
     dispatch(FLogin(response.accessToken, response.userID));
     // if (!response.status) {
       
@@ -102,6 +101,25 @@ export default function Signup() {
     // } else {
     //   alert('No se pudo loguear a Facebook');
     // }
+=======
+    if (!response.status) {
+      dispatch(
+        postFbUser({
+          firstName: response.first_name,
+          lastName: response.last_name,
+          email: response.email,
+          facebookUser: response.id,
+        })
+      );
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'No se pudo conectar a Facebook',
+        confirmButtonColor: '#378a19',
+      });
+    }
+>>>>>>> Quality
   };
 
   const sessionChange = (e) => {
@@ -330,9 +348,7 @@ export default function Signup() {
           </div>
 
           <div className="form-container sign-in-container">
-          <h1>Inicia Sesion</h1>
             <div className="social-container">
-
               <GoogleLogin
                 clientId="926134963488-27qle0uk3423ed3dt2jlkd20rtht66g6.apps.googleusercontent.com"
                 autoLoad={false}
@@ -346,7 +362,6 @@ export default function Signup() {
                 className="google-login-button"
               />
               <FacebookLogin
-
                 appId="311325910426887"
                 autoLoad={false}
                 fields="name,email,picture,first_name,last_name"
@@ -357,7 +372,6 @@ export default function Signup() {
                 icon={<TiSocialFacebookCircular />}
                 callback={responseFacebook}
               />
-
             </div>
 
             <form id="loginFrame" action="#" onSubmit={sessionSubmit}>
@@ -366,16 +380,20 @@ export default function Signup() {
               <span>o usa tu cuenta</span>
               <input
                 className={`${errors.username && 'danger'}`}
-
                 type="text"
                 value={input.uname}
                 name="uname"
                 onChange={sessionChange}
                 placeholder="Email"
               />
-              {input.uname.length< 8 || errors.username  && <p className="danger">{errors.username}</p>}
+              {input.uname.length < 8 ||
+                (errors.username && (
+                  <p className="danger">{errors.username}</p>
+                ))}
               <input
-                className={`${input.psw.length< 8 ||errors.password && "danger"}`}
+                className={`${
+                  input.psw.length < 8 || (errors.password && 'danger')
+                }`}
                 type="password"
                 value={input.psw}
                 name="psw"
@@ -383,8 +401,11 @@ export default function Signup() {
                 placeholder="Contraseña"
                 required
               />
-              {input.psw.length< 8 ||errors.password && <p className="danger">{errors.password}</p>}
-              <Link to='/forgot/email'>olvidaste tu clave?</Link>
+              {input.psw.length < 8 ||
+                (errors.password && (
+                  <p className="danger">{errors.password}</p>
+                ))}
+              <Link to="/forgot/email">olvidaste tu clave?</Link>
 
               <button type="submit">INICIA SESION</button>
             </form>

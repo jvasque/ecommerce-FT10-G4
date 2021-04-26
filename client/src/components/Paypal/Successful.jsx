@@ -52,7 +52,7 @@ export default function Successful({ payment }) {
     }
     stock();
     history.push({
-      pathname: '/catalog',
+      pathname: '/',
     });
   }, []);
 
