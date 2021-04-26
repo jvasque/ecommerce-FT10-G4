@@ -4,9 +4,6 @@ const { Review, Product } = require('../../db.js');
 module.exports = async (req, res) => {
   let productId = req.params.id
 
-  if(!req.user.id) return res.status(501).json({err: 'Unauthorized'})
-  //const userId = req.user.id;
-  
     let {
     text,
     rate,

@@ -3,8 +3,7 @@ const { Op } = require("sequelize");
 
 module.exports = async (req, res, next) => {
 
-    let { id } = req.params;
-    let { pagination } = req.query;
+    let id = req.params.id;
 
     if(!id) return res.json({error: "please, give us an id"})
     try {
@@ -12,8 +11,6 @@ module.exports = async (req, res, next) => {
         where:{
           productId:id
         },
-        offset: pagination || 0,
-        limit: 2,
         order: [
           ['createdAt', 'DESC']
         ],
@@ -30,18 +27,9 @@ module.exports = async (req, res, next) => {
           }]
         }, {model: User}]
       });
-      let usersCommented = await Review.findAll({
-        where: {
-          productId: id
-        },
-        attributes: ['userId']
-      });
-
-      let arrUsersCommented = usersCommented?.map(e => e.userId);
-
 
       if(!data) return res.json({error: "there are not reviews for this product"})
-      return res.json({data, arrUsersCommented});
+      return res.json(data);
     } catch (err) {
       res.json(err);
       return console.log(err);

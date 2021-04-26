@@ -2,8 +2,6 @@ const { Product, Review, User } = require("../../db.js");
 
 module.exports = async (req, res, next) => {
 
-  if(!req.user.id) return res.status(501).json({err: 'Unauthorized'})
-
   let id = req.params.id;
   let {text, rate} = req.body.params;
 

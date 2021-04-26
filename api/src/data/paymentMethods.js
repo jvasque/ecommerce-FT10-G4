@@ -14,13 +14,4 @@ module.exports = [
     {
         type: 'Tarjeta de Debito',
     },
-    {
-        type: 'Mercadopago',
-    },
-    {
-        type: 'Paypal',
-    },
-    {
-        type: 'Agropago',
-    },
 ]
