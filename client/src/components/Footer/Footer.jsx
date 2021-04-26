@@ -41,10 +41,10 @@ const Footer = () => {
         <hr />
         <div className="container-footer">
           <div className="row">
-            <div className="col-md-8 col-sm-6 col-xs-12 elements">
+            <div className="elements">
               <p className="copyright-text">
                 Copyright &copy; 2021 Todos los derechos reservados por
-                <span> Web-FT10-04</span>.
+                <span>Web-FT10-04</span>.
               </p>
             </div>
 
