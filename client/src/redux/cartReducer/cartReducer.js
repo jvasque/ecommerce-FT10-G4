@@ -5,7 +5,7 @@ import {
   INCREMENTQ,
   USERLOGGED,
   EMPTY,
-} from "./cartActions";
+} from './cartActions';
 
 const initialState = {
   cart: [],
@@ -62,7 +62,6 @@ export default (state = initialState, action) => {
         cart: [],
       };
     }
-
     default:
       return state;
   }

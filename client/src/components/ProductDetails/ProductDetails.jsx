@@ -1,50 +1,49 @@
-import React, { useEffect, useState } from "react";
-import Rating from "@material-ui/lab/Rating";
-import Box from "@material-ui/core/Box";
-import PropTypes from "prop-types";
-import { useDispatch, useSelector } from "react-redux";
-import { getDetail } from "../../redux/detailReducer/detailActions";
-import "../../scss/components/ProductDetail/_ProductDetails.scss";
-import Carousel from "./Carousel";
-import { Icon } from "@iconify/react";
-import tractorIcon from "@iconify-icons/la/tractor";
-import { useHistory } from "react-router";
-import { resetQuery } from "../../redux/searchReducer/searchActions";
-import { filterCategory } from "../../redux/categoryFilterReducer/categoryFilterActions";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
-import Favorite from "@material-ui/icons/Favorite";
-import FavoriteBorder from "@material-ui/icons/FavoriteBorder";
-import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
-import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
-import Pagination from '@material-ui/lab/Pagination';
-import Reviews from "../Reviews/Reviews";
-import CommentaryReviews from "../Reviews/CommentaryReviews";
-import WishlistButton from "../Wishlist/WishlistButton";
-import { modifyCart, modifyFav } from "../../redux/iconReducer/iconActions";
-import { addProduct, deleteProduct } from "../../redux/cartReducer/cartActions";
-import axios from "axios";
+import React, { useEffect, useState } from 'react';
+import Rating from '@material-ui/lab/Rating';
+import Box from '@material-ui/core/Box';
+import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
+import { getDetail } from '../../redux/detailReducer/detailActions';
+import '../../scss/components/ProductDetail/_ProductDetails.scss';
+import Carousel from './Carousel';
+import { Icon } from '@iconify/react';
+import tractorIcon from '@iconify-icons/la/tractor';
+import { useHistory } from 'react-router';
+import { resetQuery } from '../../redux/searchReducer/searchActions';
+import { filterCategory } from '../../redux/categoryFilterReducer/categoryFilterActions';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import Favorite from '@material-ui/icons/Favorite';
+import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
+import Reviews from '../Reviews/Reviews';
+import CommentaryReviews from '../Reviews/CommentaryReviews';
+import WishlistButton from '../Wishlist/WishlistButton';
+import { modifyCart, modifyFav } from '../../redux/iconReducer/iconActions';
+import { addProduct, deleteProduct } from '../../redux/cartReducer/cartActions';
+import axios from 'axios';
 
 const customIcons = {
   1: {
     icon: <Icon icon={tractorIcon} />,
-    label: "Very Dissatisfied",
+    label: 'Very Dissatisfied',
   },
   2: {
     icon: <Icon icon={tractorIcon} />,
-    label: "Dissatisfied",
+    label: 'Dissatisfied',
   },
   3: {
     icon: <Icon icon={tractorIcon} />,
-    label: "Neutral",
+    label: 'Neutral',
   },
   4: {
     icon: <Icon icon={tractorIcon} />,
-    label: "Satisfied",
+    label: 'Satisfied',
   },
   5: {
     icon: <Icon icon={tractorIcon} />,
-    label: "Very Satisfied",
+    label: 'Very Satisfied',
   },
 };
 function IconContainer(props) {
@@ -64,9 +63,7 @@ const ProductDetails = (props) => {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const { reviews, hasBuyOrderDetail } = useSelector(
-    (state) => state.reviewsReducer
-  );
+  const { reviews } = useSelector((state) => state.reviewsReducer);
 
   const iconState = useSelector((state) => state.iconReducer);
 
@@ -76,12 +73,9 @@ const ProductDetails = (props) => {
     [`Fav-${productDetail.id}`]: iconState.fav[`Fav-${productDetail.id}}`],
     [`Cart-${productDetail.id}}`]: iconState.cart[`Cart-${productDetail.id}}`],
   });
-
-  const [logged, setLogged] = useState("");
+  const [logged, setLogged] = useState('');
   const [hasBuy, setHasBuy] = useState([]);
-  const [productScore, setProductScore] = useState(0);
   const [hasComment, setHasComment] = useState([]);
-  const [pagination, setPagination] = useState(1);
 
   const Wish = () => {
     return (
@@ -91,19 +85,20 @@ const ProductDetails = (props) => {
             icon={<FavoriteBorder />}
             checkedIcon={<Favorite />}
             name={`Fav-${productDetail.id}`}
+            
           />
         }
       />
     );
   };
 
-  const Cart = (productId, handleHeart) => {
+  const Cart = (productId, state, handleHeart) => {
     return (
       <FormControlLabel
         control={
           <Checkbox
             icon={<ShoppingCartOutlinedIcon />}
-            checkedIcon={<ShoppingCartIcon style={{ color: "white" }} />}
+            checkedIcon={<ShoppingCartIcon style={{ color: 'white' }} />}
             checked={iconState.cart[`Cart-${productDetail.id}`] || false}
             name={`Cart-${productId}`}
             onChange={(e) => handleHeart(e)}
@@ -122,7 +117,7 @@ const ProductDetails = (props) => {
     }
     let { name, checked } = event.target;
     setState({ ...state, [name]: checked });
-    if (name.includes("Fav")) {
+    if (name.includes('Fav')) {
       dispatch(modifyFav({ [name]: checked }));
     } else {
       dispatch(modifyCart({ [name]: checked }));
@@ -130,58 +125,35 @@ const ProductDetails = (props) => {
   }
 
   useEffect(() => {
-    const fetchData = (async function () {
+    const fetchData = (async function (nada) {
       let json = await axios.get(
-        `http://localhost:3001/products/${parseInt(productId)}/review`,{
-          params: {
-              pagination: (pagination-1)*2,
-          }
-        }
+        `http://localhost:3001/products/${parseInt(productId)}/review`
       );
-
-      let userHasBuy = await axios.get(
-        `http://localhost:3001/products/${parseInt(
-          productId
-        )}/review-order-details/`
-      );
-      let resProductScore = await axios.get(
-        `http://localhost:3001/products/${parseInt(
-          productId
-        )}/review-product-score`
-      );
-
-      dispatch({ type: "GET_COMMENTARY", payload: json.data });
-      dispatch({ type: "HAS_BUY", payload: userHasBuy });
-      dispatch({ type: "GET_PRODUCT_SCORE", payload: resProductScore });
-      setHasComment(json.data.arrUsersCommented); //Saco los ID de los que tienen al menos una review en el producto
-      setHasBuy(userHasBuy.data?.map((e) => e.order.userId)); //Saco los ID de los usuarios que tienen una Order Detail con el produco
-      setProductScore(resProductScore.data);
+      dispatch({ type: 'GET_COMMENTARY', payload: json });
+      setHasComment(json.data?.map((e) => e.userId)); //Saco los ID de los que tienen al menos una review en el producto
     })();
+    //setHasBuy(reviews[0]?.map(e => e.orderDetail.order.userId)); //Me fijo quienes tienen una orden de compra con este producto, saco sus ID
     setLogged(loggin);
-
     dispatch(getDetail(parseInt(productId)));
-  }, [productId, dispatch, pagination]);
+  }, [productId, dispatch]);
 
   const handleClick = (cat) => {
     dispatch(filterCategory(cat));
     dispatch(resetQuery());
     history.push({
-      pathname: "/catalog",
+      pathname: '/catalog',
     });
   };
 
   const validateComment = () => {
     if (!loggin.isLogin) return false;
-    if (loggin.user.type === "superadmin" || loggin.user.type === "admin")
+    if (loggin.user.type === 'superadmin' || loggin.user.type === 'admin')
       return true;
-    if (!hasBuy.includes(loggin.user.id)) return false; //Descomentar cuando este bien hecha la pre-carga
+    //if(!hasBuy.includes(loggin.user.id)) return false; //Descomentar cuando este bien hecha la pre-carga
     if (hasComment.includes(loggin.user.id)) return false;
+
     return true;
   };
-
-  function handleButtonChange (event, value){
-    setPagination(value)
-  }
 
   return (
     <div className="productDetails">
@@ -197,7 +169,7 @@ const ProductDetails = (props) => {
                     <Rating
                       size="large"
                       name="customized-icons"
-                      value={productScore ? productScore : 1}
+                      value={productDetail.score ? productDetail.score : 1}
                       getLabelText={(value) => customIcons[value].label}
                       IconContainerComponent={IconContainer}
                       readOnly
@@ -219,7 +191,7 @@ const ProductDetails = (props) => {
                         {c.name}
                       </button>
                     ))
-                  : ""}
+                  : ''}
               </div>
               <hr />
               <div className="productOptions">
@@ -250,9 +222,6 @@ const ProductDetails = (props) => {
             <Reviews userId={loggin.user.id} id={productDetail.id} />
           )}
           <h2>Comentarios de otros usuarios</h2>
-          <div>
-            <Pagination count={Math.ceil(hasComment?.length/2)} color="primary" page={pagination} onChange={handleButtonChange} />
-          </div>
           {reviews[0] &&
             reviews[0][0] &&
             reviews[0].map((e) => {
@@ -260,10 +229,10 @@ const ProductDetails = (props) => {
               let firstName;
               let lastName;
               let photoURL;
-              e.user ? (fullName = e.user.fullName) : (fullName = "Anonymous");
-              e.user ? (firstName = e.user.firstName) : (firstName = "");
-              e.user ? (lastName = e.user.lastName) : (lastName = "");
-              e.user ? (photoURL = e.user.photoURL) : (photoURL = "");
+              e.user ? (fullName = e.user.fullName) : (fullName = 'Anonymous');
+              e.user ? (firstName = e.user.firstName) : (firstName = '');
+              e.user ? (lastName = e.user.lastName) : (lastName = '');
+              e.user ? (photoURL = e.user.photoURL) : (photoURL = '');
               return (
                 <CommentaryReviews
                   key={e.id}

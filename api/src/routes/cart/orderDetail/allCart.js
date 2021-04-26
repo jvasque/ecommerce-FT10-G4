@@ -11,16 +11,13 @@ module.exports = async (req, res) => {
       },
     });
 
-    if (order) {
-      const ordersDetail = await OrderDetail.findAll({
-        where: {
-          orderId: order.id,
-        },
-      });
-      ordersDetail ? res.json(ordersDetail) : res.send("Card Empty");
-    } else {
-      res.json([]);
-    }
+    const ordersDetail = await OrderDetail.findAll({
+      where: {
+        orderId: order.id,
+      },
+    });
+   
+    ordersDetail ? res.json(ordersDetail) : res.send("Card Empty");
   } catch (error) {
     console.log(error);
   }
