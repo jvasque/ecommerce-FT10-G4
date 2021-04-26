@@ -88,7 +88,7 @@ export default function Signup() {
     console.log(response);
     dispatch(FLogin(response.accessToken, response.userID));
     // if (!response.status) {
-      
+
     //   dispatch(
     //     postFbUser({
     //       firstName: response.first_name,
