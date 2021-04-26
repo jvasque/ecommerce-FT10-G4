@@ -20,13 +20,13 @@ const HomeCategories = () => {
   };
 
   let arr=['tab1', 'tab2', 'tab3', 'tab4'];
-    let index=0
-    let interval= setInterval(function(){
+  let index=0
+  let interval= setInterval(function(){
     if(index>2){index=0}else{
       index=index+1;
     }
     let element = document.getElementById(arr[index]);
-    element.checked=true;   
+    element.checked =true;  
   }, 2000);
 
   const handleCheck = () => {

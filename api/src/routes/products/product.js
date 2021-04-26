@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const productGet = require('./productGet');
 const productGetId = require('./productGetId');
 const productGetMany = require('./manyProductsGet');
+const productGetHigher = require('./higherProductsGet');
 const productPost = require('./productPost');
 const productPutId = require('./productPutId');
 const productDeleteID = require('./productDeleteId');
@@ -20,6 +21,7 @@ router.use(bodyParser.json());
 
 router.post('/filter', productGetMany);
 router.get('/', productGet);
+router.get('/higher', productGetHigher);
 router.get('/:id', productGetId);
 router.get('/:id/review', reviewGet);
 router.get('/:id/review-order-details/', reviewOrderDetail);
