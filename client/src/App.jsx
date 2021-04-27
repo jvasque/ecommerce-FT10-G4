@@ -9,6 +9,7 @@ import ProductForm from './components/product_form/product_form';
 import ProductFormCreate from './components/product_form/product_form_create';
 import ProductFormQuery from './components/product_form/product_form_query';
 import ProductFormUpdate from './components/product_form/product_form_update';
+import PromotionsCreate from './components/PromotionsForm/PromotionsCreate';
 import AllOrders from './components/AllOrders/AllOrders';
 import OrderHistory from './components/OrderHistory/OrderHistory';
 //import "./App.css";
@@ -70,6 +71,11 @@ function App() {
             exact
             path="/admin/product/form/update"
             component={ProductFormUpdate}
+          />
+          <Route
+            exact
+            path="/admin/promotion/form/create"
+            component={PromotionsCreate}
           />
         </AuthRoute>
         <AuthRoute path="/user" type="user">
