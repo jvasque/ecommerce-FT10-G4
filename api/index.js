@@ -251,6 +251,7 @@ conn.sync({ force: true }).then(() => {
       theReview.setProduct(theProduct)      
     }
 
+    //Locations and stock creation
     await Location.bulkCreate(locations);
     await UnitsOnLocation.bulkCreate(unitsOnLocations);
     for(let i = 0; i < unitsOnLocations.length; i++){
@@ -259,7 +260,7 @@ conn.sync({ force: true }).then(() => {
       await units.setLocation(loc)
     }
 
-
+    //Association to several 
 
     for(let i = 0; i < 5; i++){
       const productStock = await Product.findByPk(i+1)
@@ -271,6 +272,15 @@ conn.sync({ force: true }).then(() => {
         },
       })
       await productStock.addUnitsOnLocations(unitsLocProd)
+    }
+
+    //Location everyone else
+    const locDefault = await Location.findByPk(1)
+    for(let i = 5; i < products.length; i++){
+      const prodStock = await Product.findByPk(i+1)
+      const unitsOnStock = await UnitsOnLocation.create({unitsOnStock: products[i].unitsOnStock})
+      await locDefault.addUnitsOnLocations(unitsOnStock)
+      await prodStock.addUnitsOnLocations(unitsOnStock)
     }
 
     console.log('Products and categories pre charged');
