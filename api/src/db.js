@@ -51,6 +51,7 @@ const {
   OrderDetail,
   PaymentMethod,
   Product,
+  Promotion,
   Review,
   SubCategory,
   Type,
@@ -115,6 +116,9 @@ SubCategory.belongsToMany(Product, { through: 'product_subcategory' });
 
 Type.belongsToMany(Product, { through: 'product_type' });
 Brand.belongsToMany(Product, { through: 'product_brand' });
+
+Promotion.belongsToMany(Product, {through: 'product_promotion'});
+Product.belongsToMany(Promotion, {through: 'product_promotion'});
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');

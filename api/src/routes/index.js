@@ -17,6 +17,7 @@ const admin = require('../routes/admin/admin');
 const orders = require('../routes/orders/orders');
 const email = require('../routes/emails/email');
 const newsLetter = require('./users/newsLetter.js');
+const promotions = require('./promotions/promotions.js');
 
 
 const router = Router();
@@ -40,6 +41,7 @@ router.use('/cart/checkout', mercadopago);
 router.use('/admin', admin);
 router.use('/email', email);
 router.use('/newsLetter', newsLetter);
+router.use('/promotions', promotions);
 
 
 module.exports = router;

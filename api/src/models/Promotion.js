@@ -21,8 +21,13 @@ module.exports = (sequelize) => {
     },
    
     days: {
-      type: DataTypes.ENUM({values: ["0", "1", "2", "3", "4" ,"5" ,"6"]}),
+      type: DataTypes.STRING(7), 
+      allowNull: false
     },
+    active: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    } 
     
   });
 };
