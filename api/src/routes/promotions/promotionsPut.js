@@ -1,8 +1,9 @@
-const { Product, Promotion } = require("../../db.js");
+const { Product, Promotion, Category } = require("../../db.js");
+const { Op } = require('sequelize');
 
 module.exports = async (req, res) => {
 
-    let { products, categories, description, combo, days, active } = req.body;
+    let { products, categories, description, combo, days, active, discountDate } = req.body;
     let id = req.params.id;
 
     //INICIO VALIDACIONES DE DATOS
@@ -34,7 +35,7 @@ module.exports = async (req, res) => {
     if(typeof active !== 'boolean') return res.json({error: "active should be a boolean"});
     //FIN VALIDACIONES DATOS
 
-    const promotionFind = Promotion.findOne({
+    const promotionFind = await Promotion.findOne({
         where:{
             id: id
         }
@@ -44,46 +45,30 @@ module.exports = async (req, res) => {
         if(categories){
             const findProductsCategory = await Product.findAll({
                 include: [{
-                    model: product_category,
+                    model: Category,
                     where: {
-                        categoryId: {
+                        id: {
                             [Op.in]: categories
                         }
                     }
                 }]
             });
-
-            if(!findProductsCategory) return res.json({error: "There aren't products in those categories id's"});
-
-            await promotionFind.setProducts(findProductsCategory);
-
-            if(description) await promotionFind.update({description:description});
-            if(combo) await promotionFind.update({combo: combo});
-            if(stringDays) await promotionFind.update({days:stringDays});
-            if(active) await promotionFind.update({active:active});
-
-            return res.json(promotionFind);
-        }
-        if(products){
-            const findProductsIds = Product.findAll({
-                where: {
-                    id: {
-                        [Op.in]: products
-                    }
-                }
-            });
-
-            if(!findProductsIds) return res.json({error: "There aren't products in those id's"});
-
-            await promotionFind.setProducts(findProductsIds);
+            let prodCatId = findProductsCategory.map((o) => o.dataValues.id)
+            let prodId = [...products, ...prodCatId]
+            let arrRes = [...new Set(prodId)]
+            if(!arrRes) return res.json({error: "There aren't products in those categories id's"});
+        
+            await promotionFind.setProducts(arrRes);
 
             if(description) await promotionFind.update({description:description});
             if(combo) await promotionFind.update({combo: combo});
             if(stringDays) await promotionFind.update({days:stringDays});
             if(active) await promotionFind.update({active:active});
+            if(discountDate) await promotionFind.update({discountDate:discountDate});
 
             return res.json(promotionFind);
         }
+       
     } else {
         return res.json({error: "an error has occurred"});
     }

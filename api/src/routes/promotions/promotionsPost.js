@@ -39,8 +39,7 @@ module.exports = async (req, res) => {
     //Para que la sub-query funcione, categories tiene que ser un array de id's de las categorias: [1,2,3,4,...]
 
     //Si me mandan categorias, tengo que encontrar todos los productos que estan relacionados a esas categorias
-    //Para poder relizar esto, necesito consultar en la tabla intermedia
-    //Sub-query :D
+    
     let arrProductsCategories = [];
     let arrProductsIds = [];
     
@@ -80,9 +79,10 @@ module.exports = async (req, res) => {
     }
 
     let finalArray = arrProductsIds.concat(arrProductsCategories);
-    //e.product.dataValues.id
+    let idFinalArray = finalArray?.map((o) => o.dataValues.id)
+    let resArr = [...new Set(idFinalArray)]
 
-    if(!finalArray) return res.json({error: "There aren't products in those categories id's or products id's"}); 
+    if(!resArr) return res.json({error: "There aren't products in those categories id's or products id's"}); 
 
     const [promotionCreate, created] = await Promotion.findOrCreate({
         where: {
@@ -93,11 +93,10 @@ module.exports = async (req, res) => {
         }
     });
 
-    let newSet = new Set(finalArray);
-    console.log(newSet, "----El array finall promotion posts");
+   
 
 
-    await promotionCreate.setProducts(newSet);
+    await promotionCreate.setProducts(resArr);
 
     return res.json(promotionCreate);
 };
