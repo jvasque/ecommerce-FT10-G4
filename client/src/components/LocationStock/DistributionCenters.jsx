@@ -19,10 +19,8 @@ export default function DistributionCenters() {
             <b>Centros de Distribución</b>
             {
                 !centers[0]?.error && centers?.map(center => {
-                    return <DistributionCenterCard 
-                                city={center.city} 
-                                province={center.province} 
-                                postal={center.postal} 
+                    return <DistributionCenterCard
+                                center={center}     
                                 key={center.id}
                             />
                 })
