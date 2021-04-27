@@ -39,7 +39,7 @@ module.exports=  async (req, res) => {
           if (!find.googleId) await find.update({ googleId: sub });
           if (!find.photoURL) await find.update({ photoURL: picture });
           const token = jwt.sign(find.toJSON(), SECRET_KEY)
-          console.log(find.toJSON.status, find.toJSON())
+          // console.log(find.toJSON.status, find.toJSON())
           //setear logica de status, type ando reset password
           res.json(token);
         } else {

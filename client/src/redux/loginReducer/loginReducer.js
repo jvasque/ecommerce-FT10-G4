@@ -5,6 +5,7 @@ import {
   LOG_OUT,
   LOG_SWAL,
   LOG_GOOGLE,
+  LOG_FAIL_HANDLE,
 } from './loginActions';
 import decode from 'jwt-decode';
 
@@ -42,7 +43,7 @@ export default (state = initialState, action) => {
         isLogin: false,
         isAdmin: false,
       };
-    case LOG_SWAL:
+    case LOG_FAIL_HANDLE:
       return {
         errorLogin: false,
       };
