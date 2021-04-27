@@ -17,7 +17,7 @@ module.exports = [
     subId: [1, 2, 3],
     favId: [5],
     wishId: [],
-    unitsLocId: [1, 2],
+    unitsLocId: [1, 6],
     userId: 3,
   },
   {
@@ -39,7 +39,7 @@ module.exports = [
     subId: [4, 5, 6],
     favId: [5],
     wishId: [],
-    unitsLocId: [3, 4],
+    unitsLocId: [2, 7],
     userId: 3,
   },
 
@@ -60,7 +60,7 @@ module.exports = [
     subId: [7, 8, 9],
     favId: [5],
     wishId: [],
-    unitsLocId: [5, 6],
+    unitsLocId: [3, 8],
     userId: 3,
   },
 
@@ -81,7 +81,7 @@ module.exports = [
     subId: [10, 11, 12],
     favId: [5],
     wishId: [],
-    unitsLocId: [7],
+    unitsLocId: [4, 9],
     userId: 3,
   },
 
@@ -102,7 +102,7 @@ module.exports = [
     subId: [13, 14, 15],
     favId: [5],
     wishId: [],
-    unitsLocId: [8],
+    unitsLocId: [5, 10],
     userId: 3,
   },
 
@@ -123,7 +123,7 @@ module.exports = [
     subId: [1, 2, 3],
     favId: [2, 5],
     wishId: [2],
-    unitsLocId: [9, 10],
+    unitsLocId: [],
     userId: 3,
   },
   {

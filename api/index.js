@@ -30,6 +30,7 @@ const {
   Product,
   Review,
   SubCategory,
+  UnitsOnLocation,
   User,
   Wishlist,
 } = require('./src/db.js');
@@ -249,7 +250,29 @@ conn.sync({ force: true }).then(() => {
       const theReview = await Review.findByPk(i+1)
       theReview.setProduct(theProduct)      
     }
-    
+
+    await Location.bulkCreate(locations);
+    await UnitsOnLocation.bulkCreate(unitsOnLocations);
+    for(let i = 0; i < unitsOnLocations.length; i++){
+      const units = await UnitsOnLocation.findByPk(i+1)
+      const loc = await Location.findByPk(unitsOnLocations[i].location)      
+      await units.setLocation(loc)
+    }
+
+
+
+    for(let i = 0; i < 5; i++){
+      const productStock = await Product.findByPk(i+1)
+      const unitsLocProd = await UnitsOnLocation.findAll({
+        where: {
+          id: {
+            [Op.in]: products[i].unitsLocId,
+          },
+        },
+      })
+      await productStock.addUnitsOnLocations(unitsLocProd)
+    }
+
     console.log('Products and categories pre charged');
   });
 });

@@ -14,6 +14,9 @@ module.exports = (sequelize) => {
       unique: true,
       allowNull: false,
     },
+    postal: {
+      type: DataTypes.INTEGER,
+    },
     city: {
       type: DataTypes.STRING,
       allowNull: false,
