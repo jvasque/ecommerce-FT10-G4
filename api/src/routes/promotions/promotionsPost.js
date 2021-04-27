@@ -1,9 +1,9 @@
-const { Product, Promotion } = require("../../db.js");
+const { Product, Promotion, Category } = require("../../db.js");
 const { Op } = require('sequelize');
 
 module.exports = async (req, res) => {
 
-    let { products, categories, description, combo, days } = req.body;
+    let { products, categories, description, discountDate, combo, days } = req.body;
 
     //Los dias se reciben: 0123456, 035, 16, 23
     //Verificar que no se repitan, y que no salgan del rango 0-6
@@ -32,6 +32,8 @@ module.exports = async (req, res) => {
     //Si da verdadero, lo pasamos a un string de numeros para mandarlo a la DB
     let stringDays = days.join("");
 
+    
+
     //Validamos el porcentaje de descuento (1-99)
     if(discountDate < 1 || discountDate > 99) return res.json({error: "discount date must be between 1 and 99 percent"})
 
@@ -44,9 +46,9 @@ module.exports = async (req, res) => {
     if(categories){
         const findProductsCategory = await Product.findAll({
             include: [{
-                model: product_category,
+                model: Category,
                 where: {
-                    categoryId: {
+                    id: {
                         [Op.in]: categories
                     }
                 }
@@ -72,7 +74,7 @@ module.exports = async (req, res) => {
     //Si me mandan productos (id's), tengo que encontrarlos y setearle la promocion
 
     if(products){
-        const findProductsIds = Product.findAll({
+        const findProductsIds = await Product.findAll({
             where: {
                 id: {
                     [Op.in]: products

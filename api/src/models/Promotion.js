@@ -21,7 +21,7 @@ module.exports = (sequelize) => {
     },
    
     days: {
-      type: DataTypes.STRING(7), 
+      type: DataTypes.STRING, 
       allowNull: false
     },
     active: {
