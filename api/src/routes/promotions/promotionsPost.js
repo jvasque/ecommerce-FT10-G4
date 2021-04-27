@@ -30,10 +30,9 @@ module.exports = async (req, res) => {
     if(!daysVerification(days)) return res.json({error: "Invalid days"});
 
     //Si da verdadero, lo pasamos a un string de numeros para mandarlo a la DB
-    let stringDays = days.join("");
-
     
-
+    let stringDays = days.join("");
+    
     //Validamos el porcentaje de descuento (1-99)
     if(discountDate < 1 || discountDate > 99) return res.json({error: "discount date must be between 1 and 99 percent"})
 
@@ -42,6 +41,8 @@ module.exports = async (req, res) => {
     //Si me mandan categorias, tengo que encontrar todos los productos que estan relacionados a esas categorias
     //Para poder relizar esto, necesito consultar en la tabla intermedia
     //Sub-query :D
+    let arrProductsCategories = [];
+    let arrProductsIds = [];
     
     if(categories){
         const findProductsCategory = await Product.findAll({
@@ -55,23 +56,12 @@ module.exports = async (req, res) => {
             }]
         })
 
-        if(!findProductsCategory) return res.json({error: "There aren't products in those categories id's"});
-
-        const [promotionCreate, created] = await Promotion.findOrCreate({
-            where: {
-                description,
-                discountDate,
-                combo,
-                days: stringDays
-            }
-        })
-
-        await promotionCreate.setProducts(findProductsCategory);
-
-        return res.json(promotionCreate);
+        if(!findProductsCategory){
+            arrProductsCategories = [];
+        } else {
+            arrProductsCategories = findProductsCategory;
+        }
     }
-
-    //Si me mandan productos (id's), tengo que encontrarlos y setearle la promocion
 
     if(products){
         const findProductsIds = await Product.findAll({
@@ -82,21 +72,32 @@ module.exports = async (req, res) => {
             }
         })
 
-        if(!findProductsIds) return res.json({error: "There aren't products in those id's"});
-
-        const [promotionCreate, created] = await Promotion.findOrCreate({
-            where: {
-                description,
-                discountDate,
-                combo,
-                days: stringDays
-            }
-        })
-
-        await promotionCreate.setProducts(findProductsIds);
-
-        return res.json(promotionCreate);
+        if(!findProductsIds){
+            arrProductsIds = [];
+        } else {
+            arrProductsIds = findProductsIds;
+        }
     }
-    
-    return res.json({error: "something went wrong"});
+
+    let finalArray = arrProductsIds.concat(arrProductsCategories);
+    //e.product.dataValues.id
+
+    if(!finalArray) return res.json({error: "There aren't products in those categories id's or products id's"}); 
+
+    const [promotionCreate, created] = await Promotion.findOrCreate({
+        where: {
+            description,
+            discountDate,
+            combo,
+            days: stringDays
+        }
+    });
+
+    let newSet = new Set(finalArray);
+    console.log(newSet, "----El array finall promotion posts");
+
+
+    await promotionCreate.setProducts(newSet);
+
+    return res.json(promotionCreate);
 };
