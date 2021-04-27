@@ -107,9 +107,6 @@ export default function Newsletter() {
       .then((res) => {
         alert(res.data.message);
 
-        //setName("");
-        //setEmail("");
-
         setBoletinesInformativos(false);
         setPromociones(true);
         setNuevosLanzamientos(false);
