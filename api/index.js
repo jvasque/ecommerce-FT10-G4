@@ -252,7 +252,9 @@ conn.sync({ force: true }).then(() => {
     }
 
     //Locations and stock creation
-    await Location.bulkCreate(locations);
+    const userLocation = await User.findByPk(1)
+    const locationsUser = await Location.bulkCreate(locations);
+    await userLocation.addLocations(locationsUser)
     await UnitsOnLocation.bulkCreate(unitsOnLocations);
     for(let i = 0; i < unitsOnLocations.length; i++){
       const units = await UnitsOnLocation.findByPk(i+1)
@@ -282,7 +284,6 @@ conn.sync({ force: true }).then(() => {
       await locDefault.addUnitsOnLocations(unitsOnStock)
       await prodStock.addUnitsOnLocations(unitsOnStock)
     }
-
     console.log('Products and categories pre charged');
   });
 });

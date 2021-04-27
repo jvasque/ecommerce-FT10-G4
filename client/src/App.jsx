@@ -24,7 +24,7 @@ import UserScreen from './components/UserScreen/UserScreen';
 import Newsletter from './components/Newsletter/Newsletter';
 import Successful from './components/Mercadopago/Successful';
 import SuccessfulPaypal from './components/Paypal/Successful';
-import MapContainer from './components/LocationStock/MapContainer'
+import MapContainer from './components/LocationStock/DistributionCenters'
 
 function App() {
   return (

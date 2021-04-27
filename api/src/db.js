@@ -68,6 +68,7 @@ User.hasOne(Favorite);
 User.hasMany(Product); //MarketPlace functionality
 User.hasMany(Wishlist);
 User.belongsToMany(PaymentMethod, { through: 'user_payment' });
+User.hasMany(Location)
 
 PaymentMethod.hasMany(Order);
 PaymentMethod.belongsToMany(User, { through: 'user_payment' });
@@ -96,6 +97,7 @@ Product.belongsToMany(Brand, { through: 'product_brand' });
 Product.belongsToMany(Type, { through: 'product_type' });
 Product.hasMany(UnitsOnLocation);
 
+Location.belongsTo(User)
 Location.hasMany(UnitsOnLocation);
 
 UnitsOnLocation.belongsTo(Location);

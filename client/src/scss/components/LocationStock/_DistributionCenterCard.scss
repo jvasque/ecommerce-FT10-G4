@@ -1,0 +1,64 @@
+.distributionCenterCardContainer{
+    height: 100px;
+    width: 720px;
+    background: white;
+    box-shadow: 0px 0px 3px 3px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    flex-direction: row;
+    margin: 5px;
+    .room{
+        display: inline-block;
+        height: 100px;
+        width: 24px;
+        vertical-align: top;
+        margin-top: 38px;
+        margin-left: 10px;
+        margin-right: 10px;
+        color: var(--color-brand);
+    }
+    .centerInfo{
+        display: inline-block;
+        width: 632px;
+        height: 100%;
+        margin-top: 30px;
+    }
+    .dropdown{
+        position: relative;
+        display: inline-block;
+
+        .three-dots{
+            width: 24px;
+            margin-left: 10px;
+            margin-right: 10px;
+            height: 100%;
+            vertical-align: top;
+            margin-top: 38px;
+            color: var(--color-dark);
+            cursor: pointer;
+        }
+        .dropdown-content .inactive{
+            display: none;
+            position: absolute;
+            background: white;
+            box-shadow: 0px 0px 3px 3px rgba(0, 0, 0, 0.1);
+            z-index: 1;
+            right: 0;
+            min-width: 160px;
+            div{
+                height: 25px;
+            }
+        }   
+        
+        // .dropdown .active{
+        //     .dropdown-content{
+        //         display: block;
+        //     }
+        // }
+    }   
+
+    .dropdown:hover{
+        .dropdown-content{
+            display: block;
+        }
+    }  
+}
