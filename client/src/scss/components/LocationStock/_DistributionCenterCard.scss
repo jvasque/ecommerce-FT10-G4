@@ -56,12 +56,23 @@
             z-index: 1;
             right: 0;
             min-width: 160px;
+            border-radius: 5px;
             div{
-                height: 25px;
+                :hover{
+                    cursor: pointer;
+                    background: var(--color-gray);
+                }                
             }
-            .active{
-                display: block;
-            }            
+            .seeMap{
+                border-bottom: 2px solid var(--color-gray);
+
+            }  
+            .modifyLocation{
+                border-bottom: 2px solid var(--color-gray);
+            } 
+            p{
+                padding: 10px;
+            }                  
         }
     }   
 

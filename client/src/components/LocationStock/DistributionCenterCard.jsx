@@ -27,9 +27,9 @@ export default function DistributionCenterCard({city, province, postal}) {
                     <MoreVertIcon /> 
                 </div>    
                 <div className={`dropdown-content-${activeToggle}`}>
-                    <div>Ver en mapa</div>
-                    <div>Modificar</div>
-                    <div>Eliminar</div>
+                    <div><p className='seeMap'>Ver en mapa</p></div>
+                    <div><p className='modifyLocation'>Modificar</p></div>
+                    <div><p>Eliminar</p></div>
                 </div>
             </div>
         </div>
