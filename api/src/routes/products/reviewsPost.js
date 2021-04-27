@@ -13,6 +13,18 @@ module.exports = async (req, res) => {
     userId
   } = req.body.params;
 
+  //Inicio barrera de doble comentario //Decomentar en caso de ser necesario, entra en conflicto en caso de que un Admin quiera comentar 
+  //mas de una vez el mismo producto
+  /* const hasOneComment = await Review.findOne({
+    where: {
+      userId: userId,
+      productId: productId
+    }
+  })
+
+  if(hasOneComment) return res.json({error: "You've alredy commented on this product!"}) */
+  //Fin barrera doble comentario
+
   try {
     const addReview = await Review.findOrCreate({
       where: {
