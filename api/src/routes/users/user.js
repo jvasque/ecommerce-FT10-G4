@@ -30,7 +30,4 @@ router.post('/wishlist/post/:userId', wishlistPost); // Crear una wishlist
 router.delete('/wishlist/delete/:wishlistId', wishlistDelete); // Borrar una wishlist
 router.put('/wishlist/:wishlistId/:productId', wishlistPut); // Modificar productos (borrar o agregar)
 
-
-
-
 module.exports = router;

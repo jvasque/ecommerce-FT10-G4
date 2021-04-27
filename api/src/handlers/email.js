@@ -47,7 +47,7 @@ exports.enviar = async (opciones) => {
     const text = htmlToText.fromString(html); //deprecated 
 
     let mailOptions = {
-        from: 'developer2021vlad@gmail.com',
+        from: 'agroplaceofficial@gmail.com',
         to: opciones.email,
         subject: opciones.subject,
         text,

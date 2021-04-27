@@ -15,7 +15,7 @@ const server = require('./auth');
 const mercadopago = require('../routes/mercadopago/mercadopago');
 const admin = require('../routes/admin/admin');
 const orders = require('../routes/orders/orders');
-const newsLetter = require('./users/newsLetter.js');
+const newsLetter = require('../routes/newsLetter/newsLetter');
 
 const router = Router();
 router.use(cors());
