@@ -85,7 +85,7 @@ export default function Signup() {
     return errors;
   }
   const responseFacebook = (response) => {
-    console.log(response);
+  
     dispatch(FLogin(response.accessToken, response.userID));
     // if (!response.status) {
 

@@ -15,12 +15,27 @@ import { LogOut } from '../../redux/loginReducer/loginActions';
 import { getFavs } from '../../redux/wishlistReducer/wishlistActions';
 import ManageAccount from '../Admin/ManageAccount';
 import Swal from 'sweetalert2';
+import Settings from '../SettingsUser/Settings';
+import axios from "axios"
 export function UserScreen() {
   const [render, setRender] = useState('miCuenta');
 
   const login = useSelector((state) => state.loginReducer);
+  const [userDb, setUserDb] = useState([])
+  const userId = localStorage.getItem("user")
 
   const dispatch = useDispatch();
+  
+  useEffect(() => {
+    const data = localStorage.getItem("render");
+    if (data) {
+      setRender(JSON.parse(data));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("render", JSON.stringify(render));
+  },[render]);
 
   function handleClick(e) {
     e.preventDefault();
@@ -40,6 +55,13 @@ export function UserScreen() {
       localStorage.removeItem('user');
     }
   };
+  useEffect(() => {
+    async function data() {
+    const user = await axios.get(`http://localhost:3001/users/user/${userId}`)
+    setUserDb(user.data)
+    }
+    data()
+},[])
 
   return (
     <div className="infoContainer">
@@ -106,6 +128,21 @@ export function UserScreen() {
           }
         >
           Newsletter
+        </div>
+        <div
+          id="Configuracion"
+          onClick={(e) => handleClick(e)}
+          style={
+            render === 'Configuracion'
+              ? {
+                  backgroundColor: 'var(--color-brand)',
+                  opacity: '50%',
+                  color: 'var(--color-light)',
+                }
+              : { backgroundColor: '' }
+          }
+        >
+          Configuración
         </div>
         {login.isAdmin ? (
           <div
@@ -205,7 +242,9 @@ export function UserScreen() {
           <div style={{ marginLeft: '3vw' }}>
             <Newsletter />
           </div>
-        ) : render === 'allOrders' ? (
+        ) : render ==="Configuracion" ?
+         (<Settings userDb={userDb} setUserDb={setUserDb} />)
+        : render === 'allOrders' ? (
           <AllOrders />
         ) : render === 'CreateProduct' ? (
           <ProductForm />

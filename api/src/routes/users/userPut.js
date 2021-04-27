@@ -1,11 +1,10 @@
-const { User } = require('../../db.js');
+const { User } = require("../../db.js");
 
 module.exports = async (req, res, next) => {
   let {
     firstName,
     lastName,
     email,
-    // password,
     companyName,
     phone,
     address,
@@ -31,6 +30,6 @@ module.exports = async (req, res, next) => {
     return res.json(user);
   } else {
     res.status(400);
-    return res.json({ error: 'that user cannot be find' });
+    return res.json({ error: "that user cannot be find" });
   }
 };
