@@ -7,7 +7,11 @@ import { NavLink } from 'react-router-dom';
 //import axios from 'axios';
 import swal from 'sweetalert';
 import { makeStyles } from '@material-ui/core/styles';
-import { TextField } from '@material-ui/core';
+import { TextField, Input, InputLabel, MenuItem, Select, Chip } from '@material-ui/core';
+
+
+
+
 
 const grisPrincipal= "#EFEFEF";
 
@@ -28,6 +32,13 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "15px",
     marginBottom: "15px"
     
+  },
+  chips: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  chip: {
+    margin: 2,
   }
 }));
 
@@ -64,21 +75,42 @@ export default function PromotionsCreate(props) {
     });
   };
 
+  
+
   const handleCategoryCheck = function (e) {
     if (e.target.checked) {
       setInput({
         ...input,
-        categoryCheck: [...input.categoryCheck, e.target.value],
+        categoryCheck: [...input.categoryCheck, parseInt(e.target.value)],
       });
     } else {
       setInput({
         ...input,
         categoryCheck: input.categoryCheck.filter(
-          (category) => category !== e.target.value
+          (category) => category !== parseInt(e.target.value)
         ),
       });
     }
   };
+
+  const handleDayCheck = function (e) {
+    if (e.target.checked) {
+      setInput({
+        ...input,
+        days: [...input.days, parseInt(e.target.value)],
+      });
+    } else {
+      setInput({
+        ...input,
+        days: input.days.filter(
+          (day) => day !== parseInt(e.target.value)
+        ),
+      });
+    }
+  };
+
+  const dias = ["Domingo", "Lunes", "Martes", "Miércoles",
+                "Jueves", "Viernes", "Sábado"]
 
  /*  const handleSubmit = function (event) {
     event.preventDefault();
@@ -142,7 +174,7 @@ export default function PromotionsCreate(props) {
                     <label>{c.name}</label>
                     <input
                       type="checkbox"
-                      value={c.name}
+                      value={c.id}
                       onChange={(e) => handleCategoryCheck(e)}
                     />
                   </div>
@@ -185,6 +217,94 @@ export default function PromotionsCreate(props) {
           required 
           onChange={handleChange}
           className={classes.input}/>
+
+        {/* <InputLabel id="demo-mutiple-chip-label">Día/s</InputLabel>
+        <Select
+          labelId="demo-mutiple-chip-label"
+          id="demo-mutiple-chip"
+          name= "days"
+          multiple
+          value={input.days}
+          onChange={handleChange}
+          input={<Input id="select-multiple-chip" />}
+          renderValue={(selected) => (
+            <div className={classes.chips}>
+              {selected.map((value) => (
+                <Chip key={value} label={value} className={classes.chip} />
+              ))}
+            </div>
+          )}
+           MenuProps={MenuProps} 
+        >
+          
+            <MenuItem key= {0} value={0} >
+              Domingo
+            </MenuItem>
+            <MenuItem key= {1} value={1} >
+              Lunes
+            </MenuItem>
+        </Select> */}
+        <label className="label">Día/s:</label>
+          <div className="categoryBoxes">
+            {dias &&
+              dias.map((d) => {
+                return (
+                  <div key={d}>
+                    <label>{d}</label>
+                    <input
+                      type="checkbox"
+                      value={dias.indexOf(d)}
+                      onChange={(e) => handleDayCheck(e)}
+                    />
+                  </div>
+                );
+              })}
+          </div>
+        {/* <label className="label">Día/s:</label>
+          <div className="categoryBoxes">
+            
+                  <div key={0}>
+                    <label>Domingo</label>
+                    <input
+                      type="checkbox"
+                      value={0}
+                      onChange={(e) => handleDayCheck(e)}
+                    />
+                  </div>
+                  <div key={1}>
+                    <label>Lunes</label>
+                    <input
+                      type="checkbox"
+                      value={1}
+                      onChange={(e) => handleDayCheck(e)}
+                    />
+                  </div>
+                  <div key={2}>
+                    <label>Martes</label>
+                    <input
+                      type="checkbox"
+                      value= {2}
+                      onChange={(e) => handleDayCheck(e)}
+                    />
+                  </div>
+                  <div key={3}>
+                    <label>Miércoles</label>
+                    <input
+                      type="checkbox"
+                      value= {3}
+                      onChange={(e) => handleDayCheck(e)}
+                    />
+                  </div>
+                  <div key={2}>
+                    <label>Jueves</label>
+                    <input
+                      type="checkbox"
+                      value= {2}
+                      onChange={(e) => handleDayCheck(e)}
+                    />
+                  </div>
+               
+          </div> */}
 
           <button type="submit">Crear promocion</button>
         </div>
