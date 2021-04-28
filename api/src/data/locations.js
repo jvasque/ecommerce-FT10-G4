@@ -27,7 +27,7 @@ module.exports = [
         label: 'Kappa',
         address: 'Victoria 993-1019',
         province: 'Región Metropolitana',
-        city: 'Santiago',
+        city: 'Santiago de Chile',
         postal: 8320000,
         country: 'Chile',
         latitud: -33.463543,

@@ -1,13 +1,15 @@
 import React, {useState} from 'react'
 import RoomOutlinedIcon from '@material-ui/icons/RoomOutlined';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import Modal from 'react-modal';
+import { Modal } from '@material-ui/core';
+import Map from './Map'
 import '../../scss/components/LocationStock/_DistributionCenterCard.scss'
 import swal from 'sweetalert';
 import axios from 'axios'
 
 export default function DistributionCenterCard({center, modified}) {
     const [state, setState] = useState(false)
+    const [modal, setModal] = useState(false);
     let activeToggle = state ? 'active':'inactive'
 
     function toggle(){
@@ -20,8 +22,12 @@ export default function DistributionCenterCard({center, modified}) {
     }
 
     function seeMap(){
-
+        setModal(true)
     }
+
+    const handleClose = () => {
+        setModal(false);
+    };
 
     const modifyLocation = () => {
         swal({
@@ -82,6 +88,14 @@ export default function DistributionCenterCard({center, modified}) {
                     <div onClick={onDelete}><p>Eliminar</p></div>
                 </div>
             </div>
+            <Modal 
+                open={modal}
+                onClose={handleClose}
+            >
+                <div>
+                    <Map location={center}/>
+                </div>                
+            </Modal>
         </div>
     )
 }
