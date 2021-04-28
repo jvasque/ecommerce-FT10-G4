@@ -3,7 +3,7 @@ const { Op } = require('sequelize');
 
 module.exports = async (req, res) => {
 
-    let { products, categories, description, discountDate, combo, days } = req.body;
+    let { products, categoryCheck, description, discountDate, combo, days } = req.body.params;
 
     //Los dias se reciben: 0123456, 035, 16, 23
     //Verificar que no se repitan, y que no salgan del rango 0-6
@@ -43,13 +43,13 @@ module.exports = async (req, res) => {
     let arrProductsCategories = [];
     let arrProductsIds = [];
     
-    if(categories){
+    if(categoryCheck){
         const findProductsCategory = await Product.findAll({
             include: [{
                 model: Category,
                 where: {
                     id: {
-                        [Op.in]: categories
+                        [Op.in]: categoryCheck
                     }
                 }
             }]
@@ -81,7 +81,7 @@ module.exports = async (req, res) => {
     let finalArray = arrProductsIds.concat(arrProductsCategories);
     let idFinalArray = finalArray?.map((o) => o.dataValues.id)
     let resArr = [...new Set(idFinalArray)]
-
+    console.log(resArr, "ARRAY DE IDS")
     if(!resArr) return res.json({error: "There aren't products in those categories id's or products id's"}); 
 
     const [promotionCreate, created] = await Promotion.findOrCreate({
@@ -97,6 +97,6 @@ module.exports = async (req, res) => {
 
 
     await promotionCreate.setProducts(resArr);
-
+    console.log("LEIDOOOOO")
     return res.json(promotionCreate);
 };

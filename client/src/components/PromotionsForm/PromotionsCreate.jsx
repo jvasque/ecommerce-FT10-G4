@@ -3,13 +3,16 @@ import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 //import '../../scss/components/productsForm/_ProductFormCreate.scss';
-//import { postProduct } from '../../redux/reducerProductForms/actionsProductForms';
+import { postPromotion } from '../../redux/PromotionsFormReducer/actionsPromotionsForm';
 //import axios from 'axios';
 import swal from 'sweetalert';
 import { makeStyles } from '@material-ui/core/styles';
 import { TextField, Input, InputLabel, MenuItem, Select, Chip } from '@material-ui/core';
 
-
+import {
+  getProductName,
+  clearProduct,
+} from '../../redux/reducerProductForms/actionsProductForms';
 
 
 
@@ -45,16 +48,34 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default function PromotionsCreate(props) {
+  const dispatch = useDispatch();
   const classes = useStyles();
   const [input, setInput] = useState({
     description: '',
     categoryCheck: [],
-    products: '',
+    products: [],
     discountDate: '',
+    combo: '',
     days: []
     
   });
-  
+
+  //TRAIGO EL PRODUCTO CONSULTADO X NOMBRE
+  const [name, setName] = useState('');
+  const [product, setProduct] = useState([]);
+  const productGlobal = useSelector(
+    (state) => state.reducerProductForms.product
+    );
+    
+  useEffect(() => {
+    setProduct([...product,...productGlobal]);
+    async function alerting() {
+      if (productGlobal[0]?.error) {
+        swal('Oops!', 'No existe un producto con ese nombre', 'error');
+      }
+    }
+    alerting();
+  }, [productGlobal, dispatch]);
 
  /*  useEffect(() => {
    
@@ -63,7 +84,6 @@ export default function PromotionsCreate(props) {
   
   
 
-  const dispatch = useDispatch();
   const category = useSelector(
     (state) => state.categoryFilterReducer.categories
   );
@@ -92,7 +112,14 @@ export default function PromotionsCreate(props) {
       });
     }
   };
-
+//BUSCAR PRODUCTO
+function handleQuery(name, event) {
+  event.preventDefault();
+  if (!name)
+    return swal('Advertencia', 'No lo se Rick, parece vacio', 'warning');
+  dispatch(getProductName(name));
+}
+//FIN BUSCAR PRODUCTO
   const handleDayCheck = function (e) {
     if (e.target.checked) {
       setInput({
@@ -112,20 +139,21 @@ export default function PromotionsCreate(props) {
   const dias = ["Domingo", "Lunes", "Martes", "Miércoles",
                 "Jueves", "Viernes", "Sábado"]
 
- /*  const handleSubmit = function (event) {
+   const handleSubmit = function (event) {
     event.preventDefault();
-    if (input.categoryCheck.length === 0) {
-      swal('Aviso!','Se requiere al menos UNA categoría', 'warning');
+    if (input.discountDate <= 0 || input.discountDate > 99) {
+      swal('Aviso!','El valor del porcentaje de descuento debe estar entre 1 y 99', 'warning');
+    } else if (input.combo < 0) {
+      swal('Aviso!','El número del combo no debe ser negativo', 'warning');
     } else {
       dispatch(
-        postProduct(
-          input.name,
-          input.SKU,
-          input.price,
+        postPromotion(
           input.description,
-          resPic,
           input.categoryCheck,
-          input.stock
+          input.products,
+          input.discountDate,
+          input.combo,
+          input.days
         )
       );
 
@@ -133,8 +161,9 @@ export default function PromotionsCreate(props) {
       setInput({
         description: '',
         categoryCheck: [],
-        producs: '',
+        products: '',
         discountDate: [],
+        combo: '',
         days: []
       });
       
@@ -143,14 +172,14 @@ export default function PromotionsCreate(props) {
       inputs.forEach((item) => {
         item.checked = false;
       });
-      swal('Éxito!',`El producto ${input.name} ha sido creado`, 'success');
+      swal('Éxito!',`La promocion ${input.combo} ha sido creada`, 'success');
     }
-  }; */
+  }; 
 
   return (
     <div className="containerPromotionFormCreate">
       <h1>Agregar promociones</h1>
-      <form className={classes.root} /* onSubmit={(e) => handleSubmit(e)} */>
+      <form className={classes.root}  onSubmit={(e) => handleSubmit(e)} >
         <div className="cont-1">
           
           <TextField 
@@ -187,11 +216,38 @@ export default function PromotionsCreate(props) {
           label="productos" 
           placeholder="Agregue los productos a los que aplicará la promoción..."
           variant="outlined"
-          name="products" 
-          value={input.products}
-          required 
-          onChange={handleChange}
+          name="product" 
+          value={name} 
+          onChange={(e) => setName(e.target.value)}
           className={classes.input}/>
+          <button
+          onClick={(e) => {
+            handleQuery(name, e);
+          }}
+        >
+          Consultar producto
+        </button>
+      {/*   {product[0]?.name &&
+          product.map((prod) => {
+            setInput({
+              ...input,
+              products: [...input.products, prod.id],
+            });
+            return <div>
+              <p>{prod.name}</p>
+             { <button id={prod.id} onClick={
+               ()=>{ setInput({
+                 ...input,
+                  product: input.products.filter(
+                (id) => id !== prod.id
+        ),
+      })}}>x</button>}
+            </div> 
+          })}
+
+        {product && product[0]?.error && (
+          <h1>El producto solicitado no existe</h1>
+        )} */}
 
 
           <TextField 
@@ -209,41 +265,16 @@ export default function PromotionsCreate(props) {
 
           <TextField 
           id="outlined-basic" 
-          label="Descripción..." 
+          label="Combo..." 
           variant="outlined"
-          name="description"
-          value={input.description} 
-          type="text"
+          name="combo"
+          value={input.combo} 
+          type="number"
+          InputProps={{ inputProps: { min: 0, max: 999999 } }}
           required 
           onChange={handleChange}
           className={classes.input}/>
 
-        {/* <InputLabel id="demo-mutiple-chip-label">Día/s</InputLabel>
-        <Select
-          labelId="demo-mutiple-chip-label"
-          id="demo-mutiple-chip"
-          name= "days"
-          multiple
-          value={input.days}
-          onChange={handleChange}
-          input={<Input id="select-multiple-chip" />}
-          renderValue={(selected) => (
-            <div className={classes.chips}>
-              {selected.map((value) => (
-                <Chip key={value} label={value} className={classes.chip} />
-              ))}
-            </div>
-          )}
-           MenuProps={MenuProps} 
-        >
-          
-            <MenuItem key= {0} value={0} >
-              Domingo
-            </MenuItem>
-            <MenuItem key= {1} value={1} >
-              Lunes
-            </MenuItem>
-        </Select> */}
         <label className="label">Día/s:</label>
           <div className="categoryBoxes">
             {dias &&
@@ -260,58 +291,13 @@ export default function PromotionsCreate(props) {
                 );
               })}
           </div>
-        {/* <label className="label">Día/s:</label>
-          <div className="categoryBoxes">
-            
-                  <div key={0}>
-                    <label>Domingo</label>
-                    <input
-                      type="checkbox"
-                      value={0}
-                      onChange={(e) => handleDayCheck(e)}
-                    />
-                  </div>
-                  <div key={1}>
-                    <label>Lunes</label>
-                    <input
-                      type="checkbox"
-                      value={1}
-                      onChange={(e) => handleDayCheck(e)}
-                    />
-                  </div>
-                  <div key={2}>
-                    <label>Martes</label>
-                    <input
-                      type="checkbox"
-                      value= {2}
-                      onChange={(e) => handleDayCheck(e)}
-                    />
-                  </div>
-                  <div key={3}>
-                    <label>Miércoles</label>
-                    <input
-                      type="checkbox"
-                      value= {3}
-                      onChange={(e) => handleDayCheck(e)}
-                    />
-                  </div>
-                  <div key={2}>
-                    <label>Jueves</label>
-                    <input
-                      type="checkbox"
-                      value= {2}
-                      onChange={(e) => handleDayCheck(e)}
-                    />
-                  </div>
-               
-          </div> */}
 
           <button type="submit">Crear promocion</button>
         </div>
       </form>
 
       <NavLink to="/user/info">
-        <button>Volver</button>
+        <button onClick={() => dispatch(clearProduct())}>Volver</button>
       </NavLink>
     </div>
   );
