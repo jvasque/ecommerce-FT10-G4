@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from "react"
 import { useDispatch } from "react-redux";
 import DivText from "../ProductCard/DivText";
 import "../../scss/components/AllOrders/_AdminOrderDetail.scss";
