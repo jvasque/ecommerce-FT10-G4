@@ -1,14 +1,13 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import "../../scss/components/Order/_OrderDetail.scss";
 import DivText from "../ProductCard/DivText";
 function OrderDetail({ product }) {
-  
+
   return (
     <div className="orderCard">
       <div>
         <div className="cardPicture">
-          <img src={product.picture} alt="product"></img>
+          <img src={product.picture[0]} alt="product"></img>
         </div>
         <div className="cardContent">
           <div className="cardPrice">

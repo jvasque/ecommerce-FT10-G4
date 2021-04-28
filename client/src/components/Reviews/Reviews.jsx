@@ -39,8 +39,6 @@ function Reviews({id, userId}) {
     text:""
   });
   const classes = useStyles();
-  const token = localStorage.getItem("token");
-  
 
   function handleInput(e){
     e.preventDefault();
@@ -50,7 +48,7 @@ function Reviews({id, userId}) {
     })
   }
 
-  function handleSubmit(e, token){
+  function handleSubmit(e){
     e.preventDefault(e);
     if(!input.text) {
       return swal("Aviso!","No has ingresado un comentario", "warning")
@@ -58,7 +56,7 @@ function Reviews({id, userId}) {
     if(!input.rate) {
       return e.preventDefault(e); 
     }
-    dispatch(submitCommentary(input.text, input.rate, id, userId, token))
+    dispatch(submitCommentary(input.text, input.rate, id, userId))
     .then(e => {
       swal("Éxito!","Su comentario ha sido registrado", "success")
       .then(e => {
@@ -99,7 +97,7 @@ function Reviews({id, userId}) {
             color="primary"
             className={`${classes.margin} button-send`}
             type="submit"
-            onClick = {(e)=> handleSubmit(e, token)}
+            onClick = {(e)=> handleSubmit(e)}
           >
             Enviar
           </Button>

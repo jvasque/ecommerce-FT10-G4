@@ -6,7 +6,6 @@ module.exports = async (req, res) => {
     const order = await Order.findOne({
       where: {
         userId: userId,
-        state: "cart",
       },
     });
 

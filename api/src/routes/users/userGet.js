@@ -12,7 +12,7 @@ module.exports = async (req, res) => {
           },
         ],
       },
-    }); 
+    });
     const users = data
       .map((d) => d.dataValues)
       .sort(function (a, b) {

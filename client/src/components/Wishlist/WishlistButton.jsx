@@ -6,7 +6,6 @@ import {
   createWishlist,
 } from '../../redux/wishlistReducer/wishlistActions';
 import '../../scss/components/Wishlists/_WishlistButton.scss';
-import swal from 'sweetalert';
 
 function WishlistButton(props) {
   // Local React States
@@ -39,7 +38,7 @@ function WishlistButton(props) {
     // despacha action para agregar a la wishlist
     e.preventDefault();
     dispatch(addToWishlist(wishlistId, productDetail.id));
-    swal('Éxito!',`Se ha agregado el producto a la Wishlist`, 'success');
+    alert('El producto fue agregado satisfactoriamente');
   }
 
   function handleInput(e) {
@@ -53,7 +52,7 @@ function WishlistButton(props) {
       dispatch(createWishlist(user.id, input));
       setInput('');
     } else {
-      swal('Aviso!','Se requiere un nombre para la lista', 'warning');
+      alert('La lista necesita un nombre');
     }
   }
 

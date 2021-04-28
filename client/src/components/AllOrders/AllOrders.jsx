@@ -6,19 +6,10 @@ import { useSelector } from "react-redux";
 import "../../scss/components/AllOrders/_AdminOrders.scss"
 import "../../scss/components/AllOrders/_AdminFilterOrders.scss"
 import { sortById, sortByState, sortByCreation, sortByUpdate, sortByPayment, sortByTotal, sortByFirstName, sortByLastName } from '../OrderHistory/FilterOrder'
-import swal from 'sweetalert';
 
 function AllOrders(){
     const userId = useSelector(state => state.loginReducer.user.id)
     const [orders, setOrders] = useState([])
-    const [filter, setFilter] = useState({
-        created: false,
-        processing: false,
-        completed: false,
-        cancelled: false,
-        modify: false,
-    })
-    const [filtered, setFiltered] = useState(false)
     const [sort, setSort] = useState({
         id: false,
         firstName: false,
@@ -31,14 +22,14 @@ function AllOrders(){
     })
 
     async function getOrderHistory(){
-        let data = await axios.get(`http://localhost:3001/orders?created=${filter.created}&processing=${filter.processing}&completed=${filter.completed}&cancelled=${filter.cancelled}`);
+        let data = await axios.get(`http://localhost:3001/orders`);
         setOrders(data.data); 
         console.log(data.data, "ORDENES AllOrders.jsx");
     }
 
     useEffect(() => {
         getOrderHistory();
-    }, [filtered]);
+    }, []);
 
     function sortId(){
         let [newOrders, newSort] = sortById(orders, sort)
@@ -88,72 +79,9 @@ function AllOrders(){
         setOrders(newOrders)
     }
 
-    function handleFilter(event){
-        let {name, checked} = event.target
-        if(name === 'modify'){
-            setFilter({...filter, [name]: !filter[name]})
-        }else{
-            setFilter({...filter, [name]: checked})
-        }
-    }
-
-    function onFilter(event){
-        event.preventDefault()
-        getOrderHistory();
-        setFiltered(!filtered)
-    }    
-
     return (
-        <div className='containerAdminOrders'>            
-            <form className='filterAdmin' onSubmit={onFilter}>
-                <div className='created'>
-                <label >
-                Creada
-                    <input 
-                        name='created'
-                        checked={filter.created}
-                        type='checkbox'
-                        onChange={handleFilter}
-                    />
-                </label>
-                </div>
-                <div className='processing'>
-                <label >
-                Procesando
-                    <input 
-                        name='processing'
-                        checked={filter.processing}
-                        type='checkbox'
-                        onChange={handleFilter}
-                    />
-                </label>
-                </div>
-                <div className='completed'>
-                <label>
-                Completada
-                    <input 
-                        name='completed'
-                        checked={filter.completed}
-                        type='checkbox'
-                        onChange={handleFilter}
-                    />
-                </label>
-                </div>
-                <div className='cancelled'>
-                <label>
-                Cancelada
-                    <input 
-                        name='cancelled'
-                        checked={filter.cancelled}
-                        type='checkbox'
-                        onChange={handleFilter}
-                    />
-                </label>
-                </div>
-                <input className='filterState' type='submit' value='Filtrar'/>
-                <input className='modifyState' name='modify' type='button' value={filter.modify ? 'Deshabilitar Modificación' : 'Habilitar Modificación'} onClick={handleFilter}/>
-            </form>
-             <div className='containerAdminFilterOrder'>
+        <div className='containerAdminOrders'>
+            <div className='containerAdminFilterOrder'>
                 <div className='registerAdminFilter' onClick={sortId}><DivText content='Registro'/></div>
                 <div className='firstNameAdminFilter' onClick={sortFirstName}><DivText content='Nombre'/></div>
                 <div className='lastNameAdminFilter' onClick={sortLastName}><DivText content='Apellido'/></div>
@@ -165,7 +93,7 @@ function AllOrders(){
             </div>
             {
                 !orders[0]?.error && orders?.map((order) => {
-                    return <SingleOrder order={order} key={`Order-${order.id}`} modify={filter.modify}/>
+                    return <SingleOrder order={order} key={`Order-${order.id}`}/>
                 })
             }
         </div>
