@@ -15,6 +15,10 @@ export default function DistributionCenterCard({center, modified}) {
         activeToggle = state ? 'active':'inactive'
     }
 
+    function toggleOff(){
+        setState(false)
+    }
+
     function seeMap(){
 
     }
@@ -61,10 +65,10 @@ export default function DistributionCenterCard({center, modified}) {
 
     return (
         <div className='distributionCenterCardContainer'>
-            <div className='room'>
+            <div className='room' onClick={toggleOff}>
                 <RoomOutlinedIcon />
             </div>              
-            <div className='centerInfo'>
+            <div className='centerInfo' onClick={toggleOff}>
                 <b><p className='city'>{center.city}</p></b>
                 <p className='province'>{center.province + ', CP ' + center.postal}</p>
             </div>  
