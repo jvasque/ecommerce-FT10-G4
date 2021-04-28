@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import DistributionCenterCard from './DistributionCenterCard'
 import axios from 'axios';
+import '../../scss/components/LocationStock/_DistributionCenters.scss'
 
 export default function DistributionCenters() {
     const [centers, setCenters] = useState([])
@@ -21,7 +22,7 @@ export default function DistributionCenters() {
 
     return (
         <div className='distributionCentersContainer'>
-            <b>Centros de Distribución</b>
+            <p className='distributionTitle'><b>Centros de Distribución</b></p>
             {
                 !centers[0]?.error && centers?.map(center => {
                     return <DistributionCenterCard
