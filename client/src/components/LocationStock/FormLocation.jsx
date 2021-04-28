@@ -39,7 +39,10 @@ function FormLocation() {
 
     return (
         <div className="container-form">
-        
+            <div className='cabecera-form'>
+                <h2>Completá la información</h2>
+                <div>Recuerda que es la dirección desde donde realizas los envíos de tus insumos</div>
+            </div>
             <form onSubmit={handleCreateLocation}>
                 <input
                 name='address'

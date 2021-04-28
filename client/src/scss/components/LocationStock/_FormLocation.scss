@@ -1,5 +1,18 @@
 .container-form{
-    width: 500px;
-    height: 600px;
+    width: 632px;
+    height:488px;
     background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    .cabecera-form{
+        margin-left: 20%;
+    }
+    form{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items:flex-start;
+        margin-left: 20%;
+    }
 }
