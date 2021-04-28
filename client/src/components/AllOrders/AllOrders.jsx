@@ -24,7 +24,6 @@ function AllOrders(){
     async function getOrderHistory(){
         let data = await axios.get(`http://localhost:3001/orders`);
         setOrders(data.data); 
-        console.log(data.data, "ORDENES AllOrders.jsx");
     }
 
     useEffect(() => {
