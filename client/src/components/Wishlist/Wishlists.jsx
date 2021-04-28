@@ -7,6 +7,7 @@ import {
   createWishlist,
   deleteWishlist,
 } from '../../redux/wishlistReducer/wishlistActions';
+import swal from 'sweetalert';
 
 const Wishlists = (props) => {
   const [display, setDisplay] = useState('');
@@ -41,7 +42,22 @@ const Wishlists = (props) => {
 
   function handleRemove(e, wishlistId) {
     e.preventDefault(e);
-    dispatch(deleteWishlist(wishlistId));
+    swal({
+      title: 'Está seguro de eliminar la wishlist?',
+      text: 'Una vez borrada, desaparecerá de su base de datos!',
+      icon: 'warning',
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        dispatch(deleteWishlist(wishlistId));
+        swal('La wishlist fue borrada con éxito!', {
+          icon: 'success',
+        });
+      } else {
+        swal('La wishlist NO fue borrada');
+      }
+    });
   }
 
   function handleInput(e) {
@@ -58,9 +74,13 @@ const Wishlists = (props) => {
     if (input) {
       dispatch(createWishlist(login.user.id, input));
       dispatch(getWishlists(login.user.id));
-      alert('La lista fue creada');
+      swal(
+        'Éxito!',
+        `Se ha se ha creado la lista ${input} correctamente`,
+        'success'
+      );
     } else {
-      alert('Se requiere un nombre para la lista');
+      swal('Aviso!', 'Se requiere un nombre para la lista', 'warning');
     }
   }
 

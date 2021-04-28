@@ -16,5 +16,10 @@
      "no-underscore-dangle": 0,
      "no-param-reassign": 0,
      "import/no-unresolved": 0
-   }
+   },
+   
+    "parserOptions": {
+      "ecmaVersion": 2020
+    }
+  
 }
