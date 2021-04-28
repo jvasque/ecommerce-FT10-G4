@@ -1,0 +1,17 @@
+.send-container {
+  display: flex;
+  text-align: center;
+  justify-content: flex-start;
+  align-items: center;
+  margin-left: 27px;
+  width: 65%;
+  margin-top: 5px;
+
+  p {
+    width: 30%;
+    height: 100%;
+  }
+  .envio {
+    background-color: var(--color-brand-75);
+  }
+}

@@ -17,9 +17,10 @@ import ManageAccount from '../Admin/ManageAccount';
 import Swal from 'sweetalert2';
 import Settings from '../SettingsUser/Settings';
 import axios from "axios"
+import { useHistory } from 'react-router';
+import SendOrder from '../SendOrder/SendOrder';
 export function UserScreen() {
   const [render, setRender] = useState('miCuenta');
-
   const login = useSelector((state) => state.loginReducer);
   const [userDb, setUserDb] = useState([])
   const userId = localStorage.getItem("user")
@@ -46,6 +47,9 @@ export function UserScreen() {
     }
   }
 
+  
+  
+
   const handleLogOut = () => {
     if (login.isLogin) {
       dispatch(LogOut());
@@ -54,13 +58,18 @@ export function UserScreen() {
       Swal.fire('Se ha cerrado sesión');
       localStorage.removeItem('user');
     }
+
   };
+
+
+
   useEffect(() => {
     async function data() {
     const user = await axios.get(`http://localhost:3001/users/user/${userId}`)
     setUserDb(user.data)
     }
     data()
+     
 },[])
 
   return (
@@ -129,6 +138,22 @@ export function UserScreen() {
         >
           Newsletter
         </div>
+        <div
+          id="Mis envios"
+          onClick={(e) => handleClick(e)}
+          style={
+            render === 'Mis envios'
+              ? {
+                  backgroundColor: 'var(--color-brand)',
+                  opacity: '50%',
+                  color: 'var(--color-light)',
+                }
+              : { backgroundColor: '' }
+          }
+        >
+          Mis envios
+        </div>
+        
         <div
           id="Configuracion"
           onClick={(e) => handleClick(e)}
@@ -244,7 +269,8 @@ export function UserScreen() {
           </div>
         ) : render ==="Configuracion" ?
          (<Settings userDb={userDb} setUserDb={setUserDb} />)
-        : render === 'allOrders' ? (
+         : render ==="Mis envios" ? <SendOrder/>
+         : render === 'allOrders' ? (
           <AllOrders />
         ) : render === 'CreateProduct' ? (
           <ProductForm />
