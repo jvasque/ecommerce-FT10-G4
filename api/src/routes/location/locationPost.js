@@ -1,5 +1,5 @@
 const { Location, UnitsOnLocation, Product } = require('../../db.js');
-
+// /locations/locationPost
 module.exports = async (req, res) => {
   try {
     let data = await Location.findAll({

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import {
     createLocation,
-} from '../../redux/locationReducer/locationReducer';
+} from '../../redux/locationReducer/locationActions';
 
-// import '../../scss/components/formCategories/_FormLocation.scss';
+import '../../scss/components/LocationStock/_FormLocation.scss';
 
 function FormLocation() {
-
 
     const dispatch = useDispatch();
     const [input, setInput] = useState({
@@ -28,6 +28,13 @@ function FormLocation() {
     const handleCreateLocation = function(e) {
         e.preventDefault();
         dispatch(createLocation(input));
+        setInput({
+            address: '',//latitud y longitud
+            country: '',
+            province: '',
+            city: '',
+            postal: '',
+        })
     }
 
     return (
@@ -52,6 +59,13 @@ function FormLocation() {
                 name='province'
                 className="input"
                 placeholder="Provincia"
+                onChange={(e) => handleInputChange(e.target.value)}
+                />
+
+                <input
+                name='postal'
+                className="input"
+                placeholder="Código postal"
                 onChange={(e) => handleInputChange(e.target.value)}
                 />
 

@@ -1,4 +1,4 @@
-import { POST_LOCATION } from "./postUserActions";
+import { POST_LOCATION } from "./locationActions";
 
 
 const initialState = { 

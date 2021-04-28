@@ -4,6 +4,7 @@ import axios from 'axios';
 import { Modal } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import AddLocationOutlinedIcon from '@material-ui/icons/AddLocationOutlined';
+import FormLocation from './FormLocation'
 import '../../scss/components/LocationStock/_DistributionCenters.scss'
 
 const useStyles = makeStyles((theme) => ({
@@ -73,7 +74,7 @@ export default function DistributionCenters() {
                 className={classes.modal}
             >
                 <div className='modalMapContent'>
-                    {/* Agregar */}
+                    {<FormLocation/>}
                 </div>                
             </Modal>
         </div>
