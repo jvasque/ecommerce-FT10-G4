@@ -18,7 +18,7 @@ function FormLocation() {
     });
 
     const handleInputChange = function(e) {
-        //setear errores
+        
         setInput({
         ...input,
         [e.target.name]: e.target.value
@@ -48,28 +48,32 @@ function FormLocation() {
                 name='address'
                 className="input"
                 placeholder="Dirección"
-                onChange={(e) => handleInputChange(e.target.value)}
+                value={input.address} 
+                onChange={handleInputChange}
                 />
 
                 <input
                 name='country'
                 className="input"
                 placeholder="País"
-                onChange={(e) => handleInputChange(e.target.value)}
+                value={input.country} 
+                onChange={handleInputChange}
                 />
 
                 <input
                 name='province'
                 className="input"
                 placeholder="Provincia"
-                onChange={(e) => handleInputChange(e.target.value)}
+                value={input.province} 
+                onChange={handleInputChange}
                 />
 
                 <input
                 name='postal'
                 className="input"
                 placeholder="Código postal"
-                onChange={(e) => handleInputChange(e.target.value)}
+                value={input.postal} 
+                onChange={handleInputChange}
                 />
 
 
