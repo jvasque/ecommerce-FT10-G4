@@ -9,6 +9,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { reset } from '../../redux/iconReducer/iconActions';
 import swal from "sweetalert"
 
+
 function Cart() {
   const products = useSelector((state) => state.cartReducer.cart);
   const history = useHistory()
@@ -38,7 +39,7 @@ function Cart() {
   }
 
   return (
-    <div className="cart-container">
+    <div className="cart-container">   
       <h1>Carrito ({products.length})</h1>
       <div className="cart">
         {products ? (
@@ -82,6 +83,8 @@ function Cart() {
         </div>
         )}
       </div>
+     
+     
     </div>
   );
 }
