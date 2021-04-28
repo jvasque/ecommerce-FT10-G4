@@ -1,26 +1,30 @@
-.swal2-styled{
-    background-color: var(--color-brand);
-  }
+.swal2-styled {
+  background-color: var(--color-brand);
+}
 
 .Signup {
   display: flex;
   justify-content: center;
-  margin: 2em 0;
- 
+  margin: 126px 0 4em 0;
+
   * {
     box-sizing: border-box;
   }
 
-  // body {
-  // 	// background: #f6f5f7;
-  // 	// display: flex;
-  // 	// justify-content: center;
-  // 	// align-items: center;
-  // 	// flex-direction: column;
-  // 	// font-family: 'Montserrat', sans-serif;
-  // 	// height: 100vh;
-  // 	// margin: -20px 0 50px;
-  // }
+  p.danger {
+    color: red;
+    font-size: 14px;
+    user-select: none;
+
+    font-weight: auto;
+    line-height: 10px;
+    letter-spacing: 0.5px;
+    margin: 0px 0 0px;
+  }
+
+  input.danger {
+    border: 2px solid red;
+  }
 
   h1 {
     user-select: none;
@@ -65,17 +69,18 @@
     letter-spacing: 1px;
     text-transform: uppercase;
     transition: transform 80ms ease-in;
+    margin: 10px 0 0 0;
   }
 
-  button:active {    
+  button:active {
     transform: scale(0.95);
   }
 
-  button:focus {    
+  button:focus {
     outline: none;
   }
 
-  button.ghost {    
+  button.ghost {
     background-color: transparent;
     border-color: #ffffff;
   }
@@ -94,9 +99,13 @@
   input {
     background-color: #eee;
     border: none;
-    padding: 12px 15px;
-    margin: 8px 0;
+    padding: 10px 15px;
+    margin: 6px 0;
     width: 100%;
+  }
+
+  #loginFrame {
+    margin-top: -40px;
   }
 
   .container {
@@ -115,6 +124,44 @@
     top: 0;
     height: 100%;
     transition: all 0.6s ease-in-out;
+
+    .social-container {
+      position: absolute;
+      width: 100%;
+      text-align: center;
+      color: transparent;
+      margin: 333px 0 0 0;
+
+      // * {
+      //   margin: 0 0px 0 5px;
+      // }
+
+      .facebook-login-button {
+        background-color: rgb(59, 89, 152);
+        border: solid 1px rgb(59, 89, 152);
+        border-radius: 0px;
+        padding: 3px 12px 4px 8px;
+        vertical-align: top;
+        line-height: 30px;
+        box-shadow: rgba(59, 89, 152, 0.74) 0px 2px 2px 0px,
+          rgba(0, 0, 0, 0.24) 0px 0px 1px 0px;
+
+        svg {
+          margin-right: 12px;
+          font-size: 32px;
+          vertical-align: bottom;
+        }
+      }
+
+      .google-login-button {
+        margin-right: 18px;
+        vertical-align: top;
+        svg {
+          margin-left: 10px;
+          vertical-align: bottom;
+        }
+      }
+    }
   }
 
   .sign-in-container {
@@ -163,17 +210,25 @@
     height: 100%;
     overflow: hidden;
     transition: transform 0.6s ease-in-out;
-    z-index: 100;
+    z-index: 50;
   }
 
   .container.right-panel-active .overlay-container {
     transform: translateX(-100%);
   }
-  
+
   .overlay {
     background: var(--color-brand-light);
-    background: -webkit-linear-gradient(to right, var(--color-brand), var(--color-brand-light));
-    background: linear-gradient(to right, var(--color-brand), var(--color-brand-light));
+    background: -webkit-linear-gradient(
+      to right,
+      var(--color-brand),
+      var(--color-brand-light)
+    );
+    background: linear-gradient(
+      to right,
+      var(--color-brand),
+      var(--color-brand-light)
+    );
     background-repeat: no-repeat;
     background-size: cover;
     background-position: 0 0;
@@ -223,7 +278,7 @@
   }
 
   .social-container {
-    margin: 20px 0;
+    margin: 10px 0;
   }
 
   .social-container a {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { createRef, useEffect, useState } from 'react';
 import { FaFacebookF, FaLinkedinIn, FaGoogle } from 'react-icons/fa';
 import '../../scss/components/Signup/_Signup.scss';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,45 +9,120 @@ import {
 } from '../../redux/postUserReducer/postUserActions';
 import Swal from 'sweetalert2';
 import {
+  GLogin,
+  FLogin,
   LoginAction,
   LogOut,
   SwalBoo,
+  postFbUser,
 } from '../../redux/loginReducer/loginActions';
 import { useHistory } from 'react-router';
-import { totalPrice, userLogged } from '../../redux/cartReducer/cartActions';
+import {
+  addProduct,
+  emptyCart,
+  emptyDb,
+  totalPrice,
+  userLogged,
+} from '../../redux/cartReducer/cartActions';
 import { modifyCart } from '../../redux/iconReducer/iconActions';
 import axios from 'axios';
+import FacebookLogin from 'react-facebook-login';
+import { TiSocialFacebookCircular } from 'react-icons/ti';
+import { GoogleLogin } from 'react-google-login';
+import { Link } from 'react-router-dom';
 
-const Signup = () => {
+export default function Signup() {
   const dispatch = useDispatch();
   const history = useHistory();
   const log = useSelector((state) => state.loginReducer);
   const post = useSelector((state) => state.postUserReducer);
+  //social
 
+  const responseSuccessGoogle = (response) => {
+    try {
+      dispatch(GLogin(response));
+    } catch (e) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'algo ha salido mal!',
+        confirmButtonColor: '#378a19',
+      });
+    }
+  };
+
+  const responseRejectGoogle = (response) => {
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: 'algo ha salido mal!',
+      confirmButtonColor: '#378a19',
+    });
+  };
+  const products = useSelector((state) => state.catalogReducer.products);
   //Session iniciada D:
   const productCart = useSelector((state) => state.cartReducer.cart);
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [input, setInput] = useState({
+    uname: '',
+    psw: '',
+  });
+  const [errors, setErrors] = useState({});
+
+  function validateLogin(input) {
+    let errors = {};
+    if (!input.uname) {
+      errors.username = 'Email es requerido';
+    } else if (!/\S+@\S+\.\S+/.test(input.uname)) {
+      errors.username = 'Email no es valido';
+    }
+    if (!input.psw) {
+      errors.password = 'Contrseña es requerida';
+    } else if (
+      !/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/.test(input.psw)
+    ) {
+      errors.password = 'Contraseña no es valida';
+    }
+    return errors;
+  }
+  const responseFacebook = (response) => {
+    console.log(response);
+    dispatch(FLogin(response.accessToken, response.userID));
+    // if (!response.status) {
+
+    //   dispatch(
+    //     postFbUser({
+    //       firstName: response.first_name,
+    //       lastName: response.last_name,
+    //       email: response.email,
+    //       facebookUser: response.id,
+    //     })
+    //   );
+    // } else {
+    //   alert('No se pudo loguear a Facebook');
+    // }
+  };
 
   const sessionChange = (e) => {
-    return e.target.name === 'uname'
-      ? setUsername(e.target.value)
-      : e.target.name === 'psw'
-      ? setPassword(e.target.value)
-      : () => {};
+    setInput({
+      ...input,
+      [e.target.name]: e.target.value,
+    });
+    setErrors(
+      validateLogin({
+        ...input,
+        [e.target.name]: e.target.value,
+      })
+    );
   };
   const sessionSubmit = async (e) => {
     e.preventDefault();
-    if (username.length > 5) {
-      dispatch(LoginAction(username, password));
-    }
+    dispatch(LoginAction(input.uname, input.psw));
   };
 
   useEffect(() => {
     async function test() {
       if (log.isLogin) {
         const userId = localStorage.getItem('user');
-
         history.push({
           pathname: '/',
         });
@@ -56,15 +131,18 @@ const Signup = () => {
         const data = await axios.get(
           `http://localhost:3001/cart/${userId}/cart`
         );
-        const products = await axios.get('http://localhost:3001/products');
+        //const products = await axios.get("http://localhost:3001/products");
         const productsId = data.data.map((x) => x.productId);
-        const cartSaved = products.data.filter((x) =>
-          productsId.includes(x.id)
-        );
-        dispatch(userLogged(cartSaved));
+        const reduxCart = productCart.map((x) => x.id);
+        const unicId = productsId.concat(reduxCart);
+        let unic = [...new Set(unicId)];
+        const cartSaved = products.filter((x) => unic.includes(x.id));
+
+        dispatch(emptyCart());
 
         for (let i = 0; i < cartSaved.length; i++) {
           dispatch(modifyCart({ [`Cart-${cartSaved[i].id}`]: true }));
+          dispatch(addProduct(cartSaved[i]));
         }
       }
     }
@@ -90,7 +168,32 @@ const Signup = () => {
     lastName: '',
     email: '',
     password: '',
+    confirmPassword: '',
   });
+  const [errorsCreate, setErrorsCreate] = useState({});
+  function validateCreate(user) {
+    let errors = {};
+    if (!user.email) {
+      errors.username = 'Email es requerido';
+    } else if (!/\S+@\S+\.\S+/.test(user.email)) {
+      errors.email = 'Email no es valido';
+    }
+    if (!user.password) {
+      errors.password = 'Contrseña es requerida';
+    } else if (
+      !/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/.test(user.password)
+    ) {
+      errors.password = "Debe contener 'a' 'A' '1' !' y largo 8 ";
+    }
+    if (!user.confirmPassword) {
+      errors.confirmPassword = 'Contrseña es requerida';
+    } else if (user.password !== user.confirmPassword) {
+      errors.confirmPassword = 'Las contraseñas no coinciden';
+    }
+
+    return errors;
+  }
+
   const signUpButton = () => {
     setShow('right-panel-active');
   };
@@ -98,22 +201,29 @@ const Signup = () => {
     setShow(null);
   };
 
-  const handleChange = (e) => {
+  const userChange = (e) => {
     setUser({
       ...user,
       [e.target.name]: e.target.value,
     });
+    setErrorsCreate(
+      validateCreate({
+        ...user,
+        [e.target.name]: e.target.value,
+      })
+    );
   };
 
-  const handlesubmit = (e) => {
+  const userSubmit = (e) => {
     e.preventDefault();
     if (
       user.firstName.length &&
       user.lastName.length &&
-      user.email.length &&
-      user.password.length
+      !errorsCreate.email &&
+      !errorsCreate.password &&
+      !errorsCreate.confirmPassword
     ) {
-      dispatch(postUser(user));
+      if (user.password === user.confirmPassword) dispatch(postUser(user));
     }
   };
 
@@ -123,12 +233,14 @@ const Signup = () => {
         title: 'Listo, El usuario ha sido creado',
         confirmButtonColor: '#378a19',
       });
+
       dispatch(PostSuccess());
       setUser({
         firstName: '',
         lastName: '',
         email: '',
         password: '',
+        confirmPassword: '',
       });
     }
   }, [post.success]);
@@ -150,27 +262,16 @@ const Signup = () => {
       {!log.isLogin ? (
         <div className={`${show}  container`} id="container">
           <div className="form-container sign-up-container">
-            <form action="#" onSubmit={handlesubmit}>
+            <form action="#" onSubmit={userSubmit}>
               <h1>Crea tu cuenta</h1>
-              {/* <div className="social-container">
-                <a href="#" className="social">
-                  <i className="fab fa-facebook-f">
-                    <FaFacebookF />
-                  </i>
-                </a>
-                <a href="#" className="social">
-                  <i className="fab fa-google-plus-g">
-                    {" "}
-                    <FaGoogle />
-                  </i>
-                </a>
-                <a href="#" className="social">
+              <div className="social-container">
+                {/* <a href="#" className="social">
                   <i className="fab fa-linkedin-in">
                     <FaLinkedinIn />
                   </i>
-                </a>
+                </a> */}
               </div>
-              <span>o use tu email para registrarte</span> */}
+              <span>o use tu email para registrarte</span>
 
               <input
                 type="text"
@@ -178,7 +279,7 @@ const Signup = () => {
                 autoComplete="off"
                 placeholder="Nombre..."
                 value={user.firstName}
-                onChange={handleChange}
+                onChange={userChange}
                 required
               />
               <input
@@ -186,65 +287,106 @@ const Signup = () => {
                 name="lastName"
                 placeholder="Apellido..."
                 value={user.lastName}
-                onChange={handleChange}
+                onChange={userChange}
                 required
               />
               <input
-                type="email"
+                type="text"
                 name="email"
                 placeholder="Email..."
                 value={user.email}
-                onChange={handleChange}
-                required
+                onChange={userChange}
+                className={`${errorsCreate.email && 'danger'}`}
               />
+              {errorsCreate.email && (
+                <p className="danger">{errorsCreate.email}</p>
+              )}
               <input
                 type="password"
                 name="password"
-                placeholder="Contraseña..."
+                placeholder="contraseña"
                 value={user.password}
-                onChange={handleChange}
-                required
+                onChange={userChange}
+                className={`${errorsCreate.password && 'danger'}`}
               />
+              {errorsCreate.password && (
+                <p className="danger">{errorsCreate.password}</p>
+              )}
+              <input
+                type="password"
+                name="confirmPassword"
+                placeholder="confirme contraseña..."
+                value={user.confirmPassword}
+                onChange={userChange}
+                className={`${errorsCreate.confirmPassword && 'danger'}`}
+              />
+              {errorsCreate.confirmPassword && (
+                <p className="danger">{errorsCreate.confirmPassword}</p>
+              )}
               <button type="submit">Registrarse</button>
             </form>
           </div>
+
           <div className="form-container sign-in-container">
-            <form action="#" onSubmit={sessionSubmit}>
+            <div className="social-container">
+              <GoogleLogin
+                clientId="926134963488-27qle0uk3423ed3dt2jlkd20rtht66g6.apps.googleusercontent.com"
+                autoLoad={false}
+                type="button"
+                icon={true}
+                buttonText="Google"
+                loginHint="Hola"
+                onSuccess={responseSuccessGoogle}
+                onFailure={responseRejectGoogle}
+                cookiePolicy={'single_host_origin'}
+                className="google-login-button"
+              />
+              <FacebookLogin
+                appId="311325910426887"
+                autoLoad={false}
+                fields="name,email,picture,first_name,last_name"
+                textButton="Facebook"
+                // onClick={componentClicked}
+                cssClass="facebook-login-button"
+                // icon="fa-facebook"
+                icon={<TiSocialFacebookCircular />}
+                callback={responseFacebook}
+              />
+            </div>
+
+            <form id="loginFrame" action="#" onSubmit={sessionSubmit}>
               <h1>Inicia Sesion</h1>
-              {/* <div className="social-container">
-                <a href="#" className="social">
-                  <i className="fab fa-facebook-f">
-                    <FaFacebookF />
-                  </i>
-                </a>
-                <a href="#" className="social">
-                  <i className="fab fa-google-plus-g">
-                    <FaGoogle />
-                  </i>
-                </a>
-                <a href="#" className="social">
-                  <i className="fab fa-linkedin-in">
-                    <FaLinkedinIn />
-                  </i>
-                </a>
-              </div> */}
-              {/* <span>o usa tu cuenta</span> */}
+
+              <span>o usa tu cuenta</span>
               <input
-                type="email"
-                value={username}
+                className={`${errors.username && 'danger'}`}
+                type="text"
+                value={input.uname}
                 name="uname"
                 onChange={sessionChange}
                 placeholder="Email"
-                required
               />
+              {input.uname.length < 8 ||
+                (errors.username && (
+                  <p className="danger">{errors.username}</p>
+                ))}
               <input
+                className={`${
+                  input.psw.length < 8 || (errors.password && 'danger')
+                }`}
                 type="password"
-                value={password}
+                value={input.psw}
                 name="psw"
                 onChange={sessionChange}
                 placeholder="Contraseña"
+                required
               />
-              {/* <a href="#">olvidaste tu clave?</a> */}
+              {input.psw.length < 8 ||
+                (errors.password && (
+                  <p className="danger">{errors.password}</p>
+                ))}
+              <Link to="/forgot/email">olvidaste tu clave?</Link>
+
               <button type="submit">INICIA SESION</button>
             </form>
           </div>
@@ -275,6 +417,4 @@ const Signup = () => {
       )}
     </div>
   );
-};
-
-export default Signup;
+}

@@ -18,64 +18,74 @@ const verdePrincipal="#378A19";
 const grisPrincipal= "#EFEFEF";
 const grisClaro= "#F7F7F7";
 
-const useStyles = makeStyles((theme) =>({
-    root: {
-      display: 'flex',
-      '& > *': {
-        margin: theme.spacing(1),
-      },
-    },
-    orange: {
-      color: theme.palette.getContrastText(deepOrange[500]),
-      backgroundColor: deepOrange[500],
-    },
-    purple: {
-      color: theme.palette.getContrastText(deepPurple[500]),
-      backgroundColor: deepPurple[500],
-    },
-    delete: {
-      position: "absolute",
-      top: "8%",
-      right: "10%",
-      cursor: "pointer",
-      color: "gray"
-    },
-    settings: {
-      position: "absolute",
-      top: "8%",
-      right: "15%",
-      cursor: "pointer",
-      color: "gray"
-    },
-    green: {
-      color: grisPrincipal,
-      backgroundColor: verdePrincipal,
-      position: "absolute",
-      top: "5%",
-      right: "2%"
-    },
-    checkIcon: {
-      color: verdePrincipal,
-      backgroundColor: grisPrincipal,
-      position: "absolute",
-      top: "8%",
-      right: "20%",
-      cursor: "pointer",
-      borderRadius: "50%" 
-    },
-    cancelIcon: {
-      color: "rgb(245, 59, 26)",
-      backgroundColor: grisPrincipal,
-      position: "absolute",
-      top: "8%",
-      right: "25%",
-      cursor: "pointer",
-      borderRadius: "50%" 
-    }
-}));
+
 
 function CommentaryReviews({ id, content, score, userId, 
   firstName, lastName, fullName, photoURL, productId, state }) {
+
+    const useStyles = makeStyles((theme) =>({
+      root: {
+        display: 'flex',
+        '& > *': {
+          margin: theme.spacing(1),
+        },
+      },
+      orange: {
+        color: theme.palette.getContrastText(deepOrange[500]),
+        backgroundColor: deepOrange[500],
+      },
+      purple: {
+        color: theme.palette.getContrastText(deepPurple[500]),
+        backgroundColor: deepPurple[500],
+      },
+      delete: {
+        position: "absolute",
+        top: "8%",
+        right: "10%",
+        cursor: "pointer",
+        color: "gray"
+      },
+      settings: {
+        position: "absolute",
+        top: "8%",
+        right: "15%",
+        cursor: "pointer",
+        color: "gray"
+      },
+      green: {
+        color: grisPrincipal,
+        backgroundColor: verdePrincipal,
+        backgroundSize: "cover",
+        position: "absolute",
+        top: "5%",
+        right: "2%"
+      },
+      avaImg: {
+        background: `url(${photoURL})`,
+        backgroundSize: "cover",
+        position: "absolute",
+        top: "5%",
+        right: "2%"
+      },
+      checkIcon: {
+        color: verdePrincipal,
+        backgroundColor: grisPrincipal,
+        position: "absolute",
+        top: "8%",
+        right: "20%",
+        cursor: "pointer",
+        borderRadius: "50%" 
+      },
+      cancelIcon: {
+        color: "rgb(245, 59, 26)",
+        backgroundColor: grisPrincipal,
+        position: "absolute",
+        top: "8%",
+        right: "25%",
+        cursor: "pointer",
+        borderRadius: "50%" 
+      }
+  }));
 
     const dispatch = useDispatch();
     const classes = useStyles();
@@ -159,12 +169,12 @@ function CommentaryReviews({ id, content, score, userId,
     <i>{fullName}</i>
     {photoURL && 
     <div className={classes.root}>
-      <Avatar alt={fullName} src={photoURL}>
+      <Avatar alt={fullName} src={photoURL}  className={classes.avaImg}>
         {firstLast? firstLast : "A"}
       </Avatar>
     </div>}
     {!photoURL && 
-    <Avatar className={classes.green}>
+    <Avatar className={classes.green} >
       {firstLast || "A"}
     </Avatar>}
       {!toggle && <Box component="fieldset" mb={3} borderColor="transparent">

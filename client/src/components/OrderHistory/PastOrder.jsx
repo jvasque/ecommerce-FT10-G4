@@ -63,7 +63,7 @@ function PastOrder({order}){
                             <DivText content={order.updatedAt.substring(0,19).split('T').join(' ')}/>
                         </div>
                         <div className='orderPayment'>
-                            <DivText content={order.paymentMethod.type}/>
+                            <DivText content={order.paymentMethod?.type}/>
                         </div>
                         <div className='orderTotal'>
                             <DivText content={order.totalPrice}/>

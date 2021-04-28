@@ -1,9 +1,9 @@
 .cart-container {
+  margin: 126px auto 40px auto;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  margin: 40px auto 40px auto;
 
   h1 {
     color: var(--color-black);
@@ -33,6 +33,9 @@
 
     .link-redirect {
       text-decoration: none;
+      button {
+        margin-top: 20px;
+      }
     }
     button {
       background-color: #378a19;
@@ -64,5 +67,32 @@
     width: 80%;
     color: var(--color-dark);
     opacity: 50%;
+  }
+
+  .defaultResponse {
+    margin: 3rem 1rem 1rem 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    button {
+      width: 180px;
+      height: fit-content;
+      margin: 1rem 1rem;
+      padding: 12px 24px;
+      border-radius: 3px;
+      font-size: 16px;
+      background-color: var(--color-brand);
+      color: var(--color-light);
+      border: none;
+      cursor: pointer;
+      opacity: 70%;
+      &:hover {
+        background-color: var(--color-sun-85);
+        box-shadow: 1px 1px 2px var(--color-black);
+        text-shadow: 1px 1px 1px var(--color-black);
+      }
+    }
   }
 }

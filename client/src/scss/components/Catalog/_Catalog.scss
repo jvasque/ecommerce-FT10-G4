@@ -1,8 +1,17 @@
 .catalogContainer {
+  margin-top: 100px;
   padding: 40px 0;
   background-color: var(--color-gray);
   display: flex;
   flex-direction: row;
+
+  .defaultResponse {
+    margin: 3rem 1rem 1rem 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 
   .filterScreen {
     width: 20%;

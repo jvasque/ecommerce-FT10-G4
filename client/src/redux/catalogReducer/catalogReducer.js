@@ -1,8 +1,15 @@
-import { GET_CATALOG, INCREASE_PAGE, DECREASE_PAGE, SET_PAGE } from "./catalogActions";
+import {
+  GET_CATALOG,
+  INCREASE_PAGE,
+  DECREASE_PAGE,
+  SET_PAGE,
+  SET_DOLLAR,
+} from './catalogActions';
 
 const initialState = {
   products: [],
   page: 1,
+  dollar: 140,
 };
 
 export default (state = initialState, action) => {
@@ -16,22 +23,28 @@ export default (state = initialState, action) => {
     case INCREASE_PAGE: {
       return {
         ...state,
-        page: state.page + 1
+        page: state.page + 1,
       };
     }
     case DECREASE_PAGE: {
       return {
         ...state,
-        page: state.page - 1
+        page: state.page - 1,
       };
     }
     case SET_PAGE: {
       return {
         ...state,
-        page: action.payload
+        page: action.payload,
       };
     }
-  default:
-    return state;
+    case SET_DOLLAR: {
+      return {
+        ...state,
+        dollar: action.payload,
+      };
+    }
+    default:
+      return state;
   }
 };

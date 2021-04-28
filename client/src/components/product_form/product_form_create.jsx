@@ -6,8 +6,35 @@ import '../../scss/components/productsForm/_ProductFormCreate.scss';
 import { postProduct } from '../../redux/reducerProductForms/actionsProductForms';
 import axios from 'axios';
 import swal from 'sweetalert';
+import { makeStyles } from '@material-ui/core/styles';
+import { TextField, CircularProgress } from '@material-ui/core';
+
+const grisPrincipal= "#EFEFEF";
+
+const useStyles = makeStyles((theme) => ({
+  
+  root: {
+    '& > *': {
+      margin: "40px auto",
+      width: '80%',
+      background: grisPrincipal,
+      color: "black" 
+    },
+  },
+  input: {
+    
+    width: "90%",
+    color: "red",
+    marginTop: "15px",
+    marginBottom: "15px"
+    
+  }
+}));
+
+
 
 export default function Product_form_create(props) {
+  const classes = useStyles();
   const [input, setInput] = useState({
     name: '',
     SKU: '',
@@ -121,50 +148,54 @@ export default function Product_form_create(props) {
   return (
     <div className="containerProdFormCreate">
       <h1>Agregar productos</h1>
-      <form onSubmit={(e) => handleSubmit(e)}>
+      <form className={classes.root} onSubmit={(e) => handleSubmit(e)}>
         <div className="cont-1">
-          <label className="label">Nombre del producto:</label>
-          <input
-            type="text"
-            name="name"
-            autoComplete="off"
-            placeholder="Nombre..."
-            value={input.name}
-            required
-            onChange={handleChange}
-          />
+          
+          <TextField 
+          id="outlined-basic" 
+          label="Nombre" 
+          placeholder="Agregue el nombre del producto..."
+          variant="outlined"
+          name="name"
+          value={input.name} 
+          type="text"
+          required 
+          onChange={handleChange}
+          className={classes.input}/>
+         
+          <TextField 
+          id="outlined-basic" 
+          label="SKU" 
+          placeholder="Agregue el SKU del producto..."
+          variant="outlined"
+          name="SKU" value={input.SKU}
+          required onChange={handleChange}
+          className={classes.input}/>
 
-          <label className="label">SKU:</label>
-          <input
-            type="text"
-            name="SKU"
-            autoComplete="off"
-            placeholder=" SKU..."
-            value={input.SKU}
-            required
-            onChange={handleChange}
-          />
 
-          <label className="label">Precio por unidad:</label>
-          <input
-            type="number"
-            min="1"
-            max="99999"
-            name="price"
-            autoComplete="off"
-            placeholder="Precio..."
-            value={input.price}
-            required
-            onChange={handleChange}
-          />
+          <TextField 
+          id="outlined-basic" 
+          label="Precio" 
+          placeholder="Agregue el precio del producto..."
+          variant="outlined"
+          name="price" 
+          value={input.price} 
+          type="number"
+          InputProps={{ inputProps: { min: 0, max: 99999 } }}
+          required 
+          onChange={handleChange}
+          className={classes.input}/>
 
-          <label className="label">Descripción:</label>
-          <textarea
-            name="description"
-            value={input.description}
-            required
-            onChange={handleChange}
-          />
+          <TextField 
+          id="outlined-basic" 
+          label="Descripción..." 
+          variant="outlined"
+          name="description"
+          value={input.description} 
+          type="text"
+          required 
+          onChange={handleChange}
+          className={classes.input}/>
 
           <label className="label">Imagen:</label>
           {resPic.length > 2 ? (
@@ -199,7 +230,7 @@ export default function Product_form_create(props) {
                 />
               </div>
             ))}
-            <progress value={progress} max="100"></progress>
+            {progress != 100 && <CircularProgress className="circular" variant="determinate" value={progress}/>}
           </div>
 
           <label className="label">Categoria:</label>
@@ -218,19 +249,19 @@ export default function Product_form_create(props) {
                 );
               })}
           </div>
-
-          <label className="label">Stock:</label>
-          <input
-            type="number"
-            min="0"
-            max="9999"
-            name="stock"
-            autoComplete="off"
-            placeholder=" Agregar stock..."
-            value={input.stock}
-            required
-            onChange={handleChange}
-          />
+        
+          <TextField 
+          id="outlined-basic" 
+          label="Stock"
+          placeholder="Agregue el stock del producto" 
+          variant="outlined"
+          name="stock" 
+          value={input.stock} 
+          type="number"
+          InputProps={{ inputProps: { min: 0, max: 99999 } }}
+          required 
+          onChange={handleChange}
+          className={classes.input}/>
 
           <button type="submit">Crear producto</button>
         </div>
