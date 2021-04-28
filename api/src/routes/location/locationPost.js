@@ -7,8 +7,8 @@ module.exports = async (req, res) => {
     province,
     city,
     postal,
-    // latitud,
-    // longitud,
+    latitud,
+    longitud,
   } = req.body;
 
   console.log(req.body);
@@ -21,8 +21,8 @@ module.exports = async (req, res) => {
       province,
       city,
       postal,
-      // latitud,
-      // longitud,
+      latitud,
+      longitud,
     });
 
     return res.json(data);

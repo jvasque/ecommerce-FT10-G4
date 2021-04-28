@@ -3,36 +3,64 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 import { createLocation } from '../../redux/locationReducer/locationActions';
 import swal from 'sweetalert';
+import {
+    getAddress,
+} from '../../redux/locationReducer/locationActions';
 
 import '../../scss/components/LocationStock/_FormLocation.scss';
 
-function FormLocation(props) {
+function FormLocation({modified, closeModal}) {
   const dispatch = useDispatch();
-  const history = useHistory();
+  const [disabled, setDisabled] = useState({
+    address: false, 
+    postal: true,        
+})
   const [input, setInput] = useState({
     address: '', 
     postal: '',
-    // userId del localstorage
-  });
+    userId: JSON.parse(localStorage.getItem('user')),
+    });      
+    const displayCities = useSelector((state) => state.locationReducer.autocomplete);
+  
+    // dispatch(getAddress(input.address))
+    
 
   const handleInputChange = function (e) {
     setInput({
       ...input,
       [e.target.name]: e.target.value,
     });
+    if (e.target.name='address'){       
+        dispatch(getAddress(input.address)) // redux 
+    }
   };
 
   const handleCreateLocation = function (e) {
     e.preventDefault();
     dispatch(createLocation(input));
     setInput({
+        ...input,
         address: '', 
-        postal: '',
-        // userId del localstorage
+        postal: '',        
     });
-    props.modified();
-    swal('Éxito!', `Se ha creado el nuevo centro de distribución`, 'success');
-    props.closeModal();
+    swal('Éxito!', `Se ha creado el nuevo centro de distribución`, 'success');   
+    closeModal();
+    modified();
+  };
+
+  const handleClick = (result, e) => {
+    e.preventDefault();
+    setInput({
+        ...input,
+        address: result.name, 
+        postal: result.postal_code || '',        
+    });
+    setDisabled({  
+        ...disabled,   
+        address: true,
+        postal: input.postal? true : false,
+    })
+    dispatch(createLocation(input));
   };
 
   return (
@@ -40,7 +68,7 @@ function FormLocation(props) {
       <div className="cabecera-form">
         <button
           onClick={() => {
-            props.closeModal();
+            closeModal();
           }}
         >
           X
@@ -61,6 +89,7 @@ function FormLocation(props) {
                 placeholder="Dirección"
                 value={input.street}
                 onChange={handleInputChange}
+                disabled={disabled.address}
             />
 
 
@@ -72,7 +101,19 @@ function FormLocation(props) {
                 value={input.postal}
                 type="number"
                 onChange={handleInputChange}
+                disabled={disabled.postal}
             />
+        </div>
+        <div className="displayCities">
+            <ul>
+            {displayCities?.map((result, i) =>
+                result.error ? null : i < 5 ? (
+                <li key={i} onClick={(e) => handleClick(result, e)}>
+                    {result.name}
+                </li>
+                ) : null
+            )}
+            </ul>
         </div>
 
         <button className="createLocationButton" type="submit">

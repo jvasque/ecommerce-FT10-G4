@@ -34,10 +34,10 @@ export default function DistributionCenters() {
   async function getCenters() {
     let data = await axios.get('http://localhost:3001/locations');
     setCenters(data.data);
-  }
+  };
 
   const modify = () => {
-    setModified(!modified);
+    setModified(!modify);
   };
 
   const handleClose = () => {
@@ -75,7 +75,7 @@ export default function DistributionCenters() {
       </div>
       <Modal open={modal} onClose={handleClose} className={classes.modal}>
         <div className="modalMapContent">
-          {<FormLocation modified={modify} closeModal={handleClose} />}
+          {<FormLocation modified={modify} closeModal={handleClose}/>}
         </div>
       </Modal>
     </div>

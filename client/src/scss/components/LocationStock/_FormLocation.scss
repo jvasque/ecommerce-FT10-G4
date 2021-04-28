@@ -60,4 +60,32 @@
             }
         }
     }
+
+    .displayOptions {
+        color: var(--color-black);
+        ul {
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-start;
+          background-color: var(--color-light);
+          position: absolute;
+          transition: all var(--dur) var(--bez);
+          margin: 1px 0 0 2px;
+          z-index: 999;
+      
+          li {
+            width: 18.3vw;
+            margin-left: -40px;
+            text-align: left;
+            padding: 8px 21px 9px 10px;
+            list-style-type: none;
+      
+            &:hover {
+              cursor: pointer;
+              border: solid 2px var(--color-brand);
+              font-weight: 600;
+            }
+          }
+        }
+    }
 }
