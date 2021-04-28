@@ -1,4 +1,5 @@
 .distributionCentersContainer{
+    
     .distributionTitle{
         margin: 10px;
         color: var(--color-brand);
@@ -11,6 +12,7 @@
         border-radius: 5px;
         flex-direction: row;
         margin: 5px;
+        cursor: pointer;
         .roomAdd{
             display: inline-block;
             height: 100px;
