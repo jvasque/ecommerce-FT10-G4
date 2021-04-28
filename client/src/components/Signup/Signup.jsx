@@ -30,6 +30,7 @@ import FacebookLogin from "react-facebook-login";
 import { TiSocialFacebookCircular } from "react-icons/ti";
 import { GoogleLogin } from "react-google-login";
 import { Link } from "react-router-dom";
+import DoubleAuth from "./DoubleAuth";
 
 export default function Signup() {
   const dispatch = useDispatch();
@@ -273,6 +274,7 @@ export default function Signup() {
   return (
     <div className="Signup">
       {!log.isLogin ? (
+        <div>
         <div className={`${show}  container`} id="container">
           <div className="form-container sign-up-container">
             <form action="#" onSubmit={userSubmit}>
@@ -424,6 +426,8 @@ export default function Signup() {
               </div>
             </div>
           </div>
+        </div>
+        <div>{log.isDoubleAuth? (<DoubleAuth/>): ''}</div>
         </div>
       ) : (
         <button onClick={() => dispatch(LogOut())}>Salir</button>

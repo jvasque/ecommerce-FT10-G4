@@ -68,7 +68,7 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
     },
     passwordResetExpires: {
-      type: DataTypes.REAL,
+      type: DataTypes.DATE,
     },
     resetPassword: {
       type: DataTypes.BOOLEAN,
@@ -84,9 +84,13 @@ module.exports = (sequelize) => {
       //   isEmail: true,
       // },
     },
-    linkedinUser: {
-      type: DataTypes.STRING,
+    secretCode: {
+      type: DataTypes.STRING(6),
       unique: true,
+    },
+    secretCodeExpires: {
+      type:DataTypes.DATE
+
     },
     photoURL: {
       type: DataTypes.TEXT,
