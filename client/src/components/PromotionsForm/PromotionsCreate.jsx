@@ -8,7 +8,7 @@ import { postPromotion } from '../../redux/PromotionsFormReducer/actionsPromotio
 import swal from 'sweetalert';
 import { makeStyles } from '@material-ui/core/styles';
 import { TextField, Input, InputLabel, MenuItem, Select, Chip } from '@material-ui/core';
-
+import CancelIcon from '@material-ui/icons/Cancel';
 import {
   getProductName,
   clearProduct,
@@ -36,12 +36,11 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: "15px"
     
   },
-  chips: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
-  chip: {
-    margin: 2,
+  cancelIcon: {
+    color: "rgb(245, 59, 26)",
+    backgroundColor: grisPrincipal,
+    cursor: "pointer",
+    borderRadius: "50%" 
   }
 }));
 
@@ -63,18 +62,32 @@ export default function PromotionsCreate(props) {
   //TRAIGO EL PRODUCTO CONSULTADO X NOMBRE
   const [name, setName] = useState('');
   const [product, setProduct] = useState([]);
+  const [productRender, setProductRender] = useState([]); 
   const productGlobal = useSelector(
     (state) => state.reducerProductForms.product
     );
     
   useEffect(() => {
-    setProduct([...product,...productGlobal]);
+    setProduct(productGlobal);
     async function alerting() {
       if (productGlobal[0]?.error) {
         swal('Oops!', 'No existe un producto con ese nombre', 'error');
       }
     }
     alerting();
+    async function setter(){
+      if(productGlobal[0]){
+        setProductRender([...productRender,  [productGlobal[0].name, productGlobal[0].id]]);
+        setInput({
+          ...input,
+          products: [...input.products, productGlobal[0].id],
+        });
+      } 
+        
+
+    }
+    setter();
+          
   }, [productGlobal, dispatch]);
 
  /*  useEffect(() => {
@@ -112,6 +125,18 @@ export default function PromotionsCreate(props) {
       });
     }
   };
+
+  const handleDeleteProduct = function (e, id) {
+    setInput({
+      ...input,
+      products: input.products.filter(
+        (p) => p !== id
+      ),
+    });
+    setProductRender(productRender.filter(
+      (pr) => pr[1] !== id
+    ))
+  }
 //BUSCAR PRODUCTO
 function handleQuery(name, event) {
   event.preventDefault();
@@ -227,27 +252,17 @@ function handleQuery(name, event) {
         >
           Consultar producto
         </button>
-      {/*   {product[0]?.name &&
-          product.map((prod) => {
-            setInput({
-              ...input,
-              products: [...input.products, prod.id],
-            });
-            return <div>
-              <p>{prod.name}</p>
-             { <button id={prod.id} onClick={
-               ()=>{ setInput({
-                 ...input,
-                  product: input.products.filter(
-                (id) => id !== prod.id
-        ),
-      })}}>x</button>}
-            </div> 
+         {productRender.length &&
+          productRender.map((n) => {
+            return (
+              <div>
+              <p>{n[0]}</p> 
+              <CancelIcon  className={classes.cancelIcon} onClick ={(e) =>  handleDeleteProduct(e, n[1])}/>
+              </div>
+            )
           })}
 
-        {product && product[0]?.error && (
-          <h1>El producto solicitado no existe</h1>
-        )} */}
+        
 
 
           <TextField 
