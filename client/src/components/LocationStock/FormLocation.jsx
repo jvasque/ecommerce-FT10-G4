@@ -10,10 +10,7 @@ function FormLocation(props) {
   const dispatch = useDispatch();
   const history = useHistory();
   const [input, setInput] = useState({
-    address: '', //latitud y longitud
-    country: '',
-    province: '',
-    city: '',
+    address: '', 
     postal: '',
     // userId del localstorage
   });
@@ -29,11 +26,9 @@ function FormLocation(props) {
     e.preventDefault();
     dispatch(createLocation(input));
     setInput({
-      address: '', //latitud y longitud
-      country: '',
-      province: '',
-      city: '',
-      postal: '',
+        address: '', 
+        postal: '',
+        // userId del localstorage
     });
     props.modified();
     swal('Éxito!', `Se ha creado el nuevo centro de distribución`, 'success');
@@ -43,7 +38,6 @@ function FormLocation(props) {
   return (
     <div className="container-form">
       <div className="cabecera-form">
-        <h2>Completá la información</h2>
         <button
           onClick={() => {
             props.closeModal();
@@ -51,58 +45,34 @@ function FormLocation(props) {
         >
           X
         </button>
+        <h2>Completá la información</h2>
         <div>
           Recuerda que es la dirección desde donde realizas los envíos de tus
           insumos
         </div>
       </div>
       <form onSubmit={handleCreateLocation}>
+          
         <div className="inputs">
-          <input
-            required
-            name="address"
-            className="input"
-            placeholder="Dirección"
-            value={input.address}
-            onChange={handleInputChange}
-          />
+            <input
+                required
+                name="address"
+                className="input"
+                placeholder="Dirección"
+                value={input.street}
+                onChange={handleInputChange}
+            />
 
-          <input
-            required
-            name="country"
-            className="input"
-            placeholder="País"
-            value={input.country}
-            onChange={handleInputChange}
-          />
 
-          <input
-            required
-            name="province"
-            className="input"
-            placeholder="Provincia"
-            value={input.province}
-            onChange={handleInputChange}
-          />
-
-          <input
-            required
-            name="city"
-            className="input"
-            placeholder="Ciudad"
-            value={input.city}
-            onChange={handleInputChange}
-          />
-
-          <input
-            required
-            name="postal"
-            className="input"
-            placeholder="Código postal"
-            value={input.postal}
-            type="number"
-            onChange={handleInputChange}
-          />
+            <input
+                required
+                name="postal"
+                className="input"
+                placeholder="Código postal"
+                value={input.postal}
+                type="number"
+                onChange={handleInputChange}
+            />
         </div>
 
         <button className="createLocationButton" type="submit">
