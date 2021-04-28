@@ -1,14 +1,12 @@
 import React, { useState } from "react";
-import axios from "axios";
 import AdminOrderDetail from './AdminOrderDetail'
 import { sortById, sortByName, sortByQuantity, sortByPrice, sortByCost } from '../OrderHistory/FilterOrderDetail'
-import swal from 'sweetalert';
 
 import DivText from '../ProductCard/DivText'
 import "../../scss/components/AllOrders/_AdminOrderDetail.scss"
 import "../../scss/components/AllOrders/_AdminFilterOrderDetail.scss"
 
-function SingleOrder({order, modify}){
+function SingleOrder({order}){
     const [state, setState] = useState(false) 
     const [status, setStatus] = useState(order.state)
     const [ordersDetails, setOrdersDetails] = useState(order.orderDetails)  
@@ -20,7 +18,6 @@ function SingleOrder({order, modify}){
         cost: false,
     })
     let activeToggle = state ? 'active':'inactive'
-    const token = localStorage.getItem("token");
 
     function toggle(){
         setState(!state)
@@ -57,48 +54,17 @@ function SingleOrder({order, modify}){
         setOrdersDetails(newOrdersDetails)
     }      
     
-    function handleSubmit(e){
+    async function handleSubmit(e){
         e.preventDefault();
-        swal({
-            title: `Esta seguro de modificar la orden ${order.id}?`,
-            text: "Una vez modificada, debera refrescar la pagina para ver los cambios!",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-          })
-          .then(async (willDelete) => {
-            if (willDelete) {
-                await axios.post(`http://localhost:3001/orders/${order.id}?state=${status}`)
-                console.log(order, "La orden SingleOrder.jsx");
-                console.log(status, "Mi estado local, SingleOrder.jsx");
-                swal('Éxito!',`La orden ${order.id} ha sido modificada.`, 'success')
-                .then(async (e) => {
-                    if(status === "completed"){
-                        await axios.post(`http://localhost:3001/email/order-notification`, {
-                            products: order.orderDetails?.map(e => e.product.name),
-                            address: order.address
-                        }, {
-                            headers: {Authorization: `Bearer ${token}`}
-                         })
-                    }
-                    //window.location.reload();       
-                }) 
-            } else {
-                setStatus(order.state)
-              swal("La modificación ha sido cancelada!");
-            }
-          })
-        
-        
-        
+
     }
 
     function handleStatusChange(event){
         setStatus(event.target.value)
     }
 
-    let statusForm = () => {
-        if(modify && (order.state==='created')){
+    let statusForm = (status) => {
+        if(status==='cart' || status==='created'){
             return (
                 <form onSubmit={handleSubmit}>
                     <select value={status} onChange={handleStatusChange}>
@@ -107,10 +73,9 @@ function SingleOrder({order, modify}){
                         <option value="cancelled">Cancelada</option>
                     </select>
                     <input disabled={status===order.state} type='submit' value='Guardar'></input>
-                    {/* <input type='button' value='Cancelar' onClick={() => setStatus(order.state)}/> */}
                 </form>
             )
-        }else if(modify && (order.state === "processing" || order.state === "cancelled" || order.state === "completed")){
+        }else if(status === "processing"){
             return (
                 <form onSubmit={handleSubmit}>
                     <select value={status} onChange={handleStatusChange}>
@@ -119,16 +84,7 @@ function SingleOrder({order, modify}){
                         <option value="completed">Completada</option>
                     </select>
                     <input disabled={status===order.state} type='submit' value='Guardar'></input>
-                    {/* <input type='button' value='Cancelar' onClick={() => setStatus(order.state)}/> */}
                 </form>
-            )
-        }else if(status==="created"){
-            return (
-                <DivText content='Creada'/>
-            )
-        }else if(status==="processing"){
-            return (
-                <DivText content='Procesando'/>
             )
         }else if(status==="cancelled"){
             return (
@@ -165,7 +121,7 @@ function SingleOrder({order, modify}){
                             <DivText content={order.paymentMethod.type}/>
                         </div>
                         <div className='orderAdminTotal' onClick={toggle}>
-                            <DivText content={`USD$${order.totalPrice}`}/>
+                            <DivText content={order.totalPrice}/>
                         </div>
                         <div className='orderAdminStatus'>
                             {

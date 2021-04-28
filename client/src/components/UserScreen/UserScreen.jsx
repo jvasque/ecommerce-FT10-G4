@@ -12,9 +12,7 @@ import Newsletter from '../Newsletter/Newsletter';
 import { emptyCart } from '../../redux/cartReducer/cartActions';
 import { reset } from '../../redux/iconReducer/iconActions';
 import { LogOut } from '../../redux/loginReducer/loginActions';
-import { getFavs } from '../../redux/wishlistReducer/wishlistActions';
-import ManageAccount from '../Admin/ManageAccount';
-import Swal from 'sweetalert2';
+
 export function UserScreen() {
   const [render, setRender] = useState('miCuenta');
 
@@ -25,10 +23,6 @@ export function UserScreen() {
   function handleClick(e) {
     e.preventDefault();
     setRender(e.target.id);
-    if (e.target.id === 'favorites') {
-      let favList = JSON.parse(localStorage.getItem('Fav'));
-      dispatch(getFavs(favList));
-    }
   }
 
   const handleLogOut = () => {
@@ -36,8 +30,8 @@ export function UserScreen() {
       dispatch(LogOut());
       dispatch(emptyCart());
       dispatch(reset());
-      Swal.fire('Se ha cerrado sesión');
-      localStorage.removeItem('user');
+      alert('Se cerró sesión');
+      localStorage.setItem('user', 0);
     }
   };
 
@@ -158,23 +152,6 @@ export function UserScreen() {
             Administrar categorías
           </div>
         ) : null}
-        {login.isAdmin ? (
-          <div
-            id="ManageAccount"
-            onClick={(e) => handleClick(e)}
-            style={
-              render === 'ManageAccount'
-                ? {
-                    backgroundColor: 'var(--color-brand)',
-                    opacity: '50%',
-                    color: 'var(--color-light)',
-                  }
-                : { backgroundColor: '' }
-            }
-          >
-            Modificar usuario
-          </div>
-        ) : null}
         <div
           id="LogOut"
           onClick={() => handleLogOut()}
@@ -211,8 +188,6 @@ export function UserScreen() {
           <ProductForm />
         ) : render === 'ManageCategories' ? (
           <CategoriesForm />
-        ) : render === 'ManageAccount' ? (
-          <ManageAccount />
         ) : (
           <div id="welcomeUser">
             <h3>¡Hola {login.user.firstName}!</h3>
