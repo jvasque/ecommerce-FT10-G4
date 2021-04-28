@@ -4,14 +4,19 @@ import axios from 'axios';
 
 export default function DistributionCenters() {
     const [centers, setCenters] = useState([])
+    const [modified, setModified] = useState(false)
 
     useEffect(() => {
         getCenters();
-    }, []);
+    }, [modified]);
 
     async function getCenters(){
         let data = await axios.get('http://localhost:3001/locations')
         setCenters(data.data)
+    }
+
+    const modify = () => {
+        setModified(!modified)
     }
 
     return (
@@ -20,6 +25,7 @@ export default function DistributionCenters() {
             {
                 !centers[0]?.error && centers?.map(center => {
                     return <DistributionCenterCard
+                                modified={modify}
                                 center={center}     
                                 key={center.id}
                             />

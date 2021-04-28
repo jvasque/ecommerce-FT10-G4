@@ -4,8 +4,9 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Modal from 'react-modal';
 import '../../scss/components/LocationStock/_DistributionCenterCard.scss'
 import swal from 'sweetalert';
+import axios from 'axios'
 
-export default function DistributionCenterCard({center}) {
+export default function DistributionCenterCard({center, modified}) {
     const [state, setState] = useState(false)
     let activeToggle = state ? 'active':'inactive'
 
@@ -18,7 +19,7 @@ export default function DistributionCenterCard({center}) {
 
     }
 
-    function modifyLocation(){
+    const modifyLocation = () => {
         swal({
             title: `Esta seguro de modificar el centro de distribución ${center.city}?`,
             //text: "Una vez modificada, debera refrescar la pagina para ver los cambios!",
@@ -37,7 +38,7 @@ export default function DistributionCenterCard({center}) {
           })
     }
 
-    function onDelete(){
+    const onDelete = () => {
         swal({
             title: `Esta seguro de eliminar el centro de distribución ${center.city}?`,
             //text: "Una vez modificada, debera refrescar la pagina para ver los cambios!",
@@ -47,7 +48,8 @@ export default function DistributionCenterCard({center}) {
           })
           .then(async (willDelete) => {
             if (willDelete) {
-                //await axios.post(`http://localhost:3001/locations/delete`)
+                await axios.post(`http://localhost:3001/locations/delete/${center.id}`)
+                modified()
                 swal('Éxito!',`El centro de distribución ${center.city} ha sido eliminado.`, 'success');        
             } else {
                 //setStatus(order.state)
