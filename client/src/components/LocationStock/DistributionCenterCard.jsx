@@ -2,14 +2,30 @@ import React, {useState} from 'react'
 import RoomOutlinedIcon from '@material-ui/icons/RoomOutlined';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { Modal } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import Map from './Map'
 import '../../scss/components/LocationStock/_DistributionCenterCard.scss'
 import swal from 'sweetalert';
 import axios from 'axios'
 
+const useStyles = makeStyles((theme) => ({
+    modal: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    paper: {
+      backgroundColor: theme.palette.background.paper,
+      border: '2px solid #000',
+      boxShadow: theme.shadows[5],
+      padding: theme.spacing(2, 4, 3),
+    },
+  }));
+
 export default function DistributionCenterCard({center, modified}) {
     const [state, setState] = useState(false)
     const [modal, setModal] = useState(false);
+    const classes = useStyles();
     let activeToggle = state ? 'active':'inactive'
 
     function toggle(){
@@ -23,6 +39,7 @@ export default function DistributionCenterCard({center, modified}) {
 
     function seeMap(){
         setModal(true)
+        setState(false)
     }
 
     const handleClose = () => {
@@ -46,6 +63,7 @@ export default function DistributionCenterCard({center, modified}) {
               swal("La modificación ha sido cancelada!");
             }
           })
+          setState(false)
     }
 
     const onDelete = () => {
@@ -66,6 +84,7 @@ export default function DistributionCenterCard({center, modified}) {
               swal("La eliminacion ha sido cancelada!");
             }
           })
+          setState(false)
     }
 
 
@@ -91,8 +110,9 @@ export default function DistributionCenterCard({center, modified}) {
             <Modal 
                 open={modal}
                 onClose={handleClose}
+                className={classes.modal}
             >
-                <div>
+                <div className='modalMapContent'>
                     <Map location={center}/>
                 </div>                
             </Modal>
