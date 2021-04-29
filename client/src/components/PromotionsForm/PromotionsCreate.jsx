@@ -2,7 +2,7 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-//import '../../scss/components/productsForm/_ProductFormCreate.scss';
+import '../../scss/components/PromotionsForm/_PromotionsCreate.scss';
 import { postPromotion } from '../../redux/PromotionsFormReducer/actionsPromotionsForm';
 //import axios from 'axios';
 import swal from 'sweetalert';
@@ -249,7 +249,7 @@ function handleQuery(name, event) {
          {productRender.length &&
           productRender.map((n) => {
             return (
-              <div>
+              <div className = "ProductName">
               <p>{n[0]}</p> 
               <CancelIcon  className={classes.cancelIcon} onClick ={(e) =>  handleDeleteProduct(e, n[1])}/>
               </div>

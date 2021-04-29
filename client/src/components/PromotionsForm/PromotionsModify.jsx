@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
 
 function PromotionsModify(props) {
     const classes = useStyles();
-  console.log(props.history.location.promotion, "Mis props promotions modify");
+    console.log(props.history.location.promotion, "MI PROMOCION")
   const {
     active,
     combo,
@@ -23,7 +23,7 @@ function PromotionsModify(props) {
     discountDate,
     id,
   } = props.history.location.promotion;
-  return (
+   return (
     <div className="containerPromotionsModify">
       <h1>Renderizado !</h1>
       <p>Ver consola</p>
@@ -43,7 +43,8 @@ function PromotionsModify(props) {
         <NavLink to="/user/info" style={{ textDecoration: 'none', color:"#eee" }}>Volver</NavLink>
       </Button>
     </div>
-  );
+  ); 
+  
 }
 
 export default PromotionsModify;
