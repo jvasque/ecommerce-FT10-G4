@@ -22,6 +22,8 @@ function PromotionsModify(props) {
     description,
     discountDate,
     id,
+    products,
+    categoryCheck
   } = props.history.location.promotion;
    return (
     <div className="containerPromotionsModify">
@@ -39,6 +41,10 @@ function PromotionsModify(props) {
       <p>{`${discountDate}%`}</p>
       <h1>Id:</h1>
       <p>{id}</p>
+      <h1>Products Id's:</h1>
+      <p>{products?.map(e => `${e.id}, `)}</p>
+      <h1>Categories Id's:</h1>
+      <p>{categoryCheck?.map(e => `${e}, `)}</p>
       <Button variant="contained" color="primary">
         <NavLink to="/user/info" style={{ textDecoration: 'none', color:"#eee" }}>Volver</NavLink>
       </Button>

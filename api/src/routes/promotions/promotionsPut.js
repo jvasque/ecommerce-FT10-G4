@@ -3,11 +3,11 @@ const { Op } = require('sequelize');
 
 module.exports = async (req, res) => {
     
-    let { products, categories, description, combo, days, active, discountDate } = req.body;
+    let { products, categoryCheck, description, combo, days, active, discountDate } = req.body;
     let id = req.params.id;
     
     //APARTADO DE SOLO MODIFICAR ESTADO
-    if((active === true || active === false) && !products && !categories && !description && !combo && !days && !discountDate){
+    if((active === true || active === false) && !products && !categoryCheck && !description && !combo && !days && !discountDate){
         const promotionFind = await Promotion.findByPk(id);
         if(!promotionFind) return res.json({error: "That product couldn't finded"});
     
@@ -53,13 +53,13 @@ module.exports = async (req, res) => {
     });
 
     if (promotionFind) {
-        if(categories){
+        if(categoryCheck){
             const findProductsCategory = await Product.findAll({
                 include: [{
                     model: Category,
                     where: {
                         id: {
-                            [Op.in]: categories
+                            [Op.in]: categoryCheck
                         }
                     }
                 }]
@@ -76,6 +76,8 @@ module.exports = async (req, res) => {
             if(stringDays) await promotionFind.update({days:stringDays});
             if(active) await promotionFind.update({active:active});
             if(discountDate) await promotionFind.update({discountDate:discountDate});
+            if(categoryCheck) await promotionFind.update({categoryCheck:categoryCheck});
+            if(!categoryCheck) await promotionFind.update({categoryCheck:null});
 
             return res.json(promotionFind);
         }

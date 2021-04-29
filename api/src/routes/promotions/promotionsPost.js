@@ -88,7 +88,8 @@ module.exports = async (req, res) => {
             description,
             discountDate,
             combo,
-            days: stringDays
+            days: stringDays,
+            categoryCheck
         }
     });
 

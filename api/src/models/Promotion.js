@@ -27,7 +27,10 @@ module.exports = (sequelize) => {
     active: {
       type: DataTypes.BOOLEAN,
       defaultValue: false
-    } 
+    },
+    categoryCheck: {
+      type: DataTypes.ARRAY(DataTypes.INTEGER)
+    }
     
   });
 };

@@ -63,7 +63,6 @@ const ManagePromotion = ({ promotion }) => {
   const [description, setDescription] = useState(promotion.description);
   const [active, setActive] = useState(promotion.active);
 
-
   let activeToggle = state ? "active" : "inactive";
 
   function toggle() {
@@ -103,96 +102,83 @@ const ManagePromotion = ({ promotion }) => {
 
   const handleStatus = async (e, id) => {
     const swalWithBootstrapButtons = Swal.mixin({
-        customClass: {
-          confirmButton: "btn btn-success",
-          cancelButton: "btn btn-danger",
-        },
-        buttonsStyling: true,
-      });
-  
-      swalWithBootstrapButtons
-        .fire({
-          title: `Desea ${(active && "desactivar") || (!active && "activar")} esta promoción?`,
-          text: `Esto afectará de manera inmediata a todos los productos! ${(!active && "Además se le enviará un mail de notificación a todos los usuarios!") || ""}`,
-          icon: "warning",
-          showCancelButton: true,
-          confirmButtonText: "Si",
-          cancelButtonText: "No",
-          reverseButtons: true,
-          cancelButtonColor: "#378a19",
-          confirmButtonColor: "#378a19",
-        })
-        .then((result) => {
-          if (result.isConfirmed) {
-              (async function (){
-                setActive(e.target.value);
-                const fetching = await axios.put(`http://localhost:3001/promotions/${id}`, {
-                  active: e.target.value,
-                });
-              })()
-            swalWithBootstrapButtons.fire(            
-              "Listo!",
-              `La promoción fue ${(active && "desactivada") || (!active && "activada")}.`,
-              "success"
-            );
-          } else if (
-            result.dismiss === Swal.DismissReason.cancel
-          ) {
-            setActive(!e.target.value);
-            swalWithBootstrapButtons.fire(            
-              "Cancelado",
-              `No se ${(active && "desactivó") || (!active && "activó")} la promoción.`,
-              "error"
-            );
-          }
-        });
-    
+      customClass: {
+        confirmButton: "btn btn-success",
+        cancelButton: "btn btn-danger",
+      },
+      buttonsStyling: true,
+    });
+    (async function () {
+      setActive(e.target.value);
+      const fetching = await axios.put(
+        `http://localhost:3001/promotions/${id}`,
+        {
+          active: e.target.value,
+        }
+      );
+    })();
+    swalWithBootstrapButtons.fire(
+      "Listo!",
+      `La promoción fue ${
+        (active && "desactivada") || (!active && "activada")
+      }.`,
+      "success"
+    );
   };
 
   const handleDelete = async (id) => {
     const swalWithBootstrapButtons = Swal.mixin({
-        customClass: {
-          confirmButton: "btn btn-success",
-          cancelButton: "btn btn-danger",
-        },
-        buttonsStyling: true,
+      customClass: {
+        confirmButton: "btn btn-success",
+        cancelButton: "btn btn-danger",
+      },
+      buttonsStyling: true,
+    });
+
+    swalWithBootstrapButtons
+      .fire({
+        title: "Desea eliminar esta promoción?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Si",
+        cancelButtonText: "No",
+        reverseButtons: true,
+        cancelButtonColor: "#378a19",
+        confirmButtonColor: "#378a19",
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
+          (async function () {
+            const fetching = await axios.delete(
+              `http://localhost:3001/promotions/${id}`
+            );
+          })();
+          swalWithBootstrapButtons.fire(
+            "Listo!",
+            "La promoción fue eliminada.",
+            "success"
+          );
+        } else if (
+          /* Read more about handling dismissals below */
+          result.dismiss === Swal.DismissReason.cancel
+        ) {
+          swalWithBootstrapButtons.fire(
+            "Cancelado",
+            "No se eliminó la promoción.",
+            "error"
+          );
+        }
       });
-  
-      swalWithBootstrapButtons
-        .fire({
-          title: "Desea eliminar esta promoción?",
-          icon: "warning",
-          showCancelButton: true,
-          confirmButtonText: "Si",
-          cancelButtonText: "No",
-          reverseButtons: true,
-          cancelButtonColor: "#378a19",
-          confirmButtonColor: "#378a19",
-        })
-        .then((result) => {
-          if (result.isConfirmed) {
-              (async function (){
-                  const fetching = await axios.delete(
-                      `http://localhost:3001/promotions/${id}`
-                    );
-              })()
-            swalWithBootstrapButtons.fire(            
-              "Listo!",
-              "La promoción fue eliminada.",
-              "success"
-            );
-          } else if (
-            /* Read more about handling dismissals below */
-            result.dismiss === Swal.DismissReason.cancel
-          ) {
-            swalWithBootstrapButtons.fire(            
-              "Cancelado",
-              "No se eliminó la promoción.",
-              "error"
-            );
-          }
-        });
   };
+  async function handleStatusWarning() {
+    await Swal.fire({
+      title: "ALERTA!",
+      text:
+        "En caso de activar la promoción, afectará de manera inmediata y se le enviará un mail de notificación a todos los usuarios. Si desactiva la promoción de igual manera afectará de manera inmediata a todos los productos relacionados pero no se les notificará a los usuarios!",
+      icon: "warning",
+      confirmButtonText: "Entendido",
+    });
+  }
 
   if (promotion) {
     return (
@@ -224,11 +210,14 @@ const ManagePromotion = ({ promotion }) => {
                   variant="contained"
                   color="primary"
                 >
-                  <NavLink to={{
+                  <NavLink
+                    to={{
                       pathname: "/admin/promotion/form/modify",
-                      promotion: promotion
-                  }} style={{textDecoration: "none", color:"#fff"}}>
-                      Modificar
+                      promotion: promotion,
+                    }}
+                    style={{ textDecoration: "none", color: "#fff" }}
+                  >
+                    Modificar
                   </NavLink>
                 </Button>
               </div>
@@ -244,6 +233,7 @@ const ManagePromotion = ({ promotion }) => {
                   className={classes.selectuser}
                   labelId="demo-simple-select-outlined-label"
                   id="demo-simple-select-outlined"
+                  /* onClick={() => handleStatusWarning()} */
                   onChange={(e) => handleStatus(e, promotion.id)}
                 >
                   <MenuItem type="status" value={true}>

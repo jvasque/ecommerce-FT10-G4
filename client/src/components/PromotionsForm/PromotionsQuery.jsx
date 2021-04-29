@@ -21,6 +21,9 @@ import { Button } from "@material-ui/core";
 //SASS
 import _PromotionQuery from "../../scss/components/PromotionsForm/_PromotionsQuery.scss";
 
+//Sweet Alert
+import Swal from "sweetalert2";
+
 // config general
 // const token =localStorage.getItem("token")
 // axios.interceptors.request.use(
@@ -58,6 +61,12 @@ const PromotionsQuery = () => {
   useEffect(() => {
     setPromotions([]);
     getPromotions();
+    Swal.fire({
+      title: "ALERTA!",
+      text: "En caso de activar la promoción, afectará de manera inmediata y se le enviará un mail de notificación a todos los usuarios. Si desactiva la promoción de igual manera afectará de manera inmediata a todos los productos relacionados pero no se les notificará a los usuarios!",
+      icon: "warning",
+      confirmButtonText: "Entendido",
+    })
   }, []);
 
   //crear filtros
