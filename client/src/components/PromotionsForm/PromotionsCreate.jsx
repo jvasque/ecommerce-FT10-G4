@@ -78,11 +78,11 @@ export default function PromotionsCreate(props) {
     async function setter(){
       
       if(productGlobal[0]){
-        setProductRender([...productRender.filter((e)=>e[1] !== productGlobal[0].id),  [productGlobal[0].name, productGlobal[0].id]]);
+        setProductRender([...productRender?.filter((e)=>e[1] !== productGlobal[0].id),  [productGlobal[0].name, productGlobal[0].id]]);
         
         setInput({
           ...input,
-          products: [...input.products.filter((n)=>n !== productGlobal[0].id), productGlobal[0].id],
+          products: [...input.products?.filter((n)=>n !== productGlobal[0].id), productGlobal[0].id],
         });
       } 
     }
@@ -179,13 +179,14 @@ function handleQuery(name, event) {
       setInput({
         description: '',
         categoryCheck: [],
-        products: '',
+        products: [],
         discountDate: [],
         combo: '',
         days: []
       });
       
-      
+      setProductRender([]);
+      setName('');
       let inputs = document.querySelectorAll('input[type=checkbox]');
       inputs.forEach((item) => {
         item.checked = false;
