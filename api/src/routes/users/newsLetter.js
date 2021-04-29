@@ -4,100 +4,91 @@ const { NewsletterOption, User } = require("../../db.js");
 
 const server = require("express").Router();
 
-const enviarEmail = require('./../../handlers/email');
+const enviarEmail = require("./../../handlers/email");
 
 //Inicia el proceso de suscripción, por el momento no maneja token
-server.post('/email', async (req, res, next) => {
+server.post("/email", async (req, res, next) => {
+  try {
+    const {
+      name,
+      email,
+      boletinesInformativos,
+      promociones,
+      nuevosLanzamientos,
+    } = req.body;
 
-    try 
-    {
-        const {
-            name,
-            email,
-            boletinesInformativos,
-            promociones,
-            nuevosLanzamientos
-        } = req.body;
+    const [newsLetter, created] = await NewsletterOption.findOrCreate({
+      where: {
+        email,
+      },
+      defaults: {
+        name,
+        email,
+      },
+    });
 
-        const [newsLetter, created] = await NewsletterOption.findOrCreate({
-            where: {
-                email
-            },
-            defaults: {
-                name,
-                email
-            }
-        });  
-        
-        if (created)
-        {
-            const url = `http://localhost:3001/newsLetter/suscripcion?id=${newsLetter.id}&boletinesInformativos=${boletinesInformativos}&promociones=${promociones}&nuevosLanzamientos=${nuevosLanzamientos}`;
-            //const urlBaja = `http://localhost:3001/newsLetter/desuscribir?id=${newsLetter.id}&boletinesInformativos=true&promociones=false&nuevosLanzamientos=false`;
+    if (created) {
+      const url = `http://localhost:3001/newsLetter/suscripcion?id=${newsLetter.id}&boletinesInformativos=${boletinesInformativos}&promociones=${promociones}&nuevosLanzamientos=${nuevosLanzamientos}`;
+      //const urlBaja = `http://localhost:3001/newsLetter/desuscribir?id=${newsLetter.id}&boletinesInformativos=true&promociones=false&nuevosLanzamientos=false`;
 
-            await enviarEmail.enviar({
+      await enviarEmail.enviar({
+        email,
+        name,
+        subject: "Suscripción Agro Place",
+        url,
+        archivo: "layout-suscription", // aqui va la plantilla
+      });
 
-                email,
-                name,
-                subject: 'Suscripción Agro Place',
-                url,
-                archivo: 'layout-suscription' // aqui va la plantilla               
-
-            });
-
-            return res.json({
-                message: `En su bandeja de entrada llegará la autorización para la suscripción, 
-                          por favor verifique su correo no deseado y agreguenos a sus favoritos`
-            });            
-        }
-        else
-        {
-            return res.json({
-                message: "El email ya está en nuestra base de datos"
-            });
-        }
-    } 
-    catch (error) 
-    {
-        return res.json({
-            newsLetther: {},
-            message: error.message
-        });
-        console.log(error.message);        
+      return res.json({
+        message: `En su bandeja de entrada llegará la autorización para la suscripción, 
+                          por favor verifique su correo no deseado y agreguenos a sus favoritos`,
+      });
+    } else {
+      return res.json({
+        message: "El email ya está en nuestra base de datos",
+      });
     }
+  } catch (error) {
+    return res.json({
+      newsLetther: {},
+      message: error.message,
+    });
+    console.log(error.message);
+  }
 });
 
 //Aca termina el proceso de suscripción desde el correo electrónico
-server.get('/suscripcion', async (req, res, next) => {
+server.get("/suscripcion", async (req, res, next) => {
+  try {
+    const {
+      id,
+      boletinesInformativos,
+      promociones,
+      nuevosLanzamientos,
+    } = req.query;
 
-    try 
-    {
-        const {
-            id,
-            boletinesInformativos,
-            promociones,
-            nuevosLanzamientos
-        } = req.query;
+    const newsLetter = await NewsletterOption.findOne({
+      where: {
+        id,
+      },
+    });
 
-        const newsLetter = await NewsletterOption.findOne({
-            where: {
-                id
-            }
-        });
-
-        if (newsLetter !== null)
+    if (newsLetter !== null) {
+      await NewsletterOption.update(
         {
-            await NewsletterOption.update({
-                active: true,
-                boletinesInformativos,
-                promociones,
-                nuevosLanzamientos
-            }, {
-                where: {
-                    id
-                }
-            });
+          active: true,
+          boletinesInformativos,
+          promociones,
+          nuevosLanzamientos,
+        },
+        {
+          where: {
+            id,
+          },
+        }
+      );
 
-            const html = `
+      const html = `
                             <html>
                                 <head>
                                     <title>Suscription</title>
@@ -109,11 +100,9 @@ server.get('/suscripcion', async (req, res, next) => {
                             </html>
                         `;
 
-            res.send(html);
-        }
-        else
-        {
-            const html = `
+      res.send(html);
+    } else {
+      const html = `
                             <html>
                                 <head>
                                     <title>Error</title>
@@ -124,12 +113,10 @@ server.get('/suscripcion', async (req, res, next) => {
                             </html>
                         `;
 
-            res.send(html);
-        }           
-    } 
-    catch (error) 
-    {
-        const html = `
+      res.send(html);
+    }
+  } catch (error) {
+    const html = `
                         <html>
                             <head>
                                 <title>Error</title>
@@ -138,48 +125,58 @@ server.get('/suscripcion', async (req, res, next) => {
                             ${Error}
                             </body>
                         </html>
-                    `;    
+                    `;
 
-        res.send(html);    
-    }    
+    res.send(html);
+  }
 });
 
-server.get('/desuscribir', async (req, res, next) => {
+server.get("/desuscribir", async (req, res, next) => {
+  try {
+    const {
+      id,
+      boletinesInformativos,
+      promociones,
+      nuevosLanzamientos,
+    } = req.query;
 
-    try 
-    {
-        const {
-            id,
+    const newsLetter = await NewsletterOption.findOne({
+      where: {
+        id,
+      },
+    });
+
+    if (newsLetter !== null) {
+      console.log(
+        "Que pasa pues?",
+        boletinesInformativos,
+        promociones,
+        nuevosLanzamientos
+      );
+
+      if (
+        (boletinesInformativos === "false" &&
+          promociones === "false" &&
+          nuevosLanzamientos === "false") ||
+        (boletinesInformativos === false &&
+          promociones === false &&
+          nuevosLanzamientos === false)
+      ) {
+        await NewsletterOption.update(
+          {
+            active: false,
             boletinesInformativos,
             promociones,
-            nuevosLanzamientos
-        } = req.query;
-
-        const newsLetter = await NewsletterOption.findOne({
+            nuevosLanzamientos,
+          },
+          {
             where: {
-                id
-            }
-        });
+              id,
+            },
+          }
+        );
 
-        if (newsLetter !== null)
-        {
-            console.log("Que pasa pues?", boletinesInformativos, promociones, nuevosLanzamientos);
-
-            if ((boletinesInformativos === "false" && promociones === "false" && nuevosLanzamientos === "false") || 
-                (boletinesInformativos === false && promociones === false && nuevosLanzamientos === false))
-            {
-                await NewsletterOption.update({
-                    active: false,
-                    boletinesInformativos,
-                    promociones,
-                    nuevosLanzamientos
-                }, {
-                    where: {
-                        id
-                    }
-                });
-
-                const html = `
+        const html = `
                                 <html>
                                     <head>
                                         <title>Desuscripción total</title>
@@ -191,21 +188,22 @@ server.get('/desuscribir', async (req, res, next) => {
                                 </html>
                             `;
 
-                res.send(html);
-            }    
-            else
-            { 
-                await NewsletterOption.update({
-                    boletinesInformativos,
-                    promociones,
-                    nuevosLanzamientos
-                }, {
-                    where: {
-                        id
-                    }
-                });             
+        res.send(html);
+      } else {
+        await NewsletterOption.update(
+          {
+            boletinesInformativos,
+            promociones,
+            nuevosLanzamientos,
+          },
+          {
+            where: {
+              id,
+            },
+          }
+        );
 
-                const html = `
+        const html = `
                                 <html>
                                     <head>
                                         <title>Desuscripción parcial</title>
@@ -217,12 +215,10 @@ server.get('/desuscribir', async (req, res, next) => {
                                 </html>
                             `;
 
-                res.send(html);
-            }    
-        }
-        else
-        {
-            const html = `
+        res.send(html);
+      }
+    } else {
+      const html = `
                             <html>
                                 <head>
                                     <title>Error</title>
@@ -233,54 +229,44 @@ server.get('/desuscribir', async (req, res, next) => {
                             </html>
                         `;
 
-            res.send(html);
-        }
-    } 
-    catch (error) 
-    {
-        return res.json({
-            message: "Error " + error
-        });
+      res.send(html);
     }
+  } catch (error) {
+    return res.json({
+      message: "Error " + error,
+    });
+  }
 });
 
-server.get('/correo-masivo-de-prueba', async (req, res, next) => {
+server.get("/correo-masivo-de-prueba", async (req, res, next) => {
+  const boletinesInformativos = true;
+  const promociones = true;
+  const nuevosLanzamientos = true;
 
-    const boletinesInformativos = true;
-    const promociones = true;
-    const nuevosLanzamientos = true;
+  try {
+    const users = await User.findAll();
 
-    try 
-    {
-        const users = await User.findAll();
+    for (let i = 0; i < users.length; i++) {
+      const url = `http://localhost:3001/newsLetter/suscripcion?id=${users[i].id}&boletinesInformativos=${boletinesInformativos}&promociones=${promociones}&nuevosLanzamientos=${nuevosLanzamientos}`;
+      //const urlBaja = `http://localhost:3001/newsLetter/desuscribir?id=${newsLetter.id}&boletinesInformativos=true&promociones=false&nuevosLanzamientos=false`;
 
-        for (let i = 0; i < users.length; i++) 
-        {
-            const url = `http://localhost:3001/newsLetter/suscripcion?id=${users[i].id}&boletinesInformativos=${boletinesInformativos}&promociones=${promociones}&nuevosLanzamientos=${nuevosLanzamientos}`;
-            //const urlBaja = `http://localhost:3001/newsLetter/desuscribir?id=${newsLetter.id}&boletinesInformativos=true&promociones=false&nuevosLanzamientos=false`;
-
-            await enviarEmail.enviar({
-
-                email: users[i].email,
-                name: users[i].firstName,
-                subject: 'Suscripción Agro Place',
-                url,
-                archivo: 'layout-suscription'
-
-            });
-        }
-
-        return res.json({
-            message: "Los correos han sido enviados"
-        });
-    } 
-    catch (error) 
-    {
-        return res.json({
-            message: "Error " + error
-        });
+      await enviarEmail.enviar({
+        email: users[i].email,
+        name: users[i].firstName,
+        subject: "Suscripción Agro Place",
+        url,
+        archivo: "layout-suscription",
+      });
     }
 
+    return res.json({
+      message: "Los correos han sido enviados",
+    });
+  } catch (error) {
+    return res.json({
+      message: "Error " + error,
+    });
+  }
 });
 
 module.exports = server;
