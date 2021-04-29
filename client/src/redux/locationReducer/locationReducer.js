@@ -1,7 +1,6 @@
-import { POST_LOCATION, GET_ADDRESS } from "./locationActions";
+import { POST_LOCATION, GET_ADDRESS, CLEAN_ADDRESS } from './locationActions';
 
-
-const initialState = { 
+const initialState = {
   locationCreated: {},
   autocomplete: [],
 };
@@ -18,7 +17,12 @@ export default (state = initialState, action) => {
         ...state,
         autocomplete: action.payload,
       };
+    case CLEAN_ADDRESS:
+      return {
+        ...state,
+        autocomplete: [],
+      };
     default:
       return { ...state };
-    }
+  }
 };

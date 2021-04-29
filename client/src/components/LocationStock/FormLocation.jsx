@@ -1,49 +1,51 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useHistory } from 'react-router';
-import { createLocation } from '../../redux/locationReducer/locationActions';
+// import { useHistory } from 'react-router';
+import '../../scss/components/LocationStock/_FormLocation.scss';
 import swal from 'sweetalert';
 import {
-    getAddress,
+  createLocation,
+  cleanAddress,
+  getAddress,
 } from '../../redux/locationReducer/locationActions';
 
-import '../../scss/components/LocationStock/_FormLocation.scss';
-
-function FormLocation({modified, closeModal}) {
+function FormLocation({ modified, closeModal }) {
   const dispatch = useDispatch();
-  const [disabled, setDisabled] = useState({
-    address: false, 
-    postal: true,        
-})
   const [input, setInput] = useState({
-    address: '', 
+    address: '',
     postal: '',
     userId: JSON.parse(localStorage.getItem('user')),
-    });      
-    const displayCities = useSelector((state) => state.locationReducer.autocomplete);
-  
-    // dispatch(getAddress(input.address))
-    
+  });
+  const [disabled, setDisabled] = useState({
+    address: false,
+    postal: false,
+  });
+
+  const displayCities = useSelector(
+    (state) => state.locationReducer.autocomplete
+  );
 
   const handleInputChange = function (e) {
     setInput({
       ...input,
       [e.target.name]: e.target.value,
     });
-    if (e.target.name='address'){       
-        dispatch(getAddress(input.address)) // redux 
-    }
+  };
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    dispatch(getAddress(input.address));
   };
 
   const handleCreateLocation = function (e) {
     e.preventDefault();
     dispatch(createLocation(input));
     setInput({
-        ...input,
-        address: '', 
-        postal: '',        
+      ...input,
+      address: '',
+      postal: '',
     });
-    swal('Éxito!', `Se ha creado el nuevo centro de distribución`, 'success');   
+    // swal('Éxito!', `Se ha creado el nuevo centro de distribución`, 'success');
     closeModal();
     modified();
   };
@@ -51,16 +53,19 @@ function FormLocation({modified, closeModal}) {
   const handleClick = (result, e) => {
     e.preventDefault();
     setInput({
-        ...input,
-        address: result.name, 
-        postal: result.postal_code || '',        
+      ...input,
+      address: result.name,
+      postal: result.postal_code,
     });
-    setDisabled({  
-        ...disabled,   
-        address: true,
-        postal: input.postal? true : false,
-    })
-    dispatch(createLocation(input));
+
+    if (result.postal_code === null) {
+      setDisabled({ address: true, postal: false });
+    } else {
+      setInput({ address: result.name, postal: result.postal_code });
+      setDisabled({ address: true, postal: true });
+    }
+
+    dispatch(cleanAddress());
   };
 
   return (
@@ -80,40 +85,41 @@ function FormLocation({modified, closeModal}) {
         </div>
       </div>
       <form onSubmit={handleCreateLocation}>
-          
         <div className="inputs">
-            <input
-                required
-                name="address"
-                className="input"
-                placeholder="Dirección"
-                value={input.street}
-                onChange={handleInputChange}
-                disabled={disabled.address}
-            />
+          <input
+            required
+            name="address"
+            className="input"
+            placeholder="Dirección"
+            value={input.address}
+            onChange={handleInputChange}
+            disabled={disabled.address}
+          />
+          <button type="button" onClick={(e) => handleSearch(e)}>
+            Buscar
+          </button>
 
-
-            <input
-                required
-                name="postal"
-                className="input"
-                placeholder="Código postal"
-                value={input.postal}
-                type="number"
-                onChange={handleInputChange}
-                disabled={disabled.postal}
-            />
+          <input
+            required
+            name="postal"
+            className="input"
+            placeholder="Código postal"
+            value={input.postal}
+            type="number"
+            onChange={handleInputChange}
+            disabled={disabled.postal}
+          />
         </div>
         <div className="displayCities">
-            <ul>
+          <ul>
             {displayCities?.map((result, i) =>
-                result.error ? null : i < 5 ? (
+              result.error ? null : i < 5 ? (
                 <li key={i} onClick={(e) => handleClick(result, e)}>
-                    {result.name}
+                  {result.name}
                 </li>
-                ) : null
+              ) : null
             )}
-            </ul>
+          </ul>
         </div>
 
         <button className="createLocationButton" type="submit">
