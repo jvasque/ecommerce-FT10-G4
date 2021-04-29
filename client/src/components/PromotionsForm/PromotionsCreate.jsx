@@ -76,26 +76,19 @@ export default function PromotionsCreate(props) {
     }
     alerting();
     async function setter(){
+      
       if(productGlobal[0]){
-        setProductRender([...productRender,  [productGlobal[0].name, productGlobal[0].id]]);
+        setProductRender([...productRender.filter((e)=>e[1] !== productGlobal[0].id),  [productGlobal[0].name, productGlobal[0].id]]);
+        
         setInput({
           ...input,
-          products: [...input.products, productGlobal[0].id],
+          products: [...input.products.filter((n)=>n !== productGlobal[0].id), productGlobal[0].id],
         });
       } 
-        
-
     }
     setter();
           
   }, [productGlobal, dispatch]);
-
- /*  useEffect(() => {
-   
-  }, [pic]); */
-
-  
-  
 
   const category = useSelector(
     (state) => state.categoryFilterReducer.categories
