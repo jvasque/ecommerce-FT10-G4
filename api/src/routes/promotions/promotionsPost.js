@@ -81,7 +81,6 @@ module.exports = async (req, res) => {
     let finalArray = arrProductsIds.concat(arrProductsCategories);
     let idFinalArray = finalArray?.map((o) => o.dataValues.id)
     let resArr = [...new Set(idFinalArray)]
-    console.log(resArr, "ARRAY DE IDS")
     if(!resArr) return res.json({error: "There aren't products in those categories id's or products id's"}); 
 
     const [promotionCreate, created] = await Promotion.findOrCreate({
@@ -97,6 +96,5 @@ module.exports = async (req, res) => {
 
 
     await promotionCreate.setProducts(resArr);
-    console.log("LEIDOOOOO")
     return res.json(promotionCreate);
 };
