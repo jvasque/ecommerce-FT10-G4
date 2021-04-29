@@ -65,6 +65,7 @@ function FormLocation({ modified, closeModal }) {
       setDisabled({ address: true, postal: true });
     }
 
+    // guardar en estado local
     dispatch(cleanAddress());
   };
 
