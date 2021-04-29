@@ -1,51 +1,98 @@
 import axios from 'axios';
 
 export const POST_LOCATION = 'POST_LOCATION';
-export const GET_ADDRESS = 'GET_ADDRESS';
-export const CLEAN_ADDRESS = 'CLEAN_ADDRESS';
+export const RESET_LOCATION = 'RESET_LOCATION';
+export const POST_LOCATION_ERROR = 'POST_LOCATION_ERROR';
+export const RESET_ERROR = 'RESET_ERROR';
+export const GET_CENTERS = 'GET_CENTERS';
+export const MODIFY_CENTER = 'MODIFY_CENTER';
+export const DELETE_CENTER = 'DELETE_CENTER';
+export const RESET_DELETED = 'RESET_DELETED';
 
-export function createLocation({ address, postal }) {
+export function createLocation({ street, city, addressNumber, userId }) {
   return async function (dispatch) {
-    // const geo = await axios.get(`http://api.positionstack.com/v1/forward?access_key=7646425119bcb83fee7e9cfd57f641c4&query=${address}`);
-    // console.log(geo);
-    // let latitud = geo.data.data[0].latitude;
-    // let longitud = geo.data.data[0].longitude;
-    // let province = geo.data.data[0].region;
-    // let country = geo.data.data[0].country;
-    // let postalAPI = geo.data.data[0].postal_code;
-    // let city = geo.data.data[0].locality || geo.data.data[0].county;
-    // const info = await axios.post('http://localhost:3001/locations/', {
-    //   latitud,
-    //   longitud,
-    //   city,
-    //   country,
-    //   province,
-    //   postal: postalAPI || postal,
-    //   address,
-    // });
-    // dispatch({
-    //   type: POST_LOCATION,
-    //   payload: info,
-    // });
+    const geo = await axios.get(`https://geocoder.ls.hereapi.com/6.2/geocode.json?apiKey=83JHNoayKi3lxdvx66GW-T8z0UfKtTdKdn3eB40rKcM&searchtext=${city} ${street} ${addressNumber}`);
+    
+    if(geo.data.Response.View.length!==0){
+
+      let result= geo.data.Response.View[0].Result[0].Location;
+      
+      let latitud=result.DisplayPosition.Latitude;
+      let longitud=result.DisplayPosition.Longitude;
+      let ciudad=result.Address.City;
+      let address=result.Address.Label;
+      let country=result.Address.Country;
+      let postal=result.Address.PostalCode;
+      let province=result.Address.State
+  
+      console.log(result);
+      
+      const info = await axios.post('http://localhost:3001/locations/', {
+        latitud,
+        longitud,
+        ciudad,
+        country,
+        province,
+        postal,
+        address,
+        userId,
+      });
+  
+      console.log(info)
+  
+      dispatch({
+        type: POST_LOCATION,
+        payload: info.data,
+      });
+    }else{
+      dispatch({
+        type: POST_LOCATION_ERROR,
+        payload: {error: 'No se encontró esa locación, por favor ingrese los datos nuevamente.'}
+      });
+    }
   };
 }
 
-export function getAddress(input) {
-  return async function (dispatch) {
-    const info = await axios.get(
-      `http://api.positionstack.com/v1/forward?access_key=7646425119bcb83fee7e9cfd57f641c4&query=${input}`
-    );
-    dispatch({
-      type: GET_ADDRESS,
-      payload: info.data.data,
-    });
-  };
-}
-
-export function cleanAddress() {
+export function resetLocation() {
   return function (dispatch) {
     dispatch({
-      type: CLEAN_ADDRESS,
+      type: RESET_LOCATION,
     });
   };
 }
+
+export function resetError() {
+  return function (dispatch) {
+    dispatch({
+      type: RESET_ERROR,
+    });
+  };
+}
+
+export function resetDeleted() {
+  return function (dispatch) {
+    dispatch({
+      type: RESET_DELETED,
+    });
+  };
+}
+
+export function getCenters() {
+  return async function (dispatch) {
+    let centers = await axios.get('http://localhost:3001/locations');    
+    dispatch({
+      type: GET_CENTERS,
+      payload: centers.data,
+    });
+  }
+};
+
+export function deleteCenter(id) {
+  return async function (dispatch) {
+    let center = await axios.post(`http://localhost:3001/locations/delete/${id}`);    
+    dispatch({
+      type: DELETE_CENTER,
+      payload: center.data,
+    });
+  }
+};

@@ -3,10 +3,14 @@ import RoomOutlinedIcon from '@material-ui/icons/RoomOutlined';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { Modal } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { useSelector, useDispatch } from 'react-redux';
 import Map from './Map'
 import '../../scss/components/LocationStock/_DistributionCenterCard.scss'
 import swal from 'sweetalert';
 import axios from 'axios'
+import {
+    deleteCenter,
+} from '../../redux/locationReducer/locationActions';
 
 const useStyles = makeStyles((theme) => ({
     modal: {
@@ -22,11 +26,14 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
-export default function DistributionCenterCard({center, modified}) {
+export default function DistributionCenterCard({center}) {
     const [state, setState] = useState(false)
     const [modal, setModal] = useState(false);
     const classes = useStyles();
     let activeToggle = state ? 'active':'inactive'
+
+    const dispatch = useDispatch();
+
 
     function toggle(){
         setState(!state)
@@ -76,9 +83,8 @@ export default function DistributionCenterCard({center, modified}) {
           })
           .then(async (willDelete) => {
             if (willDelete) {
-                await axios.post(`http://localhost:3001/locations/delete/${center.id}`)
-                modified()
-                swal('Éxito!',`El centro de distribución ${center.city} ha sido eliminado.`, 'success');        
+                // await axios.post(`http://localhost:3001/locations/delete/${center.id}`)
+                dispatch(deleteCenter(center.id))     
             } else {
                 //setStatus(order.state)
               swal("La eliminacion ha sido cancelada!");

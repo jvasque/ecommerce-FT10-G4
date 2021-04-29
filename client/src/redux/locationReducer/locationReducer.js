@@ -1,8 +1,19 @@
-import { POST_LOCATION, GET_ADDRESS, CLEAN_ADDRESS } from './locationActions';
+import {
+   POST_LOCATION,
+   RESET_LOCATION,
+   POST_LOCATION_ERROR,
+   RESET_ERROR,
+   GET_CENTERS,
+   DELETE_CENTER,
+   MODIFY_CENTER,
+   RESET_DELETED
+ } from './locationActions';
 
 const initialState = {
-  locationCreated: {},
-  autocomplete: [],
+  centersLoaded: [],
+  locationCreated: null,
+  error: null,
+  centerDeleted: null,
 };
 
 export default (state = initialState, action) => {
@@ -12,15 +23,39 @@ export default (state = initialState, action) => {
         ...state,
         locationCreated: action.payload,
       };
-    case GET_ADDRESS:
+    case RESET_LOCATION:
       return {
         ...state,
-        autocomplete: action.payload,
+        locationCreated: null,
       };
-    case CLEAN_ADDRESS:
+    case POST_LOCATION_ERROR:
       return {
         ...state,
-        autocomplete: [],
+        error: action.payload,
+      };
+    case RESET_ERROR:
+      return {
+        ...state,
+        error: null,
+      };
+    case RESET_DELETED:
+      return {
+        ...state,
+        centerDeleted: null,
+      };
+    case GET_CENTERS:
+      return {
+        ...state,
+        centersLoaded: action.payload,
+      };
+    case DELETE_CENTER:
+      return {
+        ...state,
+        centerDeleted: action.payload,
+      };
+    case MODIFY_CENTER:
+      return {
+        ...state,        
       };
     default:
       return { ...state };

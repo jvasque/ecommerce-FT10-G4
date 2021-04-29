@@ -2,28 +2,20 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 // import { useHistory } from 'react-router';
 import '../../scss/components/LocationStock/_FormLocation.scss';
-import swal from 'sweetalert';
+import Swal from "sweetalert2";
+import swal from "sweetalert";
 import {
   createLocation,
-  cleanAddress,
-  getAddress,
 } from '../../redux/locationReducer/locationActions';
 
-function FormLocation({ modified, closeModal }) {
+function FormLocation({ closeModal }) {
   const dispatch = useDispatch();
   const [input, setInput] = useState({
-    address: '',
-    postal: '',
+    street: '',
+    city: '',
+    addressNumber: '',
     userId: JSON.parse(localStorage.getItem('user')),
   });
-  const [disabled, setDisabled] = useState({
-    address: false,
-    postal: false,
-  });
-
-  const displayCities = useSelector(
-    (state) => state.locationReducer.autocomplete
-  );
 
   const handleInputChange = function (e) {
     setInput({
@@ -32,42 +24,20 @@ function FormLocation({ modified, closeModal }) {
     });
   };
 
-  const handleSearch = (e) => {
-    e.preventDefault();
-    dispatch(getAddress(input.address));
-  };
 
-  const handleCreateLocation = function (e) {
+  const handleSubmit = function (e) {
     e.preventDefault();
     dispatch(createLocation(input));
     setInput({
       ...input,
-      address: '',
-      postal: '',
+      street: '',
+      city: '',
+      addressNumber: '',
     });
-    // swal('Éxito!', `Se ha creado el nuevo centro de distribución`, 'success');
+    
     closeModal();
-    modified();
   };
 
-  const handleClick = (result, e) => {
-    e.preventDefault();
-    setInput({
-      ...input,
-      address: result.name,
-      postal: result.postal_code,
-    });
-
-    if (result.postal_code === null) {
-      setDisabled({ address: true, postal: false });
-    } else {
-      setInput({ address: result.name, postal: result.postal_code });
-      setDisabled({ address: true, postal: true });
-    }
-
-    // guardar en estado local
-    dispatch(cleanAddress());
-  };
 
   return (
     <div className="container-form">
@@ -85,43 +55,44 @@ function FormLocation({ modified, closeModal }) {
           insumos
         </div>
       </div>
-      <form onSubmit={handleCreateLocation}>
+      <form onSubmit={handleSubmit}>
         <div className="inputs">
           <input
             required
-            name="address"
+            name="street"
             className="input"
-            placeholder="Dirección"
-            value={input.address}
+            placeholder="Calle"
+            value={input.street}
             onChange={handleInputChange}
-            disabled={disabled.address}
+            // disabled={disabled.street}
           />
-          <button type="button" onClick={(e) => handleSearch(e)}>
-            Buscar
-          </button>
 
           <input
             required
-            name="postal"
+            name="addressNumber"
             className="input"
-            placeholder="Código postal"
-            value={input.postal}
-            type="number"
+            placeholder="Número"
+            value={input.addressNumber}
             onChange={handleInputChange}
-            disabled={disabled.postal}
+            // disabled={disabled.addressNumber}
           />
+          
+
+          <input
+            required
+            name="city"
+            className="input"
+            placeholder="Ciudad"
+            value={input.postal}
+            type="text"
+            onChange={handleInputChange}
+            // disabled={disabled.city}
+          />
+
         </div>
-        <div className="displayCities">
-          <ul>
-            {displayCities?.map((result, i) =>
-              result.error ? null : i < 5 ? (
-                <li key={i} onClick={(e) => handleClick(result, e)}>
-                  {result.name}
-                </li>
-              ) : null
-            )}
-          </ul>
-        </div>
+        {/* <button type="button" onClick={(e) => handleSearch(e)}>
+            Buscar
+        </button> */}
 
         <button className="createLocationButton" type="submit">
           Crear nuevo centro de distribución

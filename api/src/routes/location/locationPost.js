@@ -1,31 +1,37 @@
-const { Location } = require('../../db.js');
-// /locations/locationPost
+const { Location, User } = require('../../db.js');
+
+// /locations/
+
 module.exports = async (req, res) => {
   const {
-    address,
-    country,
-    province,
-    city,
-    postal,
     latitud,
     longitud,
-  } = req.body;
-
-  console.log(req.body);
+    ciudad,
+    country,
+    province,
+    postal,
+    address,
+    userId,
+  } = req.body;  
 
   try {
-    let data = await Location.create({
-      label: 'Created',
+    let location = await Location.create({
+      label: Math.floor(Math.random()*100000000),
       address,
       country,
       province,
-      city,
+      city: ciudad,
       postal,
       latitud,
       longitud,
     });
 
-    return res.json(data);
+    let user = await User.findByPk(userId);
+
+    location.setUser(user);
+    
+    return res.json(location);
+
   } catch (err) {
     res.json(err);
     return console.log(err);
