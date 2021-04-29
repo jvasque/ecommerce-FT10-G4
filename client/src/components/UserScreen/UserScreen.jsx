@@ -6,8 +6,8 @@ import OrderHistory from '../OrderHistory/OrderHistory';
 import Favorites from '../Wishlist/Favorites';
 import Wishlists from '../Wishlist/Wishlists';
 import ProductForm from '../product_form/product_form';
-
 import PromotionsForm from '../PromotionsForm/PromotionsForm';
+import PromotionsQuery from '../PromotionsForm/PromotionsQuery';
 
 import CategoriesForm from '../formCategories/Form';
 import AllOrders from '../AllOrders/AllOrders';
@@ -232,7 +232,7 @@ export function UserScreen() {
         ) : render === 'CreateProduct' ? (
           <ProductForm />
         ) : render === 'CreatePromotion' ? (
-          <PromotionsForm />
+          <PromotionsQuery />
         )
           : render === 'ManageCategories' ? (
           <CategoriesForm />

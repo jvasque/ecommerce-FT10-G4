@@ -2,10 +2,20 @@ const { Product, Promotion, Category } = require("../../db.js");
 const { Op } = require('sequelize');
 
 module.exports = async (req, res) => {
-
+    
     let { products, categories, description, combo, days, active, discountDate } = req.body;
     let id = req.params.id;
-
+    
+    //APARTADO DE SOLO MODIFICAR ESTADO
+    if((active === true || active === false) && !products && !categories && !description && !combo && !days && !discountDate){
+        const promotionFind = await Promotion.findByPk(id);
+        if(!promotionFind) return res.json({error: "That product couldn't finded"});
+    
+        await promotionFind.update({active: active});
+    
+        return res.json(promotionFind);
+    }
+    //FIN DE ESTADO MODIFICAR ESTADO
     //INICIO VALIDACIONES DE DATOS
     function daysVerification (days) {
         if(days.length > 7) return false;
@@ -34,6 +44,7 @@ module.exports = async (req, res) => {
 
     if(typeof active !== 'boolean') return res.json({error: "active should be a boolean"});
     //FIN VALIDACIONES DATOS
+    
 
     const promotionFind = await Promotion.findOne({
         where:{
