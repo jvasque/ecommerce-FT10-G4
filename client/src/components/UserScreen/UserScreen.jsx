@@ -6,7 +6,6 @@ import OrderHistory from '../OrderHistory/OrderHistory';
 import Favorites from '../Wishlist/Favorites';
 import Wishlists from '../Wishlist/Wishlists';
 import ProductForm from '../product_form/product_form';
-import PromotionsForm from '../PromotionsForm/PromotionsForm';
 import PromotionsQuery from '../PromotionsForm/PromotionsQuery';
 
 import CategoriesForm from '../formCategories/Form';

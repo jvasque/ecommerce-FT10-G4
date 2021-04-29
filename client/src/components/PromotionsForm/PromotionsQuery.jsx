@@ -16,6 +16,10 @@ import ManagePromotion from "../Admin/ManagePromotion";
 //Material UI
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
+import { Button } from "@material-ui/core";
+
+//SASS
+import _PromotionQuery from "../../scss/components/PromotionsForm/_PromotionsQuery.scss";
 
 // config general
 // const token =localStorage.getItem("token")
@@ -47,7 +51,7 @@ const PromotionsQuery = () => {
     const info = await axios.get("http://localhost:3001/promotions", {
       headers: { Authorization: `Bearer ${token}` },
     });
-    console.log(info, "promotion query data");
+
     setPromotions(info.data);
   }
   // llamar estado de redux y ejecutar y setear los comps
@@ -62,17 +66,24 @@ const PromotionsQuery = () => {
   };
 
   return (
-    <div className="containerOrderHistory">
+    <div className="containerPromotionsQuery">
       <form className={classes.root} noValidate autoComplete="off">
         <TextField
           id="outlined-basic"
-          label="Buscar promoción"
+          label="Buscar combo"
           variant="outlined"
         />
       </form>
-      <NavLink to="/admin/promotion/form/create">
-        <button onClick={() => dispatch(clearProduct())}>Crear</button>
-      </NavLink>
+
+      <Button variant="contained" color="primary" onClick={() => dispatch(clearProduct())}>
+        <NavLink
+          to="/admin/promotion/form/create"
+          style={{ textDecoration: "none", color: "#fff" }}
+        >
+          Crear
+        </NavLink>
+      </Button>
+
       <div className="containerFilterOrder">
         <div className="registerFilter" onClick={handleUsers}>
           <DivText content="Combo" />

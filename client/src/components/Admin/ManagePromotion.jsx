@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import { NavLink } from "react-router-dom";
 import DivText from "../ProductCard/DivText";
-import axios from 'axios';
+import axios from "axios";
 import "../../scss/components/AllOrders/_AdminOrderDetail.scss";
 import "../../scss/components/Admin/_UserAccount.scss";
 import { Select, Button } from "@material-ui/core";
@@ -62,6 +63,7 @@ const ManagePromotion = ({ promotion }) => {
   const [description, setDescription] = useState(promotion.description);
   const [active, setActive] = useState(promotion.active);
 
+
   let activeToggle = state ? "active" : "inactive";
 
   function toggle() {
@@ -99,23 +101,99 @@ const ManagePromotion = ({ promotion }) => {
     }
   }
 
-  const handleTypes = (e) => {
-    //setType(e.target.value);
-  };
-
   const handleStatus = async (e, id) => {
-    setActive(e.target.value);
-    const fetching = await axios.put(`http://localhost:3001/promotions/${id}`, {active: e.target.value})
+    const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+          confirmButton: "btn btn-success",
+          cancelButton: "btn btn-danger",
+        },
+        buttonsStyling: true,
+      });
+  
+      swalWithBootstrapButtons
+        .fire({
+          title: `Desea ${(active && "desactivar") || (!active && "activar")} esta promoción?`,
+          text: `Esto afectará de manera inmediata a todos los productos! ${(!active && "Además se le enviará un mail de notificación a todos los usuarios!") || ""}`,
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonText: "Si",
+          cancelButtonText: "No",
+          reverseButtons: true,
+          cancelButtonColor: "#378a19",
+          confirmButtonColor: "#378a19",
+        })
+        .then((result) => {
+          if (result.isConfirmed) {
+              (async function (){
+                setActive(e.target.value);
+                const fetching = await axios.put(`http://localhost:3001/promotions/${id}`, {
+                  active: e.target.value,
+                });
+              })()
+            swalWithBootstrapButtons.fire(            
+              "Listo!",
+              `La promoción fue ${(active && "desactivada") || (!active && "activada")}.`,
+              "success"
+            );
+          } else if (
+            result.dismiss === Swal.DismissReason.cancel
+          ) {
+            setActive(!e.target.value);
+            swalWithBootstrapButtons.fire(            
+              "Cancelado",
+              `No se ${(active && "desactivó") || (!active && "activó")} la promoción.`,
+              "error"
+            );
+          }
+        });
+    
   };
 
   const handleDelete = async (id) => {
-    const fetching = await axios.delete(`http://localhost:3001/promotions/${id}`);
-    return setState(false);
+    const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+          confirmButton: "btn btn-success",
+          cancelButton: "btn btn-danger",
+        },
+        buttonsStyling: true,
+      });
+  
+      swalWithBootstrapButtons
+        .fire({
+          title: "Desea eliminar esta promoción?",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonText: "Si",
+          cancelButtonText: "No",
+          reverseButtons: true,
+          cancelButtonColor: "#378a19",
+          confirmButtonColor: "#378a19",
+        })
+        .then((result) => {
+          if (result.isConfirmed) {
+              (async function (){
+                  const fetching = await axios.delete(
+                      `http://localhost:3001/promotions/${id}`
+                    );
+              })()
+            swalWithBootstrapButtons.fire(            
+              "Listo!",
+              "La promoción fue eliminada.",
+              "success"
+            );
+          } else if (
+            /* Read more about handling dismissals below */
+            result.dismiss === Swal.DismissReason.cancel
+          ) {
+            swalWithBootstrapButtons.fire(            
+              "Cancelado",
+              "No se eliminó la promoción.",
+              "error"
+            );
+          }
+        });
   };
 
-  const handleModifyPromotion = (e) => {
-    return;
-  };
   if (promotion) {
     return (
       <div className="containerOrder">
@@ -145,31 +223,36 @@ const ManagePromotion = ({ promotion }) => {
                   className={classes.buttonreset}
                   variant="contained"
                   color="primary"
-                  onClick={(e)=> handleModifyPromotion(e)}
                 >
-                  Modificar
+                  <NavLink to={{
+                      pathname: "/admin/promotion/form/modify",
+                      promotion: promotion
+                  }} style={{textDecoration: "none", color:"#fff"}}>
+                      Modificar
+                  </NavLink>
                 </Button>
               </div>
               <FormControl variant="outlined" className={classes.formControl}>
-                  <InputLabel
-                    className="inside"
-                    id="demo-simple-select-outlined-label"
-                  >
-                    Estado
-                  </InputLabel>
-                  <Select
-                    className={classes.selectuser}
-                    labelId="demo-simple-select-outlined-label"
-                    id="demo-simple-select-outlined"
-                    onChange={(e)=>handleStatus(e, promotion.id)}
-                  >
-                    <MenuItem type="status" value={true}>
-                      Activado
-                    </MenuItem>
-                    <MenuItem type="status" value={false}>
-                      Desactivado
-                    </MenuItem>
-                  </Select>
+                <InputLabel
+                  className="inside"
+                  id="demo-simple-select-outlined-label"
+                >
+                  {active && "Activado"}
+                  {!active && "Desactivado"}
+                </InputLabel>
+                <Select
+                  className={classes.selectuser}
+                  labelId="demo-simple-select-outlined-label"
+                  id="demo-simple-select-outlined"
+                  onChange={(e) => handleStatus(e, promotion.id)}
+                >
+                  <MenuItem type="status" value={true}>
+                    Activado
+                  </MenuItem>
+                  <MenuItem type="status" value={false}>
+                    Desactivado
+                  </MenuItem>
+                </Select>
               </FormControl>
               <Button
                 className={classes.buttonsend}
