@@ -16,7 +16,7 @@ const mercadopago = require('../routes/mercadopago/mercadopago');
 const admin = require('../routes/admin/admin');
 const orders = require('../routes/orders/orders');
 const email = require('../routes/emails/email');
-const newsLetter = require('./users/newsLetter.js');
+const newsletter = require("../routes/newsletter/newsletter")
 
 
 const router = Router();
@@ -39,7 +39,7 @@ router.use('/auth', server);
 router.use('/cart/checkout', mercadopago);
 router.use('/admin', admin);
 router.use('/email', email);
-router.use('/newsLetter', newsLetter);
 
+router.use('/newsLetter', newsletter);
 
 module.exports = router;
