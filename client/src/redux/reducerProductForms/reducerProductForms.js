@@ -6,11 +6,6 @@ const initialState = {
 
 const productFormsReducer = (state = initialState, action) => {
   switch (action.type) {
-    /* case GET_PRODUCTS:
-      return {
-        ...state,
-        product: [action.payload],
-      }; */
 
       case GET_PRODUCT_NAME:
         if(!action.payload.info[0]) return {...state};

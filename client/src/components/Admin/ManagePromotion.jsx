@@ -53,17 +53,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ManagePromotion = ({ promotion }) => {
+const ManagePromotion = ({ promotion, stateFilterAfterDelete, stateActiveUpdate }) => {
   const dispatch = useDispatch();
   const classes = useStyles();
   const [state, setState] = useState(false);
-  const [days, setDays] = useState(promotion.days);
-  const [id, setId] = useState(promotion.id);
-  const [discountDate, setDiscountDate] = useState(promotion.discountDate);
-  const [combo, setCombo] = useState(promotion.combo);
-  const [description, setDescription] = useState(promotion.description);
   const [active, setActive] = useState(promotion.active);
-
+  
+  const {days, id, discountDate, combo, description} = promotion;
   let activeToggle = state ? "active" : "inactive";
 
   function toggle() {
@@ -118,6 +114,7 @@ const ManagePromotion = ({ promotion }) => {
         }
       );
     })();
+    stateActiveUpdate(id, e.target.value);
     swalWithBootstrapButtons.fire(
       "Listo!",
       `La promoción fue ${
@@ -159,8 +156,8 @@ const ManagePromotion = ({ promotion }) => {
             "La promoción fue eliminada.",
             "success"
           );
+          stateFilterAfterDelete(id)
         } else if (
-          /* Read more about handling dismissals below */
           result.dismiss === Swal.DismissReason.cancel
         ) {
           swalWithBootstrapButtons.fire(
@@ -171,15 +168,7 @@ const ManagePromotion = ({ promotion }) => {
         }
       });
   };
-  async function handleStatusWarning() {
-    await Swal.fire({
-      title: "ALERTA!",
-      text:
-        "En caso de activar la promoción, afectará de manera inmediata y se le enviará un mail de notificación a todos los usuarios. Si desactiva la promoción de igual manera afectará de manera inmediata a todos los productos relacionados pero no se les notificará a los usuarios!",
-      icon: "warning",
-      confirmButtonText: "Entendido",
-    });
-  }
+
 
   if (promotion) {
     return (

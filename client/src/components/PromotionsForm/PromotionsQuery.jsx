@@ -5,13 +5,13 @@ import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 //Redux
-import { GetUsers } from "../../redux/AdminReducer/AdminActions";
 import { clearProduct } from "../../redux/reducerProductForms/actionsProductForms";
+import { getPromotion } from "../../redux/PromotionsFormReducer/actionsPromotionsForm";
 
 //Components
-import PastOrder from "../OrderHistory/PastOrder";
 import DivText from "../ProductCard/DivText";
 import ManagePromotion from "../Admin/ManagePromotion";
+import { sortById, sortByCombo, sortByDiscountDate, sortByActive } from './promotionsFilter';
 
 //Material UI
 import { makeStyles } from "@material-ui/core/styles";
@@ -24,17 +24,6 @@ import _PromotionQuery from "../../scss/components/PromotionsForm/_PromotionsQue
 //Sweet Alert
 import Swal from "sweetalert2";
 
-// config general
-// const token =localStorage.getItem("token")
-// axios.interceptors.request.use(
-//     config=>{
-//         config.headers.authorization = `Bearer ${token}`;
-//         return config;
-//     },
-//     error =>{
-//         return Promise.reject(error)
-//     }
-// )
 const useStyles = makeStyles((theme) => ({
   root: {
     "& > *": {
@@ -46,9 +35,20 @@ const useStyles = makeStyles((theme) => ({
 
 const PromotionsQuery = () => {
   const classes = useStyles();
-  //const allUser = useSelector((state) => state.AdminReducer);
+
   const [promotions, setPromotions] = useState([]);
+  const [sort, setSort] = useState({
+    id: false,
+    combo: false,
+    discountDate: false,
+    active: false,
+});
+
+
   const dispatch = useDispatch();
+  const statePromotions = useSelector(state => state.PromotionsFormReducer);
+  
+
   async function getPromotions() {
     const token = localStorage.getItem("token");
     const info = await axios.get("http://localhost:3001/promotions", {
@@ -57,10 +57,11 @@ const PromotionsQuery = () => {
 
     setPromotions(info.data);
   }
-  // llamar estado de redux y ejecutar y setear los comps
+
   useEffect(() => {
     setPromotions([]);
     getPromotions();
+    dispatch(getPromotion())
     Swal.fire({
       title: "ALERTA!",
       text: "En caso de activar la promoción, afectará de manera inmediata y se le enviará un mail de notificación a todos los usuarios. Si desactiva la promoción de igual manera afectará de manera inmediata a todos los productos relacionados pero no se les notificará a los usuarios!",
@@ -69,10 +70,46 @@ const PromotionsQuery = () => {
     })
   }, []);
 
-  //crear filtros
-  const handleUsers = () => {
-    dispatch(GetUsers());
-  };
+  function sortId(){
+    let [newPromotions, newSort] = sortById(promotions, sort);
+    setSort(newSort);
+    setPromotions(newPromotions);
+  }
+
+  function sortCombo(){
+    let [newPromotions, newSort] = sortByCombo(promotions, sort);
+    setSort(newSort);
+    setPromotions(newPromotions);
+  }
+
+  function sortDiscountDate(){
+    let [newPromotions, newSort] = sortByDiscountDate(promotions, sort);
+    setSort(newSort);
+    setPromotions(newPromotions);
+  }
+
+  function sortActive(){
+    let [newPromotions, newSort] = sortByActive(promotions, sort);
+    setSort(newSort);
+    setPromotions(newPromotions);
+  }
+
+  function stateFilterAfterDelete(idPromotion){
+    setPromotions(promotions.filter(e => e.id !== idPromotion))
+  }
+
+  function stateActiveUpdate(idPromotion, state){
+    setPromotions(promotions.map(e => {
+      if(e.id === idPromotion){
+        return  e = {
+          ...e,
+          active: state
+        }
+      } else {
+        return e
+      }
+    }))
+  }
 
   return (
     <div className="containerPromotionsQuery">
@@ -94,16 +131,16 @@ const PromotionsQuery = () => {
       </Button>
 
       <div className="containerFilterOrder">
-        <div className="registerFilter" onClick={handleUsers}>
+        <div className="registerFilter" onClick={sortId}>
           <DivText content="Registro" />
         </div>
-        <div className="registerFilter" onClick={handleUsers}>
+        <div className="registerFilter" onClick={sortCombo}>
           <DivText content="Combo" />
         </div>
-        <div className="stateFilter" onClick={() => console.log("promotion")}>
+        <div className="stateFilter" onClick={sortDiscountDate}>
           <DivText content="Descuento %" />
         </div>
-        <div className="creationFilter" onClick={() => console.log("name")}>
+        <div className="creationFilter" onClick={sortActive}>
           <DivText content="Estado" />
         </div>
         <div className="updateFilter" onClick={() => console.log("Mail")}>
@@ -117,7 +154,9 @@ const PromotionsQuery = () => {
       {promotions?.map((promotion) => (
         <ManagePromotion
           promotion={promotion}
-          key={promotions.indexOf(promotion)}
+          key={promotion.id}
+          stateFilterAfterDelete={stateFilterAfterDelete}
+          stateActiveUpdate={stateActiveUpdate}
         />
       ))}
     </div>
