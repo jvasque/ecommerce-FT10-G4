@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import swal from 'sweetalert';
 // import { useHistory } from 'react-router';
-import '../../scss/components/LocationStock/_FormLocation.scss';
-import Swal from "sweetalert2";
-import swal from "sweetalert";
+// import '../../scss/components/LocationStock/_ModifyLocationForm.scss';
 import {
   createLocation,
 } from '../../redux/locationReducer/locationActions';
 
-function FormLocation({ closeModal }) {
+function ModifyLocationForm({ closeModal, center }) {
   const dispatch = useDispatch();
+  console.log(center)
   const [input, setInput] = useState({
     street: '',
-    city: '',
+    city: center.city,
     addressNumber: '',
     userId: JSON.parse(localStorage.getItem('user')),
   });
@@ -27,14 +27,27 @@ function FormLocation({ closeModal }) {
 
   const handleSubmit = function (e) {
     e.preventDefault();
-    dispatch(createLocation(input));
-    setInput({
-      ...input,
-      street: '',
-      city: '',
-      addressNumber: '',
-    });
-    
+    swal({
+        title: `Esta seguro de modificar el centro de distribución?`,
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      })
+      .then(async (willDelete) => {
+        if (willDelete) {
+            //dispatch modify
+            swal('Éxito!',`El centro de distribución ha sido modificado.`, 'success'); 
+            setInput({
+                ...input,
+                street: '',
+                city: '',
+                addressNumber: '',
+            });       
+        } else {
+          swal("La modificación ha sido cancelada!");
+        }
+      })
+   
     closeModal();
   };
 
@@ -49,7 +62,7 @@ function FormLocation({ closeModal }) {
         >
           X
         </button>
-        <h2>Completá la información</h2>
+        <h2>Modifica la información</h2>
         <div>
           Recuerda que es la dirección desde donde realizas los envíos de tus
           insumos
@@ -64,7 +77,6 @@ function FormLocation({ closeModal }) {
             placeholder="Calle"
             value={input.street}
             onChange={handleInputChange}
-            // disabled={disabled.street}
           />
 
           <input
@@ -74,7 +86,6 @@ function FormLocation({ closeModal }) {
             placeholder="Número"
             value={input.addressNumber}
             onChange={handleInputChange}
-            // disabled={disabled.addressNumber}
           />
           
 
@@ -82,24 +93,21 @@ function FormLocation({ closeModal }) {
             required
             name="city"
             className="input"
-            placeholder="Ciudad"
+            placeholder={center.city}
             value={input.city}
             type="text"
             onChange={handleInputChange}
-            // disabled={disabled.city}
+
           />
 
         </div>
-        {/* <button type="button" onClick={(e) => handleSearch(e)}>
-            Buscar
-        </button> */}
 
-        <button className="createLocationButton" type="submit">
-          Crear nuevo centro de distribución
+        <button className="ModifyLocationButton" type="submit">
+          Modificar centro de distribución
         </button>
       </form>
     </div>
   );
 }
 
-export default FormLocation;
+export default ModifyLocationForm;

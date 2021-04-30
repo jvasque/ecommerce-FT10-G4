@@ -3,6 +3,7 @@ import RoomOutlinedIcon from '@material-ui/icons/RoomOutlined';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { Modal } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import ModifyLocationForm from './ModifyLocationForm';
 import { useSelector, useDispatch } from 'react-redux';
 import Map from './Map'
 import '../../scss/components/LocationStock/_DistributionCenterCard.scss'
@@ -29,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
 export default function DistributionCenterCard({center}) {
     const [state, setState] = useState(false)
     const [modal, setModal] = useState(false);
+    const [modifyForm, setModifyForm] = useState(false);
     const classes = useStyles();
     let activeToggle = state ? 'active':'inactive'
 
@@ -52,38 +54,24 @@ export default function DistributionCenterCard({center}) {
     const handleClose = () => {
         setModal(false);
     };
+    const handleCloseModify = () => {
+        setModifyForm(false);
+    };
 
     const modifyLocation = () => {
-        swal({
-            title: `Esta seguro de modificar el centro de distribución ${center.city}?`,
-            //text: "Una vez modificada, debera refrescar la pagina para ver los cambios!",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-          })
-          .then(async (willDelete) => {
-            if (willDelete) {
-                //await axios.post(`http://localhost:3001/locations/delete`)
-                swal('Éxito!',`El centro de distribución ${center.city} ha sido modificado.`, 'success');        
-            } else {
-                //setStatus(order.state)
-              swal("La modificación ha sido cancelada!");
-            }
-          })
-          setState(false)
+        setModifyForm(true);
+        setState(false)
     }
 
     const onDelete = () => {
         swal({
             title: `Esta seguro de eliminar el centro de distribución ${center.city}?`,
-            //text: "Una vez modificada, debera refrescar la pagina para ver los cambios!",
             icon: "warning",
             buttons: true,
             dangerMode: true,
           })
           .then(async (willDelete) => {
             if (willDelete) {
-                // await axios.post(`http://localhost:3001/locations/delete/${center.id}`)
                 dispatch(deleteCenter(center.id))     
             } else {
                 //setStatus(order.state)
@@ -121,6 +109,11 @@ export default function DistributionCenterCard({center}) {
                 <div className='modalMapContent'>
                     <Map location={center}/>
                 </div>                
+            </Modal>
+            <Modal open={modifyForm} onClose={handleCloseModify} className={classes.modal}>
+                <div className="modalMapContent">
+                    {<ModifyLocationForm closeModal={handleCloseModify} center={center}/>}
+                </div>
             </Modal>
         </div>
     )
