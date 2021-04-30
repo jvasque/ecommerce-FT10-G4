@@ -37,7 +37,7 @@ export default function Signup() {
   const history = useHistory();
   const log = useSelector((state) => state.loginReducer);
   const post = useSelector((state) => state.postUserReducer);
-  //social
+  
 
   const responseSuccessGoogle = (response) => {
     try {
@@ -270,6 +270,7 @@ export default function Signup() {
       dispatch(SwalBooC());
     }
   }, [post.errorMail]);
+ 
 
   return (
     <div className="Signup">
@@ -303,7 +304,7 @@ export default function Signup() {
                 placeholder="Apellido..."
                 value={user.lastName}
                 onChange={userChange}
-                required
+                required 
               />
               <input
                 type="text"
@@ -401,7 +402,7 @@ export default function Signup() {
                   <p className="danger">{errors.password}</p>
                 ))}
               <Link to="/forgot/email">olvidaste tu clave?</Link>
-
+                  
               <button type="submit">INICIA SESION</button>
             </form>
           </div>
@@ -427,7 +428,7 @@ export default function Signup() {
             </div>
           </div>
         </div>
-        <div>{log.isDoubleAuth? (<DoubleAuth/>): ''}</div>
+        <div>{log.isDoubleAuth? (<DoubleAuth />): ''}</div>
         </div>
       ) : (
         <button onClick={() => dispatch(LogOut())}>Salir</button>
