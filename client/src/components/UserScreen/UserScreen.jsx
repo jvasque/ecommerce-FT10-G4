@@ -9,6 +9,7 @@ import ProductForm from '../product_form/product_form';
 import CategoriesForm from '../formCategories/Form';
 import AllOrders from '../AllOrders/AllOrders';
 import Newsletter from '../Newsletter/Newsletter';
+import DistributionCenters from '../LocationStock/DistributionCenters';
 import { emptyCart } from '../../redux/cartReducer/cartActions';
 import { reset } from '../../redux/iconReducer/iconActions';
 import { LogOut } from '../../redux/loginReducer/loginActions';
@@ -175,6 +176,23 @@ export function UserScreen() {
             Modificar usuario
           </div>
         ) : null}
+        {login.isAdmin ? (
+          <div
+            id="DistributionCenters"
+            onClick={(e) => handleClick(e)}
+            style={
+              render === "DistributionCenters"
+                ? {
+                    backgroundColor: "var(--color-brand)",
+                    opacity: "50%",
+                    color: "var(--color-light)",
+                  }
+                : { backgroundColor: "" }
+            }
+          >
+            Centros de Distribución
+          </div>
+        ) : null}
         <div
           id="LogOut"
           onClick={() => handleLogOut()}
@@ -213,6 +231,8 @@ export function UserScreen() {
           <CategoriesForm />
         ) : render === 'ManageAccount' ? (
           <ManageAccount />
+        ) : render === "DistributionCenters" ? (
+          <DistributionCenters />
         ) : (
           <div id="welcomeUser">
             <h3>¡Hola {login.user.firstName}!</h3>

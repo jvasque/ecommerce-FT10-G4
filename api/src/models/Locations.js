@@ -6,12 +6,26 @@ module.exports = (sequelize) => {
   sequelize.define('location', {
     label: {
       type: DataTypes.STRING,
-      unique: true,
+      // unique: true,
       allowNull: false,
     },
     address: {
       type: DataTypes.STRING,
       unique: true,
+      allowNull: false,
+    },
+    street: {
+      type: DataTypes.STRING,
+    },
+    addressNumber: {
+      type: DataTypes.STRING,
+    },
+    postal: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    province: {
+      type: DataTypes.STRING,
       allowNull: false,
     },
     city: {
