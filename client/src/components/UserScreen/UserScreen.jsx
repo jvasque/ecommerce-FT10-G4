@@ -22,7 +22,7 @@ import SendOrder from '../SendOrder/SendOrder';
 export function UserScreen() {
   const [render, setRender] = useState('miCuenta');
   const login = useSelector((state) => state.loginReducer);
-  const [userDb, setUserDb] = useState([])
+  
   const userId = localStorage.getItem("user")
 
   const dispatch = useDispatch();
@@ -63,14 +63,7 @@ export function UserScreen() {
 
 
 
-  useEffect(() => {
-    async function data() {
-    const user = await axios.get(`http://localhost:3001/users/user/${userId}`)
-    setUserDb(user.data)
-    }
-    data()
-     
-},[])
+ 
 
   return (
     <div className="infoContainer">
@@ -268,7 +261,7 @@ export function UserScreen() {
             <Newsletter />
           </div>
         ) : render ==="Configuracion" ?
-         (<Settings userDb={userDb} setUserDb={setUserDb} />)
+         (<Settings  />)
          : render ==="Mis envios" ? <SendOrder/>
          : render === 'allOrders' ? (
           <AllOrders />

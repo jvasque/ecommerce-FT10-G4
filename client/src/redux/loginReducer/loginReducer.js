@@ -5,15 +5,15 @@ import {
   LOG_OUT,
   LOG_SWAL,
   LOG_GOOGLE,
-} from './loginActions';
-import decode from 'jwt-decode';
+} from "./loginActions";
+import decode from "jwt-decode";
 
 const initialState = {
-  user: {},
   error: {},
   errorLogin: false,
   isLogin: false,
   isAdmin: false,
+  user: {},
 };
 
 export default (state = initialState, action) => {
@@ -46,6 +46,13 @@ export default (state = initialState, action) => {
       return {
         errorLogin: false,
       };
+
+    case "CHANGEUSER": {
+      return {
+        ...state,
+        user: { ...state.user, ...action.payload },
+      };
+    }
     // case LOGIN_FB:
     //   localStorage.setItem('user', JSON.stringify(action.payload.id));
     //   return {

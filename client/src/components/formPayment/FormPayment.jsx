@@ -44,12 +44,16 @@ const FormPayment = () => {
   const [input, setInput] = useState({
     firstName: user.firstName,
     lastName: user.lastName,
-    address: '',
     phoneNumber: 0,
     email: user.email,
+    provincia: "",
+    city:"",
+    numberAddr: "",
+    calle: ""
   });
   const [url, setUrl] = useState('');
   const id = JSON.parse(localStorage.getItem('user'));
+  console.log(input);
 
   const [showPaypal, setShowPaypal] = useState(false);
 
@@ -63,7 +67,6 @@ const FormPayment = () => {
   useEffect(() => {
     input.firstName.length !== 0 &&
     input.lastName.length !== 0 &&
-    input.address.length !== 0 &&
     input.email.includes('@') &&
     input.phoneNumber.length !== 0
       ? setShowPaypal(true)
@@ -76,8 +79,11 @@ const FormPayment = () => {
     if (
       input.firstName.length === 0 ||
       input.lastName.length === 0 ||
-      input.address.length === 0 ||
-      input.phoneNumber.length === 0
+      input.phoneNumber.length === 0 || 
+      input.provincia.length === 0 ||
+      input.city.length === 0 ||
+      input.calle.length === 0 ||
+      input.numberAddr.length === 0 
     ) {
       setShowPaypal(false);
       return swal('Aviso!', 'Todos los datos son obligatorios', 'warning');
@@ -86,13 +92,12 @@ const FormPayment = () => {
       setShowPaypal(false);
       return swal('Aviso!', 'Ingrese un Email valido', 'warning');
     }
-
     await axios.put(`http://localhost:3001/order/orders/${id}`, {
       firstName: input.firstName,
       lastName: input.lastName,
       state: 'cart',
       paymentDate: 'mercadopago',
-      address: input.address,
+      address: `${input.provincia} ${input.city} ${input.calle} ${input.numberAddr}`,
       email: input.email,
       phoneNumber: input.phoneNumber,
       totalPrice: total,
@@ -159,9 +164,36 @@ const FormPayment = () => {
                 />
                 <TextField
                   type="text"
-                  name="address"
+                  name="provincia"
                   onChange={handleChange}
-                  label="Dirección de envío:"
+                  label="Provincia:"
+                  variant="filled"
+                  className={classes.input}
+                  required
+                />
+                <TextField
+                  type="text"
+                  name="city"
+                  onChange={handleChange}
+                  label="Ciudad"
+                  variant="filled"
+                  className={classes.input}
+                  required
+                />
+                <TextField
+                  type="text"
+                  name="calle"
+                  onChange={handleChange}
+                  label="Calle"
+                  variant="filled"
+                  className={classes.input}
+                  required
+                />
+                <TextField
+                  type="number"
+                  name="numberAddr"
+                  onChange={handleChange}
+                  label="Numero"
                   variant="filled"
                   className={classes.input}
                   required
