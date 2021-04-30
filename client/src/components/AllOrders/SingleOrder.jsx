@@ -20,6 +20,7 @@ function SingleOrder({order, modify}){
         cost: false,
     })
     let activeToggle = state ? 'active':'inactive'
+    const token = localStorage.getItem("token");
 
     function toggle(){
         setState(!state)
@@ -68,7 +69,20 @@ function SingleOrder({order, modify}){
           .then(async (willDelete) => {
             if (willDelete) {
                 await axios.post(`http://localhost:3001/orders/${order.id}?state=${status}`)
-                swal('Éxito!',`La orden ${order.id} ha sido modificada.`, 'success');        
+                console.log(order, "La orden SingleOrder.jsx");
+                console.log(status, "Mi estado local, SingleOrder.jsx");
+                swal('Éxito!',`La orden ${order.id} ha sido modificada.`, 'success')
+                .then(async (e) => {
+                    if(status === "completed"){
+                        await axios.post(`http://localhost:3001/email/order-notification`, {
+                            products: order.orderDetails?.map(e => e.product.name),
+                            address: order.address
+                        }, {
+                            headers: {Authorization: `Bearer ${token}`}
+                         })
+                    }
+                    //window.location.reload();       
+                }) 
             } else {
                 setStatus(order.state)
               swal("La modificación ha sido cancelada!");

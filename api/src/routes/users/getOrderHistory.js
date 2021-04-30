@@ -22,7 +22,9 @@ module.exports = async (req, res, next) => {
                 attributes: ['type'],
             }]
         }]})
-        return res.json(data.orders);
+        return res.json(data.orders.filter(order => {
+            return ['created', 'processing', 'completed', 'cancelled'].includes(order.state)
+        }));
     } catch (err) {        
         return res.json(err);
     }    

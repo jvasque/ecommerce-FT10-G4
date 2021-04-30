@@ -12,7 +12,7 @@ module.exports = async (req, res, next) => {
         },
         include:[{
           model: Order,
-          attributes: ['userId']
+          attributes: ['userId', 'state']
         }]
       });
 

@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,200;0,400;0,600;0,800;1,200;1,400;1,600&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,200;0,400;0,600;0,800;1,200;1,400;1,600&display=swap');
 
 .App {
   width: 100%;
@@ -13,20 +13,23 @@
 :root {
   --rad: 0.7rem;
   --color-black: rgba(42, 46, 42, 1);
+  --color-black-85: rgba(42, 46, 42, 0.85);
   --color-black-50: rgba(42, 46, 42, 0.5);
+  --color-footer: rgba(77, 77, 77, 1);
   --color-dark: rgba(105, 104, 104, 1);
+  --color-dark-50: rgba(105, 104, 104, 0.5);
   --color-light: rgba(239, 239, 239, 1);
   --color-gray: rgba(247, 247, 247, 1);
-  --color-brand: rgba(47, 126, 19, 1);
-  --color-brand-85: rgba(47, 126, 19, 0.85);
-  --color-brand-75: rgba(47, 126, 19, 0.75);
-  --color-brand-50: rgba(47, 126, 19, 0.5);
+  --color-brand: rgba(69, 161, 74, 1);
+  --color-brand-85: rgba(69, 161, 74, 0.85);
+  --color-brand-75: rgba(69, 161, 74, 0.75);
+  --color-brand-50: rgba(69, 161, 74, 0.5);
   --color-brand-light: rgba(133, 218, 108, 1);
-  --color-sun: rgb(224, 192, 8);
-  --color-sun-85: rgba(224, 192, 8, 0.85);
+  --color-sun: rgb(255, 153, 0);
+  --color-sun-85: rgba(255, 153, 0, 0.85);
   --color-delete: rgba(201, 67, 94, 1);
-  --font-main: "Raleway", sans-serif;
-  --font-fam: "Lato", sans-serif;
+  --font-main: 'Raleway', sans-serif;
+  --font-fam: 'Lato', sans-serif;
   --height: 3rem;
   --btn-width: 4rem;
   --dur: 0.8s;

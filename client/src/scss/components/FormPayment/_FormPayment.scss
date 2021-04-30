@@ -1,6 +1,14 @@
 .container-payment {
   text-align: center;
-
+  background-color: whitesmoke;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  margin-top: 1.5rem;
+  width: 600px;
+  border-radius: 5px;
+  box-shadow: 1px 1px 1px 1px rgba(47, 126, 19, 1);
   h3 {
     color: #333;
     font-family: Proxima Nova, -apple-system, Helvetica Neue, Helvetica, Roboto,
@@ -9,7 +17,6 @@
   }
 
   button {
-    
     margin: 10px 1px;
     height: 3.7rem;
     background-color: #0070ba;
@@ -25,6 +32,5 @@
 
   .button-paypal {
     width: 100%;
-    
   }
 }

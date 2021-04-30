@@ -1,15 +1,13 @@
 .adminMenu {
-  display: flex;
-  align-items: center;
-  margin-right: 15px;
-
   ul {
-    font-size: 40px;
-    list-style-type: none;
+    margin-right: 15px;
     display: flex;
     flex-direction: row;
+    font-size: 40px;
+    list-style-type: none;
+
     li {
-      margin: 0 12px;
+      margin: 0 12px 0 6px;
     }
   }
 

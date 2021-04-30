@@ -1,10 +1,11 @@
-import React,{useEffect} from 'react'
+import React,{useEffect, useState} from 'react'
 import swal from "sweetalert"
 import {useDispatch, useSelector} from "react-redux"
 import { emptyCart } from '../../redux/cartReducer/cartActions'
 import axios from 'axios'
 import { reset } from '../../redux/iconReducer/iconActions'
 import { useHistory } from 'react-router';
+import { RiWindowLine } from 'react-icons/ri'
 
 export default function Successful({payment}) {
     const userId = localStorage.getItem("user")
@@ -15,9 +16,10 @@ export default function Successful({payment}) {
 
     const productSend = productBuy?.map(el => el.name);
 
+
     useEffect(() => {
     async function stock(){
-     swal("Tu compra ha sido completada!", "Gracias por confiar en nosotros", "success")
+     swal ("Tu compra ha sido completada!", "Gracias por confiar en nosotros", "success")
      const productSaved = productBuy
      dispatch(emptyCart())
      await axios.put(`http://localhost:3001/order/${userId}/state`, {
@@ -41,11 +43,17 @@ export default function Successful({payment}) {
 
    
      }
+   
+
    stock()
-    history.push({
-        pathname: '/catalog',
-    });
+
+   history.push({
+    pathname: '/',
+});
+
     },[])
+
+ 
 
     return (
         <div>

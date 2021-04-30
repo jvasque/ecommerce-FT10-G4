@@ -41,11 +41,42 @@ export const SwalBoo = () => {
   };
 };
 
+export const FLogin = (token, id) => {
+  // console.log("don id",id)
+  // console.log("don id", token)
+  return async function (dispatch) {
+    try {
+      const info = await axios.post("http://localhost:3001/auth/facebook/login", {
+        accessToken: token,
+        userID: id
+   
+      });
+      // console.log(info)
+      localStorage.setItem("token", info.data);
+
+      dispatch({
+        type: LOGIN_ACTION_KEY,
+        payload: decode(info.data),
+      });
+    } catch (e) {
+      dispatch({
+        type: LOG_FAIL,
+        payload: e,
+      });
+    }
+  };
+};
+
+
+
+
 export const GLogin = (response) => {
+  console.log(response)
   return async function (dispatch) {
     try {
       const info = await axios.post("http://localhost:3001/auth/google/login", {
-        tokenId: response.tokenId,
+        tokenId:  response.tokenId,
+        //
       });
       localStorage.setItem("token", info.data);
 

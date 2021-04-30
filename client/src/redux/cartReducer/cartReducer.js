@@ -62,6 +62,7 @@ export default (state = initialState, action) => {
         cart: [],
       };
     }
+
     default:
       return state;
   }

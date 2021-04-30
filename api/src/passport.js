@@ -17,6 +17,7 @@ passport.use(
     async (email, password, done) => {
       const user = await User.findOne({ where: { email: email } });
       if (!user || !user.correctPassword(password)) return done(null, false);
+      if (user.resetPassword) return done(null, false);
       const {
         id,
         firstName,
@@ -26,6 +27,7 @@ passport.use(
         type,
         status,
       } = user;
+      if (status === "disabled") return done(null, false)
       if (status === "banned") return done(null, false);
       return done(null, {
         id,

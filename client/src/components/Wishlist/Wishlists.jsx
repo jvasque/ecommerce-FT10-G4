@@ -26,6 +26,7 @@ const Wishlists = (props) => {
     setInput('');
     dispatch(getWishlists(login.user.id));
     return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, changedWishlist]);
 
   function handleClick(e, wishlistId, productId) {
@@ -115,7 +116,11 @@ const Wishlists = (props) => {
                     X
                   </button>
 
-                  <img className="wishlistPic" src={product.picture[0]}></img>
+                  <img
+                    alt="productImage"
+                    className="wishlistPic"
+                    src={product.picture[0]}
+                  ></img>
                   <div className="productsInfo">
                     <div className="productTitle">{product.name}</div>
                     <div>Precio: {product.unitPrice}</div>
@@ -126,6 +131,22 @@ const Wishlists = (props) => {
             </div>
           </li>
         ))}
+      {wishlists.length === 0 && (
+        <div className="defaultResponse">
+          <div>
+            <img
+              alt="worriedFace"
+              src="https://uc-emoji.azureedge.net/orig/5f/42bafd42dafb608ee3d37fc3f50665.png"
+              width="150"
+              height="150"
+            />
+          </div>
+          <h4>
+            ¿Hay algo que estés deseando? ¡Crea tu primera{' '}
+            <strong>wishlist</strong>!
+          </h4>
+        </div>
+      )}
       {inputDesplegable ? (
         <li className="createInput">
           <input
