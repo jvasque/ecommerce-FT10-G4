@@ -7,7 +7,7 @@ import { postPromotion } from '../../redux/PromotionsFormReducer/actionsPromotio
 //import axios from 'axios';
 import swal from 'sweetalert';
 import { makeStyles } from '@material-ui/core/styles';
-import { TextField, Input, InputLabel, MenuItem, Select, Chip } from '@material-ui/core';
+import { TextField } from '@material-ui/core';
 import CancelIcon from '@material-ui/icons/Cancel';
 import {
   getProductName,

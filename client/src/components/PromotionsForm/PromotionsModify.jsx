@@ -1,19 +1,46 @@
 import React from "react";
+import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from "react-router-dom";
 import _PromotionsModify from "../../scss/components/PromotionsForm/_PromotionsModify.scss";
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 
+const grisPrincipal= "#EFEFEF";
 const useStyles = makeStyles((theme) => ({
     root: {
       '& > *': {
         margin: theme.spacing(1),
       },
     },
+    input: {
+    
+      width: "90%",
+      color: "red",
+      marginTop: "15px",
+      marginBottom: "15px"
+      
+    },
+    cancelIcon: {
+      color: "rgb(245, 59, 26)",
+      backgroundColor: grisPrincipal,
+      cursor: "pointer",
+      borderRadius: "50%" 
+    }
   }));
 
 function PromotionsModify(props) {
-    const classes = useStyles();
+  const dispatch = useDispatch();
+  const classes = useStyles();
+  const [input, setInput] = useState({
+    description: '',
+    categoryCheck: [],
+    products: [],
+    discountDate: '',
+    combo: '',
+    days: []
+    
+  });
     console.log(props.history.location.promotion, "MI PROMOCION")
   const {
     active,
