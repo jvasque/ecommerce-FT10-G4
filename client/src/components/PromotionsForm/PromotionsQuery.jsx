@@ -95,6 +95,9 @@ const PromotionsQuery = () => {
 
       <div className="containerFilterOrder">
         <div className="registerFilter" onClick={handleUsers}>
+          <DivText content="Registro" />
+        </div>
+        <div className="registerFilter" onClick={handleUsers}>
           <DivText content="Combo" />
         </div>
         <div className="stateFilter" onClick={() => console.log("promotion")}>

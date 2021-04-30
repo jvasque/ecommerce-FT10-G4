@@ -53,8 +53,9 @@ module.exports = async (req, res) => {
     });
 
     if (promotionFind) {
+        let findProductsCategory = [];
         if(categoryCheck){
-            const findProductsCategory = await Product.findAll({
+            findProductsCategory = await Product.findAll({
                 include: [{
                     model: Category,
                     where: {
@@ -64,23 +65,23 @@ module.exports = async (req, res) => {
                     }
                 }]
             });
-            let prodCatId = findProductsCategory.map((o) => o.dataValues.id)
-            let prodId = [...products, ...prodCatId]
-            let arrRes = [...new Set(prodId)]
-            if(!arrRes) return res.json({error: "There aren't products in those categories id's"});
-        
-            await promotionFind.setProducts(arrRes);
-
-            if(description) await promotionFind.update({description:description});
-            if(combo) await promotionFind.update({combo: combo});
-            if(stringDays) await promotionFind.update({days:stringDays});
-            if(active) await promotionFind.update({active:active});
-            if(discountDate) await promotionFind.update({discountDate:discountDate});
-            if(categoryCheck) await promotionFind.update({categoryCheck:categoryCheck});
-            if(!categoryCheck) await promotionFind.update({categoryCheck:null});
-
-            return res.json(promotionFind);
         }
+        let prodCatId = findProductsCategory.map((o) => o.dataValues.id)
+        let prodId = [...products, ...prodCatId]
+        let arrRes = [...new Set(prodId)]
+        if(!arrRes) return res.json({error: "There aren't products in those categories id's"});
+    
+        await promotionFind.setProducts(arrRes);
+
+        if(description) await promotionFind.update({description:description});
+        if(combo) await promotionFind.update({combo: combo});
+        if(stringDays) await promotionFind.update({days:stringDays});
+        if(active) await promotionFind.update({active:active});
+        if(discountDate) await promotionFind.update({discountDate:discountDate});
+        if(categoryCheck) await promotionFind.update({categoryCheck:categoryCheck});
+        if(!categoryCheck) await promotionFind.update({categoryCheck:null});
+        
+        return res.json(promotionFind);
        
     } else {
         return res.json({error: "an error has occurred"});

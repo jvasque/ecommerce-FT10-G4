@@ -58,6 +58,7 @@ const ManagePromotion = ({ promotion }) => {
   const classes = useStyles();
   const [state, setState] = useState(false);
   const [days, setDays] = useState(promotion.days);
+  const [id, setId] = useState(promotion.id);
   const [discountDate, setDiscountDate] = useState(promotion.discountDate);
   const [combo, setCombo] = useState(promotion.combo);
   const [description, setDescription] = useState(promotion.description);
@@ -184,6 +185,9 @@ const ManagePromotion = ({ promotion }) => {
     return (
       <div className="containerOrder">
         <div className="order inactive">
+          <div className="orderId" onClick={toggle}>
+            <DivText content={id} />
+          </div>
           <div className="orderId" onClick={toggle}>
             <DivText content={combo} />
           </div>
