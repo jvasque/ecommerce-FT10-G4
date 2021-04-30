@@ -11,13 +11,17 @@ module.exports = async (req, res) => {
     province,
     postal,
     address,
+    street,
+    addressNumber,
     userId,
-  } = req.body;  
+  } = req.body;
 
   try {
     let location = await Location.create({
-      label: Math.floor(Math.random()*100000000),
+      label: Math.floor(Math.random() * 100000000),
       address,
+      street,
+      addressNumber,
       country,
       province,
       city: ciudad,
@@ -29,9 +33,8 @@ module.exports = async (req, res) => {
     let user = await User.findByPk(userId);
 
     location.setUser(user);
-    
-    return res.json(location);
 
+    return res.json(location);
   } catch (err) {
     res.json(err);
     return console.log(err);

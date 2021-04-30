@@ -12,26 +12,15 @@
     margin-right: 15%;
     margin-bottom: 5%;
     margin-top: 5%;
-
     h2 {
       margin-bottom: 2%;
     }
-
     div {
       font-weight: 100;
       color: rgb(180, 180, 180);
       font-size: 15px;
     }
-
-    .backButton {
-      color: var(--color-brand);
-      font-family: var(--font-fam);
-      font-weight: 700;
-      font-size: 40px;
-      cursor: pointer;
-    }
   }
-
   form {
     display: flex;
     flex-direction: column;

@@ -14,6 +14,12 @@ module.exports = (sequelize) => {
       unique: true,
       allowNull: false,
     },
+    street: {
+      type: DataTypes.STRING,
+    },
+    addressNumber: {
+      type: DataTypes.STRING,
+    },
     postal: {
       type: DataTypes.INTEGER,
       allowNull: false,

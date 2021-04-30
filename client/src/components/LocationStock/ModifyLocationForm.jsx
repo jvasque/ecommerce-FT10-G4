@@ -3,19 +3,39 @@ import { useSelector, useDispatch } from 'react-redux';
 import swal from 'sweetalert';
 // import { useHistory } from 'react-router';
 // import '../../scss/components/LocationStock/_ModifyLocationForm.scss';
-import {
-  createLocation,
-} from '../../redux/locationReducer/locationActions';
+import { modifyLocation } from '../../redux/locationReducer/locationActions';
 
 function ModifyLocationForm({ closeModal, center }) {
   const dispatch = useDispatch();
-  console.log(center)
+  console.log(center);
+
   const [input, setInput] = useState({
-    street: '',
+    id: center.id,
+    label: center.label,
+    street: center.street,
     city: center.city,
-    addressNumber: '',
-    userId: JSON.parse(localStorage.getItem('user')),
+    addressNumber: center.addressNumber,
   });
+
+  const [memo, setMemo] = useState({
+    street: center.street,
+    city: center.city,
+    addressNumber: center.addressNumber,
+  });
+
+  const [toggleSubmit, setToggleSubmit] = useState(true);
+
+  useEffect(() => {
+    if (
+      memo.street !== input.street ||
+      memo.city !== input.city ||
+      memo.addressNumber !== input.addressNumber
+    ) {
+      setToggleSubmit(false);
+    } else {
+      setToggleSubmit(true);
+    }
+  }, [input]);
 
   const handleInputChange = function (e) {
     setInput({
@@ -24,44 +44,41 @@ function ModifyLocationForm({ closeModal, center }) {
     });
   };
 
-
   const handleSubmit = function (e) {
     e.preventDefault();
     swal({
-        title: `Esta seguro de modificar el centro de distribución?`,
-        icon: "warning",
-        buttons: true,
-        dangerMode: true,
-      })
-      .then(async (willDelete) => {
-        if (willDelete) {
-            //dispatch modify
-            swal('Éxito!',`El centro de distribución ha sido modificado.`, 'success'); 
-            setInput({
-                ...input,
-                street: '',
-                city: '',
-                addressNumber: '',
-            });       
-        } else {
-          swal("La modificación ha sido cancelada!");
-        }
-      })
-   
-    closeModal();
-  };
+      title: `Esta seguro de modificar el centro de distribución?`,
+      icon: 'warning',
+      buttons: true,
+      dangerMode: true,
+    }).then(async (willModify) => {
+      if (willModify) {
+        dispatch(modifyLocation(input));
+        closeModal();
 
+        // swal(
+        //   'Éxito!',
+        //   `El centro de distribución ha sido modificado.`,
+        //   'success'
+        // );
+      } else {
+        closeModal();
+        swal('La modificación ha sido cancelada');
+      }
+    });
+  };
 
   return (
     <div className="container-form">
       <div className="cabecera-form">
-        <button
+        <div
+          className="backButton"
           onClick={() => {
             closeModal();
           }}
         >
-          X
-        </button>
+          {'<'}
+        </div>
         <h2>Modifica la información</h2>
         <div>
           Recuerda que es la dirección desde donde realizas los envíos de tus
@@ -70,6 +87,8 @@ function ModifyLocationForm({ closeModal, center }) {
       </div>
       <form onSubmit={handleSubmit}>
         <div className="inputs">
+          <h3>{`Centro #${input.id}`}</h3>
+
           <input
             required
             name="street"
@@ -87,22 +106,23 @@ function ModifyLocationForm({ closeModal, center }) {
             value={input.addressNumber}
             onChange={handleInputChange}
           />
-          
 
           <input
             required
             name="city"
             className="input"
-            placeholder={center.city}
+            placeholder="Ciudad"
             value={input.city}
             type="text"
             onChange={handleInputChange}
-
           />
-
         </div>
 
-        <button className="ModifyLocationButton" type="submit">
+        <button
+          className="ModifyLocationButton"
+          type="submit"
+          disabled={toggleSubmit}
+        >
           Modificar centro de distribución
         </button>
       </form>

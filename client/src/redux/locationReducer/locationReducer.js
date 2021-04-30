@@ -1,17 +1,16 @@
 import {
-   POST_LOCATION,
-   RESET_LOCATION,
-   POST_LOCATION_ERROR,
-   RESET_ERROR,
-   GET_CENTERS,
-   DELETE_CENTER,
-   MODIFY_CENTER,
-   RESET_DELETED
- } from './locationActions';
+  POST_LOCATION,
+  POST_LOCATION_ERROR,
+  PUT_LOCATION,
+  RESET_LOCATION,
+  GET_CENTERS,
+  DELETE_CENTER,
+} from './locationActions';
 
 const initialState = {
   centersLoaded: [],
   locationCreated: null,
+  locationModified: null,
   error: null,
   centerDeleted: null,
 };
@@ -23,24 +22,22 @@ export default (state = initialState, action) => {
         ...state,
         locationCreated: action.payload,
       };
-    case RESET_LOCATION:
-      return {
-        ...state,
-        locationCreated: null,
-      };
     case POST_LOCATION_ERROR:
       return {
         ...state,
         error: action.payload,
       };
-    case RESET_ERROR:
+    case PUT_LOCATION:
       return {
         ...state,
-        error: null,
+        locationModified: action.payload,
       };
-    case RESET_DELETED:
+    case RESET_LOCATION:
       return {
         ...state,
+        locationCreated: null,
+        locationModified: null,
+        error: null,
         centerDeleted: null,
       };
     case GET_CENTERS:
@@ -52,10 +49,6 @@ export default (state = initialState, action) => {
       return {
         ...state,
         centerDeleted: action.payload,
-      };
-    case MODIFY_CENTER:
-      return {
-        ...state,        
       };
     default:
       return { ...state };

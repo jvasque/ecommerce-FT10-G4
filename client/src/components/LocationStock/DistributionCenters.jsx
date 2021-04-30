@@ -7,15 +7,12 @@ import { makeStyles } from '@material-ui/core/styles';
 import AddLocationOutlinedIcon from '@material-ui/icons/AddLocationOutlined';
 import FormLocation from './FormLocation';
 import '../../scss/components/LocationStock/_DistributionCenters.scss';
-import Swal from "sweetalert2";
-import swal from "sweetalert";
+import Swal from 'sweetalert2';
+import swal from 'sweetalert';
 import {
   getCenters,
-  resetError,
   resetLocation,
-  resetDeleted,
 } from '../../redux/locationReducer/locationActions';
-
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -33,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function DistributionCenters() {
   const classes = useStyles();
-  
+
   const [modal, setModal] = useState(false);
 
   // REDUX
@@ -44,12 +41,13 @@ export default function DistributionCenters() {
   const locationCreated = useSelector(
     (state) => state.locationReducer.locationCreated
   );
-  const error = useSelector(
-    (state) => state.locationReducer.error
+  const locationModified = useSelector(
+    (state) => state.locationReducer.locationModified
   );
+  const error = useSelector((state) => state.locationReducer.error);
   const centerDeleted = useSelector(
     (state) => state.locationReducer.centerDeleted
-);
+  );
 
   // USE EFFECTS
   useEffect(() => {
@@ -57,37 +55,51 @@ export default function DistributionCenters() {
   }, []);
 
   useEffect(() => {
-    if(locationCreated){
+    if (locationCreated) {
       dispatch(getCenters());
       swal('Éxito!', `Se ha creado el nuevo centro de distribución`, 'success');
       dispatch(resetLocation());
-    };
-    return () => {      
     }
+    return () => {};
   }, [locationCreated]);
 
   useEffect(() => {
-    if(error){
-      Swal.fire({
-        icon: "error",
-        title: "Locación no encontrada",
-        text: "Por favor ingrese la información de forma más específica.",
-        confirmButtonColor: "#378a19",
-      });
-      dispatch(resetError());      
-    };      
-    return () => {
+    if (locationModified) {
+      dispatch(getCenters());
+      swal(
+        'Éxito!',
+        `Se han modificado los datos de: Centro #${locationModified.id}`,
+        'success'
+      );
+      dispatch(resetLocation());
     }
+    return () => {};
+  }, [locationModified]);
+
+  useEffect(() => {
+    if (error) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Locación no encontrada',
+        text: 'Por favor ingrese la información de forma más específica.',
+        confirmButtonColor: '#378a19',
+      });
+      dispatch(resetLocation());
+    }
+    return () => {};
   }, [error]);
 
   useEffect(() => {
-    if(centerDeleted){
+    if (centerDeleted) {
       dispatch(getCenters());
-      swal('Éxito!',`El centro de distribución de ${centerDeleted.city} ha sido eliminado.`, 'success');        
-      dispatch(resetDeleted());
-    };
-    return () => {      
+      swal(
+        'Éxito!',
+        `El centro de distribución de ${centerDeleted.city} ha sido eliminado.`,
+        'success'
+      );
+      dispatch(resetLocation());
     }
+    return () => {};
   }, [centerDeleted]);
 
   const handleClose = () => {
@@ -105,12 +117,7 @@ export default function DistributionCenters() {
       </p>
       {centersLoaded.length > 0 &&
         centersLoaded.map((center) => {
-          return (
-            <DistributionCenterCard              
-              center={center}
-              key={center.id}
-            />
-          );
+          return <DistributionCenterCard center={center} key={center.id} />;
         })}
       <div className="addLocation" onClick={addNewLocation}>
         <div className="roomAdd">
@@ -124,7 +131,7 @@ export default function DistributionCenters() {
       </div>
       <Modal open={modal} onClose={handleClose} className={classes.modal}>
         <div className="modalMapContent">
-          {<FormLocation closeModal={handleClose}/>}
+          {<FormLocation closeModal={handleClose} />}
         </div>
       </Modal>
     </div>
