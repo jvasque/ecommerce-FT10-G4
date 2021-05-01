@@ -1,6 +1,6 @@
 //Libraries
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -37,6 +37,7 @@ const PromotionsQuery = () => {
   const classes = useStyles();
 
   const [promotions, setPromotions] = useState([]);
+  const originalPromotions = useRef([]);
   const [sort, setSort] = useState({
     id: false,
     combo: false,
@@ -56,12 +57,14 @@ const PromotionsQuery = () => {
     });
 
     setPromotions(info.data);
+    originalPromotions.current = info.data;
   }
 
   useEffect(() => {
     setPromotions([]);
     getPromotions();
     dispatch(getPromotion())
+    
     Swal.fire({
       title: "ALERTA!",
       text: "En caso de activar la promoción, afectará de manera inmediata y se le enviará un mail de notificación a todos los usuarios. Si desactiva la promoción de igual manera afectará de manera inmediata a todos los productos relacionados pero no se les notificará a los usuarios!",
@@ -74,24 +77,28 @@ const PromotionsQuery = () => {
     let [newPromotions, newSort] = sortById(promotions, sort);
     setSort(newSort);
     setPromotions(newPromotions);
+    originalPromotions.current=newPromotions;
   }
 
   function sortCombo(){
     let [newPromotions, newSort] = sortByCombo(promotions, sort);
     setSort(newSort);
     setPromotions(newPromotions);
+    originalPromotions.current=newPromotions;
   }
 
   function sortDiscountDate(){
     let [newPromotions, newSort] = sortByDiscountDate(promotions, sort);
     setSort(newSort);
     setPromotions(newPromotions);
+    originalPromotions.current=newPromotions;
   }
 
   function sortActive(){
     let [newPromotions, newSort] = sortByActive(promotions, sort);
     setSort(newSort);
     setPromotions(newPromotions);
+    originalPromotions.current=newPromotions;
   }
 
   function stateFilterAfterDelete(idPromotion){
@@ -111,24 +118,33 @@ const PromotionsQuery = () => {
     }))
   }
 
+  function handleInputChange (input) {
+    if(!input){
+      setPromotions(originalPromotions.current);
+    } else { 
+      setPromotions(originalPromotions.current.filter(e => e.combo.toString().includes(input) || e.id.toString().includes(input)))
+    }
+  }
+
   return (
     <div className="containerPromotionsQuery">
       <form className={classes.root} noValidate autoComplete="off">
         <TextField
           id="outlined-basic"
-          label="Buscar combo"
+          label="Buscar por combo/id"
           variant="outlined"
+          onChange={(e)=>handleInputChange(e.target.value)}
         />
-      </form>
-
-      <Button variant="contained" color="primary" onClick={() => dispatch(clearProduct())}>
+      <Button variant="contained" color="primary" style={{ height: "54px",textAlign:"center", justifySelf: "center" }} onClick={() => dispatch(clearProduct())}>
         <NavLink
           to="/admin/promotion/form/create"
-          style={{ textDecoration: "none", color: "#fff" }}
+          style={{ textDecoration: "none", color: "#fff"}}
         >
           Crear
         </NavLink>
       </Button>
+      </form>
+
 
       <div className="containerFilterOrder">
         <div className="registerFilter" onClick={sortId}>
@@ -144,7 +160,7 @@ const PromotionsQuery = () => {
           <DivText content="Estado" />
         </div>
         <div className="updateFilter" onClick={() => console.log("Mail")}>
-          <DivText content="Dias" />
+          <DivText content="Días" />
         </div>
         <div className="updateFilter" onClick={() => console.log("Mail")}>
           <DivText content="Descripción" />
