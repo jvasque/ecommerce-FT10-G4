@@ -38,7 +38,7 @@ function PromotionsModify(props) {
   );
   const dispatch = useDispatch();
   const classes = useStyles();
-  /* console.log(props.history.location.promotion, "MI PROMOCION ANTES") */
+  
 const {
   description,
   categoryCheck,
@@ -49,7 +49,8 @@ const {
   active, 
   id,
 } = props.history.location.promotion;
-
+  
+  const [hasCategory, setHasCategory] = useState([])
   const [promotion, setPromotion] = useState([]);
   const [input, setInput] = useState({
     description: '',
@@ -121,12 +122,20 @@ const {
 
     setPromotion(info.data);
   }
+  
+
   useEffect(() => {
     setPromotion([]);
     getPromotion();
-    
+     
   }, []);
-  console.log(promotion, "MI PROMO ESTADO")
+  
+  console.log(promotion.categoryCheck, "CATEGORICHEEEK!!")
+
+  var handleCheck = function(x){
+    let check = promotion.categoryCheck?.includes(x)
+    return check
+  }
    return (
     <div className="containerPromotionsModify">
       <form className={classes.root}  /* onSubmit={(e) => handleSubmit(e)} */ >
@@ -141,7 +150,6 @@ const {
           name="description"
           value={input.description} 
           type="text"
-          required 
           onChange={handleChange}
           className={classes.input}/>
 
@@ -149,21 +157,22 @@ const {
            <div className="categoryBoxes">
              {category &&
                category.map((c) => {
-                 let check = promotion.categoryCheck?.includes(c.id).toString()
                  return ( 
                    <div key={c.name}>
                      <label>{c.name}</label>
                      <input
                       type="checkbox"
+                      key={c.id}
                       value={c.id}
                       onChange={(e) =>  handleCategoryCheck(e)}
-                      checked = { check }
+                      defaultChecked = { handleCheck(c.id) }
                       
                      />
                    </div>
                  );
                })}
            </div>
+          
 
         
       

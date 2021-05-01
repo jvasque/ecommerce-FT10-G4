@@ -4,6 +4,9 @@ const addCategory = require('./categories/addCategory');
 const allCategories = require('./categories/allCategories');
 const deleteCategory = require('./categories/deleteCategory');
 const putCategory = require('./categories/putCategory');
+
+const queryCategory = require('./categories/queryCategory');
+
 const products = require('./products/product');
 const search = require('./products/search');
 const users = require('./users/user');
@@ -30,6 +33,9 @@ router.use('/addCategory', addCategory);
 router.use('/deleteCategory', deleteCategory);
 router.use('/putCategory', putCategory);
 router.use('/allCategories', allCategories);
+
+router.use('/queryCategory', queryCategory)
+
 router.use('/products', products);
 router.use('/search', search);
 router.use('/users', users);
