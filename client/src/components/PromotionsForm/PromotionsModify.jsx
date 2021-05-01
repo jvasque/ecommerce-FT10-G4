@@ -3,7 +3,7 @@ import axios from "axios";
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from "react-router-dom";
-import _PromotionsModify from "../../scss/components/PromotionsForm/_PromotionsModify.scss";
+import "../../scss/components/PromotionsForm/_PromotionsCreate.scss";
 import { makeStyles } from '@material-ui/core/styles';
 import { TextField } from '@material-ui/core';
 import CancelIcon from '@material-ui/icons/Cancel';
@@ -13,7 +13,10 @@ const grisPrincipal= "#EFEFEF";
 const useStyles = makeStyles((theme) => ({
     root: {
       '& > *': {
-        margin: theme.spacing(1),
+        margin: "40px auto",
+        width: '80%',
+        background: grisPrincipal,
+        color: "black" 
       },
     },
     input: {
@@ -83,6 +86,9 @@ const {
       });
     }
   };
+
+  const dias = ["Domingo", "Lunes", "Martes", "Miércoles",
+                "Jueves", "Viernes", "Sábado"]
  /*  const handleSubmit = function (event) {
     event.preventDefault();
       dispatch(
@@ -121,27 +127,52 @@ const {
     });
 
     setPromotion(info.data);
+    
   }
   
 
   useEffect(() => {
     setPromotion([]);
     getPromotion();
+    setInput({
+      ...input,
+      categoryCheck: categoryCheck,
+      days: days.toString().split("").map((d) => parseInt(d)) 
+    });
      
   }, []);
-  
-  console.log(promotion.categoryCheck, "CATEGORICHEEEK!!")
+ 
+
+  const handleDayCheck = function (e) {
+    if (e.target.checked) {
+      setInput({
+        ...input,
+        days: [...input.days, parseInt(e.target.value)],
+      });
+    } else {
+      setInput({
+        ...input,
+        days: input.days.filter(
+          (day) => day !== parseInt(e.target.value)
+        ),
+      });
+    }
+  };
 
   var handleCheck = function(x){
-    let check = promotion.categoryCheck?.includes(x)
+    let check = categoryCheck?.includes(x)
+    return check
+  }
+  var handleDaysChecked = function(x){
+    let check = days?.includes(x)
     return check
   }
    return (
-    <div className="containerPromotionsModify">
+    <div className="containerPromotionFormCreate">
       <form className={classes.root}  /* onSubmit={(e) => handleSubmit(e)} */ >
        <h1>Modificar promociones</h1>
-       <div className="cont-2">
-
+       <div className="cont-1">
+       <label>nombre</label>
        <TextField 
           id="outlined-basic" 
           label={promotion.description} 
@@ -170,26 +201,57 @@ const {
                      />
                    </div>
                  );
-               })}
+                })}
            </div>
           
 
         
-      
-      <h1>Combo:</h1>
-      <p>{combo}</p>
-      <h1>Días:</h1>
-      <p>{days}</p>
-      {/* <h1>Descripción:</h1>
-      <p>{description}</p> */}
-      <h1>Descuento:</h1>
-      <p>{`${discountDate}%`}</p>
-      <h1>Id:</h1>
-      <p>{id}</p>
-      <h1>Products Id's:</h1>
-      <p>{products?.map(e => `${e.id}, `)}</p>
-      <h1>Categories Id's:</h1>
-      <p>{categoryCheck?.map(e => `${e}, `)}</p>
+                <h1>Products Id's:</h1>
+                <p>{products?.map(e => `${e.id}, `)}</p>
+         <label>Porcentaje de descuento</label>
+         <TextField 
+          id="outlined-basic" 
+          label={promotion.discountDate} 
+          placeholder="Agregue el nuevo porcentaje de descuento..."
+          variant="outlined"
+          name="discountDate" 
+          value={input.discountDate} 
+          type="number"
+          InputProps={{ inputProps: { min: 1, max: 99 } }}
+          onChange={handleChange}
+          className={classes.input}/>     
+     
+          <label>Combo</label>
+          <TextField 
+          id="outlined-basic" 
+          label={promotion.combo} 
+          variant="outlined"
+          name="combo"
+          value={input.combo} 
+          type="number"
+          InputProps={{ inputProps: { min: 0, max: 999999 } }}
+          onChange={handleChange}
+          className={classes.input}/>
+
+          <label className="label">Día/s:</label>
+          <div className="categoryBoxes">
+            {dias &&
+              dias.map((d) => {
+                return (
+                  <div key={d}>
+                    <label>{d}</label>
+                    <input
+                      type="checkbox"
+                      value={dias.indexOf(d)}
+                      onChange={(e) => handleDayCheck(e)}
+                      defaultChecked = { handleDaysChecked(dias.indexOf(d)) }
+                    />
+                  </div>
+                );
+              })}
+          </div>
+
+          <button type="submit">Modificar promocion</button>     
        </div>
       </form>
       <Button variant="contained" color="primary">
