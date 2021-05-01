@@ -9,6 +9,7 @@ function ProductCard({product}){
  
     return (
         <div className='productCard'>
+            {product.promotions?.length > 0 && product.promotions[0].discountDate && <div className="cardDiscount">{product.promotions[0].discountDate}% OFF</div>}
             <Link className='cardLink' to={`/${product.id}`}>
                 <div className='cardPicture'>
                     <img src={product.picture[0]} alt='product'></img>

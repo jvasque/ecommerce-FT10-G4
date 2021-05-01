@@ -1,4 +1,4 @@
-const { Product, Category } = require("../../db.js");
+const { Product, Category, Promotion } = require("../../db.js");
 
 module.exports = async (req, res, next) => {
   var code = req.params.id;
@@ -9,6 +9,9 @@ module.exports = async (req, res, next) => {
     include: {
       model: Category,
     },
+    include: {
+      model: Promotion
+    }
   });
   if (product) {
     res.status(200);
