@@ -28,6 +28,10 @@ passport.use(
         photoURL,
         type,
         status,
+        city,
+        capital,
+        street,
+        number,
       } = user;
       if (status === "disabled") return done(null, false);
       if (status === "banned") return done(null, false);
@@ -41,6 +45,10 @@ passport.use(
         phone,
         type,
         status,
+        city,
+        capital,
+        street,
+        number,
       });
     }
   )

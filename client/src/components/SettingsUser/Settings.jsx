@@ -17,9 +17,13 @@ function Settings() {
         firstName: user.firstName,
         lastName: user.lastName,
         phone:  user.phone,
-        address: user.address
+        city: user.city,
+        capital: user.capital,
+        street: user.street,
+        number: user.number
     })
     
+
 
     const handleChange = (e) => {
         e.preventDefault()
@@ -34,9 +38,14 @@ function Settings() {
         firstName: newUser.firstName,
         lastName: newUser.lastName,
         phone: newUser.phone,
-        address: newUser.address
+        city: newUser.city,
+        capital: newUser.capital,
+        street: newUser.street,
+        number: newUser.number
+
        })
        console.log(newUser);
+     
       dispatch({type:"CHANGEUSER", payload: newUser})
        await Swal.fire({
           icon: 'success',
@@ -44,7 +53,7 @@ function Settings() {
           showConfirmButton: false,
           timer: 1500
         })    
-        const user = await axios.get(`http://localhost:3001/users/user/${userId}`)
+        //const user = await axios.get(`http://localhost:3001/users/user/${userId}`)
         
 
     }
@@ -79,8 +88,20 @@ function Settings() {
                 </div>
             <h2>Domicilio</h2>
                 <div>
-                <label id="2">Dirección</label>
-                <TextField id ="2" name="address" onChange={(e) => handleChange(e)} value={newUser.address} defaultValue={user.address}></TextField>
+                <label id="2">Provincia</label>
+                <TextField id ="3" name="city" onChange={(e) => handleChange(e)} value={newUser.city} defaultValue={user.city}></TextField>
+                </div>
+                <div>
+                <label id="2">Localidad</label>
+                <TextField id ="4" name="capital" onChange={(e) => handleChange(e)} value={newUser.capital} defaultValue={user.capital}></TextField>
+                </div>
+                <div>
+                <label id="2">Calle</label>
+                <TextField id ="5" name="street" onChange={(e) => handleChange(e)} value={newUser.street} defaultValue={user.street}></TextField>
+                </div>
+                <div>
+                <label id="2">Número</label>
+                <TextField type="number" id ="2" name="number" onChange={(e) => handleChange(e)} value={newUser.number} defaultValue={user.number}></TextField>
                 </div>
                 
                <Button className="pass-bu" onClick={changePass}>Cambiar contraseña</Button>

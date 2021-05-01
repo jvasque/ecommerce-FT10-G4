@@ -36,7 +36,7 @@ export default function SendOrder() {
           <div className="totalFilterSend" >
             <DivText content="Valor Total" />
           </div>
-          <div className="totalFilter" >
+          <div className="totalFilterSend" >
             <DivText content="Seguir envio" />
           </div>
         </div>

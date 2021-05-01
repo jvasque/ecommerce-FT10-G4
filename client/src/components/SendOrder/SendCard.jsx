@@ -30,7 +30,7 @@ function SendCart({order}) {
             <p>{order.paymentMethod.type}</p>
             <p>USD${order.totalPrice}</p>
             
-            <Button className="envio" onClick={handleSend}>Envio</Button>
+            <Button  className="envio" onClick={handleSend}>Envio</Button>
             
         </div>
     )

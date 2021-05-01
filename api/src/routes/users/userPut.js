@@ -9,6 +9,9 @@ module.exports = async (req, res, next) => {
     phone,
     address,
     city,
+    capital,
+    street,
+    number,
   } = req.body;
   let code = req.params.id;
   const user = await User.findOne({
@@ -25,6 +28,9 @@ module.exports = async (req, res, next) => {
     if (phone) await user.update({ phone: phone });
     if (address) await user.update({ address: address });
     if (city) await user.update({ city: city });
+    if (capital) await user.update({ capital: capital });
+    if (street) await user.update({ street: street });
+    if (number) await user.update({ number: number });
 
     res.status(200);
     return res.json(user);
