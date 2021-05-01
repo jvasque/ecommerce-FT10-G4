@@ -3,7 +3,7 @@ const { Op } = require('sequelize');
 
 module.exports = async (req, res) => {
     
-    let { products, categoryCheck, description, combo, days, active, discountDate } = req.body;
+    let { products, categoryCheck, description, combo, days, active, discountDate } = req.body.params;
     let id = req.params.id;
     
     //APARTADO DE SOLO MODIFICAR ESTADO
@@ -86,5 +86,5 @@ module.exports = async (req, res) => {
     } else {
         return res.json({error: "an error has occurred"});
     }
-    return;
+    
 };

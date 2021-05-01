@@ -28,6 +28,32 @@ export function postPromotion(
   };
 }
 
+export function putPromotion(
+  description,
+  categoryCheck,
+  products,
+  discountDate,
+  combo,
+  days,
+  active,
+  id
+) {
+  return async function (dispatch) {
+    var json = await axios.put("http://localhost:3001/promotions/" + id, {
+      params: {
+        description,
+        categoryCheck,
+        products,
+        days,
+        active,
+        discountDate,
+        combo,
+      },
+    });
+    return dispatch({ type: PUT_PROMOTIONS, payload: json.data });
+  };
+}
+
 export function getPromotion() {
   return async function (dispatch) {
     const token = localStorage.getItem("token");

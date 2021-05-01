@@ -8,6 +8,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import { TextField } from '@material-ui/core';
 import CancelIcon from '@material-ui/icons/Cancel';
 import Button from '@material-ui/core/Button';
+import { putPromotion } from '../../redux/PromotionsFormReducer/actionsPromotionsForm';
+import swal from 'sweetalert';
 
 const grisPrincipal= "#EFEFEF";
 const useStyles = makeStyles((theme) => ({
@@ -43,11 +45,11 @@ function PromotionsModify(props) {
   const classes = useStyles();
   
 const {
-  description,
+  //description,
   categoryCheck,
   products,
-  discountDate,
-  combo,
+  //discountDate,
+  //combo,
   days,
   active, 
   id,
@@ -89,16 +91,18 @@ const {
 
   const dias = ["Domingo", "Lunes", "Martes", "Miércoles",
                 "Jueves", "Viernes", "Sábado"]
- /*  const handleSubmit = function (event) {
+  const handleSubmit = function (event) {
     event.preventDefault();
       dispatch(
-        postPromotion(
+        putPromotion(
           input.description,
           input.categoryCheck,
           input.products,
           input.discountDate,
           input.combo,
-          input.days
+          input.days,
+          active,
+          id
         )
       );
       setInput({
@@ -110,14 +114,14 @@ const {
         days: []
       });
       
-      setProductRender([]);
-      setName('');
+      /* setProductRender([]);
+      setName(''); */
       let inputs = document.querySelectorAll('input[type=checkbox]');
       inputs.forEach((item) => {
         item.checked = false;
       });
       swal('Éxito!',`La promocion ${input.combo} ha sido modificada`, 'success'); 
-  };  */
+  };  
 
   async function getPromotion() {
     const token = localStorage.getItem("token");
@@ -169,7 +173,7 @@ const {
   }
    return (
     <div className="containerPromotionFormCreate">
-      <form className={classes.root}  /* onSubmit={(e) => handleSubmit(e)} */ >
+      <form className={classes.root}   onSubmit={(e) => handleSubmit(e)}  >
        <h1>Modificar promociones</h1>
        <div className="cont-1">
        <label>nombre</label>
