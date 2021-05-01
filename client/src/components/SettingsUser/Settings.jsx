@@ -1,22 +1,23 @@
 import { Button, FormGroup, TextField } from '@material-ui/core'
 import React,{useEffect, useState} from 'react'
 import "../../scss/components/SettingsUser/_Settings.scss"
-import {useSelector} from "react-redux"
+import {useSelector, useDispatch} from "react-redux"
 import Swal from 'sweetalert2'
 import axios from "axios"
 import { useHistory } from 'react-router'
 
-function Settings({userDb, setUserDb}) {
+function Settings() {
 
     const user = useSelector(state => state.loginReducer.user)
+    const dispatch = useDispatch()
     const history = useHistory()
 
     const userId = localStorage.getItem("user")
     const [newUser, setNewUser] = useState({
-        firstName: userDb.firstName,
-        lastName: userDb.lastName,
-        phone:  userDb.phone,
-        direction: userDb.address
+        firstName: user.firstName,
+        lastName: user.lastName,
+        phone:  user.phone,
+        address: user.address
     })
     
 
@@ -27,14 +28,16 @@ function Settings({userDb, setUserDb}) {
             [e.target.name]: e.target.value
         })
     } 
+    
     const handleSubmit = async () => {
        axios.put(`http://localhost:3001/users/update/${userId}`, {
         firstName: newUser.firstName,
         lastName: newUser.lastName,
         phone: newUser.phone,
-        address: newUser.direction
+        address: newUser.address
        })
-      
+       console.log(newUser);
+      dispatch({type:"CHANGEUSER", payload: newUser})
        await Swal.fire({
           icon: 'success',
           title: 'Tus cambios han sido guardados',
@@ -42,7 +45,7 @@ function Settings({userDb, setUserDb}) {
           timer: 1500
         })    
         const user = await axios.get(`http://localhost:3001/users/user/${userId}`)
-        setUserDb(user.data)
+        
 
     }
      
@@ -72,12 +75,12 @@ function Settings({userDb, setUserDb}) {
                 </div>
                 <div>
                 <label id="2">Telefono</label>
-                <TextField id ="2" name="phone" type="number" onChange={(e) => handleChange(e)} value={newUser.phone}  defaultValue={userDb.phone}></TextField>
+                <TextField id ="2" name="phone" type="number" onChange={(e) => handleChange(e)} value={newUser.phone}  defaultValue={user.phone}></TextField>
                 </div>
             <h2>Domicilio</h2>
                 <div>
                 <label id="2">Dirección</label>
-                <TextField id ="2" name="direction" onChange={(e) => handleChange(e)} value={newUser.direction} defaultValue={userDb.address} placeholder="Gustavo"></TextField>
+                <TextField id ="2" name="address" onChange={(e) => handleChange(e)} value={newUser.address} defaultValue={user.address}></TextField>
                 </div>
                 
                <Button className="pass-bu" onClick={changePass}>Cambiar contraseña</Button>

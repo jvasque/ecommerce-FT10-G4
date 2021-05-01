@@ -12,8 +12,10 @@ function SendCart({order}) {
 
  const handleSend = async () => {
   
-  const apiData =  await axios.get(`http://api.positionstack.com/v1/forward?access_key=3e14f5a7ff0c5901576a04916413ff25&query=${order.address}&country=AR`)
-  const address = [apiData.data.data[0].latitude, apiData.data.data[0].longitude]
+  const apiData =  await axios.get(`https://geocoder.ls.hereapi.com/6.2/geocode.json?apiKey=q25zaLysr0fVTbApPZXE9dwg-PoUlN-n89C5d_o6lhY&searchtext=${order.address}`)
+  let dataRes = apiData.data.Response.View[0].Result[0].Location.DisplayPosition;
+  let address = [dataRes.Latitude, dataRes.Longitude]
+
   localStorage.setItem("address", JSON.stringify(address))
   
    history.push({

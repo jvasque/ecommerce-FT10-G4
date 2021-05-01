@@ -21,7 +21,7 @@ export default function SendOrder() {
      getOrderHistory()
     }, [])
      
-    console.log(orders);
+
 
     return (
         <div>
