@@ -9,6 +9,45 @@ import { Map, Marker , ZoomControl } from "pigeon-maps";
 
 
 
+import firebase from "firebase";
+
+var firebaseConfig = {
+  apiKey: "AIzaSyBg15wobs-aRNI7U841KJVyTqaplHt8eag",
+  authDomain: "agroplace-2bbbc.firebaseapp.com",
+  projectId: "agroplace-2bbbc",
+  storageBucket: "agroplace-2bbbc.appspot.com",
+  messagingSenderId: "27807532405",
+  appId: "1:27807532405:web:6df3dee402bdcb4a5cff3c",
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+const data = {
+  name: "Los Angeles",
+  state: "CA",
+  country: "USA",
+};
+
+
+
+const getPosition = async () => {
+  try {
+    await db.collection("GPS").add({
+      latitud: 300.0,
+      longitud: 2.0,
+    });
+    // 
+    // await db.collection('GPS').doc('datos').get();
+   
+   
+  } catch (error) {
+    console.log("getPosition -> error", error);
+  }
+  //console.log('hi',await db.collection("datos").doc("coordenadas").get());
+};
+ 
+
 const Maps = () => {
 
 
@@ -29,7 +68,7 @@ const Maps = () => {
 
 
   useEffect(() => {
-   
+    getPosition()
   }, [center[0]]);
 
 
@@ -46,8 +85,8 @@ const Maps = () => {
       color={color}
       onClick={() => setHue(hue + 20)}
 
-      //   onBoundsChanged={({center}) => {
-      //  //console.log(center)
+      //   onBoundsChanged={({center,zoom}) => {
+    
 
       //   }}
     >
