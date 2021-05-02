@@ -1,0 +1,24 @@
+.send-container {
+  display: flex;
+  text-align: center;
+  justify-content: flex-start;
+  align-items: center;
+  margin-left: 27px;
+  width: 80%;
+  margin-top: 5px;
+
+  p {
+    width: 20%;
+    height: 100%;
+  }
+  .envio {
+    margin-left: 7%;
+    background-color: var(--color-brand-75);
+    color: white;
+    text-align: center;
+
+    &:hover {
+      background-color: var(--color-brand-75);
+    }
+  }
+}

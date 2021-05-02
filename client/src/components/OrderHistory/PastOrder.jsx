@@ -5,6 +5,7 @@ import DivText from '../ProductCard/DivText'
 import "../../scss/components/OrderHistory/_OrderHistory.scss"
 import '../../scss/components/OrderHistory/_FilterOrderDetail.scss'
 
+
 function PastOrder({order}){
     const [state, setState] = useState(false) 
     const [ordersDetails, setOrdersDetails] = useState(order.orderDetails)  
@@ -88,6 +89,7 @@ function PastOrder({order}){
                         ordersDetails?.map(orderDetail => {
                             return <div className="folding-pannel answer" key={`OrderDetail-${orderDetail.id}-${order.id}`}>
                                         <OrderDetail product={orderDetail}/>
+                                        
                                     </div>
                         })
                     }   

@@ -1,9 +1,9 @@
-const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
-const BearerStrategy = require('passport-http-bearer').Strategy;
-const FacebookStrategy = require('passport-facebook').Strategy;
-const { User } = require('./db.js');
-const jwt = require('jsonwebtoken');
+const passport = require("passport");
+const LocalStrategy = require("passport-local").Strategy;
+const BearerStrategy = require("passport-http-bearer").Strategy;
+const FacebookStrategy = require("passport-facebook").Strategy;
+const { User } = require("./db.js");
+const jwt = require("jsonwebtoken");
 const {
   SECRET_KEY,
   CLIENT_SECRET_FB,
@@ -13,7 +13,7 @@ const {
 
 passport.use(
   new LocalStrategy(
-    { usernameField: 'email', passwordField: 'password', session: false },
+    { usernameField: "email", passwordField: "password", session: false },
     async (email, password, done) => {
       const user = await User.findOne({ where: { email: email } });
       if (!user || !user.correctPassword(password)) return done(null, false);
@@ -23,11 +23,17 @@ passport.use(
         firstName,
         lastName,
         email: userEmail,
+        address,
+        phone,
         photoURL,
         type,
         status,
+        city,
+        capital,
+        street,
+        number,
       } = user;
-      if (status === "disabled") return done(null, false)
+      if (status === "disabled") return done(null, false);
       if (status === "banned") return done(null, false);
       return done(null, {
         id,
@@ -35,8 +41,14 @@ passport.use(
         lastName,
         email: userEmail,
         photoURL,
+        address,
+        phone,
         type,
         status,
+        city,
+        capital,
+        street,
+        number,
       });
     }
   )
@@ -48,7 +60,7 @@ passport.use(
       clientID: CLIENT_ID_FB,
       clientSecret: CLIENT_SECRET_FB,
       callbackURL: CALLBACK_URL_FB,
-      profileFields: ['email', 'name'],
+      profileFields: ["email", "name"],
     },
 
     //     function (accessToken, refreshToken, profile, done) {
@@ -85,7 +97,7 @@ passport.use(
           firstName: profile.name.givenName,
           lastName: profile.name.familyName,
           email: profile.emails[0].value,
-          password: 'Default@12#$',
+          password: "Default@12#$",
         },
       });
       done(err, newUser);
