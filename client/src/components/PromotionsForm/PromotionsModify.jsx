@@ -127,7 +127,8 @@ const {
       inputs.forEach((item) => {
         item.checked = false;
       });
-      swal('Éxito!',`La promocion ${input.combo} ha sido modificada`, 'success'); 
+      swal('Éxito!',`La promocion ${input.combo} ha sido modificada`, 'success')
+      .then(e => window.location.replace("http://localhost:3000/user/info")) 
   };  
 
   async function getPromotion() {
