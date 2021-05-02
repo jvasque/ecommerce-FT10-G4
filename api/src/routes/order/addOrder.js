@@ -24,6 +24,8 @@ module.exports = async (req, res, next) => {
         totalPrice: totalPrice,
       },
     });
+
+    console.log('orderNew', orderCreate)
     
       res.send(orderCreate).status(200);
     

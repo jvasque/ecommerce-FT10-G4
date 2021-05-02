@@ -12,22 +12,24 @@ import ProductFormUpdate from './components/product_form/product_form_update';
 import AllOrders from './components/AllOrders/AllOrders';
 import OrderHistory from './components/OrderHistory/OrderHistory';
 //import "./App.css";
-import Catalog from './components/Catalog/Catalog.jsx';
-import Form from './components/formCategories/Form';
-import './scss/_App.scss';
-import Footer from './components/Footer/Footer';
-import Cart from './components/Cart/Cart';
-import Order from './components/Order/Order';
-import Signup from './components/Signup/Signup';
-import ManageAccount from './components/Admin/ManageAccount';
-import AuthRoute from './components/FrontAuth/AuthRoute';
-import UserScreen from './components/UserScreen/UserScreen';
-import Newsletter from './components/Newsletter/Newsletter';
-import Successful from './components/Mercadopago/Successful';
-import ResetPassword from './components/Admin/ResetPassword';
-import EmailPassword from './components/Admin/EmailPassword';
-import SuccessfulPaypal from './components/Paypal/Successful';
-import MapContainer from './components/LocationStock/DistributionCenters';
+import Catalog from "./components/Catalog/Catalog.jsx";
+import Form from "./components/formCategories/Form";
+import "./scss/_App.scss";
+import Footer from "./components/Footer/Footer";
+import Cart from "./components/Cart/Cart";
+import Order from "./components/Order/Order";
+import Signup from "./components/Signup/Signup";
+import ManageAccount from "./components/Admin/ManageAccount";
+import AuthRoute from "./components/FrontAuth/AuthRoute";
+import UserScreen from "./components/UserScreen/UserScreen";
+import Newsletter from "./components/Newsletter/Newsletter";
+import Successful from "./components/Mercadopago/Successful";
+import ResetPassword from "./components/Admin/ResetPassword";
+import EmailPassword from "./components/Admin/EmailPassword";
+import SuccessfulPaypal from "./components/Paypal/Successful";
+import Maps from "./components/Map/Map";
+
+
 
 function App() {
   return (
