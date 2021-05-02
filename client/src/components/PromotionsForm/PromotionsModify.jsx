@@ -10,6 +10,10 @@ import CancelIcon from '@material-ui/icons/Cancel';
 import Button from '@material-ui/core/Button';
 import { putPromotion } from '../../redux/PromotionsFormReducer/actionsPromotionsForm';
 import swal from 'sweetalert';
+import {
+  getProductName,
+  clearProduct,
+} from '../../redux/reducerProductForms/actionsProductForms';
 
 const grisPrincipal= "#EFEFEF";
 const useStyles = makeStyles((theme) => ({
@@ -41,6 +45,9 @@ function PromotionsModify(props) {
   const category = useSelector(
     (state) => state.categoryFilterReducer.categories
   );
+  const productGlobal = useSelector(
+    (state) => state.reducerProductForms.product
+    );
   const dispatch = useDispatch();
   const classes = useStyles();
   
@@ -54,8 +61,8 @@ const {
   active, 
   id,
 } = props.history.location.promotion;
-  
-  const [hasCategory, setHasCategory] = useState([])
+  const [name, setName] = useState('');
+  const [product, setProduct] = useState([]);
   const [promotion, setPromotion] = useState([]);
   const [input, setInput] = useState({
     description: '',
@@ -97,7 +104,7 @@ const {
         putPromotion(
           input.description,
           input.categoryCheck,
-          input.products,
+          input.products.map((e) => e.id),
           input.discountDate,
           input.combo,
           input.days,
@@ -156,6 +163,13 @@ const {
   }
 
   useEffect(() => {
+    setProduct(productGlobal);
+    async function alerting() {
+      if (productGlobal[0]?.error) {
+        swal('Oops!', 'No existe un producto con ese nombre', 'error');
+      }
+    }
+    alerting();
     setPromotion([]);
     getPromotion();
     setInput({
@@ -164,10 +178,23 @@ const {
       days: days.toString().split("").map((d) => parseInt(d)),
       products: productFilterFromCategory(products, categoryCheck)
     });
-
-  }, []);
+    if(productGlobal[0] && !productGlobal[0]?.error){
+    setInput({
+      ...input,
+      
+      products: [...input.products?.filter((n)=>n.id !== productGlobal[0].id), productGlobal[0]]
+    });
+  }else if(productGlobal[0]?.error){
+    setInput({
+      ...input,
+      
+      products: input.products
+  })
+  }
+  
+  }, [productGlobal, dispatch]);
  
-
+console.log(input.products, "PRODUTO")
   const handleDayCheck = function (e) {
     if (e.target.checked) {
       setInput({
@@ -192,6 +219,23 @@ const {
     let check = days?.includes(x)
     return check
   }
+
+  const handleDeleteProduct = function (e, id) {
+    setInput({
+      ...input,
+      products: input.products.filter(
+        (p) => p.id !== id
+      ),
+    });
+  }
+  //BUSCAR PRODUCTO
+function handleQuery(name, event) {
+  event.preventDefault();
+  if (!name)
+    return swal('Advertencia', 'No lo se Rick, parece vacio', 'warning');
+  dispatch(getProductName(name));
+}
+//FIN BUSCAR PRODUCTO
    return (
     <div className="containerPromotionFormCreate">
       <form className={classes.root}   onSubmit={(e) => handleSubmit(e)}  >
@@ -229,12 +273,32 @@ const {
                 })}
            </div>
           
-
+           <TextField 
+          id="outlined-basic" 
+          label="productos" 
+          placeholder="Agregue los productos a los que aplicará la promoción..."
+          variant="outlined"
+          name="product" 
+          value={name} 
+          onChange={(e) => setName(e.target.value)}
+          className={classes.input}/>
+          <button
+          onClick={(e) => {
+            handleQuery(name, e);
+          }}
+        >
+          Consultar producto
+        </button>
+         {input.products?.length &&
+          input.products?.map((n) => {
+            return (
+              <div className = "ProductName">
+              <p>{n.name}</p> 
+              <CancelIcon  className={classes.cancelIcon} onClick ={(e) =>  handleDeleteProduct(e, n.id)}/>
+              </div>
+            )
+          })}
         
-                <h1>Todos Products Id's:</h1>
-                <p>{products?.map(e => `${e.id}, `)}</p>
-                <h1>Products Id's filtrados:</h1>
-                <p>{input.products?.map(e => `${e.id}, `)}</p>
          <label>Porcentaje de descuento</label>
          <TextField 
           id="outlined-basic" 
