@@ -240,7 +240,7 @@ const ProductDetails = (props) => {
                       productDetail.unitPrice-(
                         productDetail.unitPrice *
                       (productPromotion[0].discountDate / 100))
-                    ).toFixed(2)}`}</h4>
+                    ).toFixed(2)}`} | <i>{`${productPromotion[0].discountDate}% OFF`}</i></h4>
                     <del style={{color: "#aaa", fontSize:"15px"}}>USD${`${productDetail.unitPrice}`}</del>
                   </>
                 )}
