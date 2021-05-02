@@ -5,6 +5,8 @@ import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 import { PostDoubleAuth } from "../../redux/loginReducer/loginActions";
+import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -14,9 +16,26 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     backgroundColor: theme.palette.background.paper,
-    border: "2px solid #000",
+    border: "2px solid  #378A19",
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
+  },
+  root: {
+    "& > *": {
+      margin: theme.spacing(),
+      
+    },
+    "& .MuiTextField-root": {
+      margin: theme.spacing(1),
+      width: "25ch",
+    },
+
+  },
+  buttonsend: {
+    marginLeft: "25px",
+    color: "white",
+    padding: "15px",
+    
   },
 }));
 
@@ -50,7 +69,7 @@ const DoubleAuth = () => {
     //     <button type='submit'>enviar</button>
     //     </form>
     // </div>
-    <div>      
+    <div>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -69,13 +88,22 @@ const DoubleAuth = () => {
               Ingresa tu codigo de autenticación.
             </h2>
             <form onSubmit={secretSubmit}>
-              <input
-                id="transition-modal-description"
+              <TextField
+                id="outlined-password-input"
+                label="Codigo secreto"
                 name="secret"
-                type="number"
+                type="text"
+                autoComplete="current-password"
+                variant="outlined"
                 onChange={secretChange}
-              ></input>
-              <button type="submit">Enviar</button>
+              />
+              {/* <input
+                id="transition-modal-description"                
+                type="text"                
+              ></input> */}
+              <Button type="submit" className={classes.buttonsend} variant="contained" color="primary">
+                Enviar
+              </Button>
             </form>
           </div>
         </Fade>
