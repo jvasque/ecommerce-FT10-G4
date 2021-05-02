@@ -89,7 +89,7 @@ module.exports = async (req, res) => {
             discountDate,
             combo,
             days: stringDays,
-            categoryCheck
+            categoryCheck: categoryCheck || null
         }
     });
 

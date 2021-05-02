@@ -133,7 +133,27 @@ const {
     setPromotion(info.data);
     
   }
-  
+
+  function productFilterFromCategory(products, categoryCheckeds){
+
+    if(!categoryCheckeds) return products;
+    let response=[];
+
+    for (let i = 0; i < products.length; i++) {
+      const categoryProduct = products[i].categories?.map(e => e.id);
+      if(!categoryProduct){
+        response.push(products[i]);
+        continue;
+      }
+      if(categoryProduct){
+        let filtered = categoryProduct.some(item => categoryCheckeds.includes(item));
+
+        if(!filtered) response.push(products[i]);
+        
+      }
+    }
+    return response;
+  }
 
   useEffect(() => {
     setPromotion([]);
@@ -141,9 +161,10 @@ const {
     setInput({
       ...input,
       categoryCheck: categoryCheck,
-      days: days.toString().split("").map((d) => parseInt(d)) 
+      days: days.toString().split("").map((d) => parseInt(d)),
+      products: productFilterFromCategory(products, categoryCheck)
     });
-     
+
   }, []);
  
 
@@ -210,8 +231,10 @@ const {
           
 
         
-                <h1>Products Id's:</h1>
+                <h1>Todos Products Id's:</h1>
                 <p>{products?.map(e => `${e.id}, `)}</p>
+                <h1>Products Id's filtrados:</h1>
+                <p>{input.products?.map(e => `${e.id}, `)}</p>
          <label>Porcentaje de descuento</label>
          <TextField 
           id="outlined-basic" 
