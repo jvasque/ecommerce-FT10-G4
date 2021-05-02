@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-const { Product, Category } = require('../../db.js');
+const { Product, Category, Promotion } = require('../../db.js');
 
 // /products/filter?recommended=[true/false]
 
@@ -13,7 +13,11 @@ module.exports = async (req, res, next) => {
     randomDic = {};
 
   // TOTAL DE PRODUCTOS EN LA DB
-  let totalProducts = await Product.findAndCountAll();
+  let totalProducts = await Product.findAndCountAll({
+    include: {
+      model: Promotion
+    },
+  });
 
   let randomProdIndices = [
     Math.floor(Math.random() * totalProducts.count),
@@ -40,6 +44,9 @@ module.exports = async (req, res, next) => {
         ],
         where: {
           id: { [Sequelize.Op.in]: array },
+        },
+        include: {
+          model: Promotion
         },
         include: {
           model: Category,
@@ -96,6 +103,9 @@ module.exports = async (req, res, next) => {
                 'picture',
                 'score',
               ],
+              include: {
+                model: Promotion
+              },
               through: {
                 attributes: [],
               },
@@ -143,6 +153,9 @@ module.exports = async (req, res, next) => {
         where: {
           id: { [Sequelize.Op.in]: randomProdIndices },
         },
+        include: {
+          model: Promotion
+        }
       });
 
       return res.send(recProducts); // CASE 4

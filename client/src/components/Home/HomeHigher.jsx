@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+//import higherProductsGet from '../../../../api/src/routes/products/higherProductsGet';
 import {
   getHigher,
 } from '../../redux/wishlistReducer/wishlistActions';
@@ -22,7 +23,7 @@ function HomeHigher() {
     <div className="HomeHigher">
       <h2>Productos Destacados</h2>
       <div className="productsHigher">
-        {higherProducts &&
+        {higherProducts && !higherProducts.includes(null) && 
           higherProducts.map((product) => (
             <ProductCard product={product} key={product.id} />
           ))}
