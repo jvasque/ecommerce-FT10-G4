@@ -37,7 +37,6 @@ export default function Signup() {
   const history = useHistory();
   const log = useSelector((state) => state.loginReducer);
   const post = useSelector((state) => state.postUserReducer);
-  
 
   const responseSuccessGoogle = (response) => {
     try {
@@ -87,7 +86,7 @@ export default function Signup() {
   };
 
   ///////
-  
+
   const products = useSelector((state) => state.catalogReducer.products);
   //Session iniciada D:
   const productCart = useSelector((state) => state.cartReducer.cart);
@@ -130,8 +129,6 @@ export default function Signup() {
     e.preventDefault();
     dispatch(LoginAction(input.uname, input.psw));
   };
-
-  
 
   useEffect(() => {
     async function test() {
@@ -270,165 +267,164 @@ export default function Signup() {
       dispatch(SwalBooC());
     }
   }, [post.errorMail]);
- 
 
   return (
     <div className="Signup">
       {!log.isLogin ? (
         <div>
-        <div className={`${show}  container`} id="container">
-          <div className="form-container sign-up-container">
-            <form action="#" onSubmit={userSubmit}>
-              <h1>Crea tu cuenta</h1>
-              <div className="social-container">
-                {/* <a href="#" className="social">
+          <div className={`${show}  container`} id="container">
+            <div className="form-container sign-up-container">
+              <form action="#" onSubmit={userSubmit}>
+                <h1>Crea tu cuenta</h1>
+                <div className="social-container">
+                  {/* <a href="#" className="social">
                   <i className="fab fa-linkedin-in">
                     <FaLinkedinIn />
                   </i>
                 </a> */}
-              </div>
-              <span>o use tu email para registrarte</span>
+                </div>
+                <span>o use tu email para registrarte</span>
 
-              <input
-                type="text"
-                name="firstName"
-                autoComplete="off"
-                placeholder="Nombre..."
-                value={user.firstName}
-                onChange={userChange}
-                required
-              />
-              <input
-                type="text"
-                name="lastName"
-                placeholder="Apellido..."
-                value={user.lastName}
-                onChange={userChange}
-                required 
-              />
-              <input
-                type="text"
-                name="email"
-                placeholder="Email..."
-                value={user.email}
-                onChange={userChange}
-                className={`${errorsCreate.email && "danger"}`}
-              />
-              {errorsCreate.email && (
-                <p className="danger">{errorsCreate.email}</p>
-              )}
-              <input
-                type="password"
-                name="password"
-                placeholder="contraseña"
-                value={user.password}
-                onChange={userChange}
-                className={`${errorsCreate.password && "danger"}`}
-              />
-              {errorsCreate.password && (
-                <p className="danger">{errorsCreate.password}</p>
-              )}
-              <input
-                type="password"
-                name="confirmPassword"
-                placeholder="confirme contraseña..."
-                value={user.confirmPassword}
-                onChange={userChange}
-                className={`${errorsCreate.confirmPassword && "danger"}`}
-              />
-              {errorsCreate.confirmPassword && (
-                <p className="danger">{errorsCreate.confirmPassword}</p>
-              )}
-              <button type="submit">Registrarse</button>
-            </form>
-          </div>
-
-          <div className="form-container sign-in-container">
-            <div className="social-container">
-              <GoogleLogin
-                clientId="926134963488-27qle0uk3423ed3dt2jlkd20rtht66g6.apps.googleusercontent.com"
-                autoLoad={false}
-                type="button"
-                icon={true}
-                buttonText="Google"
-                loginHint="Hola"
-                onSuccess={responseSuccessGoogle}
-                onFailure={responseRejectGoogle}
-                cookiePolicy={"single_host_origin"}
-                className="google-login-button"
-              />
-              <FacebookLogin
-                appId="311325910426887"
-                autoLoad={false}
-                fields="name,email,picture,first_name,last_name"
-                textButton="Facebook"
-                // onClick={componentClicked}
-                cssClass="facebook-login-button"
-                // icon="fa-facebook"
-                icon={<TiSocialFacebookCircular />}
-                callback={responseFacebook}
-              />
+                <input
+                  type="text"
+                  name="firstName"
+                  autoComplete="off"
+                  placeholder="Nombre..."
+                  value={user.firstName}
+                  onChange={userChange}
+                  required
+                />
+                <input
+                  type="text"
+                  name="lastName"
+                  placeholder="Apellido..."
+                  value={user.lastName}
+                  onChange={userChange}
+                  required
+                />
+                <input
+                  type="text"
+                  name="email"
+                  placeholder="Email..."
+                  value={user.email}
+                  onChange={userChange}
+                  className={`${errorsCreate.email && "danger"}`}
+                />
+                {errorsCreate.email && (
+                  <p className="danger">{errorsCreate.email}</p>
+                )}
+                <input
+                  type="password"
+                  name="password"
+                  placeholder="contraseña"
+                  value={user.password}
+                  onChange={userChange}
+                  className={`${errorsCreate.password && "danger"}`}
+                />
+                {errorsCreate.password && (
+                  <p className="danger">{errorsCreate.password}</p>
+                )}
+                <input
+                  type="password"
+                  name="confirmPassword"
+                  placeholder="confirme contraseña..."
+                  value={user.confirmPassword}
+                  onChange={userChange}
+                  className={`${errorsCreate.confirmPassword && "danger"}`}
+                />
+                {errorsCreate.confirmPassword && (
+                  <p className="danger">{errorsCreate.confirmPassword}</p>
+                )}
+                <button type="submit">Registrarse</button>
+              </form>
             </div>
 
-            <form id="loginFrame" action="#" onSubmit={sessionSubmit}>
-              <h1>Inicia Sesion</h1>
-
-              <span>o usa tu cuenta</span>
-              <input
-                className={`${errors.username && "danger"}`}
-                type="text"
-                value={input.uname}
-                name="uname"
-                onChange={sessionChange}
-                placeholder="Email"
-              />
-              {input.uname.length < 8 ||
-                (errors.username && (
-                  <p className="danger">{errors.username}</p>
-                ))}
-              <input
-                className={`${
-                  input.psw.length < 8 || (errors.password && "danger")
-                }`}
-                type="password"
-                value={input.psw}
-                name="psw"
-                onChange={sessionChange}
-                placeholder="Contraseña"
-                required
-              />
-              {input.psw.length < 8 ||
-                (errors.password && (
-                  <p className="danger">{errors.password}</p>
-                ))}
-              <Link to="/forgot/email">olvidaste tu clave?</Link>
-                  
-              <button type="submit">INICIA SESION</button>
-            </form>
-          </div>
-          <div className="overlay-container">
-            <div className="overlay">
-              <div className="overlay-panel overlay-left">
-                <h1>Bienvenido!</h1>
-                <p>Ya tenes una cuenta? Ingresa tu email y contraseña...</p>
-                <button className="ghost" id="signIn" onClick={signInButton}>
-                  Iniciar sesion
-                </button>
+            <div className="form-container sign-in-container">
+              <div className="social-container">
+                <GoogleLogin
+                  clientId="926134963488-27qle0uk3423ed3dt2jlkd20rtht66g6.apps.googleusercontent.com"
+                  autoLoad={false}
+                  type="button"
+                  icon={true}
+                  buttonText="Google"
+                  loginHint="Hola"
+                  onSuccess={responseSuccessGoogle}
+                  onFailure={responseRejectGoogle}
+                  cookiePolicy={"single_host_origin"}
+                  className="google-login-button"
+                />
+                <FacebookLogin
+                  appId="311325910426887"
+                  autoLoad={false}
+                  fields="name,email,picture,first_name,last_name"
+                  textButton="Facebook"
+                  // onClick={componentClicked}
+                  cssClass="facebook-login-button"
+                  // icon="fa-facebook"
+                  icon={<TiSocialFacebookCircular />}
+                  callback={responseFacebook}
+                />
               </div>
-              <div className="overlay-panel overlay-right">
-                <h1>Sembremos futuro, juntos!</h1>
-                <p>
-                  Para seguir conectado con nosotros por favor ingresa tu
-                  informacion personal!
-                </p>
-                <button className="ghost" id="signUp" onClick={signUpButton}>
-                  Registrarse
-                </button>
+
+              <form id="loginFrame" action="#" onSubmit={sessionSubmit}>
+                <h1>Inicia Sesion</h1>
+
+                <span>o usa tu cuenta</span>
+                <input
+                  className={`${errors.username && "danger"}`}
+                  type="text"
+                  value={input.uname}
+                  name="uname"
+                  onChange={sessionChange}
+                  placeholder="Email"
+                />
+                {input.uname.length < 8 ||
+                  (errors.username && (
+                    <p className="danger">{errors.username}</p>
+                  ))}
+                <input
+                  className={`${
+                    input.psw.length < 8 || (errors.password && "danger")
+                  }`}
+                  type="password"
+                  value={input.psw}
+                  name="psw"
+                  onChange={sessionChange}
+                  placeholder="Contraseña"
+                  required
+                />
+                {input.psw.length < 8 ||
+                  (errors.password && (
+                    <p className="danger">{errors.password}</p>
+                  ))}
+                <Link to="/forgot/email">olvidaste tu clave?</Link>
+
+                <button type="submit">INICIA SESION</button>
+              </form>
+            </div>
+            <div className="overlay-container">
+              <div className="overlay">
+                <div className="overlay-panel overlay-left">
+                  <h1>Bienvenido!</h1>
+                  <p>Ya tenes una cuenta? Ingresa tu email y contraseña...</p>
+                  <button className="ghost" id="signIn" onClick={signInButton}>
+                    Iniciar sesion
+                  </button>
+                </div>
+                <div className="overlay-panel overlay-right">
+                  <h1>Sembremos futuro, juntos!</h1>
+                  <p>
+                    Para seguir conectado con nosotros por favor ingresa tu
+                    informacion personal!
+                  </p>
+                  <button className="ghost" id="signUp" onClick={signUpButton}>
+                    Registrarse
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div>{log.isDoubleAuth? (<DoubleAuth />): ''}</div>
+          <div className="doble">{log.isDoubleAuth ? <DoubleAuth /> : ""}</div>
         </div>
       ) : (
         <button onClick={() => dispatch(LogOut())}>Salir</button>

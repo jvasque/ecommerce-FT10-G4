@@ -23,19 +23,16 @@ const useStyles = makeStyles((theme) => ({
   root: {
     "& > *": {
       margin: theme.spacing(),
-      
     },
     "& .MuiTextField-root": {
       margin: theme.spacing(1),
       width: "25ch",
     },
-
   },
   buttonsend: {
     marginLeft: "25px",
     color: "white",
     padding: "15px",
-    
   },
 }));
 
@@ -56,9 +53,10 @@ const DoubleAuth = () => {
   const secretChange = (e) => {
     setSecret(e.target.value);
   };
+
   const secretSubmit = (e) => {
     e.preventDefault();
-    //// enviar a redux
+    // enviar a redux
     dispatch(PostDoubleAuth(secret));
   };
 
@@ -70,6 +68,15 @@ const DoubleAuth = () => {
     //     </form>
     // </div>
     <div>
+      <Button        
+        className={classes.buttonsend}
+        variant="contained"
+        color="primary"
+        onClick={handleOpen}
+      >
+        Verificar codigo
+      </Button>
+
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -93,15 +100,15 @@ const DoubleAuth = () => {
                 label="Codigo secreto"
                 name="secret"
                 type="text"
-                autoComplete="current-password"
                 variant="outlined"
                 onChange={secretChange}
-              />
-              {/* <input
-                id="transition-modal-description"                
-                type="text"                
-              ></input> */}
-              <Button type="submit" className={classes.buttonsend} variant="contained" color="primary">
+              />             
+              <Button
+                type="submit"
+                className={classes.buttonsend}
+                variant="contained"
+                color="primary"
+              >
                 Enviar
               </Button>
             </form>
