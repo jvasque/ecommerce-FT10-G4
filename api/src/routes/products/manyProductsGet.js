@@ -15,7 +15,11 @@ module.exports = async (req, res, next) => {
   // TOTAL DE PRODUCTOS EN LA DB
   let totalProducts = await Product.findAndCountAll({
     include: {
-      model: Promotion
+      model: Promotion,
+      where: {
+        active: true,
+      },
+      required: false 
     },
   });
 
@@ -46,7 +50,11 @@ module.exports = async (req, res, next) => {
           id: { [Sequelize.Op.in]: array },
         },
         include: {
-          model: Promotion
+          model: Promotion,
+          where: {
+            active: true,
+          },
+          required: false 
         },
         include: {
           model: Category,
@@ -104,7 +112,11 @@ module.exports = async (req, res, next) => {
                 'score',
               ],
               include: {
-                model: Promotion
+                model: Promotion,
+                where: {
+                  active: true,
+                },
+                required: false 
               },
               through: {
                 attributes: [],
@@ -154,7 +166,11 @@ module.exports = async (req, res, next) => {
           id: { [Sequelize.Op.in]: randomProdIndices },
         },
         include: {
-          model: Promotion
+          model: Promotion,
+          where: {
+            active: true,
+          },
+          required: false 
         }
       });
 

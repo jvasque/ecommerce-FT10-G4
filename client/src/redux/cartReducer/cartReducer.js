@@ -42,7 +42,7 @@ export default (state = initialState, action) => {
     }
     case TOTAL: {
       let totalP = state.cart.reduce(
-        (acc, e) => acc + e.unitPrice * (e.quantity ? e.quantity : 1) * ((-(havePromotion(e.promotions) - 1)) || 1),
+        (acc, e) => acc + e.unitPrice * (e.quantity ? e.quantity : 1) * ((-(havePromotion(e.promotions) - 1)) || 1), //0.80 - 1  = -0.20 * -1 = 0.20
         0
       );
       totalP = parseFloat(totalP.toFixed(2));

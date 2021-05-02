@@ -1,7 +1,7 @@
 const express = require('express');
 const router = require('express').Router();
 const { Sequelize } = require('sequelize');
-const { Product } = require('../../db.js');
+const { Product, Promotion } = require('../../db.js');
 
 router.use(express.json());
 
@@ -15,7 +15,7 @@ router.get('/', async (req, res, next) => {
         name: { 
           [Sequelize.Op.iLike]: `%${query}%`,
         },
-      }, include: {all: true}
+      }, include: {all: true},
     });
     return data.length > 0
       ? res.json(data)

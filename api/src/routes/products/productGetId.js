@@ -10,7 +10,11 @@ module.exports = async (req, res, next) => {
       model: Category,
     },
     include: {
-      model: Promotion
+      model: Promotion,
+      where: {
+        active: true,
+      },
+      required: false 
     }
   });
   if (product) {

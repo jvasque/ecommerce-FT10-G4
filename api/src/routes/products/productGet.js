@@ -5,9 +5,13 @@ module.exports = async (req, res, next) => {
     let data = await Product.findAll({ include: {
       model: OrderDetail,
       include: Review
-    }, include: {
-      model: Promotion
-    }});
+    }, include: [{
+      model: Promotion,
+      where: {
+        active: true,
+      },
+      required: false 
+    }]});
     return res.json(data);
   } catch (err) {
     res.json(err);

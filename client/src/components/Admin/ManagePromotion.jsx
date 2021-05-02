@@ -109,8 +109,10 @@ const ManagePromotion = ({ promotion, stateFilterAfterDelete, stateActiveUpdate 
       setActive(e.target.value);
       const fetching = await axios.put(
         `http://localhost:3001/promotions/${id}`,
-        {
+        {params:{
+
           active: e.target.value,
+        }
         }
       );
     })();

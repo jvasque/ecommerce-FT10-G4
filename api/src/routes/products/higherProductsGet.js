@@ -6,7 +6,11 @@ const { Product, Promotion } = require('../../db.js');
 module.exports = async (req, res, next) => {
   let totalProducts = await Product.findAndCountAll({
     include: {
-      model: Promotion
+      model: Promotion,
+      where: {
+        active: true,
+      },
+      required: false 
     }
   });
   // console.log(totalProducts)
