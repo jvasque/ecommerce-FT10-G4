@@ -44,8 +44,9 @@ function ProductCard({ product }) {
                         product.unitPrice *
                         (productPromotion[0].discountDate / 100))
                       ).toFixed(2)}`}
+                      discount={product.unitPrice}
                     />
-                    <del style={{color: "#aaa", fontSize:"20px"}}>{`${product.unitPrice}`}</del>
+                    
                   </>
                 )}
             </div>

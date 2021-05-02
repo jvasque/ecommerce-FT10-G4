@@ -12,6 +12,19 @@ const initialState = {
   total: 0,
 };
 
+function havePromotion(e){
+  let productPromotion = e || false;
+  if(!productPromotion) return 1;
+  if (productPromotion) {
+    //Los ordeno para tomar la mejor promocion para el consumidor, la mejor promocion quedara (en caso de existir) en la posicion 0
+    productPromotion = productPromotion.sort(
+      (a, b) => b.discountDate - a.discountDate
+    );
+  }
+
+  return (productPromotion[0]?.discountDate /100) // 0.45, 0.75, etc ...
+}
+
 export default (state = initialState, action) => {
   switch (action.type) {
     case ADD_PRODUCT: {
@@ -29,7 +42,7 @@ export default (state = initialState, action) => {
     }
     case TOTAL: {
       let totalP = state.cart.reduce(
-        (acc, e) => acc + e.unitPrice * (e.quantity ? e.quantity : 1),
+        (acc, e) => acc + e.unitPrice * (e.quantity ? e.quantity : 1) * ((-(havePromotion(e.promotions) - 1)) || 1),
         0
       );
       totalP = parseFloat(totalP.toFixed(2));
