@@ -4,7 +4,7 @@ const { NewsletterOption, User } = require("../../db.js");
 
 const server = require("express").Router();
 
-const enviarEmail = require("../newsletter/email");
+const enviarEmail = require("../auth/sendEmaildoubleAuth");
 
 //Inicia el proceso de suscripción, por el momento no maneja token
 server.post("/email", async (req, res, next) => {

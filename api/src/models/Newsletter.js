@@ -3,38 +3,36 @@ const { DataTypes } = require('sequelize');
 // Luego le injectamos la conexion a sequelize.
 module.exports = (sequelize) => {
   // defino el modelo
-  sequelize.define('newsletterOption', {
-    name: {
+  sequelize.define('newsletter', {
+    //newsLetterEmail
+    type: { //el template elegido.
       type: DataTypes.STRING,
+      allowNull: false
     },
-    active: {
-        type: DataTypes.BOOLEAN,
-        allowNull: false,
-        defaultValue: false,
+    html:{
+      type: DataTypes.TEXT,
+      allowNull: false
     },
-    email: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-          isEmail: true,
-        },
-        unique: true,
-    },
-    boletinesInformativos: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: false,
-    },
-    promociones: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: false,
-    },
-    nuevosLanzamientos: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: false,
-    },
+    // email:{
+    //   type: DataTypes.STRING,
+    //   allowNull: false
+    // },
+    //newsLetterOption
+    // promotion: {
+    //   type: DataTypes.BOOLEAN,
+    //   defaultValue: true
+    // },
+    // information:{
+    //   type: DataTypes.BOOLEAN,
+    //   defaultValue: true
+    // },
+    // daily: {
+    //   type: DataTypes.BOOLEAN,
+    //   defaultValue: true
+    // }
+   
+
+    
   });
 };
 

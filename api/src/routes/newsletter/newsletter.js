@@ -1,20 +1,41 @@
-const express = require('express');
-const router = require('express').Router();
-const passport = require('passport');
-const enviarEmail = require("./email");
+const express = require("express");
+const router = require("express").Router();
+const passport = require("passport");
+const { User, Newsletter } = require("../../db.js");
+const { HandlerEmail } = require("./email/handlerEmail.js");
+const { TestEmail } = require("./email/TestEmail.js");
+const axios = require("axios");
+
+const options = require("./options.js");
+const suscribe = require("./suscribe.js");
+const juice = require("juice");
 
 // Middlewares
 router.use(express.json());
 
 // User routes
-router.get('/', async (req, res) => {
-    const enviar = await enviarEmail.enviar("Carlos", 1230404, "carlossalazarsilva11@gmail.com", "Holi")
-res.json(enviar)
+router.get("/", passport.authenticate("bearer", { session: false }), options);
+router.post(
+  "/suscribe",
+  passport.authenticate("bearer", { session: false }),
+  suscribe
+);
+
+router.post("/prueba", async (req, res) => {
+  const product = await axios.get(`http://localhost:3001/products/${1}`);
+  console.log(product.data.createdAt);
+  const html = TestEmail();
+  const news = await Newsletter.create({
+    type: "prueba",
+    html: html,
+  });
+  await HandlerEmail(html, "carlossalazarsilva11@gmail.com", "prueba");
+  res.status(200).send(juice(news.html));
 });
 
 
-
-
-
-
+router.get("/getEmail", async (req, res) => {
+  const news = await Newsletter.findAll();
+  res.status(200).send(juice(news[0].html));
+});
 module.exports = router;

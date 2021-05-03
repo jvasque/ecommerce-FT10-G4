@@ -12,7 +12,7 @@ const {
   CALLBACK_URL_FB,
   user, pass
 } = process.env;
-const enviarEmail = require("./routes/newsletter/email");
+const sendEmail = require("./routes/auth/sendEmaildoubleAuth");
 
 passport.use(
   new LocalStrategy(
@@ -31,6 +31,10 @@ passport.use(
         adress,
         type,
         status,
+        newsLetter,
+        promotion,
+        off,
+        information
       } = usuario;
 
       if (type.includes("admin")) {
@@ -44,71 +48,7 @@ passport.use(
         await usuario.update({ secretCode: secretNumber });
         await usuario.update({ secretCodeExpires: Date.now() + 15 * 60 * 1000 });
         // mandar el codigo 
-        const enviar = await enviarEmail.enviar(usuario.firstName, secretNumber, usuario.email, `cambio de contraseña, usuario: ${usuario.firstName}`)
-        // let transporter = nodemailer.createTransport({
-        //   service: "Gmail",
-        //   post: 587,
-        //   secure: false,
-        //   auth: {
-        //     user: user,
-        //     pass: pass,
-        //   },
-        // });
-    
-        // let htmlCreator = `<html>
-        // <head>
-        // <style type="text/css">
-        // .containergral {
-        //     align-content: center;
-        //     justify-content: center;
-        //     padding: 30px;
-        //     position: relative;
-        //     background: #EFEFEF;
-        //     }
-        // h1 {
-        //     color: #378A19;
-        // }
-        // .unorderlist {
-        //     display: flex;
-        //     flex-direction: row;
-        //     align-items: center;
-        //     justify-content: center;
-        //     background: #F7F7F7;
-        //     color: #378A19;
-        //   }
-        // .img-card {
-        //     margin-left: 25%;
-        //     margin-top: 20px    
-        // }
-        // </style>
-        // </head>
-        // <body>
-        // <div class="containergral">
-        // <h1>Hola ${usuario.firstName}, hemos generado un codigo para que Ud.</h1>
-        // <h4>Ingrese este codigo ${secretNumber}</h4>
-        // </hr>
-        // <b>Este enlace dura 24 horas.</b>
-      
-        // </hr>
-        // <b>Gracias por confiar en nosotros!</b>
-        // </div>
-        // </body>
-        // </html>
-        // `;
-       
-        // // console.log(typeof htmlCreator)
-        // let mailOptions = {
-        //   from: "AgroPlace <agroplaceofficial@gmail.com>",
-        //   to: usuario.email,
-        //   subject: `cambio de contraseña, usuario: ${usuario.firstName}`,
-        //   html: htmlCreator,
-        // };
-    
-        // transporter.sendMail(mailOptions, (error, info) => {
-        //   if (error) return res.status(500).send(error.message);
-    
-        //   res.status(200).json({ answer: req.body });
-        // });
+        await sendEmail.DobleAuth(usuario.firstName, secretNumber, usuario.email, `cambio de contraseña, usuario: ${usuario.firstName}`)
       }
 
       if (status === "disabled") return done(null, false);
@@ -123,6 +63,10 @@ passport.use(
         adress,
         type,
         status,
+        newsLetter,
+        promotion,
+        off,
+        information
       });
     }
   )

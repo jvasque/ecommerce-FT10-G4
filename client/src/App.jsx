@@ -27,6 +27,7 @@ import Successful from './components/Mercadopago/Successful';
 import ResetPassword from "./components/Admin/ResetPassword";
 import EmailPassword from "./components/Admin/EmailPassword";
 import SuccessfulPaypal from './components/Paypal/Successful';
+import AdminNewsletter from './components/Admin/AdminNewsletter';
 
 
 
@@ -38,19 +39,22 @@ function App() {
       <Route path="/" component={Nav} />
       <Route exact path="/" component={NavBanner} />
       <Route exact path="/" component={Home} />
+     
       <Switch>
         <Route exact path="/product/cart" component={Cart} />
         <Route exact path="/catalog" component={Catalog} />
-
+        
         {/* <Route exact path="/map" component={MapContainer} /> */}
 
         <Route exact path="/user/login" component={Signup} />
         <Route  exact path="/reset/password/:token" component={ResetPassword}/> 
         <Route  exact path="/forgot/email" component={EmailPassword}/> 
         <Route exact path="/order/completada" component={Successful} />
+        <Route exact path="/newsletter/prueba" component={AdminNewsletter}/>
         <Route exact path="/:id" component={ProductDetails} />
         <Route exact path="/order/completada" component={Successful} />
         <Route exact path="/order/complete" component={SuccessfulPaypal} />
+        
         <AuthRoute path="/admin" type="admin">
           <Route exact path="/admin/categories" component={Form} />
           <Route exact path="/admin/orders" component={AllOrders} />

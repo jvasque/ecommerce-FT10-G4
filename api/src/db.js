@@ -46,7 +46,7 @@ const {
   Category,
   Favorite,
   Location,
-  NewsletterOption,
+  Newsletter,
   Order,
   OrderDetail,
   PaymentMethod,
@@ -67,6 +67,7 @@ User.hasMany(Review);
 User.hasOne(Favorite);
 User.hasMany(Product); //MarketPlace functionality
 User.hasMany(Wishlist);
+User.hasMany(Newsletter);
 User.belongsToMany(PaymentMethod, { through: 'user_payment' });
 
 PaymentMethod.hasMany(Order);

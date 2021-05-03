@@ -1,113 +1,147 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import Checkbox from "@material-ui/core/Checkbox";
+import Swal from "sweetalert2";
 import axios from "axios";
+import { makeStyles } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
+import "../../scss/components/Newsletter/_Newsletter.scss";
+import CircularProgress from "@material-ui/core/CircularProgress";
+
+const useStyles = makeStyles((theme) => ({
+  margin: {
+    margin: theme.spacing(1),
+    color: "white",
+  },
+}));
 
 const Newsletter = () => {
-  
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+  const classes = useStyles();
+  const token = localStorage.getItem("token");
+  const [show, setShow] = useState(true);
+  const [news, setNews] = useState({
+    suscribe: false,
+    promotion: false,
+    off: false,
+    information: false,
+  });
+  const [newsE, setNewsE] = useState({
+    suscribe: false,
+    promotion: false,
+    off: false,
+    information: false,
+  });
 
-  const [boletinesInformativos, setBoletinesInformativos] = useState(true);
-  const [promociones, setPromociones] = useState(true);  
-  const [nuevosLanzamientos, setNuevosLanzamientos] = useState(true);  
+  const stateNews = async () => {
+    const info = await axios.get(`http://localhost:3001/newsletter`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    setNews({
+      suscribe: info.data.newsLetter,
+      promotion: info.data.promotion,
+      off: info.data.off,
+      information: info.data.information,
+    });
+    setNewsE({
+      suscribe: info.data.newsLetter,
+      promotion: info.data.promotion,
+      off: info.data.off,
+      information: info.data.information,
+    });
+  };
 
-  const handleSubmit = (e) => {
+  useEffect(() => {
+    stateNews();
+  }, []);
+
+  const newsChange = (e) => {
+    setNews({
+      ...news,
+      [e.target.name]: e.target.checked,
+    });
+  };
+
+  const newsSubmit = async (e) => {
     e.preventDefault();
-
-    if (!boletinesInformativos && !promociones && !nuevosLanzamientos)
-    {
-        alert("Para suscribirte seleccion al menos un tipo de suscripción");
-
-        return;
-    }    
-
-    if (name === "") {
-      alert("Digita el nombre");
-      return;
-    }
-
-    if (email === "") {
-      alert("Digita el email");
-      return;
-    }
-
-    var url = "http://localhost:3001/newsLetter/email";
-
-    let newsLetter = {
-      name: name,
-      email: email,
-      boletinesInformativos: boletinesInformativos,
-      promociones: promociones,
-      nuevosLanzamientos: nuevosLanzamientos
-    };
-
-    axios
-      .post(
-        url,
-        newsLetter,
+    if (
+      newsE.suscribe !== news.suscribe ||
+      newsE.promotion !== news.promotion ||
+      newsE.off !== news.off ||
+      newsE.information !== news.information
+    ) {
+      setShow(false);
+      const info = await axios.post(
+        `http://localhost:3001/newsletter/suscribe`,
+        { news: news },
         {
-          headers: {
-            "Content-Type": "application/json;charset=utf-8",
-          },
+          headers: { Authorization: `Bearer ${token}` },
         }
-      )
-      .then((res) => {
+      );
 
-          alert(res.data.message);
-          
-          setName("");
-          setEmail("");
-
-          setBoletinesInformativos(true);
-          setPromociones(true);
-          setNuevosLanzamientos(true);
-          
+      setShow(true);
+      Swal.fire({
+        text: info.data.message,
+        confirmButtonColor: "#378a19",
       });
-
+    }
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="Nombre"
-        />
-
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Email"
-        />
-        <br />
-
-        <input
-          type="checkbox"
-          onChange={(e) => setBoletinesInformativos(!boletinesInformativos)}
-          defaultChecked={boletinesInformativos}
-        />
-
-        <label>Boletines informativos</label>
-
-        <input
-          type="checkbox"
-          onChange={(e) => setPromociones(!promociones)}
-          defaultChecked={promociones}
-        />
-
-        <label>Promociones</label>
-
-        <input
-          type="checkbox"
-          onChange={(e) => setNuevosLanzamientos(!nuevosLanzamientos)}
-          defaultChecked={nuevosLanzamientos}
-        />
-        <label>Nuevos lanzamientos</label>
-        <br />
-        <button>Suscribirse</button>
-      </form>
+    <div className="container-newsletter">
+      <div className="newsletter-form">
+        {show ? (
+          <form onSubmit={newsSubmit}>
+            <div>
+              <Checkbox
+                color="primary"
+                name="suscribe"
+                checked={news.suscribe}
+                onChange={newsChange}
+              />
+              <label>NewsLetter</label>
+            </div>
+            <div>
+              <Checkbox
+                color="primary"
+                name="promotion"
+                checked={news.promotion}
+                onChange={newsChange}
+              />
+              <label>Promociones</label>
+            </div>
+            <div>
+              <Checkbox
+                color="primary"
+                name="off"
+                checked={news.off}
+                onChange={newsChange}
+              />
+              <label>Ofertas</label>
+            </div>
+            <div>
+              <Checkbox
+                color="primary"
+                name="information"
+                checked={news.information}
+                onChange={newsChange}
+              />
+              <label>Productos</label>
+            </div>
+            <div>
+              <Button
+                type="submit"
+                variant="contained"
+                size="medium"
+                color="primary"
+                className={classes.margin}
+              >
+                Enviar
+              </Button>
+            </div>
+          </form>
+        ) : (
+          <CircularProgress />
+        )}
+      </div>
     </div>
   );
 };

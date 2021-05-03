@@ -70,7 +70,7 @@ const generarHTML = (firstName, secretNumber) => {
 
 //queda generica para ser utilizada desde cualquier parte de la aplicación
 
-exports.enviar = async (name, secret, email, subject, tipo) => {
+exports.DobleAuth = async (name, secret, email, subject, tipo) => {
   const html = generarHTML(name, secret);
 //   const text = htmlToText.fromString(html); //deprecated
 
