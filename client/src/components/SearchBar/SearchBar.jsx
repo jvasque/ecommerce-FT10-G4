@@ -91,7 +91,7 @@ function SearchBar() {
 
       <div className="displayOptions">
         <ul>
-          {options?.map((result, i) =>
+          {options.length > 0 && options?.map((result, i) =>
             result.error ? null : i < 5 ? (
               <li key={i} onClick={(e) => handleClick(result.name, e)}>
                 {result.name}
