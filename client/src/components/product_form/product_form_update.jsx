@@ -67,7 +67,7 @@ function Product_form_update(props) {
     SKU: '',
     price: '',
     description: '',
-    stock: '',
+    /* stock: '', */
     selectCategory: '',
   });
   const [resPic, setResPic] = useState(product[0]?.picture || []);
@@ -144,7 +144,7 @@ function Product_form_update(props) {
 
   const handleSubmit = async function (event) {
     event.preventDefault();
-    let categoriesIds = modifProduct.map((e) => e.id);
+    let categoriesIds = modifProduct?.map((e) => e.id);
 
     dispatch(
       putProduct(
@@ -154,7 +154,7 @@ function Product_form_update(props) {
         input.price,
         input.description,
         resPic,
-        input.stock,
+        /* input.stock, */
         categoriesIds
       )
     );
@@ -165,7 +165,7 @@ function Product_form_update(props) {
       SKU: '',
       price: '',
       description: '',
-      stock: '',
+      /* stock: '', */
     });
     swal(
       'Éxito',
@@ -265,7 +265,7 @@ function Product_form_update(props) {
             ))}
             {progress != 100 && <CircularProgress className="circular" variant="determinate" value={progress}/>}
           </div>
-
+{/* 
           <TextField 
           id="outlined-basic" 
           label={product[0]?.unitsOnStock || ' Stock...'}
@@ -276,7 +276,7 @@ function Product_form_update(props) {
           type="number"
           InputProps={{ inputProps: { min: 0, max: 99999 } }} 
           onChange={handleChange}
-          className={classes.input}/>
+          className={classes.input}/> */}
 
           {modifProduct?.map((x) => (
             <label>
