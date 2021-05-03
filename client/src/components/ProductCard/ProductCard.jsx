@@ -18,7 +18,7 @@ function ProductCard({product}){
                     <div className='cardData'>
                         <div className='cardScore'>
                             <div className='starIcon'>
-                                <ScoreIcon score={product.score}/>
+                                <ScoreIcon score={Math.round(product.score)}/>
                             </div>                        
                         </div>
                         <div className='cardPrice'>

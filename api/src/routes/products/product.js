@@ -15,12 +15,16 @@ const reviewDelete = require('./reviewsDelete');
 const reviewPut = require('./reviewsPut');
 const reviewOrderDetail = require('./reviewOrderDetail');
 const reviewAverage = require('./reviewAverage');
+const cfrs = require('./cfrs')
+const cfrsPredictions = require('./cfrsPredictions')
 const passport = require('passport');
 
 router.use(bodyParser.json());
 
-router.post('/filter', productGetMany);
 router.get('/', productGet);
+router.post('/filter', productGetMany);
+router.get('/featured', cfrs) //ml
+router.get('/featuredPredictions', cfrsPredictions) //ml
 router.get('/higher', productGetHigher);
 router.get('/:id', productGetId);
 router.get('/:id/review', reviewGet);
