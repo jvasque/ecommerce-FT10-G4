@@ -69,6 +69,7 @@ const Newsletter = () => {
       newsE.information !== news.information
     ) {
       setShow(false);
+      console.log(show)
       const info = await axios.post(
         `http://localhost:3001/newsletter/suscribe`,
         { news: news },
@@ -76,7 +77,12 @@ const Newsletter = () => {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-
+      setNewsE({
+        suscribe: news.suscribe,
+        promotion: news.promotion,
+        off: news.off,
+        information: news.information,
+      });
       setShow(true);
       Swal.fire({
         text: info.data.message,
