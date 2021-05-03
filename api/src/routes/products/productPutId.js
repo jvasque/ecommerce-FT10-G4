@@ -6,15 +6,15 @@ module.exports = async (req, res, next) => {
     SKU,
     unitPrice,
     description,
-    unitsOnStock,
+    /* unitsOnStock, */
     picture,
     categoriesIds,
   } = req.body.params;
   let code = req.params.id;
 
   if (unitPrice < 0) return res.json({ error: "unitPrice cannot be negative" });
-  if (unitsOnStock < 0)
-    return res.json({ error: "unitsOnStock cannot be negative" });
+/*   if (unitsOnStock < 0)
+    return res.json({ error: "unitsOnStock cannot be negative" }); */
 
   const product = await Product.findOne({
     where: {
@@ -26,7 +26,7 @@ module.exports = async (req, res, next) => {
     if (SKU) await product.update({ SKU: SKU });
     if (unitPrice) await product.update({ unitPrice: unitPrice });
     if (description) await product.update({ description: description });
-    if (unitsOnStock || unitsOnStock===0) await product.update({ unitsOnStock: unitsOnStock });
+    /* if (unitsOnStock || unitsOnStock===0) await product.update({ unitsOnStock: unitsOnStock }); */
     if (picture) await product.update({ picture: picture });
 
     if (categoriesIds) {

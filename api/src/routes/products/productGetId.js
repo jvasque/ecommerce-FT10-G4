@@ -6,16 +6,16 @@ module.exports = async (req, res, next) => {
     where: {
       id: code,
     },
-    include: {
+    include: [{
       model: Category,
-    },
-    include: {
+    },{
       model: Promotion,
       where: {
         active: true,
       },
       required: false 
-    }
+    }],
+
   });
   if (product) {
     res.status(200);
