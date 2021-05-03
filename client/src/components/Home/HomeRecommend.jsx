@@ -27,7 +27,7 @@ function HomeRecommend() {
     <div className="homeRecommend">
       <h2>Recomendados para vos</h2>
       <div className="productsRecommended">
-        {products &&
+        {products.length &&
           products.map((product) => (
             <ProductCard product={product} key={product.id} />
           ))}
