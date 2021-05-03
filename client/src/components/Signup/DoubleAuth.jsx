@@ -8,6 +8,8 @@ import { PostDoubleAuth } from "../../redux/loginReducer/loginActions";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 
+
+
 const useStyles = makeStyles((theme) => ({
   modal: {
     display: "flex",
@@ -41,7 +43,7 @@ const DoubleAuth = () => {
   const [open, setOpen] = React.useState(true);
 
   const handleOpen = () => {
-    setOpen(true);
+    setOpen(true);    
   };
 
   const handleClose = () => {
@@ -50,14 +52,17 @@ const DoubleAuth = () => {
 
   const [secret, setSecret] = useState("");
   const dispatch = useDispatch();
+  
   const secretChange = (e) => {
     setSecret(e.target.value);
+    
   };
 
   const secretSubmit = (e) => {
     e.preventDefault();
     // enviar a redux
     dispatch(PostDoubleAuth(secret));
+    
   };
 
   return (
@@ -76,7 +81,6 @@ const DoubleAuth = () => {
       >
         Verificar codigo
       </Button>
-
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
