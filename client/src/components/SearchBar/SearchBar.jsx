@@ -11,7 +11,7 @@ import {
 } from '../../redux/searchReducer/searchActions';
 import { setPage } from '../../redux/catalogReducer/catalogActions';
 import { filterCategory } from '../../redux/categoryFilterReducer/categoryFilterActions';
-import useOutsideClick from '../../useOutsideClick';
+// import useOutsideClick from '../../useOutsideClick';
 
 function SearchBar() {
   const [find, setFind] = useState('');
@@ -25,11 +25,30 @@ function SearchBar() {
   const history = useHistory();
   const ref = useRef();
 
+  const useOutsideClick = (ref, callback) => {
+    const handleClick = (e) => {
+      if (ref.current && !ref.current.contains(e.target)) {
+        callback();
+      }
+    };
+  
+    useEffect(() => {
+      if(find !== ''){
+        document.addEventListener('click', handleClick);
+      }else{
+        document.removeEventListener('click', handleClick);
+      }
+  
+      return () => {
+        document.removeEventListener('click', handleClick);
+      };
+    }, [find]);
+  };
+  
   useOutsideClick(ref, () => {
     dispatch(resetOptions());
     setFind('');
   });
-
   useEffect(() => {
     setFind(findQuery);
     return;

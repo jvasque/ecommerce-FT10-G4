@@ -28,8 +28,6 @@ const Paypal = ({ dataClient }) => {
 
   return (
     <div>
-   
-  
       <PayPalButton
         style={{ color: 'blue' }}
         createOrder={(data, actions) => {
@@ -65,8 +63,6 @@ const Paypal = ({ dataClient }) => {
           history.push('/order/complete');
         }}
       />
-     
-     
     </div>
   );
 };

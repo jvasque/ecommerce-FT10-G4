@@ -138,7 +138,7 @@ module.exports = async (req, res, next) => {
         }
 
         // subCase 1: menos de 5
-        while (recProducts.length < 5) {
+        while (recProducts.length < 4) {
           let randomIndex = Math.floor(
             Math.random() * totalProducts.rows.length
           );

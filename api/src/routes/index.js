@@ -21,6 +21,7 @@ const orders = require('../routes/orders/orders');
 const email = require('../routes/emails/email');
 const newsLetter = require('./users/newsLetter.js');
 const promotions = require('./promotions/promotions.js');
+const locations = require('./location/location.js')
 
 
 const router = Router();
@@ -46,6 +47,7 @@ router.use('/auth', server);
 router.use('/cart/checkout', mercadopago);
 router.use('/admin', admin);
 router.use('/email', email);
+router.use('/locations', locations);
 router.use('/newsLetter', newsLetter);
 router.use('/promotions', promotions);
 

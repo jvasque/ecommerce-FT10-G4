@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "axios"
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { GetUsers } from "../../redux/AdminReducer/AdminActions";
