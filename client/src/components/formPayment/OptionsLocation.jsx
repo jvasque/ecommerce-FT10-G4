@@ -76,8 +76,9 @@ export const OptionsLocation = ({ setModalCenters, modalCenters, onCloseModal })
     centers.length !== 0 &&
     centers.map((center) => (
       <FormControlLabel
-        key={center.id}
+        key={center.id}        
         value={center.id}
+        checked={center.id.toString() === value}
         label={` ${center.address} - ${center.city} - ${center.province}`}
         control={<GreenRadio />}
         name={` ${center.address} - ${center.city} - ${center.province}`}
@@ -96,11 +97,12 @@ export const OptionsLocation = ({ setModalCenters, modalCenters, onCloseModal })
         <FormLabel><h1>CENTROS DE DISTRIBUCIÓN</h1></FormLabel>
         <RadioGroup aria-label="centros"  value={value} onChange={handleChange}>
           {radioButtons}
-        </RadioGroup>
+        </RadioGroup> 
         <Button style={buttons}  onClick={onCloseModal}>
           Metodo de Pago
-        </Button>
+        </Button>     
       </FormControl>
+      
     </div>
   );
 };
