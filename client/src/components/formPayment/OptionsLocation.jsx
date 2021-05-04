@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 
 // Material-UI
@@ -32,11 +32,11 @@ const buttons = {
 
 // Component
 export const OptionsLocation = ({
-  setModalCenters,
-  modalCenters,
   onCloseModal,
 }) => {
   const product = useSelector((state) => state.cartReducer.cart);
+  const dispatch = useDispatch()
+
   const [value, setValue] = useState(false);
   const [centers, setCenters] = useState([
     { address: "Enviar a mi dirección", city: "", province: "", id: false },
@@ -75,11 +75,8 @@ export const OptionsLocation = ({
   }
 
   const handleChange = (event) => {
+     dispatch({type:"LOCATION", payload: event.target.value})
     setValue(event.target.value);
-    localStorage.setItem(
-      "distributionNumber",
-      JSON.stringify(event.target.value)
-    );
   };
 
   const radioButtons =

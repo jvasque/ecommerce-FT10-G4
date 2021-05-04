@@ -14,7 +14,7 @@ import {
 } from "@material-ui/core/styles";
 
 // React components
-import Paypal from "../Paypal/Paypal";
+import Paypal from "../paypal/paypal";
 import { OptionsLocation } from "./OptionsLocation";
 
 const useStyles = makeStyles({
@@ -52,7 +52,7 @@ const FormPayment = () => {
   //
   const cart = useSelector((state) => state.cartReducer);
   const idProducts = cart.cart?.map((product) => product.id);
-  const locationId = localStorage.getItem("distributionNumber"); 
+
   //
   const [modal, setModal] = useState(false);
   const [modalCenters, setModalCenters] = useState(false);
@@ -75,30 +75,7 @@ const FormPayment = () => {
     });
   };
 
-  const prueba = async () => {
-    let location = await axios.get(`http://localhost:3001/locations/1`);
-
-    let productsLocation = await location.data?.unitsOnLocations?.filter(
-      (location) => idProducts.includes(location.product.id)
-    );
-
-    for (let i = 0; i < productsLocation.length; i++) {
-      const el = cart.cart.find(
-        (product) => product.id === productsLocation[i].product.id
-      );
-
-      const stock = productsLocation[i].unitsOnStock - el.quantity;
-      console.log(el.id);
-      await axios.put(
-        `http://localhost:3001/locations/unitsonlocation/1`,
-        {
-          productId: el.id,
-          stock: stock,
-        }
-      );
-
-    }
-  };
+  
 
   useEffect(() => {
     input.firstName.length !== 0 &&
@@ -108,7 +85,7 @@ const FormPayment = () => {
     input.phoneNumber.length !== 0
       ? setShowPaypal(true)
       : setShowPaypal(false);
-    prueba();
+    
   }, [showPaypal, input]);
 
   const onSubmit = async (e, value) => {
@@ -157,7 +134,7 @@ const FormPayment = () => {
 
   return (
     <div>
-      <Button onClick={prueba}>sdfasdfasf</Button>
+     
       <div className="buttons">
         <Button style={buttons} onClick={() => setModalCenters(!modalCenters)}>
           Continuar Compra

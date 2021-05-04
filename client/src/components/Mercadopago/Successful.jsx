@@ -13,9 +13,12 @@ export default function Successful({ payment }) {
   const cart = useSelector((state) => state.cartReducer);
   const history = useHistory();
   const token = localStorage.getItem("token");
-  const locationId = localStorage.getItem("distributionNumber");
+
   const productSend = cart.cart?.map((el) => el.name);
   const idProducts = cart.cart?.map((product) => product.id);
+
+  const locationId = cart.location
+
 
   useEffect(() => {
     async function stock() {
@@ -39,11 +42,13 @@ export default function Successful({ payment }) {
         }
       );
 
-      let location = await axios.get(`http://localhost:3001/locations/1`);
+      let location = await axios.get(`http://localhost:3001/locations/${locationId}`);
 
       let productsLocation = await location.data?.unitsOnLocations?.filter(
         (location) => idProducts.includes(location.product.id)
       );
+
+      
   
       for (let i = 0; i < productsLocation.length; i++) {
         const el = cart.cart.find(
@@ -51,11 +56,10 @@ export default function Successful({ payment }) {
         );
   
         const stock = productsLocation[i].unitsOnStock - el.quantity;
-        console.log(stock);
         await axios.put(
           `http://localhost:3001/locations/unitsonlocation/${locationId}`,
           {
-            productId: el.product.id,
+            productId: el.id,
             stock: stock,
           }
         );
