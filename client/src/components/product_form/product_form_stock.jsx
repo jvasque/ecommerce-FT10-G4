@@ -21,6 +21,8 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import Icon from "@material-ui/core/Icon";
 import EditIcon from "@material-ui/icons/Edit";
 import AddBoxIcon from "@material-ui/icons/AddBox";
+import Backdrop from '@material-ui/core/Backdrop';
+import CircularProgress from '@material-ui/core/CircularProgress';
 //action locations
 import { getCenters } from "../../redux/locationReducer/locationActions.js";
 import { getProductName } from "../../redux/reducerProductForms/actionsProductForms";
@@ -43,22 +45,27 @@ const StyledTableRow = withStyles((theme) => ({
   },
 }))(TableRow);
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme)=>({
   table: {
     minWidth: 700,
   },
-});
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    color: '#fff',
+  },
+}));
 
 function Product_form_stock(props) {
   const product = useSelector((state) => state.reducerProductForms.product);
 
   const [locations, setLocations] = useState([]);
   const [addLocationId, setAddLocationId] = useState([]);
+  const [open, setOpen] = useState(false);
 
   const dispatch = useDispatch();
 
   const classes = useStyles();
-
+  
   useEffect(() => {
     dispatch(getProductName(product[0].name));
     dispatch(getCenters());
@@ -89,10 +96,16 @@ function Product_form_stock(props) {
         productId: product[0].id /* unitsOnLocations?.map((e) => e.id) */,
       }
     );
-    Promise.all([dispatch(getProductName(product[0].name))])
+    function later(delay) {
+      return new Promise(function(resolve) {
+          setTimeout(resolve, delay);
+      });
+  }
+    
+    Promise.all([dispatch(getProductName(product[0].name)), handleToggle(), later(1500)])
     .then(e => {
       window.location.reload();
-
+      handleToggle();
     })
     
   };
@@ -108,10 +121,15 @@ function Product_form_stock(props) {
         },
       }
     );
-    Promise.all([dispatch(getProductName(product[0].name))])
+    function later(delay) {
+      return new Promise(function(resolve) {
+          setTimeout(resolve, delay);
+      });
+  }
+    Promise.all([dispatch(getProductName(product[0].name)), handleToggle(), later(1500)])
     .then(e => {
       window.location.reload();
-      
+      handleToggle()
     })
     
   };
@@ -119,6 +137,10 @@ function Product_form_stock(props) {
   const addLocation = (e) => {
     if (!e.target.value) return;
     setAddLocationId([parseInt(e.target.value)]);
+  };
+
+  const handleToggle = () => {
+    setOpen(!open);
   };
 
   return (
@@ -216,6 +238,9 @@ function Product_form_stock(props) {
           Volver
         </NavLink>
       </Button>
+      <Backdrop className={classes.backdrop} open={open} /* onClick={handleClose} */>
+        <CircularProgress color="inherit" />
+      </Backdrop>
     </div>
   );
 }
