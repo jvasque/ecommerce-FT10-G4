@@ -75,32 +75,26 @@ module.exports = async (req, res, next) => {
     let modelTheta = Theta.arraySync()
     let modelY = Ymean.arraySync()
 
-    const workbookX = new ExcelJS.Workbook()
-    workbookX.creator = 'Julian'
-    workbookX.properties.date1904 = true
-    const sheetX = workbookX.addWorksheet('ProductsProfiles')
+    const workbook = new ExcelJS.Workbook()
+    workbook.creator = 'Julian'
+    workbook.properties.date1904 = true
+
+    const sheetX = workbook.addWorksheet('ProductProfiles')
     modelX.forEach(row => {
         sheetX.addRow(row)
     })
-    await workbookX.xlsx.writeFile('src/models/FeaturedProductsProfiles.xlsx')
 
-    const workbookTheta = new ExcelJS.Workbook()
-    workbookTheta.creator = 'Julian'
-    workbookTheta.properties.date1904 = true
-    const sheetTheta = workbookTheta.addWorksheet('UserProfiles')
+    const sheetTheta = workbook.addWorksheet('UserProfiles')
     modelTheta.forEach(row => {
         sheetTheta.addRow(row)
     })
-    await workbookTheta.xlsx.writeFile('src/models/FeaturedUsersProfiles.xlsx')
-
-    const workbookY = new ExcelJS.Workbook()
-    workbookY.creator = 'Julian'
-    workbookY.properties.date1904 = true
-    const sheetY = workbookY.addWorksheet('Ymean')
+    
+    const sheetY = workbook.addWorksheet('Ymean')
     modelY.forEach(row => {
         sheetY.addRow(row)
     })
-    await workbookY.xlsx.writeFile('src/models/FeaturedYmean.xlsx')
+
+    await workbook.xlsx.writeFile('src/models/FeaturedModel.xlsx')
   
     res.send('Ok')
 }

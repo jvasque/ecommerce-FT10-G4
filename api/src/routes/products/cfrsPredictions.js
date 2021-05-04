@@ -5,15 +5,11 @@ const ExcelJS = require('exceljs');
 module.exports = async (req, res, next) => {
     try{
         let userId = parseInt(req.query.userId)
-        const workbookX = new ExcelJS.Workbook();
-        const workbookTheta = new ExcelJS.Workbook();
-        const workbookY = new ExcelJS.Workbook();
-        await workbookX.xlsx.readFile('src/models/FeaturedProductsProfiles.xlsx');
-        await workbookTheta.xlsx.readFile('src/models/FeaturedUsersProfiles.xlsx');
-        await workbookY.xlsx.readFile('src/models/FeaturedYmean.xlsx');
-        const worksheetX = workbookX.getWorksheet(1);
-        const worksheetTheta = workbookTheta.getWorksheet(1);
-        const worksheetY = workbookY.getWorksheet(1);
+        const workbook = new ExcelJS.Workbook();
+        await workbook.xlsx.readFile('src/models/FeaturedModel.xlsx');
+        const worksheetX = workbook.getWorksheet('ProductProfiles');
+        const worksheetTheta = workbook.getWorksheet('UserProfiles');
+        const worksheetY = workbook.getWorksheet('Ymean');
         let X = []
         let Theta = []
         let Y = []
