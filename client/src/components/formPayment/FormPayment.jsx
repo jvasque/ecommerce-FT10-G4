@@ -14,7 +14,7 @@ import {
 } from '@material-ui/core/styles';
 
 // React components
-import Paypal from '../Paypal/Paypal';
+import Paypal from '../paypal/paypal';
 import {OptionsLocation} from './OptionsLocation'
 
 const useStyles = makeStyles({
@@ -128,11 +128,8 @@ const FormPayment = () => {
   return (
     <div>
       <div className="buttons">
-        <Button style={buttons} onClick={onCloseModal}>
-          Metodo de Pago
-        </Button>
         <Button style={buttons} onClick={() => setModalCenters(!modalCenters)}>
-          Escoger centro de distribución
+          Continuar Compra
         </Button>
       </div>
 
@@ -141,6 +138,7 @@ const FormPayment = () => {
           <OptionsLocation
             modalCenters={modalCenters}
             setModalCenters={setModalCenters}
+            onCloseModal={onCloseModal}
           />
         </div>
       </Modal>

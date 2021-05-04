@@ -35,11 +35,13 @@ function Cart() {
   };
 
   const handleNext = () => {
-    
+    if(!validation) {
+     swal("Aviso!", "Ingrese un valor valido", "warning");
+    }else {
       history.push({
         pathname: "/user/cart/order",
       })
-    
+    }
   }
 
   return (

@@ -9,7 +9,7 @@ import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormLabel from "@material-ui/core/FormLabel";
-import { FormControl } from "@material-ui/core";
+import { FormControl, Button } from "@material-ui/core";
 import Swal from "sweetalert2";
 
 // styles
@@ -23,15 +23,22 @@ const GreenRadio = withStyles({
   checked: {},
 })((props) => <Radio color="default" {...props} />);
 
+const buttons = {
+  backgroundColor: "#378a19",
+  color: "#f7f7f7",
+
+  margin: 10,
+};
+
 // Component
-export const OptionsLocation = ({ setModalCenters, modalCenters }) => {
+export const OptionsLocation = ({ setModalCenters, modalCenters, onCloseModal }) => {
   const product = useSelector((state) => state.cartReducer.cart);
   const [checkLocation, setCheckLocation] = useState([]);
-  const [value, setValue] = useState("");
-  const [centers, setCenters] = useState([]);
+  const [value, setValue] = useState(false);
+  const [centers, setCenters] = useState([{address: "Enviar a mi dirección", city: "", province:"", id:false}]);
   async function getLocations() {
     let data = await axios.get(`http://localhost:3001/locations`);
-    setCenters(data.data);
+    //setCenters(data.data);
     const myArray = data.data.map(x => x.unitsOnLocations);
     let idLocations = [];
     for(let i=0; i<myArray.length; i++) {
@@ -53,24 +60,16 @@ export const OptionsLocation = ({ setModalCenters, modalCenters }) => {
         setCheckLocation(idLocations)
       }
      }
-     setCenters(data.data.filter(distribution=>(idLocations.includes(distribution.id))))
+  
+     setCenters([...centers, ...data.data.filter(distribution=>(idLocations.includes(distribution.id)))])
   }
-  const handleChange = (event) => {
-    setValue(event.target.value);
-    setModalCenters(!modalCenters);
-    localStorage.setItem('distributionNumber',JSON.stringify(event.target.value))
-    Swal.fire({
-      icon: "success",
-      title: `Elegiste ${event.target.name}`,
-      showClass: {
-        popup: "animate__animated animate__fadeInDown",
-      },
-      hideClass: {
-        popup: "animate__animated animate__fadeOutUp",
-      },
-    });
-  };
+  
 
+  const handleChange = (event) => {
+       setValue(event.target.value)
+    localStorage.setItem('distributionNumber',JSON.stringify(event.target.value))
+    
+  };
 
 
   const radioButtons =
@@ -78,7 +77,6 @@ export const OptionsLocation = ({ setModalCenters, modalCenters }) => {
     centers.map((center) => (
       <FormControlLabel
         key={center.id}
-        checked={value === center.id.toString()}
         value={center.id}
         label={` ${center.address} - ${center.city} - ${center.province}`}
         control={<GreenRadio />}
@@ -89,15 +87,19 @@ export const OptionsLocation = ({ setModalCenters, modalCenters }) => {
    
   useEffect(() => {
     getLocations();
+  
   }, []);
 
   return (
     <div>
       <FormControl>
         <FormLabel><h1>CENTROS DE DISTRIBUCIÓN</h1></FormLabel>
-        <RadioGroup aria-label="centros" value={value} onChange={handleChange}>
+        <RadioGroup aria-label="centros"  value={value} onChange={handleChange}>
           {radioButtons}
         </RadioGroup>
+        <Button style={buttons}  onClick={onCloseModal}>
+          Metodo de Pago
+        </Button>
       </FormControl>
     </div>
   );

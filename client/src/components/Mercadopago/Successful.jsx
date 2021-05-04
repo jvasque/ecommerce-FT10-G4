@@ -29,7 +29,6 @@ export default function Successful({payment}) {
         
         for(let i =0; i<productSaved.length; i++) {
             const stock = productSaved[i].unitsOnStock - productSaved[i].quantity
-            console.log(stock);
             await axios.put(`http://localhost:3001/products/${productSaved[i].id}`, {
                 params: {
                     unitsOnStock: stock
@@ -40,7 +39,6 @@ export default function Successful({payment}) {
         await axios.post(`http://localhost:3001/email/buy-confirmation`,{products: productSend}, {
            headers: {Authorization: `Bearer ${token}`}
         })
-
    
      }
    

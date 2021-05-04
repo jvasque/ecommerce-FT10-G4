@@ -20,7 +20,7 @@ function ProductCard({ product, setValidation}) {
     if (e.target.value > unitsOnStock) {
       setValidation(false)
       setStock(false);
-      //return setQuantity(1);
+      return setQuantity(1);
     }
     if (e.target.value && e.target.value < 1) {
       setValidation(false)
