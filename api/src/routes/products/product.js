@@ -16,7 +16,9 @@ const reviewPut = require('./reviewsPut');
 const reviewOrderDetail = require('./reviewOrderDetail');
 const reviewAverage = require('./reviewAverage');
 const cfrs = require('./cfrs')
+const cbrs = require('./cbrs')
 const cfrsPredictions = require('./cfrsPredictions')
+const cbrsPredictions = require('./cbrsPredictions')
 const passport = require('passport');
 
 router.use(bodyParser.json());
@@ -26,6 +28,8 @@ router.post('/filter', productGetMany);
 router.get('/featured', cfrs) //ml
 router.get('/featuredPredictions', cfrsPredictions) //ml
 router.get('/higher', productGetHigher);
+router.get('/recommended', cbrs) //ml
+router.get('/recommendedPredictions', cbrsPredictions) //ml
 router.get('/:id', productGetId);
 router.get('/:id/review', reviewGet);
 router.get('/:id/review-order-details/', reviewOrderDetail);

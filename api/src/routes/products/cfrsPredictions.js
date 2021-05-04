@@ -52,7 +52,6 @@ module.exports = async (req, res, next) => {
             Yrow.shift()
             if(Yrow[0] === mean){
                 Y.push(Yrow)
-                console.log('iguales')
             }else{
                 Y.push([mean])
             }

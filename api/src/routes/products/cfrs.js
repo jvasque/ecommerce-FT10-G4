@@ -2,7 +2,7 @@ const { Review, User, Product } = require('../../db.js');
 const tf = require('@tensorflow/tfjs');
 const ExcelJS = require('exceljs');
 const { cosiCostFunc, normalizeRatings } = require('./mlf')
-const fmincg = require('./fmincg')
+const { fmincg } = require('./fmincg')
 
 //featured products
 

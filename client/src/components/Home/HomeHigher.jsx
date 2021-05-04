@@ -3,16 +3,15 @@ import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import {
   getHigher, 
-  getFeatured,
 } from '../../redux/wishlistReducer/wishlistActions';
 import '../../scss/components/Home/_HomeHigher.scss';
 import ProductCard from '../ProductCard/ProductCard';
 
 function HomeHigher() {
   const userId = useSelector((state) => state.loginReducer.user.id);
-  const higher = useSelector((state) => state.wishlistReducer.higher);
+  //const higher = useSelector((state) => state.wishlistReducer.higher);
   const products = useSelector((state) => state.catalogReducer.products);
-  const dispatch = useDispatch();
+  //const dispatch = useDispatch();
 
   //const [higherProducts, setHigherProducts] = useState(higher);
   const [featuredProducts, setFeaturedProducts] = useState([]);

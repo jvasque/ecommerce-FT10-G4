@@ -26,6 +26,27 @@ function cosiCostFunc(params, Y, R, nu, nm, nf, lambda){
     return [J, grad]   
 }
 
+function cosiCostFuncContent(params, Y, R, F, nu, nm, nf, lambda){
+    let X = F
+    let Theta = params.reshape([nu, nf])
+    let J = tf.scalar(0)
+    let Theta_grad = tf.zerosLike(Theta)
+
+    let temp = tf.sub(tf.matMul(X, Theta, false, true), Y) 
+   
+    J = tf.div(tf.sum(tf.mul(tf.pow(temp, 2), R)),2)
+
+    let reg = tf.mul(tf.div(lambda, 2), tf.sum(tf.pow(Theta, 2)) )
+
+    J = tf.add(J, reg)
+    
+    Theta_grad = tf.add(tf.matMul(tf.mul(temp, R), X, true, false), tf.mul(lambda, Theta))
+    
+    let grad = Theta_grad.reshape([nu*nf, 1])
+    
+    return [J, grad]   
+}
+
 function normalizeRatings(nm, Y, R){
     let Ysum = tf.sum(Y, 1).reshape([nm, 1])
     let Rsum = tf.sum(R, 1).reshape([nm, 1])
@@ -35,4 +56,4 @@ function normalizeRatings(nm, Y, R){
     return [Ynorm, Ymean]
 }
 
-module.exports = { cosiCostFunc, normalizeRatings }
+module.exports = { cosiCostFunc, cosiCostFuncContent, normalizeRatings }
