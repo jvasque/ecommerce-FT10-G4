@@ -23,8 +23,8 @@ router.post(
 
 router.post("/prueba", async (req, res) => {
   const product = await axios.get(`http://localhost:3001/products/${1}`);
-  console.log(product.data.createdAt);
-  const html = TestEmail();
+  console.log(product.data);
+  const html = TestEmail('Carlangas');
   const news = await Newsletter.create({
     type: "prueba",
     html: html,

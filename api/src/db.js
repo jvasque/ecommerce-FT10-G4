@@ -67,7 +67,7 @@ User.hasMany(Review);
 User.hasOne(Favorite);
 User.hasMany(Product); //MarketPlace functionality
 User.hasMany(Wishlist);
-User.hasMany(Newsletter);
+User.belongsToMany(Newsletter, { through: "user_newsletter" });
 User.belongsToMany(PaymentMethod, { through: 'user_payment' });
 
 PaymentMethod.hasMany(Order);
@@ -116,6 +116,9 @@ SubCategory.belongsToMany(Product, { through: 'product_subcategory' });
 
 Type.belongsToMany(Product, { through: 'product_type' });
 Brand.belongsToMany(Product, { through: 'product_brand' });
+
+
+Newsletter.belongsToMany(User, { through: "user_newsletter" });
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
