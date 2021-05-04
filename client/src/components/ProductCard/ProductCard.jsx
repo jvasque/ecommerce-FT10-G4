@@ -1,9 +1,9 @@
-import React from 'react'
-import {Link} from 'react-router-dom'
-import '../../scss/components/ProductCard/_ProductCard.scss'
-import DivText from './DivText.jsx'
-import ButtonIconText from './ButtonIconText';
-import ScoreIcon from './ScoreIcon';
+import React from "react";
+import { Link } from "react-router-dom";
+import "../../scss/components/ProductCard/_ProductCard.scss";
+import DivText from "./DivText.jsx";
+import ButtonIconText from "./ButtonIconText";
+import ScoreIcon from "./ScoreIcon";
 
 function ProductCard({product}){
     if(product){
@@ -54,4 +54,5 @@ function ProductCard({product}){
     }    
 } 
 
-export default ProductCard
+
+export default ProductCard;

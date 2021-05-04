@@ -15,6 +15,14 @@
   overflow: hidden;
   margin: auto;
 
+  .cardDiscount{
+    background-color: green;
+    color: #eee;
+    position: absolute;
+    border-radius:  20% 0 0 0;
+    padding: 1px;
+  }
+
   .cardPicture {
     height: 57%;
     margin: 2%;

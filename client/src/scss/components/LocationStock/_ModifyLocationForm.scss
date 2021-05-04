@@ -1,0 +1,94 @@
+.container-form {
+  width: 632px;
+  height: 500px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  outline: none;
+  border: none;
+  .cabecera-form {
+    margin-left: 15%;
+    margin-right: 15%;
+    margin-bottom: 5%;
+    margin-top: 5%;
+    h2 {
+      margin-bottom: 2%;
+    }
+    div {
+      font-weight: 100;
+      color: rgb(180, 180, 180);
+      font-size: 15px;
+    }
+  }
+  form {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    margin-left: 15%;
+    margin-right: 15%;
+    .inputs {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      width: 100%;
+      input {
+        padding: 10px;
+        margin: 10px 0 10px 0;
+        border: none;
+        border-bottom: 1px solid var(--color-dark);
+        outline: none;
+        &:focus {
+          border: none;
+          border-bottom: 2px solid var(--color-brand);
+        }
+      }
+    }
+    button {
+      outline: none;
+      background-color: var(--color-brand);
+      color: white;
+      padding: 10px;
+      border-radius: 7px;
+      border: none;
+      cursor: pointer;
+      margin-top: 10px;
+      &:focus {
+        background-color: var(--color-sun);
+      }
+      &:disabled {
+        opacity: 50%;
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  .displayOptions {
+    color: var(--color-black);
+    ul {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      background-color: var(--color-light);
+      position: absolute;
+      transition: all var(--dur) var(--bez);
+      margin: 1px 0 0 2px;
+      z-index: 999;
+
+      li {
+        width: 18.3vw;
+        margin-left: -40px;
+        text-align: left;
+        padding: 8px 21px 9px 10px;
+        list-style-type: none;
+
+        &:hover {
+          cursor: pointer;
+          border: solid 2px var(--color-brand);
+          font-weight: 600;
+        }
+      }
+    }
+  }
+}

@@ -12,6 +12,8 @@ import loginReducer from './loginReducer/loginReducer'
 import postUserReducer from './postUserReducer/postUserReducer'
 import AdminReducer from './AdminReducer/AdminReducer'
 import paymentIdReducer from './formPaymentReducer/formPaymentReducer'
+import promotionsFormReducer from './PromotionsFormReducer/reducerPromotionsForm';
+import locationReducer from './locationReducer/locationReducer';
 
 const rootReducer = combineReducers({  
   detailReducer,
@@ -27,6 +29,8 @@ const rootReducer = combineReducers({
   postUserReducer,
   AdminReducer,
   paymentIdReducer,
+  promotionsFormReducer,
+  locationReducer,
 });
 
 export default rootReducer;

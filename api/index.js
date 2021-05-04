@@ -30,6 +30,7 @@ const {
   Product,
   Review,
   SubCategory,
+  UnitsOnLocation,
   User,
   Wishlist,
 } = require('./src/db.js');
@@ -249,7 +250,40 @@ conn.sync({ force: true }).then(() => {
       const theReview = await Review.findByPk(i+1)
       theReview.setProduct(theProduct)      
     }
-    
+
+    //Locations and stock creation
+    const userLocation = await User.findByPk(1)
+    const locationsUser = await Location.bulkCreate(locations);
+    await userLocation.addLocations(locationsUser)
+    await UnitsOnLocation.bulkCreate(unitsOnLocations);
+    for(let i = 0; i < unitsOnLocations.length; i++){
+      const units = await UnitsOnLocation.findByPk(i+1)
+      const loc = await Location.findByPk(unitsOnLocations[i].location)      
+      await units.setLocation(loc)
+    }
+
+    //Association to several 
+
+    for(let i = 0; i < 5; i++){
+      const productStock = await Product.findByPk(i+1)
+      const unitsLocProd = await UnitsOnLocation.findAll({
+        where: {
+          id: {
+            [Op.in]: products[i].unitsLocId,
+          },
+        },
+      })
+      await productStock.addUnitsOnLocations(unitsLocProd)
+    }
+
+    //Location everyone else
+    const locDefault = await Location.findByPk(1)
+    for(let i = 5; i < products.length; i++){
+      const prodStock = await Product.findByPk(i+1)
+      const unitsOnStock = await UnitsOnLocation.create({unitsOnStock: products[i].unitsOnStock})
+      await locDefault.addUnitsOnLocations(unitsOnStock)
+      await prodStock.addUnitsOnLocations(unitsOnStock)
+    }
     console.log('Products and categories pre charged');
   });
 });
