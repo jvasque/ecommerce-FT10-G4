@@ -1,28 +1,31 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import axios from 'axios';
-import { Button, TextField } from '@material-ui/core';
-import Typography from '@material-ui/core/Typography';
-import '../../scss/components/FormPayment/_FormPayment.scss';
-import swal from 'sweetalert';
-import { FormControl, Modal, Zoom } from '@material-ui/core';
+import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import axios from "axios";
 
+// Material UI
+import { Button, TextField } from "@material-ui/core";
+import Typography from "@material-ui/core/Typography";
+import swal from "sweetalert";
+import { FormControl, Modal, Zoom } from "@material-ui/core";
 import {
   makeStyles,
   createMuiTheme,
   ThemeProvider,
-} from '@material-ui/core/styles';
-import Paypal from '../Paypal/Paypal';
+} from "@material-ui/core/styles";
+
+// React components
+import Paypal from "../paypal/paypal";
+import { OptionsLocation } from "./OptionsLocation";
 
 const useStyles = makeStyles({
   root: {
-    borderColor: 'green',
+    borderColor: "green",
     fontWeight: 525,
   },
   input: {
     marginTop: 10,
     marginBottom: 10,
-    backgroundColor: 'white',
+    backgroundColor: "white",
     width: 500,
   },
 });
@@ -30,30 +33,42 @@ const useStyles = makeStyles({
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: 'rgba(47, 126, 19, 1)',
+      main: "rgba(47, 126, 19, 1)",
     },
   },
 });
+
+const buttons = {
+  backgroundColor: "#378a19",
+  color: "#f7f7f7",
+
+  margin: 10,
+};
 
 const FormPayment = () => {
   const classes = useStyles();
   const total = useSelector((state) => state.cartReducer.total);
   const user = useSelector((state) => state.loginReducer.user);
+  //
+  const cart = useSelector((state) => state.cartReducer);
+  const idProducts = cart.cart?.map((product) => product.id);
 
+  //
   const [modal, setModal] = useState(false);
+  const [modalCenters, setModalCenters] = useState(false);
   const [input, setInput] = useState({
     firstName: user.firstName,
     lastName: user.lastName,
-    phoneNumber: user.phone,
+    address: "",
+    phoneNumber: 0,
     email: user.email,
     provincia: user.city,
     capital:user.capital,
     numberAddr: user.number,
     street: user.street
   });
-  const [url, setUrl] = useState('');
-  const id = JSON.parse(localStorage.getItem('user'));
-  console.log(input);
+  const [url, setUrl] = useState("");
+  const id = JSON.parse(localStorage.getItem("user"));
 
   const [showPaypal, setShowPaypal] = useState(false);
 
@@ -64,13 +79,17 @@ const FormPayment = () => {
     });
   };
 
+  
+
   useEffect(() => {
     input.firstName.length !== 0 &&
     input.lastName.length !== 0 &&
-    input.email.includes('@') &&
+    input.address.length !== 0 &&
+    input.email.includes("@") &&
     input.phoneNumber.length !== 0
       ? setShowPaypal(true)
       : setShowPaypal(false);
+    
   }, [showPaypal, input]);
 
   const onSubmit = async (e, value) => {
@@ -86,11 +105,11 @@ const FormPayment = () => {
       input.numberAddr.length === 0 
     ) {
       setShowPaypal(false);
-      return swal('Aviso!', 'Todos los datos son obligatorios', 'warning');
+      return swal("Aviso!", "Todos los datos son obligatorios", "warning");
     }
-    if (!input.email.includes('@')) {
+    if (!input.email.includes("@")) {
       setShowPaypal(false);
-      return swal('Aviso!', 'Ingrese un Email valido', 'warning');
+      return swal("Aviso!", "Ingrese un Email valido", "warning");
     }
     await axios.put(`http://localhost:3001/order/orders/${id}`, {
       firstName: input.firstName,
@@ -104,9 +123,9 @@ const FormPayment = () => {
     });
 
     const urlMercadopago = await axios.post(
-      'http://localhost:3001/cart/checkout',
+      "http://localhost:3001/cart/checkout",
       {
-        title: 'Pago AgroPlace',
+        title: "Pago AgroPlace",
         totalPrice: total,
       }
     );
@@ -121,12 +140,23 @@ const FormPayment = () => {
 
   return (
     <div>
-      <Button
-        style={{ backgroundColor: '#378a19', color: '#f7f7f7' }}
-        onClick={onCloseModal}
-      >
-        Metodo de Pago
-      </Button>
+     
+      <div className="buttons">
+        <Button style={buttons} onClick={() => setModalCenters(!modalCenters)}>
+          Continuar Compra
+        </Button>
+      </div>
+
+      <Modal open={modalCenters} onClose={() => setModalCenters(!modalCenters)}>
+        <div className="container-payment">
+          <OptionsLocation
+            modalCenters={modalCenters}
+            setModalCenters={setModalCenters}
+            onCloseModal={onCloseModal}
+          />
+        </div>
+      </Modal>
+
       <Modal open={modal} onClose={onCloseModal}>
         <ThemeProvider theme={theme}>
           <div className="container-payment">
@@ -207,7 +237,7 @@ const FormPayment = () => {
                   type="email"
                   name="email"
                   onChange={handleChange}
-                  label={'Email'}
+                  label={"Email"}
                   variant="filled"
                   className={classes.input}
                   defaultValue={user.email}
@@ -215,14 +245,14 @@ const FormPayment = () => {
 
                 <h3> Total: ${total}</h3>
 
-                <Button onClick={(e) => onSubmit(e, 'mercadopago')}>
+                <Button onClick={(e) => onSubmit(e, "mercadopago")}>
                   Mercadopago
                 </Button>
 
                 {showPaypal ? (
                   <Paypal dataClient={input} />
                 ) : (
-                  <Button onClick={(e) => onSubmit(e, 'paypal')}>Paypal</Button>
+                  <Button onClick={(e) => onSubmit(e, "paypal")}>Paypal</Button>
                 )}
               </FormControl>
             </Zoom>

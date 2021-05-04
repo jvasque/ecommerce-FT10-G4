@@ -8,10 +8,11 @@ import iconReducer from './iconReducer/iconReducer';
 import cartReducer from './cartReducer/cartReducer';
 import reviewsReducer from './reviewsReducer/reducerReviews';
 import wishlistReducer from './wishlistReducer/wishlistReducer';
-import loginReducer from './loginReducer/loginReducer'
-import postUserReducer from './postUserReducer/postUserReducer'
-import AdminReducer from './AdminReducer/AdminReducer'
-import paymentIdReducer from './formPaymentReducer/formPaymentReducer'
+import loginReducer from './loginReducer/loginReducer';
+import postUserReducer from './postUserReducer/postUserReducer';
+import AdminReducer from './AdminReducer/AdminReducer';
+import paymentIdReducer from './formPaymentReducer/formPaymentReducer';
+import locationReducer from './locationReducer/locationReducer';
 
 const rootReducer = combineReducers({  
   detailReducer,
@@ -27,6 +28,7 @@ const rootReducer = combineReducers({
   postUserReducer,
   AdminReducer,
   paymentIdReducer,
+  locationReducer,
 });
 
 export default rootReducer;

@@ -10,6 +10,7 @@ import {
 const initialState = {
   cart: [],
   total: 0,
+  location: "",
 };
 
 export default (state = initialState, action) => {
@@ -60,6 +61,12 @@ export default (state = initialState, action) => {
       return {
         ...state,
         cart: [],
+      };
+    }
+    case "LOCATION": {
+      return {
+        ...state,
+        location: action.payload,
       };
     }
 
