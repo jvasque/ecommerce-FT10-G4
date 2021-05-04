@@ -110,8 +110,21 @@ function Product_form_stock(props) {
         productId: product[0].id /* unitsOnLocations?.map((e) => e.id) */,
       }
     );
-    dispatch(getProductName(product[0].name));
-    window.location.reload();
+
+    function later(delay) {
+      return new Promise(function (resolve) {
+        setTimeout(resolve, delay);
+      });
+    }
+
+    Promise.all([
+      dispatch(getProductName(product[0].name)),
+      handleToggle(),
+      later(1500),
+    ]).then((e) => {
+      window.location.reload();
+      handleToggle();
+    });
   };
 
   const addNewStock = async function (event, id) {
@@ -183,6 +196,7 @@ function Product_form_stock(props) {
   const newStock = (e) => {
     e.preventDefault();
     setModifStock(parseInt(e.target.value));
+  }
     const handleToggle = () => {
       setOpen(!open);
     };
@@ -318,6 +332,6 @@ function Product_form_stock(props) {
       </div>
     );
   };
-}
+
 
 export default Product_form_stock;
