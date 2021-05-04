@@ -30,6 +30,7 @@ const {
   Product,
   Review,
   SubCategory,
+  Timeslots,
   UnitsOnLocation,
   User,
   Wishlist,
@@ -285,5 +286,18 @@ conn.sync({ force: true }).then(() => {
       await prodStock.addUnitsOnLocations(unitsOnStock)
     }
     console.log('Products and categories pre charged');
+
+    // Timeslot
+    const timeslot = await Timeslots.create({
+      date: "2021-05-04",
+      time: 9
+    });
+    const timeUser = await User.findByPk(1);
+    const timeUser2 = await User.findByPk(10);
+    const timeLocation = await Location.findByPk(1);
+
+    timeslot.setLocation(timeLocation);
+    timeslot.setUsers(timeUser);
+    timeslot.setUsers(timeUser2);
   });
 });
