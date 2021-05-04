@@ -48,7 +48,7 @@ passport.use(
         await usuario.update({ secretCode: secretNumber });
         await usuario.update({ secretCodeExpires: Date.now() + 15 * 60 * 1000 });
         // mandar el codigo 
-        await sendEmail.DobleAuth(usuario.firstName, secretNumber, usuario.email, `cambio de contraseña, usuario: ${usuario.firstName}`)
+        await sendEmail.DobleAuth(usuario.firstName, secretNumber, usuario.email, `Clave secreta, usuario: ${usuario.firstName}`)
       }
 
       if (status === "disabled") return done(null, false);
