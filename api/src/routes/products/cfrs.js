@@ -95,6 +95,10 @@ module.exports = async (req, res, next) => {
     })
 
     await workbook.xlsx.writeFile('src/models/FeaturedModel.xlsx')
+
+    let predictions = tf.add(tf.matMul(X, Theta, false, true), Ymean)
+    Y.print()
+    predictions.print()
   
-    res.send('Ok')
+    res.json('Ok')
 }
