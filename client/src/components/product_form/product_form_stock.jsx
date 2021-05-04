@@ -5,7 +5,7 @@ import {
   putProduct,
   clearProduct,
 } from "../../redux/reducerProductForms/actionsProductForms";
-import axios from 'axios';
+import axios from "axios";
 import swal from "sweetalert";
 import "../../scss/components/productsForm/_ProductFormStock.scss";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
@@ -20,10 +20,10 @@ import { Button } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import Icon from "@material-ui/core/Icon";
 import EditIcon from "@material-ui/icons/Edit";
-import AddBoxIcon from '@material-ui/icons/AddBox';
+import AddBoxIcon from "@material-ui/icons/AddBox";
 //action locations
-import { getCenters } from '../../redux/locationReducer/locationActions.js';
-import { getProductName } from '../../redux/reducerProductForms/actionsProductForms';
+import { getCenters } from "../../redux/locationReducer/locationActions.js";
+import { getProductName } from "../../redux/reducerProductForms/actionsProductForms";
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -60,67 +60,98 @@ function Product_form_stock(props) {
   const classes = useStyles();
 
   useEffect(() => {
-    dispatch(getCenters())
+    dispatch(getProductName(product[0].name));
+    dispatch(getCenters());
     if (product[0]?.unitsOnLocations) {
       setLocations(
         product[0].unitsOnLocations?.map((e) => {
           return {
             place: `${e.location.address} - ${e.location.city} - ${e.location.province} - ${e.location.country}`,
             stock: e.unitsOnStock,
-            id: e.location.id
+            id: e.location.id,
+            productId: e.product.id,
           };
         })
       );
     }
   }, [dispatch]);
-  const locationsLoaded= useSelector((state) => state.locationReducer.centersLoaded);
-  let ids = locations.map((e)=> e.id)
-  let locationsSelect = locationsLoaded.filter((e)=> !ids.includes(e.id) && e )
-  
+  const locationsLoaded = useSelector(
+    (state) => state.locationReducer.centersLoaded
+  );
+  let ids = locations.map((e) => e.id);
+  let locationsSelect = locationsLoaded.filter((e) => !ids.includes(e.id) && e);
+
   const addProduct = async function (event) {
     event.preventDefault();
-    const res = await axios.put('http://localhost:3001/locations/addproduct/' + addLocationId[0], {
-      productId: product[0].id /* unitsOnLocations?.map((e) => e.id) */
-      });
-    dispatch(getProductName(product[0].name));
-    window.location.reload();
-  }
+    const res = await axios.put(
+      "http://localhost:3001/locations/addproduct/" + addLocationId[0],
+      {
+        productId: product[0].id /* unitsOnLocations?.map((e) => e.id) */,
+      }
+    );
+    Promise.all([dispatch(getProductName(product[0].name))])
+    .then(e => {
+      window.location.reload();
 
-  
+    })
+    
+  };
+
+  const removeProduct = async function (event, locationId, productId) {
+    event.preventDefault();
+
+    const res = await axios.delete(
+      "http://localhost:3001/locations/removeproduct/" + locationId,
+      {
+        data: {
+          productId: productId,
+        },
+      }
+    );
+    Promise.all([dispatch(getProductName(product[0].name))])
+    .then(e => {
+      window.location.reload();
+      
+    })
+    
+  };
+
   const addLocation = (e) => {
     if (!e.target.value) return;
     setAddLocationId([parseInt(e.target.value)]);
   };
-  
+
   return (
     <div className="containerProdFormStock">
       <h1>Administración del stock</h1>
       <div>
-      <select onChange={(e) => addLocation(e)}>
-      <option value=""> seleccionar ...</option>
-        {locationsSelect?.map((e)=> {
-           return (
-            <option key={e.id} 
-              name={`${e.address} - 
+        <select onChange={(e) => addLocation(e)}>
+          <option value=""> seleccionar ...</option>
+          {locationsSelect?.map((e) => {
+            return (
+              <option
+                key={e.id}
+                name={`${e.address} - 
               ${e.city} - 
               ${e.province} - 
-              ${e.country}`} 
-              value={e.id}>
-              {`${e.address} - ${e.city} - 
+              ${e.country}`}
+                value={e.id}
+              >
+                {`${e.address} - ${e.city} - 
               ${e.province} - ${e.country}`}
-            </option>
-          );
-        })}
-      </select>
-      <Button
-       variant="contained"
-       color="primary"
-       className={classes.button}
-       startIcon={<AddBoxIcon />}
-       onClick={(e)=>addProduct(e)}
-      >
-      Agregar centro de distribución
-      </Button>
+              </option>
+            );
+          })}
+        </select>
+        <Button
+          variant="contained"
+          color="primary"
+          className={classes.button}
+          startIcon={<AddBoxIcon />}
+          onClick={(e) => addProduct(e)}
+        >
+          Agregar centro de distribución
+        </Button>
       </div>
       <TableContainer component={Paper} style={{ width: "85%" }}>
         <Table className={classes.table} aria-label="customized table">
@@ -146,6 +177,9 @@ function Product_form_stock(props) {
                         color="primary"
                         className={classes.button}
                         startIcon={<DeleteIcon />}
+                        onClick={(event) =>
+                          removeProduct(event, e.id, e.productId)
+                        }
                       >
                         Eliminar
                       </Button>
