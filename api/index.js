@@ -290,7 +290,8 @@ conn.sync({ force: true }).then(() => {
     // Timeslot
     const timeslot = await Timeslots.create({
       date: "2021-05-04",
-      time: 9
+      time: 9,
+      capacity: 0,
     });
     const timeUser = await User.findByPk(1);
     const timeUser2 = await User.findByPk(10);
