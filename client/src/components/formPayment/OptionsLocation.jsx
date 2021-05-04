@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {useSelector} from 'react-redux'
+import {useSelector, useDispatch} from 'react-redux'
 import axios from "axios";
 
 // Material-UI
@@ -31,11 +31,14 @@ const buttons = {
 };
 
 // Component
-export const OptionsLocation = ({ setModalCenters, modalCenters, onCloseModal }) => {
+export const OptionsLocation = ({ onCloseModal }) => {
   const product = useSelector((state) => state.cartReducer.cart);
+  const dispatch = useDispatch()
+
   const [checkLocation, setCheckLocation] = useState([]);
-  const [value, setValue] = useState(false);
+  const [value, setValue] = useState();
   const [centers, setCenters] = useState([{address: "Enviar a mi dirección", city: "", province:"", id:false}]);
+
   async function getLocations() {
     let data = await axios.get(`http://localhost:3001/locations`);
     //setCenters(data.data);
@@ -67,7 +70,8 @@ export const OptionsLocation = ({ setModalCenters, modalCenters, onCloseModal })
 
   const handleChange = (event) => {
        setValue(event.target.value)
-    localStorage.setItem('distributionNumber',JSON.stringify(event.target.value))
+       dispatch({type:"LOCATION", payload:event.target.value})
+    //localStorage.setItem('distributionNumber',JSON.stringify(event.target.value))
     
   };
 
@@ -98,7 +102,7 @@ export const OptionsLocation = ({ setModalCenters, modalCenters, onCloseModal })
         <RadioGroup aria-label="centros"  value={value} onChange={handleChange}>
           {radioButtons}
         </RadioGroup> 
-        <Button style={buttons}  onClick={onCloseModal}>
+        <Button style={buttons}  onClick={value && onCloseModal}>
           Metodo de Pago
         </Button>     
       </FormControl>
