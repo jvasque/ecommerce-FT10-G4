@@ -5,7 +5,7 @@ import {
   putProduct,
   clearProduct,
 } from "../../redux/reducerProductForms/actionsProductForms";
-import axios from 'axios';
+import axios from "axios";
 import swal from "sweetalert";
 import "../../scss/components/productsForm/_ProductFormStock.scss";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
@@ -17,13 +17,14 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import { Button } from "@material-ui/core";
+import Modal from "@material-ui/core/Modal";
 import DeleteIcon from "@material-ui/icons/Delete";
 import Icon from "@material-ui/core/Icon";
 import EditIcon from "@material-ui/icons/Edit";
-import AddBoxIcon from '@material-ui/icons/AddBox';
+import AddBoxIcon from "@material-ui/icons/AddBox";
 //action locations
-import { getCenters } from '../../redux/locationReducer/locationActions.js';
-import { getProductName } from '../../redux/reducerProductForms/actionsProductForms';
+import { getCenters } from "../../redux/locationReducer/locationActions.js";
+import { getProductName } from "../../redux/reducerProductForms/actionsProductForms";
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -43,84 +44,130 @@ const StyledTableRow = withStyles((theme) => ({
   },
 }))(TableRow);
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   table: {
     minWidth: 700,
   },
-});
+  modal: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  paper: {
+    backgroundColor: theme.palette.background.paper,
+    border: "2px solid #000",
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+  },
+}));
 
 function Product_form_stock(props) {
   const product = useSelector((state) => state.reducerProductForms.product);
 
   const [locations, setLocations] = useState([]);
   const [addLocationId, setAddLocationId] = useState([]);
+  const [openModal, setOpenModal] = useState(false);
+  const [modifStock, setModifStock] = useState([]);
 
   const dispatch = useDispatch();
 
   const classes = useStyles();
 
   useEffect(() => {
-    dispatch(getCenters())
+    dispatch(getCenters());
     if (product[0]?.unitsOnLocations) {
       setLocations(
         product[0].unitsOnLocations?.map((e) => {
           return {
             place: `${e.location.address} - ${e.location.city} - ${e.location.province} - ${e.location.country}`,
             stock: e.unitsOnStock,
-            id: e.location.id
+            id: e.location.id,
           };
         })
       );
     }
   }, [dispatch]);
-  const locationsLoaded= useSelector((state) => state.locationReducer.centersLoaded);
-  let ids = locations.map((e)=> e.id)
-  let locationsSelect = locationsLoaded.filter((e)=> !ids.includes(e.id) && e )
-  
+  const locationsLoaded = useSelector(
+    (state) => state.locationReducer.centersLoaded
+  );
+  let ids = locations.map((e) => e.id);
+  let locationsSelect = locationsLoaded.filter((e) => !ids.includes(e.id) && e);
+
   const addProduct = async function (event) {
     event.preventDefault();
-    const res = await axios.put('http://localhost:3001/locations/addproduct/' + addLocationId[0], {
-      productId: product[0].id /* unitsOnLocations?.map((e) => e.id) */
-      });
+    const res = await axios.put(
+      "http://localhost:3001/locations/addproduct/" + addLocationId[0],
+      {
+        productId: product[0].id /* unitsOnLocations?.map((e) => e.id) */,
+      }
+    );
     dispatch(getProductName(product[0].name));
     window.location.reload();
-  }
+  };
 
-  
+  const addNewStock = async function (event, id) {
+    event.preventDefault();
+    console.log(id, "PARAMETRO ID");
+    const res = await axios.put(
+      "http://localhost:3001/locations/unitsonlocation/" + id,
+      {
+        productId: product[0].id /* unitsOnLocations?.map((e) => e.id) */,
+        stock: modifStock,
+      }
+    );
+    dispatch(getProductName(product[0].name));
+    /*  window.location.reload(); */
+  };
+
   const addLocation = (e) => {
     if (!e.target.value) return;
     setAddLocationId([parseInt(e.target.value)]);
   };
-  
+
+  const handleOpenModal = () => {
+    setOpenModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setOpenModal(false);
+  };
+
+  const newStock = (e) => {
+    e.preventDefault();
+    setModifStock(parseInt(e.target.value));
+  };
+
   return (
     <div className="containerProdFormStock">
       <h1>Administración del stock</h1>
       <div>
-      <select onChange={(e) => addLocation(e)}>
-      <option value=""> seleccionar ...</option>
-        {locationsSelect?.map((e)=> {
-           return (
-            <option key={e.id} 
-              name={`${e.address} - 
+        <select onChange={(e) => addLocation(e)}>
+          <option value=""> seleccionar ...</option>
+          {locationsSelect?.map((e) => {
+            return (
+              <option
+                key={e.id}
+                name={`${e.address} - 
               ${e.city} - 
               ${e.province} - 
-              ${e.country}`} 
-              value={e.id}>
-              {`${e.address} - ${e.city} - 
+              ${e.country}`}
+                value={e.id}
+              >
+                {`${e.address} - ${e.city} - 
               ${e.province} - ${e.country}`}
-            </option>
-          );
-        })}
-      </select>
-      <Button
-       variant="contained"
-       color="primary"
-       className={classes.button}
-       startIcon={<AddBoxIcon />}
-       onClick={(e)=>addProduct(e)}
-      >
-      Agregar centro de distribución
-      </Button>
+              </option>
+            );
+          })}
+        </select>
+        <Button
+          variant="contained"
+          color="primary"
+          className={classes.button}
+          startIcon={<AddBoxIcon />}
+          onClick={(e) => addProduct(e)}
+        >
+          Agregar centro de distribución
+        </Button>
       </div>
       <TableContainer component={Paper} style={{ width: "85%" }}>
         <Table className={classes.table} aria-label="customized table">
@@ -154,9 +201,32 @@ function Product_form_stock(props) {
                         color="primary"
                         className={classes.button}
                         startIcon={<EditIcon />}
+                        onClick={handleOpenModal}
                       >
                         Editar
                       </Button>
+
+                      <Modal
+                        open={openModal}
+                        onClose={handleCloseModal}
+                        className={classes.modal}
+                        aria-labelledby="simple-modal-title"
+                        aria-describedby="simple-modal-description"
+                      >
+                        <div className={classes.paper}>
+                          <h2 id="simple-modal-title">Elija el nuevo stock</h2>
+                          <input
+                            type="number"
+                            min="0"
+                            onChange={(e) => {
+                              newStock(e);
+                            }}
+                          ></input>
+                          <button onClick={(ev) => addNewStock(ev, e.id)}>
+                            Modificar
+                          </button>
+                        </div>
+                      </Modal>
                     </StyledTableCell>
                   </StyledTableRow>
                 );

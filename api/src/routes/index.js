@@ -24,6 +24,7 @@ const promotions = require('./promotions/promotions.js');
 const locations = require('./location/location.js')
 
 
+
 const router = Router();
 router.use(cors());
 
