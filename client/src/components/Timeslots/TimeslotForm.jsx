@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 // import { useHistory } from 'react-router';
-import '../../scss/components/LocationStock/_FormLocation.scss';
+import '../../scss/components/LocationStock/_TimeslotForm.scss';
 import { createLocation } from '../../redux/locationReducer/locationActions';
 
-function FormLocation({ closeModal }) {
+function TimeslotForm({ closeModal }) {
   const dispatch = useDispatch();
 
   const [input, setInput] = useState({
@@ -50,67 +50,28 @@ function FormLocation({ closeModal }) {
   return (
     <div className="container-form">
       <div className="cabecera-form">
-        <div
-          className="backButton"
-          onClick={() => {
-            closeModal();
-          }}
-        >
-          {'<'}
-        </div>
-        <h2>Completá la información</h2>
+        <h2>Genera un turno para retirar su producto</h2>
         <div>
-          Recuerda que es la dirección desde donde realizas los envíos de tus
-          insumos
+          Elija un día y horario disponible.
         </div>
       </div>
       <form onSubmit={handleSubmit}>
         <div className="inputs">
           <input
-            required
-            name="street"
-            className="input"
-            placeholder="Calle"
-            value={input.street}
-            onChange={handleInputChange}
-            // disabled={disabled.street}
-          />
-
-          <input
-            required
-            name="addressNumber"
-            className="input"
-            placeholder="Número"
-            value={input.addressNumber}
-            onChange={handleInputChange}
-            // disabled={disabled.addressNumber}
-          />
-
-          <input
-            required
-            name="city"
-            className="input"
-            placeholder="Ciudad"
-            value={input.city}
-            type="text"
-            onChange={handleInputChange}
-            // disabled={disabled.city}
+            
           />
         </div>
-        {/* <button type="button" onClick={(e) => handleSearch(e)}>
-            Buscar
-        </button> */}
-
+       
         <button
-          className="createLocationButton"
+          
           type="submit"
           disabled={toggleSubmit}
         >
-          Crear nuevo centro de distribución
+          Generar turno
         </button>
       </form>
     </div>
   );
 }
 
-export default FormLocation;
+export default TimeslotForm;
