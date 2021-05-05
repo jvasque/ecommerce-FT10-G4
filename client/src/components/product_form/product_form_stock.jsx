@@ -8,6 +8,8 @@ import {
 import axios from "axios";
 import swal from "sweetalert";
 import "../../scss/components/productsForm/_ProductFormStock.scss";
+
+//MATERIA UI
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -19,15 +21,15 @@ import Paper from "@material-ui/core/Paper";
 import { Button } from "@material-ui/core";
 import Modal from "@material-ui/core/Modal";
 import DeleteIcon from "@material-ui/icons/Delete";
-import Icon from "@material-ui/core/Icon";
 import EditIcon from "@material-ui/icons/Edit";
 import AddBoxIcon from "@material-ui/icons/AddBox";
 import Backdrop from "@material-ui/core/Backdrop";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import Select from '@material-ui/core/Select';
-import Fade from '@material-ui/core/Fade';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormControl from '@material-ui/core/FormControl';
+import Select from "@material-ui/core/Select";
+import Fade from "@material-ui/core/Fade";
+import InputLabel from "@material-ui/core/InputLabel";
+import FormControl from "@material-ui/core/FormControl";
+import TextField from "@material-ui/core/TextField";
 //action locations
 import { getCenters } from "../../redux/locationReducer/locationActions.js";
 import { getProductName } from "../../redux/reducerProductForms/actionsProductForms";
@@ -58,11 +60,10 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    '&:focus': {
+    "&:focus": {
       outline: "none",
-      border: "none"
+      border: "none",
     },
-
   },
   paper: {
     backgroundColor: theme.palette.background.paper,
@@ -75,23 +76,37 @@ const useStyles = makeStyles((theme) => ({
     color: "#fff",
   },
   button: {
-    color: "#fff"
+    color: "#fff",
+    fontWeight: "bold",
+  },
+  modalButton: {
+    color: "#fff",
+    fontWeight: "bold",
+    margin: '5px 10px'
   },
   addButton: {
     color: "#fff",
-    marginLeft: "200px"
-  }
-  ,
+    marginLeft: "200px",
+    fontWeight: "bold",
+  },
   option: {
     cursor: "pointer",
-    '&:hover': {
+    "&:hover": {
       background: "#eee",
-   },
-   formControl: {
-    margin: theme.spacing(1),
-    minWidth: 120,
-    marginLeft: "200px"
+    },
+    formControl: {
+      margin: theme.spacing(1),
+      minWidth: 120,
+      marginLeft: "200px",
+    },
+
   },
+  modalTextField:{
+    width: "100%"
+  },
+  h1title: {
+    display: "flex",
+    justifyContent: "center"
   }
 }));
 
@@ -166,9 +181,7 @@ function Product_form_stock(props) {
         stock: modifStock,
       }
     );
-    swal('Producto modificado !')
-    .then(e => {
-
+    swal("Producto modificado !").then((e) => {
       Promise.all([
         dispatch(getProductName(product[0].name)),
         handleToggle(),
@@ -176,18 +189,16 @@ function Product_form_stock(props) {
         window.location.reload();
         handleToggle();
       });
-    })
-
-    
+    });
   };
 
   const removeProduct = async function (event, locationId, productId) {
     event.preventDefault();
 
     swal({
-      title: 'Está seguro de borrar el producto seleccionado?',
-      text: 'Una vez borrado, desaparecerá de su base de datos!',
-      icon: 'warning',
+      title: "Está seguro de borrar el producto seleccionado?",
+      text: "Una vez borrado, desaparecerá de su base de datos!",
+      icon: "warning",
       buttons: true,
       dangerMode: true,
     }).then(async (willDelete) => {
@@ -214,7 +225,7 @@ function Product_form_stock(props) {
           handleToggle();
         });
       } else {
-        swal('El producto NO fue borrado');
+        swal("El producto NO fue borrado");
       }
     });
   };
@@ -245,27 +256,29 @@ function Product_form_stock(props) {
     <div className="containerProdFormStock">
       <h1 className="title">Administración del stock</h1>
       <div className="selectDiv">
-      <FormControl className={classes.formControl}>
-        <InputLabel id="demo-simple-select-label">Seleccionar locación</InputLabel>
-        <Select onChange={(e) => addLocation(e)} className="select">
-          {locationsSelect?.map((e) => {
-            return (
-              <option
-                value={e.id}
-                className={classes.option}
-                inputProps={{
-                  name: `${e.address} - 
+        <FormControl className={classes.formControl}>
+          <InputLabel id="demo-simple-select-label">
+            Seleccionar locación
+          </InputLabel>
+          <Select onChange={(e) => addLocation(e)} className="select">
+            {locationsSelect?.map((e) => {
+              return (
+                <option
+                  value={e.id}
+                  className={classes.option}
+                  inputProps={{
+                    name: `${e.address} - 
                   ${e.city} - 
                   ${e.province} - 
-                  ${e.country}`
-                }}
-              >
-                {`${e.address} - ${e.city} - 
+                  ${e.country}`,
+                  }}
+                >
+                  {`${e.address} - ${e.city} - 
               ${e.province} - ${e.country}`}
-              </option>
-            );
-          })}
-        </Select>
+                </option>
+              );
+            })}
+          </Select>
         </FormControl>
         <Button
           variant="contained"
@@ -301,7 +314,7 @@ function Product_form_stock(props) {
                         color="primary"
                         className={classes.button}
                         startIcon={<DeleteIcon />}
-                        style={{margin: "0 15px 0 0"}}
+                        style={{ margin: "0 15px 0 0" }}
                         onClick={(event) =>
                           removeProduct(event, e.id, e.productId)
                         }
@@ -327,27 +340,46 @@ function Product_form_stock(props) {
               className={classes.modal}
               aria-labelledby="simple-modal-title"
               aria-describedby="simple-modal-description"
-              disableBackdropClick= {true}
-              disableEscapeKeyDown = {true}
+              disableBackdropClick={true}
+              disableEscapeKeyDown={true}
             >
               <Fade in={openModal}>
-              <div className={classes.paper}>
-                <h2 id="simple-modal-title">Elija el nuevo stock</h2>
-                <input
-                  type="number"
-                  min="0"
-                  onChange={(e) => {
-                    newStock(e);
-                  }}
-                  placeholder={locations[positionArr]?.id}
-                ></input>
-                <button
-                  onClick={(ev) => addNewStock(ev, locations[positionArr]?.id)}
-                >
-                  Modificar
-                </button>
-                <button onClick={()=>setOpenModal(false)}>Cancelar</button>
-              </div>
+                <div className={classes.paper}>
+                  <h2 id="simple-modal-title" className={classes.h1title}>Elija el nuevo stock</h2>
+                  <TextField
+                    id="outlined-number"
+                    label="Nuevo stock"
+                    type="number"
+                    className={classes.modalTextField}
+                    onChange={(e) => {
+                      newStock(e);
+                    }}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    variant="outlined"
+                  />
+                  <div className="modalButtons">
+                  <Button
+                    className={classes.modalButton}
+                    onClick={(ev) =>
+                      addNewStock(ev, locations[positionArr]?.id)
+                    }
+                    variant="contained"
+                    color="primary"
+                  >
+                    Modificar
+                  </Button>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    className={classes.modalButton}
+                    onClick={() => setOpenModal(false)}
+                  >
+                    Cancelar
+                  </Button>
+                  </div>
+                </div>
               </Fade>
             </Modal>
           </TableBody>
@@ -366,7 +398,7 @@ function Product_form_stock(props) {
       >
         <NavLink
           to="/admin/product/form/query"
-          style={{ textDecoration: "none", color: "#fff" }}
+          style={{ textDecoration: "none", color: "#fff", fontWeight: "bold" }}
         >
           Volver
         </NavLink>
