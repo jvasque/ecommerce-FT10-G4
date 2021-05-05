@@ -40,7 +40,7 @@ const categories = require('./src/data/categories');
 const subcategories = require('./src/data/subcategories');
 const favorites = require('./src/data/favorites');
 const locations = require('./src/data/locations');
-const newsletter = require('./src/data/newsletterOptions');
+const newsletter = require('./src/data/newsletter');
 const orderDetails = require('./src/data/orderDetails');
 const orders = require('./src/data/orders');
 const paymentMethods = require('./src/data/paymentMethods');
@@ -249,7 +249,7 @@ conn.sync({ force: true }).then(() => {
       const theReview = await Review.findByPk(i+1)
       theReview.setProduct(theProduct)      
     }
-    
+
     console.log('Products and categories pre charged');
   });
 });
