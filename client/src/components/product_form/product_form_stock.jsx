@@ -75,6 +75,7 @@ function Product_form_stock(props) {
   const [openModal, setOpenModal] = useState(false);
   const [modifStock, setModifStock] = useState([]);
   const [open, setOpen] = useState(false);
+  const [positionArr, setPositionArr] = useState("");
 
   const dispatch = useDispatch();
 
@@ -185,7 +186,8 @@ function Product_form_stock(props) {
     setAddLocationId([parseInt(e.target.value)]);
   };
 
-  const handleOpenModal = () => {
+  const handleOpenModal = (i) => {
+    setPositionArr(i);
     setOpenModal(true);
   };
 
@@ -196,142 +198,139 @@ function Product_form_stock(props) {
   const newStock = (e) => {
     e.preventDefault();
     setModifStock(parseInt(e.target.value));
-  }
-    const handleToggle = () => {
-      setOpen(!open);
-    };
+  };
+  const handleToggle = () => {
+    setOpen(!open);
+  };
 
-    return (
-      <div className="containerProdFormStock">
-        <h1>Administración del stock</h1>
-        <div>
-          <select onChange={(e) => addLocation(e)}>
-            <option value=""> seleccionar ...</option>
-            {locationsSelect?.map((e) => {
-              return (
-                <option
-                  key={e.id}
-                  name={`${e.address} - 
+  return (
+    <div className="containerProdFormStock">
+      <h1>Administración del stock</h1>
+      <div>
+        <select onChange={(e) => addLocation(e)}>
+          <option value=""> seleccionar ...</option>
+          {locationsSelect?.map((e) => {
+            return (
+              <option
+                key={e.id}
+                name={`${e.address} - 
               ${e.city} - 
               ${e.province} - 
               ${e.country}`}
-                  value={e.id}
-                >
-                  {`${e.address} - ${e.city} - 
+                value={e.id}
+              >
+                {`${e.address} - ${e.city} - 
               ${e.province} - ${e.country}`}
-                </option>
-              );
-            })}
-          </select>
-          <Button
-            variant="contained"
-            color="primary"
-            className={classes.button}
-            startIcon={<AddBoxIcon />}
-            onClick={(e) => addProduct(e)}
-          >
-            Agregar centro de distribución
-          </Button>
-        </div>
-        <TableContainer component={Paper} style={{ width: "85%" }}>
-          <Table className={classes.table} aria-label="customized table">
-            <TableHead>
-              <TableRow>
-                <StyledTableCell>Locacion </StyledTableCell>
-                <StyledTableCell align="center">Stock</StyledTableCell>
-                <StyledTableCell align="center">Opciones</StyledTableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {locations?.length > 0 &&
-                locations.map((e) => {
-                  return (
-                    <StyledTableRow key={e.place}>
-                      <StyledTableCell component="th" scope="row">
-                        {e.place}
-                      </StyledTableCell>
-                      <StyledTableCell align="center">
-                        {e.stock}
-                      </StyledTableCell>
-                      <StyledTableCell align="center">
-                        <Button
-                          variant="contained"
-                          color="primary"
-                          className={classes.button}
-                          startIcon={<DeleteIcon />}
-                          onClick={(event) =>
-                            removeProduct(event, e.id, e.productId)
-                          }
-                        >
-                          Eliminar
-                        </Button>
-                        <Button
-                          variant="contained"
-                          color="primary"
-                          className={classes.button}
-                          startIcon={<EditIcon />}
-                          onClick={handleOpenModal}
-                        >
-                          Editar
-                        </Button>
-
-                        <Modal
-                          open={openModal}
-                          onClose={handleCloseModal}
-                          className={classes.modal}
-                          aria-labelledby="simple-modal-title"
-                          aria-describedby="simple-modal-description"
-                        >
-                          <div className={classes.paper}>
-                            <h2 id="simple-modal-title">
-                              Elija el nuevo stock
-                            </h2>
-                            <input
-                              type="number"
-                              min="0"
-                              onChange={(e) => {
-                                newStock(e);
-                              }}
-                            ></input>
-                            <button onClick={(ev) => addNewStock(ev, e.id)}>
-                              Modificar
-                            </button>
-                          </div>
-                        </Modal>
-                      </StyledTableCell>
-                    </StyledTableRow>
-                  );
-                })}
-            </TableBody>
-          </Table>
-        </TableContainer>
+              </option>
+            );
+          })}
+        </select>
         <Button
           variant="contained"
           color="primary"
-          style={{
-            height: "54px",
-            textAlign: "center",
-            justifySelf: "center",
-            margin: "8px",
-          }}
-          onClick={() => dispatch(clearProduct())}
+          className={classes.button}
+          startIcon={<AddBoxIcon />}
+          onClick={(e) => addProduct(e)}
         >
-          <NavLink
-            to="/admin/product/form/query"
-            style={{ textDecoration: "none", color: "#fff" }}
-          >
-            Volver
-          </NavLink>
+          Agregar centro de distribución
         </Button>
-        <Backdrop
-          className={classes.backdrop}
-          open={open} /* onClick={handleClose} */
-        >
-          <CircularProgress color="inherit" />
-        </Backdrop>
       </div>
-    );
-  };
-
+      <TableContainer component={Paper} style={{ width: "85%" }}>
+        <Table className={classes.table} aria-label="customized table">
+          <TableHead>
+            <TableRow>
+              <StyledTableCell>Locacion </StyledTableCell>
+              <StyledTableCell align="center">Stock</StyledTableCell>
+              <StyledTableCell align="center">Opciones</StyledTableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {locations?.length > 0 &&
+              locations.map((e, i) => {
+                return (
+                  <StyledTableRow key={e.place}>
+                    <StyledTableCell component="th" scope="row">
+                      {e.place}
+                    </StyledTableCell>
+                    <StyledTableCell align="center">{e.stock}</StyledTableCell>
+                    <StyledTableCell align="center">
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        className={classes.button}
+                        startIcon={<DeleteIcon />}
+                        onClick={(event) =>
+                          removeProduct(event, e.id, e.productId)
+                        }
+                      >
+                        Eliminar
+                      </Button>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        className={classes.button}
+                        startIcon={<EditIcon />}
+                        onClick={() => handleOpenModal(i)}
+                      >
+                        Editar
+                      </Button>
+                    </StyledTableCell>
+                  </StyledTableRow>
+                );
+              })}
+            <Modal
+              open={openModal}
+              onClose={handleCloseModal}
+              className={classes.modal}
+              aria-labelledby="simple-modal-title"
+              aria-describedby="simple-modal-description"
+            >
+              <div className={classes.paper}>
+                <h2 id="simple-modal-title">Elija el nuevo stock</h2>
+                <input
+                  type="number"
+                  min="0"
+                  onChange={(e) => {
+                    newStock(e);
+                  }}
+                  placeholder={locations[positionArr]?.id}
+                ></input>
+                <button
+                  onClick={(ev) => addNewStock(ev, locations[positionArr]?.id)}
+                >
+                  Modificar
+                </button>
+              </div>
+            </Modal>
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <Button
+        variant="contained"
+        color="primary"
+        style={{
+          height: "54px",
+          textAlign: "center",
+          justifySelf: "center",
+          margin: "8px",
+        }}
+        onClick={() => dispatch(clearProduct())}
+      >
+        <NavLink
+          to="/admin/product/form/query"
+          style={{ textDecoration: "none", color: "#fff" }}
+        >
+          Volver
+        </NavLink>
+      </Button>
+      <Backdrop
+        className={classes.backdrop}
+        open={open} /* onClick={handleClose} */
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
+    </div>
+  );
+}
 
 export default Product_form_stock;
