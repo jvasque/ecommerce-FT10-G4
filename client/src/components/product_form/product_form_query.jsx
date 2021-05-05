@@ -135,6 +135,16 @@ function Product_form_query(props) {
           Eliminar
         </Button>
 
+        <NavLink to="/admin/product/form/stock">
+          <button
+            onClick={(e) => {
+              handlerPreventButton(e);
+            }}
+          >
+            Stock
+          </button>
+        </NavLink>
+
         {product[0]?.name &&
           product.map((prod) => {
             return <ProductCard product={prod}></ProductCard>;

@@ -51,6 +51,7 @@ const {
   OrderDetail,
   PaymentMethod,
   Product,
+  Promotion,
   Review,
   SubCategory,
   Type,
@@ -67,8 +68,9 @@ User.hasMany(Review);
 User.hasOne(Favorite);
 User.hasMany(Product); //MarketPlace functionality
 User.hasMany(Wishlist);
-User.belongsToMany(Newsletter, { through: "user_newsletter" });
+User.belongsToMany(Newsletter, { through: 'user_newsletter' });
 User.belongsToMany(PaymentMethod, { through: 'user_payment' });
+User.hasMany(Location);
 
 PaymentMethod.hasMany(Order);
 PaymentMethod.belongsToMany(User, { through: 'user_payment' });
@@ -80,13 +82,12 @@ Wishlist.belongsTo(User);
 Wishlist.belongsToMany(Product, { through: 'wishlist_product' });
 
 Review.belongsTo(User);
-Review.belongsTo(Product) // Comment.belonfsTo(Comment)
+Review.belongsTo(Product); // Comment.belonfsTo(Comment)
 Review.belongsTo(OrderDetail); // review es por compra
 
 Product.belongsTo(User);
-Product.hasMany(Review) // review es por compra,
+Product.hasMany(Review); // review es por compra,
 Product.hasMany(OrderDetail);
-Product.hasMany(UnitsOnLocation);
 Product.belongsToMany(Category, {
   through: 'product_category',
   timestamps: false,
@@ -96,6 +97,14 @@ Product.belongsToMany(Favorite, { through: 'favorite_product' });
 Product.belongsToMany(Wishlist, { through: 'wishlist_product' });
 Product.belongsToMany(Brand, { through: 'product_brand' });
 Product.belongsToMany(Type, { through: 'product_type' });
+Product.hasMany(UnitsOnLocation);
+Product.belongsToMany(Promotion, { through: 'product_promotion' });
+
+Location.belongsTo(User);
+Location.hasMany(UnitsOnLocation);
+
+UnitsOnLocation.belongsTo(Location);
+UnitsOnLocation.belongsTo(Product);
 
 Order.hasMany(OrderDetail);
 Order.belongsTo(User);
@@ -117,8 +126,9 @@ SubCategory.belongsToMany(Product, { through: 'product_subcategory' });
 Type.belongsToMany(Product, { through: 'product_type' });
 Brand.belongsToMany(Product, { through: 'product_brand' });
 
+Newsletter.belongsToMany(User, { through: 'user_newsletter' });
 
-Newsletter.belongsToMany(User, { through: "user_newsletter" });
+Promotion.belongsToMany(Product, { through: 'product_promotion' });
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');

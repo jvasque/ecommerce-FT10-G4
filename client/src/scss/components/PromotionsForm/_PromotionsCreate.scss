@@ -1,0 +1,58 @@
+.containerPromotionFormCreate {
+  background-color: var(--color-light);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 110px;
+  h1 {
+    color: var(--color-brand);
+  }
+  button {
+    background-color: var(--color-brand-light);
+    padding: 1.5vh 3vw;
+    border: transparent;
+    box-shadow: 2px 2px 2px var(--color-brand);
+    margin: 2vh auto;
+
+    &:hover {
+      background-color: var(--color-brand);
+      box-shadow: 2px 2px 2px #164b03;
+      position: relative;
+      top: -5px;
+    }
+    &:active {
+      background-color: var(--color-sun);
+      box-shadow: 2px 2px 2px orange;
+    }
+  }
+  .cont-1 {
+    background-color: var(--color-gray);
+    /* margin-top: 10%; */
+    /* button {
+      background-color: var(--color-brand-light);
+      padding: 1.5vh 3vw;
+      border: transparent;
+      box-shadow: 2px 2px 2px var(--color-brand);
+      margin: 2vh auto;
+
+      &:hover {
+        background-color: var(--color-brand);
+        box-shadow: 2px 2px 2px #164b03;
+        position: relative;
+        top: -5px;
+      }
+      &:active {
+        background-color: var(--color-sun);
+        box-shadow: 2px 2px 2px orange;
+      }
+    } */
+
+    .ProductName {
+      display: flex;
+      border: 2px solid #4caf50;
+      border-radius: 20px;
+      margin-top: 5px;
+      padding: 5px;
+    }
+  }
+}

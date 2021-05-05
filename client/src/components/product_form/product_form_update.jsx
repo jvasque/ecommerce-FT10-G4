@@ -1,51 +1,51 @@
-import axios from "axios";
-import React, { useEffect } from "react";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
+import axios from 'axios';
+import React, { useEffect } from 'react';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 import {
   putProduct,
   clearProduct,
-} from "../../redux/reducerProductForms/actionsProductForms";
-import "../../scss/components/productsForm/_ProductFormUpdate.scss";
-import swal from "sweetalert";
-import { makeStyles } from "@material-ui/core/styles";
-import { TextField, CircularProgress, Button } from "@material-ui/core";
+} from '../../redux/reducerProductForms/actionsProductForms';
+import '../../scss/components/productsForm/_ProductFormUpdate.scss';
+import swal from 'sweetalert';
+import { makeStyles } from '@material-ui/core/styles';
+import { TextField, CircularProgress, Button } from '@material-ui/core';
 
-const grisPrincipal = "#EFEFEF";
+const grisPrincipal = '#EFEFEF';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    "& > *": {
-      margin: "40px auto",
-      width: "80%",
+    '& > *': {
+      margin: '40px auto',
+      width: '80%',
       background: grisPrincipal,
-      color: "black",
+      color: 'black',
     },
   },
   button: {
-    margin: "10px",
-    color: "white",
-    padding: "10px",
-    fontWeight: "bold",
+    margin: '10px',
+    color: 'white',
+    padding: '10px',
+    fontWeight: 'bold',
   },
   input: {
-    width: "90%",
-    color: "red",
-    marginTop: "15px",
-    marginBottom: "15px",
+    width: '90%',
+    color: 'red',
+    marginTop: '15px',
+    marginBottom: '15px',
   },
   inputDescription: {
-    padding: "0px",
-    width: "95%",
-    marginTop: "15px",
-    marginBottom: "15px",
+    padding: '0px',
+    width: '95%',
+    marginTop: '15px',
+    marginBottom: '15px',
   },
   cancelIcon: {
-    color: "rgb(245, 59, 26)",
+    color: 'rgb(245, 59, 26)',
     backgroundColor: grisPrincipal,
-    cursor: "pointer",
-    borderRadius: "50%",
+    cursor: 'pointer',
+    borderRadius: '50%',
   },
 }));
 
@@ -58,27 +58,27 @@ function Product_form_update(props) {
   const [modifProduct, setModifProduct] = useState([]);
 
   const [input, setInput] = useState({
-    id: "",
-    name: "",
-    SKU: "",
-    price: "",
-    description: "",
-    stock: "",
-    selectCategory: "",
+    id: '',
+    name: '',
+    SKU: '',
+    price: '',
+    description: '',
+    /* stock: '', */
+    selectCategory: '',
   });
   const [resPic, setResPic] = useState(product[0]?.picture || []);
   const [pic, setPic] = useState();
   const [progress, setProgress] = useState();
 
   const CLOUDINARY_URL =
-    "https://api.cloudinary.com/v1_1/dxy0hg426/image/upload";
-  const CLOUDINARY_UPLOAD_PRESET = "iyqdnelg";
+    'https://api.cloudinary.com/v1_1/dxy0hg426/image/upload';
+  const CLOUDINARY_UPLOAD_PRESET = 'iyqdnelg';
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     async function categories() {
-      const data = await axios.get("http://localhost:3001/allCategories");
+      const data = await axios.get('http://localhost:3001/allCategories');
       setCategory(data.data);
     }
     if (product[0]) {
@@ -88,13 +88,13 @@ function Product_form_update(props) {
     categories();
     //SE VIENEEEEEEEE
     const formData = new FormData();
-    formData.append("file", pic);
-    formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
+    formData.append('file', pic);
+    formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
 
     const fetchImg = (async function () {
       const res = await axios.post(CLOUDINARY_URL, formData, {
         headers: {
-          "Content-Type": "multipart/form-data",
+          'Content-Type': 'multipart/form-data',
         },
         onUploadProgress(e) {
           setProgress((e.loaded * 100) / e.total);
@@ -119,7 +119,7 @@ function Product_form_update(props) {
     if (!e.target.value) return;
     let aux = modifProduct.map((e) => e.id);
     if (aux.includes(e.target.value) || aux.includes(parseInt(e.target.value)))
-      return swal("Aviso!", "La categoria se encuentra seleccionada", "info");
+      return swal('Aviso!', 'La categoria se encuentra seleccionada', 'info');
     setModifProduct([
       ...modifProduct,
       {
@@ -140,7 +140,7 @@ function Product_form_update(props) {
 
   const handleSubmit = async function (event) {
     event.preventDefault();
-    let categoriesIds = modifProduct.map((e) => e.id);
+    let categoriesIds = modifProduct?.map((e) => e.id);
 
     dispatch(
       putProduct(
@@ -150,27 +150,27 @@ function Product_form_update(props) {
         input.price,
         input.description,
         resPic,
-        input.stock,
+        /* input.stock, */
         categoriesIds
       )
     );
 
     setModifProduct([]);
     setInput({
-      name: "",
-      SKU: "",
-      price: "",
-      description: "",
-      stock: "",
+      name: '',
+      SKU: '',
+      price: '',
+      description: '',
+      /* stock: '', */
     });
     swal(
-      "Éxito",
+      'Éxito',
       `El producto ${input.name} ha sido modificado`,
-      "success"
+      'success'
     ).then((e) => {
       dispatch(clearProduct());
       window.location.reload();
-      window.location.replace("http://localhost:3000/admin/product/form/query");
+      window.location.replace('http://localhost:3000/admin/product/form/query');
     });
   };
 
@@ -183,7 +183,7 @@ function Product_form_update(props) {
 
           <TextField
             id="outlined-basic"
-            label={product[0]?.name || " Nombre"}
+            label={product[0]?.name || ' Nombre'}
             placeholder="Agregue el nuevo nombre del producto..."
             variant="outlined"
             name="name"
@@ -197,7 +197,7 @@ function Product_form_update(props) {
 
           <TextField
             id="outlined-basic"
-            label={product[0]?.SKU || " SKU"}
+            label={product[0]?.SKU || ' SKU'}
             placeholder="Agregue el nuevo SKU del producto..."
             variant="outlined"
             name="SKU"
@@ -210,7 +210,7 @@ function Product_form_update(props) {
 
           <TextField
             id="outlined-basic"
-            label={product[0]?.unitPrice || " Precio..."}
+            label={product[0]?.unitPrice || ' Precio...'}
             placeholder="Agregue el nuevo precio del producto..."
             variant="outlined"
             name="price"
@@ -225,7 +225,7 @@ function Product_form_update(props) {
           <textarea
             className="textareaDescription"
             name="description"
-            placeholder={product[0]?.description || " Descripción..."}
+            placeholder={product[0]?.description || ' Descripción...'}
             value={input.description}
             onChange={handleChange}
           />
@@ -270,23 +270,22 @@ function Product_form_update(props) {
               />
             )}
           </div>
-
-          <TextField
-            id="outlined-basic"
-            label={product[0]?.unitsOnStock || " Stock..."}
-            placeholder="Agregue el nuevo stock del producto"
-            variant="outlined"
-            name="stock"
-            value={input.stock}
-            type="number"
-            InputProps={{ inputProps: { min: 0, max: 99999 } }}
-            onChange={handleChange}
-            className={classes.input}
-          />
+          {/* 
+          <TextField 
+          id="outlined-basic" 
+          label={product[0]?.unitsOnStock || ' Stock...'}
+          placeholder="Agregue el nuevo stock del producto" 
+          variant="outlined"
+          name="stock" 
+          value={input.stock} 
+          type="number"
+          InputProps={{ inputProps: { min: 0, max: 99999 } }} 
+          onChange={handleChange}
+          className={classes.input}/> */}
 
           {modifProduct?.map((x) => (
             <label>
-              {x.name + "  "}
+              {x.name + '  '}
               <Button
                 className={classes.button}
                 variant="contained"
