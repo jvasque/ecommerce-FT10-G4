@@ -24,6 +24,10 @@ import EditIcon from "@material-ui/icons/Edit";
 import AddBoxIcon from "@material-ui/icons/AddBox";
 import Backdrop from "@material-ui/core/Backdrop";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import Select from '@material-ui/core/Select';
+import Fade from '@material-ui/core/Fade';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
 //action locations
 import { getCenters } from "../../redux/locationReducer/locationActions.js";
 import { getProductName } from "../../redux/reducerProductForms/actionsProductForms";
@@ -54,6 +58,11 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    '&:focus': {
+      outline: "none",
+      border: "none"
+    },
+
   },
   paper: {
     backgroundColor: theme.palette.background.paper,
@@ -65,6 +74,25 @@ const useStyles = makeStyles((theme) => ({
     zIndex: theme.zIndex.drawer + 1,
     color: "#fff",
   },
+  button: {
+    color: "#fff"
+  },
+  addButton: {
+    color: "#fff",
+    marginLeft: "200px"
+  }
+  ,
+  option: {
+    cursor: "pointer",
+    '&:hover': {
+      background: "#eee",
+   },
+   formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+    marginLeft: "200px"
+  },
+  }
 }));
 
 function Product_form_stock(props) {
@@ -138,46 +166,56 @@ function Product_form_stock(props) {
         stock: modifStock,
       }
     );
+    swal('Producto modificado !')
+    .then(e => {
 
-    function later(delay) {
-      return new Promise(function (resolve) {
-        setTimeout(resolve, delay);
+      Promise.all([
+        dispatch(getProductName(product[0].name)),
+        handleToggle(),
+      ]).then((e) => {
+        window.location.reload();
+        handleToggle();
       });
-    }
+    })
 
-    Promise.all([
-      dispatch(getProductName(product[0].name)),
-      handleToggle(),
-      later(1500),
-    ]).then((e) => {
-      window.location.reload();
-      handleToggle();
-    });
+    
   };
 
   const removeProduct = async function (event, locationId, productId) {
     event.preventDefault();
 
-    const res = await axios.delete(
-      "http://localhost:3001/locations/removeproduct/" + locationId,
-      {
-        data: {
-          productId: productId,
-        },
+    swal({
+      title: 'Está seguro de borrar el producto seleccionado?',
+      text: 'Una vez borrado, desaparecerá de su base de datos!',
+      icon: 'warning',
+      buttons: true,
+      dangerMode: true,
+    }).then(async (willDelete) => {
+      if (willDelete) {
+        const res = await axios.delete(
+          "http://localhost:3001/locations/removeproduct/" + locationId,
+          {
+            data: {
+              productId: productId,
+            },
+          }
+        );
+        function later(delay) {
+          return new Promise(function (resolve) {
+            setTimeout(resolve, delay);
+          });
+        }
+        Promise.all([
+          dispatch(getProductName(product[0].name)),
+          handleToggle(),
+          later(1500),
+        ]).then((e) => {
+          window.location.reload();
+          handleToggle();
+        });
+      } else {
+        swal('El producto NO fue borrado');
       }
-    );
-    function later(delay) {
-      return new Promise(function (resolve) {
-        setTimeout(resolve, delay);
-      });
-    }
-    Promise.all([
-      dispatch(getProductName(product[0].name)),
-      handleToggle(),
-      later(1500),
-    ]).then((e) => {
-      window.location.reload();
-      handleToggle();
     });
   };
 
@@ -205,30 +243,34 @@ function Product_form_stock(props) {
 
   return (
     <div className="containerProdFormStock">
-      <h1>Administración del stock</h1>
-      <div>
-        <select onChange={(e) => addLocation(e)}>
-          <option value=""> seleccionar ...</option>
+      <h1 className="title">Administración del stock</h1>
+      <div className="selectDiv">
+      <FormControl className={classes.formControl}>
+        <InputLabel id="demo-simple-select-label">Seleccionar locación</InputLabel>
+        <Select onChange={(e) => addLocation(e)} className="select">
           {locationsSelect?.map((e) => {
             return (
               <option
-                key={e.id}
-                name={`${e.address} - 
-              ${e.city} - 
-              ${e.province} - 
-              ${e.country}`}
                 value={e.id}
+                className={classes.option}
+                inputProps={{
+                  name: `${e.address} - 
+                  ${e.city} - 
+                  ${e.province} - 
+                  ${e.country}`
+                }}
               >
                 {`${e.address} - ${e.city} - 
               ${e.province} - ${e.country}`}
               </option>
             );
           })}
-        </select>
+        </Select>
+        </FormControl>
         <Button
           variant="contained"
           color="primary"
-          className={classes.button}
+          className={classes.addButton}
           startIcon={<AddBoxIcon />}
           onClick={(e) => addProduct(e)}
         >
@@ -239,7 +281,7 @@ function Product_form_stock(props) {
         <Table className={classes.table} aria-label="customized table">
           <TableHead>
             <TableRow>
-              <StyledTableCell>Locacion </StyledTableCell>
+              <StyledTableCell>Locación </StyledTableCell>
               <StyledTableCell align="center">Stock</StyledTableCell>
               <StyledTableCell align="center">Opciones</StyledTableCell>
             </TableRow>
@@ -259,6 +301,7 @@ function Product_form_stock(props) {
                         color="primary"
                         className={classes.button}
                         startIcon={<DeleteIcon />}
+                        style={{margin: "0 15px 0 0"}}
                         onClick={(event) =>
                           removeProduct(event, e.id, e.productId)
                         }
@@ -284,7 +327,10 @@ function Product_form_stock(props) {
               className={classes.modal}
               aria-labelledby="simple-modal-title"
               aria-describedby="simple-modal-description"
+              disableBackdropClick= {true}
+              disableEscapeKeyDown = {true}
             >
+              <Fade in={openModal}>
               <div className={classes.paper}>
                 <h2 id="simple-modal-title">Elija el nuevo stock</h2>
                 <input
@@ -300,7 +346,9 @@ function Product_form_stock(props) {
                 >
                   Modificar
                 </button>
+                <button onClick={()=>setOpenModal(false)}>Cancelar</button>
               </div>
+              </Fade>
             </Modal>
           </TableBody>
         </Table>

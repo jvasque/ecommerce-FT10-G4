@@ -16,11 +16,26 @@ module.exports = async (req, res) => {
       },
     });
 
-    if (!UOL) return res.json({ error: "Can't find that product in this location" });
+    if (!UOL)
+      return res.json({ error: "Can't find that product in this location" });
 
-    await UOL.destroy()
-    /* await location.removeUnitsOnLocations(UOL);
-    await prod.removeUnitsOnLocations(UOL); */
+    await UOL.destroy();
+
+    let productUnitsAll = await UnitsOnLocation.findAll({
+      where: {
+        productId: productId,
+      },
+    });
+
+    let newStock = await productUnitsAll.reduce(
+      (a, b) => a + b.dataValues.unitsOnStock,
+      0
+    );
+
+    let productToSetStock = await Product.findByPk(productId);
+
+    productToSetStock.unitsOnStock = newStock;
+    await productToSetStock.save();
 
     return res.json(location);
   } catch (err) {
