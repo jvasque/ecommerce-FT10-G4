@@ -10,8 +10,9 @@ const AdminNewsletter = () => {
   const [show, setShow] = useState(false);
   // /getEmail
   const getEmail = async () => {
-    const email = await axios.get(`http://localhost:3001/newsletter/getEmail`);
-    setEmail({ __html: email.data });
+    const email = await axios.get(`http://localhost:3001/newsletter/historial`);
+    console.log(email.data)
+    setEmail({ __html: email.data[0].html });
     setShow(true);
   };
   useEffect(() => {
@@ -20,7 +21,7 @@ const AdminNewsletter = () => {
   }, []);
   return (
     <div className="container-adminNewsletter">
-      <h2>Tamplate Email</h2>
+      <h2>Template Email</h2>
       {show ? <div dangerouslySetInnerHTML={email} /> : ""}
     </div>
   );
