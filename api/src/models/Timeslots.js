@@ -4,21 +4,19 @@ const { DataTypes } = require('sequelize');
 module.exports = (sequelize) => {
   sequelize.define('timeslots', {
     date: {
-      type: DataTypes.DATEONLY,//"2021-02-01"
+      type: DataTypes.DATEONLY, //"2021-02-01"
       allowNull: false,
       unique: false,
     },
     time: {
-      type: DataTypes.ENUM("9","10","11","12","13","14","15","16","17"),
+      type: DataTypes.ENUM('9', '10', '11', '12', '13', '14', '15', '16', '17'),
       allowNull: false,
       unique: false,
     },
     capacity: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      defaultValue: 9,
+      defaultValue: 2,
     },
   });
 };
-
-

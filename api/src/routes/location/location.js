@@ -4,17 +4,20 @@ const locationGet = require('./locationGet');
 const locationDelete = require('./locationDelete');
 const locationPost = require('./locationPost');
 const locationPut = require('./locationPut');
-const timeslotsGet = require('./timeslotsGet')
+const timeslotsGet = require('./timeslotsGet');
+const timeslotsPost = require('./timeslotsPost');
 
 // Middlewares
 router.use(express.json());
 
-// User routes
+// Locations routes
 router.get('/', locationGet);
 router.post('/', locationPost);
 router.put('/:id', locationPut);
-router.get('/:id/timeslots', timeslotsGet)
 router.post('/delete/:id', locationDelete);
 
+// timeslot routes
+router.get('/:id/timeslots', timeslotsGet);
+router.post('/:id/timeslots', timeslotsPost);
 
 module.exports = router;
