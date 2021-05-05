@@ -13,10 +13,10 @@ module.exports = async (req, res) => {
       },
     });
     if (UOL) {
-      if (stock) {
+      
         UOL.unitsOnStock = stock;
         await UOL.save();
-      }
+      
     }
 
     let productUnitsAll = await UnitsOnLocation.findAll({
