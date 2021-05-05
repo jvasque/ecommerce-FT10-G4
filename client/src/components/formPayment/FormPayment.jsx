@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import { Button, TextField } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import '../../scss/components/FormPayment/_FormPayment.scss';
 import swal from 'sweetalert';
 import { FormControl, Modal, Zoom } from '@material-ui/core';
+
+//actions
+import {returnAddress} from '../../redux/formPaymentReducer/formPaymentActions'
 
 import {
   makeStyles,
@@ -39,7 +42,7 @@ const FormPayment = () => {
   const classes = useStyles();
   const total = useSelector((state) => state.cartReducer.total);
   const user = useSelector((state) => state.loginReducer.user);
-
+  const dispatch = useDispatch()
   const [modal, setModal] = useState(false);
   const [input, setInput] = useState({
     firstName: user.firstName,

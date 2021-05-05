@@ -1,4 +1,4 @@
-import { SAVE_ID, RETURN_PROD_CART } from "./formPaymentActions";
+import { SAVE_ID, RETURN_PROD_CART, RETURN_ADDRESS } from "./formPaymentActions";
 import axios from "axios";
 const initialState = {
   orderId: 0,
@@ -30,7 +30,13 @@ export default (state = initialState, { type, payload }) => {
         ...state,
         orderId: payload.idOrder,
       };
+    case RETURN_ADDRESS:
+      return  {
+        ...state,
+        address:payload
+      }
     default:
       return state;
   }
 };
+
