@@ -1,14 +1,6 @@
-
-
 const { User } = require("../../db.js");
-
 const jwt = require("jsonwebtoken");
-
-
-
-
 const { SECRET_KEY } = process.env;
-
 const axios = require('axios')
 
 

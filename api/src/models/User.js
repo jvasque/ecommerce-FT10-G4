@@ -1,9 +1,9 @@
-const { DataTypes } = require('sequelize');
-const crypto = require('crypto');
-const db = require('../db.js');
+const { DataTypes } = require("sequelize");
+const crypto = require("crypto");
+const db = require("../db.js");
 
 module.exports = (sequelize) => {
-  const User = sequelize.define('user', {
+  const User = sequelize.define("user", {
     firstName: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -33,18 +33,18 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
       get() {
-        return () => this.getDataValue('password');
+        return () => this.getDataValue("password");
       },
     },
     salt: {
       type: DataTypes.STRING,
       get() {
-        return () => this.getDataValue('salt');
+        return () => this.getDataValue("salt");
       },
-    },   
+    },
     type: {
-      type: DataTypes.ENUM('superadmin', 'admin', 'user', 'guest'),
-      defaultValue: 'user',
+      type: DataTypes.ENUM("superadmin", "admin", "user", "guest"),
+      defaultValue: "user",
     },
     status: {
       type: DataTypes.ENUM("active", "disabled", "banned"),
@@ -68,7 +68,7 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
     },
     passwordResetExpires: {
-      type: DataTypes.REAL,
+      type: DataTypes.DATE,
     },
     resetPassword: {
       type: DataTypes.BOOLEAN,
@@ -84,28 +84,48 @@ module.exports = (sequelize) => {
       //   isEmail: true,
       // },
     },
-    linkedinUser: {
-      type: DataTypes.STRING,
+    secretCode: {
+      type: DataTypes.STRING(6),
       unique: true,
+    },
+    secretCodeExpires: {
+      type: DataTypes.DATE,
     },
     photoURL: {
       type: DataTypes.TEXT,
       allowNull: true,
     },
+    newsLetter: { // if u suscribr send daily news (1 for week)
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
+    },
+    promotion: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true
+    },
+    off: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true
+    },
+    information:{
+      type: DataTypes.BOOLEAN,
+      defaultValue: true
+    },
+   
   });
 
   User.generateSalt = function () {
-    return crypto.randomBytes(16).toString('base64');
+    return crypto.randomBytes(16).toString("base64");
   };
   User.encryptPassword = function (plainText, salt) {
     return crypto
-      .createHash('RSA-SHA256')
+      .createHash("RSA-SHA256")
       .update(plainText)
       .update(salt)
-      .digest('hex');
+      .digest("hex");
   };
   const setSaltAndPassword = (user) => {
-    if (user.changed('password')) {
+    if (user.changed("password")) {
       user.salt = User.generateSalt();
       user.password = User.encryptPassword(user.password(), user.salt());
     }
