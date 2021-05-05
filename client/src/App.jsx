@@ -9,6 +9,7 @@ import ProductForm from './components/product_form/product_form';
 import ProductFormCreate from './components/product_form/product_form_create';
 import ProductFormQuery from './components/product_form/product_form_query';
 import ProductFormUpdate from './components/product_form/product_form_update';
+import ProductFormStock from './components/product_form/product_form_stock';
 import PromotionsCreate from './components/PromotionsForm/PromotionsCreate';
 import PromotionsModify from './components/PromotionsForm/PromotionsModify';
 import AllOrders from './components/AllOrders/AllOrders';
@@ -69,6 +70,11 @@ function App() {
             exact
             path="/admin/product/form/update"
             component={ProductFormUpdate}
+          />
+          <Route
+            exact
+            path="/admin/product/form/stock"
+            component={ProductFormStock}
           />
           <Route
             exact

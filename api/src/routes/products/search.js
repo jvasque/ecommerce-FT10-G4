@@ -14,6 +14,7 @@ const {
   Wishlist,
   Brand,
   Types,
+  Locations
 } = require("../../db.js");
 
 router.use(express.json());
@@ -38,6 +39,12 @@ router.get("/", async (req, res, next) => {
           },
           required: false,
         },
+        {
+          model: UnitsOnLocation,
+          include: [{
+            all: true
+          }]
+        }
       ],
     });
     return data.length > 0
