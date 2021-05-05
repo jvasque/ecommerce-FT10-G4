@@ -5,6 +5,7 @@ import {
   RESET_LOCATION,
   GET_CENTERS,
   DELETE_CENTER,
+  GET_TIMES,
 } from './locationActions';
 
 const initialState = {
@@ -13,6 +14,7 @@ const initialState = {
   locationModified: null,
   error: null,
   centerDeleted: null,
+  unavailableTimeslots: null
 };
 
 export default (state = initialState, action) => {
@@ -49,6 +51,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         centerDeleted: action.payload,
+      };
+    case GET_TIMES:
+      return {
+        ...state,
+        unavailableTimeslots: action.payload,
       };
     default:
       return { ...state };

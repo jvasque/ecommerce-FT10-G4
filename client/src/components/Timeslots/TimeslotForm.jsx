@@ -1,31 +1,34 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-// import { useHistory } from 'react-router';
-import '../../scss/components/LocationStock/_TimeslotForm.scss';
-import { createLocation } from '../../redux/locationReducer/locationActions';
+import DatePicker from 'react-datepicker'
+// import '../../scss/components/LocationStock/_TimeslotForm.scss';
+import "react-datepicker/dist/react-datepicker.css";
+import { addDays } from "date-fns";
+import { getTimes } from '../../redux/locationReducer/locationActions';
 
-function TimeslotForm({ closeModal }) {
+function TimeslotForm({ closeModal, center }) {
+
   const dispatch = useDispatch();
 
+  const [startDate, setStartDate] = useState(null);
+  const [unavailableDay, setUnavailableDay] = useState(false);
   const [input, setInput] = useState({
-    street: '',
-    city: '',
-    addressNumber: '',
+    date: startDate,
+    time: '',
     userId: JSON.parse(localStorage.getItem('user')),
+    locationId: 1,//center.id
   });
-  const [toggleSubmit, setToggleSubmit] = useState(true);
+  const unavailableTimeslots = useSelector((state) => state.locationReducer.unavailableTimeslots);
+  
 
   useEffect(() => {
-    if (
-      input.street !== '' &&
-      input.city !== '' &&
-      input.addressNumber !== ''
-    ) {
-      setToggleSubmit(false);
-    } else {
-      setToggleSubmit(true);
+    dispatch(getTimes(input.locationId));
+    if ( unavailableTimeslots.length === 9 ) {
+      setUnavailableDay(true);
     }
-  }, [input]);
+    return () => {
+    }
+  }, []);
 
   const handleInputChange = function (e) {
     setInput({
@@ -35,16 +38,8 @@ function TimeslotForm({ closeModal }) {
   };
 
   const handleSubmit = function (e) {
-    e.preventDefault();
-    dispatch(createLocation(input));
-    setInput({
-      ...input,
-      street: '',
-      city: '',
-      addressNumber: '',
-    });
-
-    closeModal();
+    // dispatch crear turno
+    // closeModal();
   };
 
   return (
@@ -57,15 +52,31 @@ function TimeslotForm({ closeModal }) {
       </div>
       <form onSubmit={handleSubmit}>
         <div className="inputs">
-          <input
-            
+          <div className='day'>
+          <DatePicker
+            selected={startDate}
+            onChange={date => setStartDate(date)}
+            includeDates={[new Date(), addDays(new Date(), 1)]}
+            placeholderText="Turnos disponibles"
           />
+          </div>
+          <div className='time'>Hora:
+            <select value={input.time} onChange={handleInputChange} name='time'>
+              <option value="9">9:00 hs</option>
+              <option value="10">10:00 hs</option>
+              <option value="11">11:00 hs</option>
+              <option value="12">12:00 hs</option>
+              <option value="13">13:00 hs</option>
+              <option value="14">14:00 hs</option>
+              <option value="15">15:00 hs</option>
+              <option value="16">16:00 hs</option>
+              <option value="17">17:00 hs</option>
+            </select>
+          </div>        
         </div>
        
-        <button
-          
+        <button          
           type="submit"
-          disabled={toggleSubmit}
         >
           Generar turno
         </button>

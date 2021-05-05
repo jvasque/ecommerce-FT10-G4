@@ -8,6 +8,7 @@ export const RESET_ERROR = 'RESET_ERROR';
 export const RESET_DELETED = 'RESET_DELETED';
 export const GET_CENTERS = 'GET_CENTERS';
 export const DELETE_CENTER = 'DELETE_CENTER';
+export const GET_TIMES = 'GET_TIMES';
 
 export function createLocation({ street, city, addressNumber, userId }) {
   return async function (dispatch) {
@@ -135,4 +136,15 @@ export function deleteCenter(id) {
       payload: center.data,
     });
   };
-}
+};
+export function getTimes(id) {
+  return async function (dispatch) {
+    let times = await axios.post(
+      `http://localhost:3001/locations/${id}/timeslots`
+    );
+    dispatch({
+      type: GET_TIMES,
+      payload: times.data,
+    });
+  };
+};
