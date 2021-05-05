@@ -10,6 +10,7 @@ import {
 const initialState = {
   cart: [],
   total: 0,
+  location: "",
 };
 
 function havePromotion(e){
@@ -73,6 +74,12 @@ export default (state = initialState, action) => {
       return {
         ...state,
         cart: [],
+      };
+    }
+    case "LOCATION": {
+      return {
+        ...state,
+        location: action.payload,
       };
     }
 

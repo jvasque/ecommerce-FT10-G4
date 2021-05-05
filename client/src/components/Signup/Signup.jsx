@@ -1,34 +1,34 @@
-import React, { useEffect, useState } from "react";
-import "../../scss/components/Signup/_Signup.scss";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect, useState } from 'react';
+import '../../scss/components/Signup/_Signup.scss';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   PostSuccess,
   postUser,
   SwalBooC,
-} from "../../redux/postUserReducer/postUserActions";
-import Swal from "sweetalert2";
-import swal from "sweetalert";
+} from '../../redux/postUserReducer/postUserActions';
+import Swal from 'sweetalert2';
+import swal from 'sweetalert';
 import {
   GLogin,
   FLogin,
   LoginAction,
   LogOut,
   LogFailHandle,
-} from "../../redux/loginReducer/loginActions";
-import { useHistory } from "react-router";
+} from '../../redux/loginReducer/loginActions';
+import { useHistory } from 'react-router';
 import {
   addProduct,
   emptyCart,
   totalPrice,
-} from "../../redux/cartReducer/cartActions";
-import { modifyCart } from "../../redux/iconReducer/iconActions";
-import axios from "axios";
-import FacebookLogin from "react-facebook-login";
-import { TiSocialFacebookCircular } from "react-icons/ti";
-import { GoogleLogin } from "react-google-login";
-import { Link } from "react-router-dom";
-import DoubleAuth from "./DoubleAuth";
-import CircularProgress from "@material-ui/core/CircularProgress";
+} from '../../redux/cartReducer/cartActions';
+import { modifyCart } from '../../redux/iconReducer/iconActions';
+import axios from 'axios';
+import FacebookLogin from 'react-facebook-login';
+import { TiSocialFacebookCircular } from 'react-icons/ti';
+import { GoogleLogin } from 'react-google-login';
+import { Link } from 'react-router-dom';
+import DoubleAuth from './DoubleAuth';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 export default function Signup() {
   const dispatch = useDispatch();
@@ -41,20 +41,20 @@ export default function Signup() {
       dispatch(GLogin(response));
     } catch (e) {
       Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "algo ha salido mal!",
-        confirmButtonColor: "#378a19",
+        icon: 'error',
+        title: 'Oops...',
+        text: 'algo ha salido mal!',
+        confirmButtonColor: '#378a19',
       });
     }
   };
 
   const responseRejectGoogle = (response) => {
     Swal.fire({
-      icon: "error",
-      title: "Oops...",
-      text: "algo ha salido mal!",
-      confirmButtonColor: "#378a19",
+      icon: 'error',
+      title: 'Oops...',
+      text: 'algo ha salido mal!',
+      confirmButtonColor: '#378a19',
     });
   };
   const responseFacebook = (response) => {
@@ -63,10 +63,10 @@ export default function Signup() {
       dispatch(FLogin(response.accessToken, response.userID));
     } catch (e) {
       Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "algo ha salido mal!",
-        confirmButtonColor: "#378a19",
+        icon: 'error',
+        title: 'Oops...',
+        text: 'algo ha salido mal!',
+        confirmButtonColor: '#378a19',
       });
     }
     // if (!response.status) {
@@ -90,24 +90,24 @@ export default function Signup() {
   //Session iniciada D:
   const productCart = useSelector((state) => state.cartReducer.cart);
   const [input, setInput] = useState({
-    uname: "",
-    psw: "",
+    uname: '',
+    psw: '',
   });
   const [errors, setErrors] = useState({});
 
   function validateLogin(input) {
     let errors = {};
     if (!input.uname) {
-      errors.username = "Email es requerido";
+      errors.username = 'Email es requerido';
     } else if (!/\S+@\S+\.\S+/.test(input.uname)) {
-      errors.username = "Email no es valido";
+      errors.username = 'Email no es valido';
     }
     if (!input.psw) {
-      errors.password = "Contrseña es requerida";
+      errors.password = 'Contrseña es requerida';
     } else if (
       !/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/.test(input.psw)
     ) {
-      errors.password = "Contraseña no es valida";
+      errors.password = 'Contraseña no es valida';
     }
     return errors;
   }
@@ -126,17 +126,16 @@ export default function Signup() {
   };
   const sessionSubmit = async (e) => {
     e.preventDefault();
-    setActivate(false)
+    setActivate(false);
     dispatch(LoginAction(input.uname, input.psw));
-    
   };
 
   useEffect(() => {
     async function test() {
       if (log.isLogin) {
-        const userId = localStorage.getItem("user");
+        const userId = localStorage.getItem('user');
         history.push({
-          pathname: "/",
+          pathname: '/',
         });
         dispatch(totalPrice());
 
@@ -164,24 +163,23 @@ export default function Signup() {
   useEffect(() => {
     if (log.errorLogin) {
       Swal.fire({
-        icon: "error",
-        title: "Oops...",
+        icon: 'error',
+        title: 'Oops...',
         text: log.error,
-        confirmButtonColor: "#378a19",
+        confirmButtonColor: '#378a19',
       });
       dispatch(LogFailHandle());
     }
   }, [log.errorLogin]);
 
   useEffect(() => {
-    
     if (log.isDoubleAuth) {
       swal(
-        "Aviso!",
-        "Hemos enviado un codigo de verificacion a tu email",
-        "success"
-      );     
-      setActivate(true)      
+        'Aviso!',
+        'Hemos enviado un codigo de verificacion a tu email',
+        'success'
+      );
+      setActivate(true);
     }
   }, [log.isDoubleAuth]);
 
@@ -189,38 +187,38 @@ export default function Signup() {
   const [activate, setActivate] = useState(true);
   const [show, setShow] = useState(null);
   const [user, setUser] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
   });
   const [errorsCreate, setErrorsCreate] = useState({});
   function validateCreate(user) {
     let errors = {};
     if (!user.email) {
-      errors.username = "Email es requerido";
+      errors.username = 'Email es requerido';
     } else if (!/\S+@\S+\.\S+/.test(user.email)) {
-      errors.email = "Email no es valido";
+      errors.email = 'Email no es valido';
     }
     if (!user.password) {
-      errors.password = "Contrseña es requerida";
+      errors.password = 'Contrseña es requerida';
     } else if (
       !/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/.test(user.password)
     ) {
       errors.password = "Debe contener 'a' 'A' '1' !' y largo 8 ";
     }
     if (!user.confirmPassword) {
-      errors.confirmPassword = "Contrseña es requerida";
+      errors.confirmPassword = 'Contrseña es requerida';
     } else if (user.password !== user.confirmPassword) {
-      errors.confirmPassword = "Las contraseñas no coinciden";
+      errors.confirmPassword = 'Las contraseñas no coinciden';
     }
 
     return errors;
   }
 
   const signUpButton = () => {
-    setShow("right-panel-active");
+    setShow('right-panel-active');
   };
   const signInButton = () => {
     setShow(null);
@@ -255,17 +253,17 @@ export default function Signup() {
   useEffect(() => {
     if (post.success) {
       Swal.fire({
-        title: "Listo, El usuario ha sido creado",
-        confirmButtonColor: "#378a19",
+        title: 'Listo, El usuario ha sido creado',
+        confirmButtonColor: '#378a19',
       });
 
       dispatch(PostSuccess());
       setUser({
-        firstName: "",
-        lastName: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
       });
     }
   }, [post.success]);
@@ -273,10 +271,10 @@ export default function Signup() {
   useEffect(() => {
     if (post.errorMail) {
       Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "No lo se rick, parece que este mail se encuentra registrado",
-        confirmButtonColor: "#378a19",
+        icon: 'error',
+        title: 'Oops...',
+        text: 'No lo se rick, parece que este mail se encuentra registrado',
+        confirmButtonColor: '#378a19',
       });
       dispatch(SwalBooC());
     }
@@ -324,7 +322,7 @@ export default function Signup() {
                       placeholder="Email..."
                       value={user.email}
                       onChange={userChange}
-                      className={`${errorsCreate.email && "danger"}`}
+                      className={`${errorsCreate.email && 'danger'}`}
                     />
                     {errorsCreate.email && (
                       <p className="danger">{errorsCreate.email}</p>
@@ -335,7 +333,7 @@ export default function Signup() {
                       placeholder="contraseña"
                       value={user.password}
                       onChange={userChange}
-                      className={`${errorsCreate.password && "danger"}`}
+                      className={`${errorsCreate.password && 'danger'}`}
                     />
                     {errorsCreate.password && (
                       <p className="danger">{errorsCreate.password}</p>
@@ -346,7 +344,7 @@ export default function Signup() {
                       placeholder="confirme contraseña..."
                       value={user.confirmPassword}
                       onChange={userChange}
-                      className={`${errorsCreate.confirmPassword && "danger"}`}
+                      className={`${errorsCreate.confirmPassword && 'danger'}`}
                     />
                     {errorsCreate.confirmPassword && (
                       <p className="danger">{errorsCreate.confirmPassword}</p>
@@ -366,7 +364,7 @@ export default function Signup() {
                       loginHint="Hola"
                       onSuccess={responseSuccessGoogle}
                       onFailure={responseRejectGoogle}
-                      cookiePolicy={"single_host_origin"}
+                      cookiePolicy={'single_host_origin'}
                       className="google-login-button"
                     />
                     <FacebookLogin
@@ -387,7 +385,7 @@ export default function Signup() {
 
                     <span>o usa tu cuenta</span>
                     <input
-                      className={`${errors.username && "danger"}`}
+                      className={`${errors.username && 'danger'}`}
                       type="text"
                       value={input.uname}
                       name="uname"
@@ -400,7 +398,7 @@ export default function Signup() {
                       ))}
                     <input
                       className={`${
-                        input.psw.length < 8 || (errors.password && "danger")
+                        input.psw.length < 8 || (errors.password && 'danger')
                       }`}
                       type="password"
                       value={input.psw}
@@ -451,7 +449,7 @@ export default function Signup() {
                 </div>
               </div>
               <div className="doble">
-                {log.isDoubleAuth ? <DoubleAuth /> : ""}
+                {log.isDoubleAuth ? <DoubleAuth /> : ''}
               </div>
             </div>
           ) : (

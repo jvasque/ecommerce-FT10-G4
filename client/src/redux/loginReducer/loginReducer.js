@@ -6,11 +6,9 @@ import {
   LOG_FAIL_HANDLE,
   DOUBLE_AUTH,
   ADMIN_LOGIN,
-} from "./loginActions";
-
+} from './loginActions';
 
 const initialState = {
-  user: {},
   error: {},
   errorLogin: false,
   isLogin: false,
@@ -21,7 +19,7 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case LOGIN_ACTION_KEY:
-      localStorage.setItem("user", JSON.stringify(action.payload.id));
+      localStorage.setItem('user', JSON.stringify(action.payload.id));
       return {
         ...state,
         user: action.payload,
@@ -37,7 +35,7 @@ export default (state = initialState, action) => {
         error: action.payload,
       };
     case LOG_OUT:
-      localStorage.removeItem("token");
+      localStorage.removeItem('token');
       return {
         ...state,
         user: {},
@@ -56,12 +54,12 @@ export default (state = initialState, action) => {
         isDoubleAuth: true,
       };
     case ADMIN_LOGIN:
-      localStorage.setItem("user", JSON.stringify(action.payload.id));
+      localStorage.setItem('user', JSON.stringify(action.payload.id));
       return {
         ...state,
         user: action.payload,
         isLogin: true,
-        isAdmin: action.payload.type.includes("admin"),
+        isAdmin: action.payload.type.includes('admin'),
         errorLogin: false,
         error: {},
         isDoubleAuth: false,

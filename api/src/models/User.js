@@ -64,6 +64,15 @@ module.exports = (sequelize) => {
     city: {
       type: DataTypes.STRING,
     },
+    capital: {
+      type: DataTypes.STRING,
+    },
+    street: {
+      type: DataTypes.STRING,
+    },
+    number: {
+      type: DataTypes.INTEGER,
+    },
     recoveryToken: {
       type: DataTypes.STRING,
     },

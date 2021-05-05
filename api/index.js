@@ -82,6 +82,7 @@ conn.sync({ force: true }).then(() => {
 
     //Order creation and association
     for (let i = 0; i < orders.length; i++) {
+     
       const findOrderDetail = await OrderDetail.findAll({
         where: {
           id: {
@@ -89,6 +90,7 @@ conn.sync({ force: true }).then(() => {
           },
         },
       });
+     
       const findPaymentMethod = await PaymentMethod.findByPk(
         orders[i].paymentMethod
       );
