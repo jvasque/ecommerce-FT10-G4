@@ -10,7 +10,7 @@ module.exports = async (req, res, next) => {
         state: "cart",
       },
     });
-
+console.log('adding cart', order)
     const product = await Product.findByPk(id);
 
     const findDuplicate = await OrderDetail.findAll({

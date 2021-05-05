@@ -3,6 +3,7 @@ import axios from "axios";
 import AdminOrderDetail from './AdminOrderDetail'
 import { sortById, sortByName, sortByQuantity, sortByPrice, sortByCost } from '../OrderHistory/FilterOrderDetail'
 import swal from 'sweetalert';
+import db from '../Map/firebase'
 
 import DivText from '../ProductCard/DivText'
 import "../../scss/components/AllOrders/_AdminOrderDetail.scss"
@@ -80,6 +81,9 @@ function SingleOrder({order, modify}){
                         }, {
                             headers: {Authorization: `Bearer ${token}`}
                          })
+                    
+                         //let dato = await db.collection('GPS')
+
                     }
                     //window.location.reload();       
                 }) 

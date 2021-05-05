@@ -13,7 +13,8 @@ export default function SendOrder() {
 
     async function getOrderHistory() {
         let data = await axios.get(`http://localhost:3001/users/${userId}/orders`)
-        const filter = data.data.filter(x => x.state === "created")
+        const filter = data?.data?.filter(x => x.state === "created")
+      
         setOrders(filter)
     }
 

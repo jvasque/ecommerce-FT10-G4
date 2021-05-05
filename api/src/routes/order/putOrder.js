@@ -19,6 +19,8 @@ module.exports = async (req, res) => {
       },
     });
 
+  
+
     order.firstName = firstName;
     order.lastName = lastName;
     order.state = state;
@@ -27,6 +29,8 @@ module.exports = async (req, res) => {
     order.address = address;
     order.phoneNumber = phoneNumber;
     await order.save();
+
+
 
     res.send(order);
   } catch (error) {
