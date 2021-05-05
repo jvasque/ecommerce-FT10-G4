@@ -1,22 +1,22 @@
-import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import axios from "axios";
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import axios from 'axios';
 
 // Material-UI
-import { withStyles } from "@material-ui/core/styles";
-import { green } from "@material-ui/core/colors";
-import Radio from "@material-ui/core/Radio";
-import RadioGroup from "@material-ui/core/RadioGroup";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import FormLabel from "@material-ui/core/FormLabel";
-import { FormControl, Button } from "@material-ui/core";
-import Swal from "sweetalert2";
+import { withStyles } from '@material-ui/core/styles';
+import { green } from '@material-ui/core/colors';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormLabel from '@material-ui/core/FormLabel';
+import { FormControl, Button } from '@material-ui/core';
+import Swal from 'sweetalert2';
 
 // styles
 const GreenRadio = withStyles({
   root: {
     color: green[400],
-    "&$checked": {
+    '&$checked': {
       color: green[600],
     },
   },
@@ -24,25 +24,23 @@ const GreenRadio = withStyles({
 })((props) => <Radio color="default" {...props} />);
 
 const buttons = {
-  backgroundColor: "#378a19",
-  color: "#f7f7f7",
+  backgroundColor: '#378a19',
+  color: '#f7f7f7',
 
   margin: 10,
 };
 
 // Component
-export const OptionsLocation = ({
-  onCloseModal,
-}) => {
+export const OptionsLocation = ({ onCloseModal }) => {
   const product = useSelector((state) => state.cartReducer.cart);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const [value, setValue] = useState();
   const [centers, setCenters] = useState([]);
 
   async function getLocations() {
     let data = await axios.get(`http://localhost:3001/locations`);
-    console.log("data", data.data);
+    console.log('data', data.data);
     const myArray = data.data.map((x) => x.unitsOnLocations);
     let idLocations = [];
     for (let i = 0; i < myArray.length; i++) {
@@ -69,11 +67,10 @@ export const OptionsLocation = ({
         idLocations.includes(distribution.id)
       ),
     ]);
-   
   }
 
   const handleChange = (event) => {
-     dispatch({type:"LOCATION", payload: event.target.value})
+    dispatch({ type: 'LOCATION', payload: event.target.value });
     setValue(event.target.value);
   };
 

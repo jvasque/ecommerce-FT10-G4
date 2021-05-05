@@ -20,17 +20,17 @@ export default function Successful() {
   useEffect(() => {
     async function stock() {
       swal(
-        "Tu compra ha sido completada!",
-        "Gracias por confiar en nosotros",
-        "success"
+        'Tu compra ha sido completada!',
+        'Gracias por confiar en nosotros',
+        'success'
       );
 
       dispatch(emptyCart());
       dispatch(reset());
 
       await axios.put(`http://localhost:3001/order/${userId}/state`, {
-        state: "created",
-        paypal: "Paypal"
+        state: 'created',
+        paypal: 'Paypal',
       });
       await axios.post(
         `http://localhost:3001/email/buy-confirmation`,
@@ -39,28 +39,29 @@ export default function Successful() {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      
-        let location = await axios.get(`http://localhost:3001/locations/${locationId}`);
 
-        let productsLocation = await location.data?.unitsOnLocations?.filter(
-          (location) => idProducts.includes(location.product.id)
+      let location = await axios.get(
+        `http://localhost:3001/locations/${locationId}`
+      );
+
+      let productsLocation = await location.data?.unitsOnLocations?.filter(
+        (location) => idProducts.includes(location.product.id)
+      );
+
+      for (let i = 0; i < productsLocation.length; i++) {
+        const el = productBuy.find(
+          (product) => product.id === productsLocation[i].product.id
         );
-  
-        for (let i = 0; i < productsLocation.length; i++) {
-          const el = productBuy.find(
-            (product) => product.id === productsLocation[i].product.id
-          );
-    
-          const stock = productsLocation[i].unitsOnStock - el.quantity;
-          await axios.put(
-            `http://localhost:3001/locations/unitsonlocation/${locationId}`,
-            {
-              productId: el.id,
-              stock: stock,
-            }
-          );
-        }
-      
+
+        const stock = productsLocation[i].unitsOnStock - el.quantity;
+        await axios.put(
+          `http://localhost:3001/locations/unitsonlocation/${locationId}`,
+          {
+            productId: el.id,
+            stock: stock,
+          }
+        );
+      }
 
       /*   const productSaved = cart.cart
 
@@ -73,13 +74,12 @@ export default function Successful() {
         })
 
       } */
-    
     }
 
     stock();
 
     history.push({
-      pathname: "/",
+      pathname: '/',
     });
   }, []);
 
