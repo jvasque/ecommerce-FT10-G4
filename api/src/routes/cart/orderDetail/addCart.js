@@ -1,4 +1,4 @@
-const { OrderDetail, Order, Product } = require("../../../db.js");
+const { OrderDetail, Order, Product, Promotion } = require("../../../db.js");
 
 module.exports = async (req, res, next) => {
   const { userId, id } = req.params;
@@ -10,14 +10,21 @@ module.exports = async (req, res, next) => {
         state: "cart",
       },
     });
-console.log('adding cart', order)
-    const product = await Product.findByPk(id);
+
+    const product = await Product.findOne({
+      where: {
+        id:id
+      },
+      include:{
+        model: Promotion
+      }
+    });
 
     const findDuplicate = await OrderDetail.findAll({
       where: {
         productId: id,
         orderId: order[0].id,
-      },
+      }
     });
     if (findDuplicate.length !== 0) {
       res.send("Ya existe ese producto");

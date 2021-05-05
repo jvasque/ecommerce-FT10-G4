@@ -1,35 +1,38 @@
 import React from "react";
 import { Route, Switch } from "react-router";
 
-import Home from "./components/Home/Home";
-import Nav from "./components/Nav/Nav";
-import NavBanner from "./components/Nav/NavBanner";
-import ProductDetails from "./components/ProductDetails/ProductDetails";
-import ProductForm from "./components/product_form/product_form";
-import ProductFormCreate from "./components/product_form/product_form_create";
-import ProductFormQuery from "./components/product_form/product_form_query";
-import ProductFormUpdate from "./components/product_form/product_form_update";
-import AllOrders from "./components/AllOrders/AllOrders";
-import OrderHistory from "./components/OrderHistory/OrderHistory";
+import Home from './components/Home/Home';
+import Nav from './components/Nav/Nav';
+import NavBanner from './components/Nav/NavBanner';
+import ProductDetails from './components/ProductDetails/ProductDetails';
+import ProductForm from './components/product_form/product_form';
+import ProductFormCreate from './components/product_form/product_form_create';
+import ProductFormQuery from './components/product_form/product_form_query';
+import ProductFormUpdate from './components/product_form/product_form_update';
+import ProductFormStock from './components/product_form/product_form_stock';
+import PromotionsCreate from './components/PromotionsForm/PromotionsCreate';
+import PromotionsModify from './components/PromotionsForm/PromotionsModify';
+import AllOrders from './components/AllOrders/AllOrders';
+import OrderHistory from './components/OrderHistory/OrderHistory';
 //import "./App.css";
-import Catalog from "./components/Catalog/Catalog.jsx";
-import Form from "./components/formCategories/Form";
-import "./scss/_App.scss";
-import Footer from "./components/Footer/Footer";
-import Cart from "./components/Cart/Cart";
-import Order from "./components/Order/Order";
-import Signup from "./components/Signup/Signup";
-import ManageAccount from "./components/Admin/ManageAccount";
-import AuthRoute from "./components/FrontAuth/AuthRoute";
-import UserScreen from "./components/UserScreen/UserScreen";
-import Newsletter from "./components/Newsletter/Newsletter";
-import Successful from "./components/Mercadopago/Successful";
-import ResetPassword from "./components/Admin/ResetPassword";
-import EmailPassword from "./components/Admin/EmailPassword";
-import SuccessfulPaypal from "./components/Paypal/Successful";
-import Maps from "./components/Map/Map";
-
-
+import Catalog from './components/Catalog/Catalog.jsx';
+import Form from './components/formCategories/Form';
+import './scss/_App.scss';
+import Footer from './components/Footer/Footer';
+import Cart from './components/Cart/Cart';
+import Order from './components/Order/Order';
+import Signup from './components/Signup/Signup';
+import ManageAccount from './components/Admin/ManageAccount';
+import AuthRoute from './components/FrontAuth/AuthRoute';
+import UserScreen from './components/UserScreen/UserScreen';
+import Newsletter from './components/Newsletter/Newsletter';
+import Successful from './components/Mercadopago/Successful';
+import ResetPassword from './components/Admin/ResetPassword';
+import EmailPassword from './components/Admin/EmailPassword';
+import SuccessfulPaypal from './components/Paypal/Successful';
+import MapContainer from './components/LocationStock/DistributionCenters';
+import AdminNewsletter from './components/Admin/AdminNewsletter';
+import Maps from './components/Map/Map'
 
 function App() {
   return (
@@ -37,6 +40,7 @@ function App() {
       <Route path="/" component={Nav} />
       <Route exact path="/" component={NavBanner} />
       <Route exact path="/" component={Home} />
+
       <Switch>
         <Route exact path="/map" component={Maps} />
         <Route exact path="/product/cart" component={Cart} />
@@ -48,6 +52,7 @@ function App() {
         <Route exact path="/reset/password/:token" component={ResetPassword} />
         <Route exact path="/forgot/email" component={EmailPassword} />
         <Route exact path="/order/completada" component={Successful} />
+        <Route exact path="/newsletter/prueba" component={AdminNewsletter} />
         <Route exact path="/:id" component={ProductDetails} />
         <Route exact path="/order/completada" component={Successful} />
         <Route exact path="/order/complete" component={SuccessfulPaypal} />
@@ -71,6 +76,21 @@ function App() {
             exact
             path="/admin/product/form/update"
             component={ProductFormUpdate}
+          />
+          <Route
+            exact
+            path="/admin/product/form/stock"
+            component={ProductFormStock}
+          />
+          <Route
+            exact
+            path="/admin/promotion/form/create"
+            component={PromotionsCreate}
+          />
+          <Route
+            exact
+            path="/admin/promotion/form/modify"
+            component={PromotionsModify}
           />
         </AuthRoute>
         <AuthRoute path="/user" type="user">

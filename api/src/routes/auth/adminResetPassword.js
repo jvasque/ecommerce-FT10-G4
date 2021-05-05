@@ -72,7 +72,8 @@ module.exports = async (req, res) => {
     </body>
     </html>
     `;
-
+   
+    // console.log(typeof htmlCreator)
     let mailOptions = {
       from: "AgroPlace <agroplaceofficial@gmail.com>",
       to: usuario.email,

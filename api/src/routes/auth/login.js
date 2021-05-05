@@ -9,7 +9,7 @@ module.exports = function (req, res, next) {
     { session: false },
     function (err, user, message) {
       if (err) return next(err);
-      else if (!user) return res.sendStatus(401).json(err);
+      else if (!user) return res.sendStatus(401);
       else return res.send(jwt.sign(user, SECRET_KEY));
     }
   )(req, res, next);

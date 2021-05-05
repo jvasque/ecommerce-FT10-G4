@@ -15,6 +15,8 @@
     "npm": ">=6.14.6"
   },
   "dependencies": {
+    "@tensorflow/tfjs": "^3.6.0",
+    "@tensorflow/tfjs-vis": "^1.5.1",
     "axios": "^0.21.1",
     "body-parser": "^1.19.0",
     "cookie-parser": "^1.4.5",
@@ -22,6 +24,7 @@
     "cors": "^2.8.5",
     "crypto": "^1.0.1",
     "dotenv": "^8.2.0",
+    "exceljs": "^4.2.1",
     "express": "^4.17.1",
     "firebase": "^8.4.3",
     "google-auth-library": "^7.0.4",
@@ -43,6 +46,7 @@
     "passport-twitter": "^1.0.4",
     "pg": "^8.3.0",
     "pug": "^3.0.2",
+    "read-excel-file": "^5.1.0",
     "sequelize": "^6.6.2"
   },
   "devDependencies": {

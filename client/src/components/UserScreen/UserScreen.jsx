@@ -6,6 +6,8 @@ import OrderHistory from '../OrderHistory/OrderHistory';
 import Favorites from '../Wishlist/Favorites';
 import Wishlists from '../Wishlist/Wishlists';
 import ProductForm from '../product_form/product_form';
+import PromotionsQuery from '../PromotionsForm/PromotionsQuery';
+
 import CategoriesForm from '../formCategories/Form';
 import AllOrders from '../AllOrders/AllOrders';
 import Newsletter from '../Newsletter/Newsletter';
@@ -196,7 +198,26 @@ export function UserScreen() {
           >
             Administrar productos
           </div>
-        ) : null}
+           ) : null}
+        {/* //prueba  */}
+        {login.isAdmin ? (
+          <div
+            id="CreatePromotion"
+            onClick={(e) => handleClick(e)}
+            style={
+              render === 'CreatePromotion'
+                ? {
+                    backgroundColor: 'var(--color-brand)',
+                    opacity: '50%',
+                    color: 'var(--color-light)',
+                  }
+                : { backgroundColor: '' }
+            }
+          >
+            Administrar promociones
+          </div>
+           ) : null}
+         {/*  //fin de prueba */}
         {login.isAdmin ? (
           <div
             id="ManageCategories"
@@ -285,7 +306,10 @@ export function UserScreen() {
           <AllOrders />
         ) : render === 'CreateProduct' ? (
           <ProductForm />
-        ) : render === 'ManageCategories' ? (
+        ) : render === 'CreatePromotion' ? (
+          <PromotionsQuery />
+        )
+          : render === 'ManageCategories' ? (
           <CategoriesForm />
         ) : render === 'ManageAccount' ? (
           <ManageAccount />

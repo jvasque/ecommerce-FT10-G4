@@ -1,0 +1,18 @@
+.container-newsletter {
+  display: flex;
+  justify-content: center;
+}
+
+.newsletter-form {
+  width: fit-content;
+  border-radius: 8px;
+  box-shadow: 1.5px 1px 1.5px 1px rgba(0, 0, 0, 0.2);
+  background-color: white;
+  margin-top: 2em;
+  padding: 1em 3em;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  text-size-adjust: inherit;
+  
+}

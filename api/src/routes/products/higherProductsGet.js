@@ -1,10 +1,18 @@
 const Sequelize = require('sequelize');
-const { Product } = require('../../db.js');
+const { Product, Promotion } = require('../../db.js');
 
 // /products/higher
 
 module.exports = async (req, res, next) => {
-  let totalProducts = await Product.findAndCountAll();
+  let totalProducts = await Product.findAndCountAll({
+    include: {
+      model: Promotion,
+      where: {
+        active: true,
+      },
+      required: false 
+    }
+  });
   // console.log(totalProducts)
   try {
     let sortedScores = totalProducts.rows.sort(function (a, b) {
@@ -23,9 +31,10 @@ module.exports = async (req, res, next) => {
       sortedScores[2],
       sortedScores[3],
     ];
+    if(fourSorted.includes(null)) return res.json({error: "no finded products"});
     return res.json(fourSorted).status(200);
   } catch (error) {
-    res.json(err);
-    return console.log(err);
+    res.json(error);
+    return console.log(error);
   }
 };
