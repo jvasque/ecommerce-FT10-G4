@@ -41,7 +41,7 @@ const categories = require('./src/data/categories');
 const subcategories = require('./src/data/subcategories');
 const favorites = require('./src/data/favorites');
 const locations = require('./src/data/locations');
-const newsletter = require('./src/data/newsletterOptions');
+const newsletter = require('./src/data/newsletter');
 const orderDetails = require('./src/data/orderDetails');
 const orders = require('./src/data/orders');
 const paymentMethods = require('./src/data/paymentMethods');
@@ -97,7 +97,7 @@ conn.sync({ force: true }).then(() => {
 
       const myOrder = await Order.create({
         state: orders[i].status,
-        totalPrice: orders[i].totalPrice
+        totalPrice: orders[i].totalPrice,
       });
       await myOrder.setOrderDetails(findOrderDetail);
       await myOrder.setPaymentMethod(findPaymentMethod);
@@ -110,7 +110,7 @@ conn.sync({ force: true }).then(() => {
         content: reviews[i].content,
       });
       const findOrderDetail = await OrderDetail.findByPk(i + 1);
-      findOrderDetail.setReview(myReview)
+      findOrderDetail.setReview(myReview);
     }
 
     //Product creation and association
@@ -152,7 +152,7 @@ conn.sync({ force: true }).then(() => {
       await myProduct.setCategories(findCategory);
       await myProduct.setSubCategories(findSubCategory);
       await myProduct.setOrderDetails(findOrderDetail);
-    }   
+    }
 
     // User creation and association
 
@@ -208,7 +208,7 @@ conn.sync({ force: true }).then(() => {
           email: users[i].email,
           password: users[i].password,
           phone: users[i].phone,
-          photoURL: users[i].photoURL || "",
+          photoURL: users[i].photoURL || '',
           address: users[i].address,
         },
       });
@@ -233,58 +233,62 @@ conn.sync({ force: true }).then(() => {
       await findUser.setOrders(findOrder);
     }
 
-    for(let i = 0; i < reviews.length; i++){
+    for (let i = 0; i < reviews.length; i++) {
       const theOrderDetail = await OrderDetail.findOne({
         where: {
-            id: i+1
+          id: i + 1,
         },
-        include: [{
-          model: Product,
-          attributes: ['id']
-        }]
-      })
-      const productReviewId = theOrderDetail.dataValues.productId
+        include: [
+          {
+            model: Product,
+            attributes: ['id'],
+          },
+        ],
+      });
+      const productReviewId = theOrderDetail.dataValues.productId;
       const theProduct = await Product.findOne({
         where: {
-          id: productReviewId
-        }
-      })
-      const theReview = await Review.findByPk(i+1)
-      theReview.setProduct(theProduct)      
+          id: productReviewId,
+        },
+      });
+      const theReview = await Review.findByPk(i + 1);
+      theReview.setProduct(theProduct);
     }
 
     //Locations and stock creation
-    const userLocation = await User.findByPk(1)
+    const userLocation = await User.findByPk(1);
     const locationsUser = await Location.bulkCreate(locations);
-    await userLocation.addLocations(locationsUser)
+    await userLocation.addLocations(locationsUser);
     await UnitsOnLocation.bulkCreate(unitsOnLocations);
-    for(let i = 0; i < unitsOnLocations.length; i++){
-      const units = await UnitsOnLocation.findByPk(i+1)
-      const loc = await Location.findByPk(unitsOnLocations[i].location)      
-      await units.setLocation(loc)
+    for (let i = 0; i < unitsOnLocations.length; i++) {
+      const units = await UnitsOnLocation.findByPk(i + 1);
+      const loc = await Location.findByPk(unitsOnLocations[i].location);
+      await units.setLocation(loc);
     }
 
-    //Association to several 
+    //Association to several
 
-    for(let i = 0; i < 5; i++){
-      const productStock = await Product.findByPk(i+1)
+    for (let i = 0; i < 5; i++) {
+      const productStock = await Product.findByPk(i + 1);
       const unitsLocProd = await UnitsOnLocation.findAll({
         where: {
           id: {
             [Op.in]: products[i].unitsLocId,
           },
         },
-      })
-      await productStock.addUnitsOnLocations(unitsLocProd)
+      });
+      await productStock.addUnitsOnLocations(unitsLocProd);
     }
 
     //Location everyone else
-    const locDefault = await Location.findByPk(1)
-    for(let i = 5; i < products.length; i++){
-      const prodStock = await Product.findByPk(i+1)
-      const unitsOnStock = await UnitsOnLocation.create({unitsOnStock: products[i].unitsOnStock})
-      await locDefault.addUnitsOnLocations(unitsOnStock)
-      await prodStock.addUnitsOnLocations(unitsOnStock)
+    const locDefault = await Location.findByPk(1);
+    for (let i = 5; i < products.length; i++) {
+      const prodStock = await Product.findByPk(i + 1);
+      const unitsOnStock = await UnitsOnLocation.create({
+        unitsOnStock: products[i].unitsOnStock,
+      });
+      await locDefault.addUnitsOnLocations(unitsOnStock);
+      await prodStock.addUnitsOnLocations(unitsOnStock);
     }
     console.log('Products and categories pre charged');
   });

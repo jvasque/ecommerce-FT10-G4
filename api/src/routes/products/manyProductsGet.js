@@ -1,5 +1,5 @@
-const Sequelize = require('sequelize');
-const { Product, Category } = require('../../db.js');
+const Sequelize = require("sequelize");
+const { Product, Category, Promotion } = require("../../db.js");
 
 // /products/filter?recommended=[true/false]
 
@@ -13,7 +13,15 @@ module.exports = async (req, res, next) => {
     randomDic = {};
 
   // TOTAL DE PRODUCTOS EN LA DB
-  let totalProducts = await Product.findAndCountAll();
+  let totalProducts = await Product.findAndCountAll({
+    include: {
+      model: Promotion,
+      where: {
+        active: true,
+      },
+      required: false,
+    },
+  });
 
   let randomProdIndices = [
     Math.floor(Math.random() * totalProducts.count),
@@ -31,34 +39,43 @@ module.exports = async (req, res, next) => {
     if (array && array.length) {
       favProducts = await Product.findAll({
         attributes: [
-          'id',
-          'name',
-          'description',
-          'unitPrice',
-          'picture',
-          'score',
+          "id",
+          "name",
+          "description",
+          "unitPrice",
+          "picture",
+          "score",
         ],
         where: {
           id: { [Sequelize.Op.in]: array },
         },
-        include: {
-          model: Category,
-          through: {
-            attributes: [],
+        include: [
+          {
+            model: Promotion,
+            where: {
+              active: true,
+            },
+            required: false,
           },
-        },
+          {
+            model: Category,
+            through: {
+              attributes: [],
+            },
+          },
+        ],
       });
 
       // console.log('Favoritos de DB:', favProducts);
 
       //Pide favoritos, tiene y no pide recommended, devuelvo favoritos
-      if (isRecommended !== 'true') {
+      if (isRecommended !== "true") {
         // console.log(favProducts);
         return res.json(favProducts).status(200); // CASE 1 return
       }
 
       //Pide recommended y tiene favoritos
-      if (req.query.recommended === 'true') {
+      if (req.query.recommended === "true") {
         recCategories = favProducts.map((product) => {
           return product.categories[0].id;
         });
@@ -89,13 +106,20 @@ module.exports = async (req, res, next) => {
             include: {
               model: Product,
               attributes: [
-                'id',
-                'name',
-                'description',
-                'unitPrice',
-                'picture',
-                'score',
+                "id",
+                "name",
+                "description",
+                "unitPrice",
+                "picture",
+                "score",
               ],
+              include: {
+                model: Promotion,
+                where: {
+                  active: true,
+                },
+                required: false,
+              },
               through: {
                 attributes: [],
               },
@@ -134,7 +158,7 @@ module.exports = async (req, res, next) => {
       }
     } else {
       // no tiene favoritos y no pide recommended
-      if (isRecommended !== 'true') {
+      if (isRecommended !== "true") {
         return res.send(null).status(204); // CASE 3
       }
 
@@ -142,6 +166,13 @@ module.exports = async (req, res, next) => {
       recProducts = await Product.findAll({
         where: {
           id: { [Sequelize.Op.in]: randomProdIndices },
+        },
+        include: {
+          model: Promotion,
+          where: {
+            active: true,
+          },
+          required: false,
         },
       });
 

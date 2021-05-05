@@ -77,7 +77,7 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
     },
     passwordResetExpires: {
-      type: DataTypes.REAL,
+      type: DataTypes.DATE,
     },
     resetPassword: {
       type: DataTypes.BOOLEAN,
@@ -93,14 +93,34 @@ module.exports = (sequelize) => {
       //   isEmail: true,
       // },
     },
-    linkedinUser: {
-      type: DataTypes.STRING,
+    secretCode: {
+      type: DataTypes.STRING(6),
       unique: true,
+    },
+    secretCodeExpires: {
+      type: DataTypes.DATE,
     },
     photoURL: {
       type: DataTypes.TEXT,
       allowNull: true,
     },
+    newsLetter: { // if u suscribr send daily news (1 for week)
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
+    },
+    promotion: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true
+    },
+    off: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true
+    },
+    information:{
+      type: DataTypes.BOOLEAN,
+      defaultValue: true
+    },
+   
   });
 
   User.generateSalt = function () {

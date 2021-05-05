@@ -15,6 +15,14 @@ function ProductCard({ product, setValidation}) {
 
   const dispatch = useDispatch();
 
+  let productPromotion = product.promotions || null;
+  if (productPromotion) {
+    //Los ordeno para tomar la mejor promocion para el consumidor, la mejor promocion quedara (en caso de existir) en la posicion 0
+    productPromotion = productPromotion.sort(
+      (a, b) => b.discountDate - a.discountDate
+    );
+  }
+
   const handleChange = (e, unitsOnStock) => {
     setQuantity(e.target.value);
     if (e.target.value > unitsOnStock) {
@@ -46,7 +54,20 @@ function ProductCard({ product, setValidation}) {
             <ScoreIcon score={product.score} />
           </p>
         </div>
-        <h2 className="cardPrice">{`USD$ ${product.unitPrice}`}</h2>
+        {!productPromotion?.length > 0 && <h2 className="cardPrice">Precio: USD${product.unitPrice}</h2>}
+              {productPromotion?.length > 0 &&
+                productPromotion[0].discountDate && (
+                  <>
+                    <h2
+                      className="cardPrice"
+                    >{`USD$${(
+                      product.unitPrice-(
+                        product.unitPrice *
+                      (productPromotion[0].discountDate / 100))
+                    ).toFixed(2)}`} | <i>{`${productPromotion[0].discountDate}% OFF`}</i></h2>
+                    <del style={{color: "#aaa", fontSize:"15px"}}>Precio: USD${`${product.unitPrice}`}</del>
+                  </>
+                )}
         <h3>{product.name}</h3>
       </div>
       <div className="cartOptions">

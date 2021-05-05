@@ -8,11 +8,11 @@ import axios from 'axios';
 const Paypal = ({ dataClient }) => {
   const cart = useSelector((state) => state.cartReducer);
   const id = JSON.parse(localStorage.getItem('user'));
-  const idLocation = JSON.parse(localStorage.getItem('distributionNumber'))
+  const idLocation = JSON.parse(localStorage.getItem('distributionNumber'));
   const history = useHistory();
 
   useEffect(() => {
-    const a = async () =>{
+    const a = async () => {
       await axios.put(`http://localhost:3001/order/orders/${id}`, {
         firstName: dataClient.firstName,
         lastName: dataClient.lastName,
@@ -23,9 +23,7 @@ const Paypal = ({ dataClient }) => {
         phoneNumber: dataClient.phoneNumber,
         totalPrice: cart.total,
       });
-      
-      
-    }
+    };
 
     a();
   });
@@ -63,10 +61,7 @@ const Paypal = ({ dataClient }) => {
           //     })
           //   });
           // });
-          
-          
 
-          
           history.push('/order/complete');
         }}
       />

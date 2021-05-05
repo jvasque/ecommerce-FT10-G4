@@ -7,30 +7,16 @@
     color: var(--color-brand);
   }
 
+  a {
+    text-decoration: none;
+  }
+
   .contBtnProdForm {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: center;
     align-items: center;
-
-    button {
-      background-color: var(--color-brand-light);
-      padding: 1.5vh 3vw;
-      border: transparent;
-      box-shadow: 2px 2px 2px var(--color-brand);
-      margin: 0 10px;
-
-      &:hover {
-        background-color: var(--color-brand);
-        box-shadow: 2px 2px 2px #164b03;
-        position: relative;
-        top: -5px;
-      }
-      &:active {
-        background-color: var(--color-sun);
-        box-shadow: 2px 2px 2px orange;
-      }
-    }
+   
   }
 }
