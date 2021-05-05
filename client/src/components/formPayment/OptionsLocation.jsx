@@ -37,10 +37,8 @@ export const OptionsLocation = ({
   const product = useSelector((state) => state.cartReducer.cart);
   const dispatch = useDispatch()
 
-  const [value, setValue] = useState(false);
-  const [centers, setCenters] = useState([
-    { address: "Enviar a mi dirección", city: "", province: "", id: false },
-  ]);
+  const [value, setValue] = useState();
+  const [centers, setCenters] = useState([]);
 
   async function getLocations() {
     let data = await axios.get(`http://localhost:3001/locations`);

@@ -45,9 +45,7 @@ export default function Successful({ payment }) {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-
-
-      if(locationId !== "false") {
+      
         let location = await axios.get(`http://localhost:3001/locations/${locationId}`);
 
         let productsLocation = await location.data?.unitsOnLocations?.filter(
@@ -68,9 +66,9 @@ export default function Successful({ payment }) {
             }
           );
         }
-      } else {
+      
 
-        const productSaved = cart.cart
+      /*   const productSaved = cart.cart
 
         for(let i =0; i<productSaved.length; i++) {
           const stock = productSaved[i].unitsOnStock - productSaved[i].quantity
@@ -80,10 +78,7 @@ export default function Successful({ payment }) {
              }
         })
 
-      }
-
-      }
-
+      } */
     
     }
 
