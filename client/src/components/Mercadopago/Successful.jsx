@@ -19,6 +19,10 @@ export default function Successful({ payment }) {
 
   const locationId = cart.location
 
+  const productSaved = cart.cart
+
+  console.log(productSaved);
+
 
   useEffect(() => {
     async function stock() {
@@ -42,42 +46,45 @@ export default function Successful({ payment }) {
         }
       );
 
-      let location = await axios.get(`http://localhost:3001/locations/${locationId}`);
 
-      let productsLocation = await location.data?.unitsOnLocations?.filter(
-        (location) => idProducts.includes(location.product.id)
-      );
+      if(locationId !== "false") {
+        let location = await axios.get(`http://localhost:3001/locations/${locationId}`);
 
-      
-  
-      for (let i = 0; i < productsLocation.length; i++) {
-        const el = cart.cart.find(
-          (product) => product.id === productsLocation[i].product.id
+        let productsLocation = await location.data?.unitsOnLocations?.filter(
+          (location) => idProducts.includes(location.product.id)
         );
   
-        const stock = productsLocation[i].unitsOnStock - el.quantity;
-        await axios.put(
-          `http://localhost:3001/locations/unitsonlocation/${locationId}`,
-          {
-            productId: el.id,
-            stock: stock,
-          }
-        );
+        for (let i = 0; i < productsLocation.length; i++) {
+          const el = cart.cart.find(
+            (product) => product.id === productsLocation[i].product.id
+          );
+    
+          const stock = productsLocation[i].unitsOnStock - el.quantity;
+          await axios.put(
+            `http://localhost:3001/locations/unitsonlocation/${locationId}`,
+            {
+              productId: el.id,
+              stock: stock,
+            }
+          );
+        }
+      } else {
+
+        const productSaved = cart.cart
+
+        for(let i =0; i<productSaved.length; i++) {
+          const stock = productSaved[i].unitsOnStock - productSaved[i].quantity
+         await axios.put(`http://localhost:3001/products/${productSaved[i].id}`, {
+             params: {
+                 unitsOnStock: stock
+             }
+        })
+
       }
-      
 
-      //     for(let i =0; i<productSaved.length; i++) {
-      //         const stock = productSaved[i].unitsOnStock - productSaved[i].quantity
-      //         await axios.put(`http://localhost:3001/products/${productSaved[i].id}`, {
-      //             params: {
-      //                 unitsOnStock: stock
-      //             }
-      //         })
+      }
 
-      //     }
-
-      //Traer los productos de la location, sacar los que coinciden con el id de
-      // los productos del cart y restar unitsOnStock-quantity hacer put
+    
     }
 
     stock();

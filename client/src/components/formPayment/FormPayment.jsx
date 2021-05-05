@@ -84,9 +84,12 @@ const FormPayment = () => {
   useEffect(() => {
     input.firstName.length !== 0 &&
     input.lastName.length !== 0 &&
-    input.address.length !== 0 &&
+    input.provincia.length !== 0 &&
     input.email.includes("@") &&
-    input.phoneNumber.length !== 0
+    input.phoneNumber.length !== 0 &&
+    input.capital.length !==0 &&
+    input.numberAddr.length !== 0 &&
+    input.street.length !== 0 
       ? setShowPaypal(true)
       : setShowPaypal(false);
     
