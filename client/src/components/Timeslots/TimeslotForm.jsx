@@ -27,9 +27,9 @@ function TimeslotForm() {
   useEffect(() => {                   
     hoursArray = ['9','10','11','12','13','14','15','16','17'];    
     
-    if (unavailableTimeslots.oneDay && unavailableTimeslots.oneDay.length)       
+    if (unavailableTimeslots?.oneDay && unavailableTimeslots?.oneDay.length)       
     {
-      unavailableTimeslots.oneDay.map(timeslot => { 
+      unavailableTimeslots?.oneDay.map(timeslot => { 
         
         hoursArray = hoursArray.filter((h) => timeslot.time != h);
         console.log(hoursArray);
@@ -40,7 +40,7 @@ function TimeslotForm() {
 
     return () => {
     }
-  }, [unavailableTimeslots.oneDay])
+  }, [unavailableTimeslots?.oneDay])
   
 
   useEffect(() => {
