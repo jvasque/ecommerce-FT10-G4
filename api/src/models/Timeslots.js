@@ -4,7 +4,7 @@ const { DataTypes } = require('sequelize');
 module.exports = (sequelize) => {
   sequelize.define('timeslots', {
     date: {
-      type: DataTypes.DATEONLY, //"2021-02-01"
+      type: DataTypes.DATEONLY, //"2021-02-01        
       allowNull: false,
       unique: false,
     },

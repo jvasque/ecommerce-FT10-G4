@@ -1,10 +1,12 @@
 const { Op } = require('sequelize');
 const { Location, Timeslots } = require('../../db.js');
+const { addDays } = require("date-fns");
 
 module.exports = async (req, res) => {
   const locationId = parseInt(req.params.id);
 
   let today = new Date();
+  let weekEnd = addDays(today,7);
 
   const location = await Location.findOne({
     where: {
@@ -14,7 +16,7 @@ module.exports = async (req, res) => {
       model: Timeslots,
       where: {
         capacity: 0,
-        date: { [Op.gt]: today },
+        date: { [Op.between]: [today, weekEnd] },
       },
       attributes: ['id', 'date', 'time', 'capacity'],
     },
@@ -26,7 +28,6 @@ module.exports = async (req, res) => {
         id: timeslot.dataValues.id,
         date: timeslot.dataValues.date,
         time: timeslot.dataValues.time,
-        capacity: timeslot.dataValues.capacity,
       };
     });
     return res.json(disabledDates);

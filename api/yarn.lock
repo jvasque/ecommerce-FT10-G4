@@ -1228,6 +1228,11 @@
   dependencies:
     "assert-plus" "^1.0.0"
 
+"date-fns@^2.21.2":
+  "integrity" "sha512-FMkG7pIPx64mGIpS2LOb3Wp3O606H/hatoiz7G0oiYWai1izdM4tF1dd7QABv2NogkIDI4wxsfLLFQSuVvDHgA=="
+  "resolved" "https://registry.npmjs.org/date-fns/-/date-fns-2.21.2.tgz"
+  "version" "2.21.2"
+
 "dayjs@^1.8.34":
   "integrity" "sha512-RI/Hh4kqRc1UKLOAf/T5zdMMX5DQIlDxwUe3wSyMMnEbGunnpENCdbUgM+dW7kXidZqCttBrmw7BhN4TMddkCw=="
   "resolved" "https://registry.npmjs.org/dayjs/-/dayjs-1.10.4.tgz"

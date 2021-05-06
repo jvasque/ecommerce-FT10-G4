@@ -4,42 +4,86 @@ import DatePicker from 'react-datepicker'
 // import '../../scss/components/LocationStock/_TimeslotForm.scss';
 import "react-datepicker/dist/react-datepicker.css";
 import { addDays } from "date-fns";
-import { getTimes } from '../../redux/locationReducer/locationActions';
+import { getTimes, createTimeslot, resetTimeslot } from '../../redux/locationReducer/locationActions';
+import swal from 'sweetalert';
 
 function TimeslotForm({ closeModal, center }) {
 
   const dispatch = useDispatch();
 
   const [startDate, setStartDate] = useState(null);
-  const [unavailableDay, setUnavailableDay] = useState(false);
   const [input, setInput] = useState({
-    date: startDate,
+    date: '',
     time: '',
     userId: JSON.parse(localStorage.getItem('user')),
     locationId: 1,//center.id
   });
+  const [hours,setHours] = useState(['9','10','11','12','13','14','15','16','17']);
   const unavailableTimeslots = useSelector((state) => state.locationReducer.unavailableTimeslots);
+  const createdTimeslot = useSelector((state) => state.locationReducer.createdTimeslot);
+  let array = hours;
+  
+  useEffect(() => {               
+    setHours(['9','10','11','12','13','14','15','16','17']);
+    
+    if (unavailableTimeslots.oneDay && unavailableTimeslots.oneDay.length)
+            
+    array = hours;    
+    
+    {
+      unavailableTimeslots.oneDay.map(timeslot => { 
+        
+        array = array.filter((h) => timeslot.time != h);
+        console.log(array);
+      })
+      setHours(array)
+    };
+    return () => {
+    }
+  }, [unavailableTimeslots.oneDay])
   
 
   useEffect(() => {
-    dispatch(getTimes(input.locationId));
-    if ( unavailableTimeslots.length === 9 ) {
-      setUnavailableDay(true);
+    if (startDate) {
+      setInput({
+        ...input,
+        date: startDate,
+      });
+
+    dispatch(getTimes( input.locationId, startDate ));
     }
     return () => {
     }
-  }, []);
+  }, [startDate]);
+
+  useEffect(() => {
+    if (createdTimeslot && !createdTimeslot.error) {    
+    swal(`Se ha creado un turno el día ${createdTimeslot.date} a las ${createdTimeslot.time}:00 hs.`);
+    dispatch(resetTimeslot())
+    }
+    return () => {
+    }
+  }, [createdTimeslot])
+
 
   const handleInputChange = function (e) {
+    let value = e.target.value;
+    value = value.toString()
+    console.log(typeof value)
+
     setInput({
       ...input,
-      [e.target.name]: e.target.value,
+      time: value,
     });
   };
 
   const handleSubmit = function (e) {
-    // dispatch crear turno
-    // closeModal();
+    e.preventDefault()
+    if(startDate){
+      dispatch(createTimeslot(input));
+    }else{
+      swal('Seleccione una fecha')
+    }
   };
 
   return (
@@ -56,30 +100,42 @@ function TimeslotForm({ closeModal, center }) {
           <DatePicker
             selected={startDate}
             onChange={date => setStartDate(date)}
-            includeDates={[new Date(), addDays(new Date(), 1)]}
+            // includeDates={[new Date(), addDays(new Date(), 2)]}
+            dateFormat="dd/MM/yyyy"
+            minDate={new Date()}
+            maxDate={addDays(new Date(), 7)}
             placeholderText="Turnos disponibles"
           />
           </div>
+
+          { startDate && 
           <div className='time'>Hora:
-            <select value={input.time} onChange={handleInputChange} name='time'>
-              <option value="9">9:00 hs</option>
-              <option value="10">10:00 hs</option>
-              <option value="11">11:00 hs</option>
-              <option value="12">12:00 hs</option>
-              <option value="13">13:00 hs</option>
-              <option value="14">14:00 hs</option>
-              <option value="15">15:00 hs</option>
-              <option value="16">16:00 hs</option>
-              <option value="17">17:00 hs</option>
+            { hours && hours.length ?
+            <select value={input.time} onChange={(e) => handleInputChange(e)} name='time'>
+              {
+                hours.map(h => (
+                  <option value={h}>{h}:00 hs</option>
+                ))
+              }
             </select>
-          </div>        
+            : <p>No hay horarios disponibles para ese día</p>
+            }
+          </div>
+        }        
         </div>
-       
+        { hours && hours.length ?
         <button          
           type="submit"
         >
           Generar turno
         </button>
+        : <button          
+        type="submit"
+        disabled={true}
+      >
+        Generar turno
+      </button>
+      }
       </form>
     </div>
   );

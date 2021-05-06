@@ -9,6 +9,8 @@ export const RESET_DELETED = 'RESET_DELETED';
 export const GET_CENTERS = 'GET_CENTERS';
 export const DELETE_CENTER = 'DELETE_CENTER';
 export const GET_TIMES = 'GET_TIMES';
+export const CREATE_TIMESLOT = 'CREATE_TIMESLOT';
+export const RESET_TIMESLOT = 'RESET_TIMESLOT';
 
 export function createLocation({ street, city, addressNumber, userId }) {
   return async function (dispatch) {
@@ -137,14 +139,78 @@ export function deleteCenter(id) {
     });
   };
 };
-export function getTimes(id) {
+export function getTimes(id, day) {
   return async function (dispatch) {
-    let times = await axios.post(
+    let times = await axios.get(
       `http://localhost:3001/locations/${id}/timeslots`
     );
+    // console.log(times)// 12/08/2019
+    // console.log("DB: ",times.data[0].date, typeof times.data[0].date,"\n","Param: ", day, typeof day)
+
+    let unavailablePerDay = null;    
+    
+    if (day) {
+      //setting day to the right format
+      day = day.toString();
+      console.log(day);
+      day = day.split(" ").splice(1,3);
+      console.log(day);
+      
+      let months = {
+        "Jan": "01",
+        "Feb": "02",
+        "Mar": "03",
+        "Apr": "04",
+        "May": "05",
+        "Jun": "06",
+        "Jul": "07",
+        "Aug": "08",
+        "Sep": "09",
+        "Oct": "10",
+        "Nov": "11",
+        "Dec": "12",  
+      }
+      day[0] = months[day[0]];
+      day = day[2]+'-'+day[0]+'-'+day[1]
+      
+      console.log(day)
+      
+      if (times.data && times.data.length)
+      { unavailablePerDay = times.data.filter((time) => time.date===day) }
+    };
+
+    let obj = {
+      oneDay: unavailablePerDay,
+      allDays: times.data,
+    }    
+
+    console.log(obj);
     dispatch({
       type: GET_TIMES,
-      payload: times.data,
+      payload: obj
     });
   };
 };
+
+export function createTimeslot(input) {
+  return async function (dispatch) {
+    let timeslot = await axios.post(
+      `http://localhost:3001/locations/${input.locationId}/timeslots`, input
+    );
+      console.log("timeslot: ", timeslot)
+      console.log('input: ', input)
+
+    dispatch({
+      type: CREATE_TIMESLOT,
+      payload: timeslot.data,
+    });
+  };
+};
+
+export function resetTimeslot() {
+  return function (dispatch) {
+    dispatch({
+      type: RESET_TIMESLOT,
+    });
+  };
+}
