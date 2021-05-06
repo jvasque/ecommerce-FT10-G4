@@ -28,8 +28,6 @@ passport.use(
         firstName,
         lastName,
         email: userEmail,
-        address,
-        phone,
         photoURL,
         phone,
         adress,
