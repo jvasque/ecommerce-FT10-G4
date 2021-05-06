@@ -9,6 +9,7 @@ import {
 } from './loginActions';
 
 const initialState = {
+  user: {},
   error: {},
   errorLogin: false,
   isLogin: false,
@@ -24,7 +25,7 @@ export default (state = initialState, action) => {
         ...state,
         user: action.payload,
         isLogin: true,
-        // isAdmin: action.payload.type.includes("admin"),
+        //isAdmin: action.payload.type.includes("admin"),
         errorLogin: false,
         error: {},
       };

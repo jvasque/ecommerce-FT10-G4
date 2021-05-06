@@ -30,7 +30,6 @@ import Successful from './components/Mercadopago/Successful';
 import ResetPassword from './components/Admin/ResetPassword';
 import EmailPassword from './components/Admin/EmailPassword';
 import SuccessfulPaypal from './components/Paypal/Successful';
-import MapContainer from './components/LocationStock/DistributionCenters';
 import AdminNewsletter from './components/Admin/AdminNewsletter';
 
 function App() {
@@ -44,9 +43,6 @@ function App() {
         {/* <Route exact path="/map" component={MapContainer} /> */}
         <Route exact path="/product/cart" component={Cart} />
         <Route exact path="/catalog" component={Catalog} />
-
-        {/* <Route exact path="/map" component={MapContainer} /> */}
-
         <Route exact path="/user/login" component={Signup} />
         <Route exact path="/reset/password/:token" component={ResetPassword} />
         <Route exact path="/forgot/email" component={EmailPassword} />

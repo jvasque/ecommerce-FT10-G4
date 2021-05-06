@@ -8,10 +8,13 @@ const locationPut = require('./locationPut');
 const addProductToLocation = require('./addProductToLocation');
 const unitsOnLocationPut = require('./unitsonlocationput');
 const removeProductToLocation = require('./removeProductToLocation');
+const timeslotsGet = require('./timeslotsGet');
+const timeslotsPost = require('./timeslotsPost');
+
 // Middlewares
 router.use(express.json());
 
-// User routes
+// Locations routes
 router.get('/', locationGet);
 router.post('/', locationPost);
 
@@ -23,5 +26,8 @@ router.put('/:id', locationPut);
 router.post('/delete/:id', locationDelete);
 router.get('/:id', locationGetId);
 router.put('/unitsonlocation/:id', unitsOnLocationPut);
+// timeslot routes
+router.get('/:id/timeslots', timeslotsGet);
+router.post('/:id/timeslots', timeslotsPost);
 
 module.exports = router;

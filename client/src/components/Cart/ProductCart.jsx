@@ -51,7 +51,7 @@ function ProductCard({ product, setValidation}) {
       <div className="cartContent">
         <div className="cardData">
           <p className="starIcon">
-            <ScoreIcon score={product.score} />
+            <ScoreIcon score={Math.round(product.score)} />
           </p>
         </div>
         {!productPromotion?.length > 0 && <h2 className="cardPrice">Precio: USD${product.unitPrice}</h2>}

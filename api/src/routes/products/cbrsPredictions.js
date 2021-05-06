@@ -77,15 +77,15 @@ module.exports = async (req, res, next) => {
                 })
             })
 
-            let favoriteProducts = user.dataValues.favorite.dataValues.products.map(product => {
-                return product.dataValues.id
-            });
-            favoriteProducts.forEach(product => {
-                R[product-1][i] = 1
-                if(Y[product-1][i] < 1){
-                    Y[product-1][i] = 0.5
-                }            
-            })
+            // let favoriteProducts = user.dataValues.favorite.dataValues.products.map(product => {
+            //     return product.dataValues.id
+            // });
+            // favoriteProducts.forEach(product => {
+            //     R[product-1][i] = 1
+            //     if(Y[product-1][i] < 1){
+            //         Y[product-1][i] = 0.5
+            //     }            
+            // })
     
             let wishlistProducts = user.dataValues.wishlists.map(wishlist => {
                 return wishlist.dataValues.products.map(product => {

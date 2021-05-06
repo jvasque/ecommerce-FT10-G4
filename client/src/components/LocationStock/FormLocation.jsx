@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 // import { useHistory } from 'react-router';
 import '../../scss/components/LocationStock/_FormLocation.scss';
-import Swal from 'sweetalert2';
-import swal from 'sweetalert';
 import { createLocation } from '../../redux/locationReducer/locationActions';
 
 function FormLocation({ closeModal }) {
