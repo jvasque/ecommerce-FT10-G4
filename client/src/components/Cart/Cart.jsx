@@ -15,8 +15,6 @@ import { reset } from '../../redux/iconReducer/iconActions';
 
 // React components
 import ProductCart from './ProductCart';
-
-import swal from "sweetalert"
 import TimeslotForm from '../Timeslots/TimeslotForm'
 
 function Cart() {

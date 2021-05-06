@@ -17,12 +17,13 @@
   }
 
   button {
-    margin: 10px 1px;
+    margin: 30px 1px;
     height: 3.7rem;
     background-color: #0070ba;
     color: #fff;
     margin-left: none;
     font-weight: bolder;
+    
 
     &:hover {
       background-color: #009ee3;
@@ -34,6 +35,23 @@
     width: 100%;
   }
 
- 
+ .Button{
+  margin-top: 30px 1px;
+  height: 3.7rem;
+  background-color: #0070ba;
+  color: #fff;
+  
+  font-weight: bolder;
+  width: 530px;
+
+  &:hover {
+    background-color: #009ee3;
+    box-shadow: 2px 2px 2px #0070ba;
+  }
+ }
+
+ .button-forward-reverse{
+  background-color: rgb(55, 138, 25)
+ }
 
 }

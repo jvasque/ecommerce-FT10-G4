@@ -26,12 +26,12 @@ function TimeslotForm({ closeModal, center }) {
   useEffect(() => {               
     setHours(['9','10','11','12','13','14','15','16','17']);
     
-    if (unavailableTimeslots.oneDay && unavailableTimeslots.oneDay.length)
+    if (unavailableTimeslots?.oneDay && unavailableTimeslots?.oneDay?.length)
             
     array = hours;    
     
     {
-      unavailableTimeslots.oneDay.map(timeslot => { 
+      unavailableTimeslots?.oneDay.map(timeslot => { 
         
         array = array.filter((h) => timeslot.time != h);
         console.log(array);
@@ -40,7 +40,7 @@ function TimeslotForm({ closeModal, center }) {
     };
     return () => {
     }
-  }, [unavailableTimeslots.oneDay])
+  }, [unavailableTimeslots?.oneDay])
   
 
   useEffect(() => {

@@ -29,7 +29,7 @@ const Paypal = ({ dataClient }) => {
   });
 
   return (
-    <div>
+    <div >
       <PayPalButton
         style={{ color: 'blue' }}
         createOrder={(data, actions) => {
