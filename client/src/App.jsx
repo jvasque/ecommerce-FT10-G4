@@ -9,6 +9,7 @@ import ProductForm from './components/product_form/product_form';
 import ProductFormCreate from './components/product_form/product_form_create';
 import ProductFormQuery from './components/product_form/product_form_query';
 import ProductFormUpdate from './components/product_form/product_form_update';
+import ProductFormStock from './components/product_form/product_form_stock';
 import PromotionsCreate from './components/PromotionsForm/PromotionsCreate';
 import PromotionsModify from './components/PromotionsForm/PromotionsModify';
 import AllOrders from './components/AllOrders/AllOrders';
@@ -29,7 +30,7 @@ import Successful from './components/Mercadopago/Successful';
 import ResetPassword from './components/Admin/ResetPassword';
 import EmailPassword from './components/Admin/EmailPassword';
 import SuccessfulPaypal from './components/Paypal/Successful';
-
+import AdminNewsletter from './components/Admin/AdminNewsletter';
 
 function App() {
   return (
@@ -37,14 +38,15 @@ function App() {
       <Route path="/" component={Nav} />
       <Route exact path="/" component={NavBanner} />
       <Route exact path="/" component={Home} />
+
       <Switch>
         <Route exact path="/product/cart" component={Cart} />
         <Route exact path="/catalog" component={Catalog} />
-
         <Route exact path="/user/login" component={Signup} />
         <Route exact path="/reset/password/:token" component={ResetPassword} />
         <Route exact path="/forgot/email" component={EmailPassword} />
         <Route exact path="/order/completada" component={Successful} />
+        <Route exact path="/newsletter/prueba" component={AdminNewsletter} />
         <Route exact path="/:id" component={ProductDetails} />
         <Route exact path="/order/completada" component={Successful} />
         <Route exact path="/order/complete" component={SuccessfulPaypal} />
@@ -68,6 +70,11 @@ function App() {
             exact
             path="/admin/product/form/update"
             component={ProductFormUpdate}
+          />
+          <Route
+            exact
+            path="/admin/product/form/stock"
+            component={ProductFormStock}
           />
           <Route
             exact

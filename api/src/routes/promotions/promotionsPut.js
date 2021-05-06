@@ -40,9 +40,9 @@ module.exports = async (req, res) => {
 
     let stringDays = days.join("");
 
-    if(discountDate < 1 || discountDate > 99) return res.json({error: "discount date must be between 1 and 99 percent"});
+    if(discountDate && (discountDate < 1 || discountDate > 99)) return res.json({error: "discount date must be between 1 and 99 percent"});
 
-    if(typeof active !== 'boolean') return res.json({error: "active should be a boolean"});
+    if((active !== undefined && active !== null) && (typeof active !== 'boolean')) return res.json({error: "active should be a boolean"});
     //FIN VALIDACIONES DATOS
     
 

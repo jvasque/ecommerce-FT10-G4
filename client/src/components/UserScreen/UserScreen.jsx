@@ -18,12 +18,28 @@ import { LogOut } from '../../redux/loginReducer/loginActions';
 import { getFavs } from '../../redux/wishlistReducer/wishlistActions';
 import ManageAccount from '../Admin/ManageAccount';
 import Swal from 'sweetalert2';
+import Settings from '../SettingsUser/Settings';
+import axios from "axios"
+import { useHistory } from 'react-router';
+import SendOrder from '../SendOrder/SendOrder';
 export function UserScreen() {
   const [render, setRender] = useState('miCuenta');
-
   const login = useSelector((state) => state.loginReducer);
+  
+  const userId = localStorage.getItem("user")
 
   const dispatch = useDispatch();
+  
+  useEffect(() => {
+    const data = localStorage.getItem("render");
+    if (data) {
+      setRender(JSON.parse(data));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("render", JSON.stringify(render));
+  },[render]);
 
   function handleClick(e) {
     e.preventDefault();
@@ -34,6 +50,9 @@ export function UserScreen() {
     }
   }
 
+  
+  
+
   const handleLogOut = () => {
     if (login.isLogin) {
       dispatch(LogOut());
@@ -42,7 +61,12 @@ export function UserScreen() {
       Swal.fire('Se ha cerrado sesión');
       localStorage.removeItem('user');
     }
+
   };
+
+
+
+ 
 
   return (
     <div className="infoContainer">
@@ -109,6 +133,37 @@ export function UserScreen() {
           }
         >
           Newsletter
+        </div>
+        <div
+          id="Mis envios"
+          onClick={(e) => handleClick(e)}
+          style={
+            render === 'Mis envios'
+              ? {
+                  backgroundColor: 'var(--color-brand)',
+                  opacity: '50%',
+                  color: 'var(--color-light)',
+                }
+              : { backgroundColor: '' }
+          }
+        >
+          Mis envios
+        </div>
+        
+        <div
+          id="Configuracion"
+          onClick={(e) => handleClick(e)}
+          style={
+            render === 'Configuracion'
+              ? {
+                  backgroundColor: 'var(--color-brand)',
+                  opacity: '50%',
+                  color: 'var(--color-light)',
+                }
+              : { backgroundColor: '' }
+          }
+        >
+          Configuración
         </div>
         {login.isAdmin ? (
           <div
@@ -244,7 +299,10 @@ export function UserScreen() {
           <div style={{ marginLeft: '3vw' }}>
             <Newsletter />
           </div>
-        ) : render === 'allOrders' ? (
+        ) : render ==="Configuracion" ?
+         (<Settings  />)
+         : render ==="Mis envios" ? <SendOrder/>
+         : render === 'allOrders' ? (
           <AllOrders />
         ) : render === 'CreateProduct' ? (
           <ProductForm />

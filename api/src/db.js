@@ -46,7 +46,7 @@ const {
   Category,
   Favorite,
   Location,
-  NewsletterOption,
+  Newsletter,
   Order,
   OrderDetail,
   PaymentMethod,
@@ -69,6 +69,7 @@ User.hasMany(Review);
 User.hasOne(Favorite);
 User.hasMany(Product); //MarketPlace functionality
 User.hasMany(Wishlist);
+User.belongsToMany(Newsletter, { through: 'user_newsletter' });
 User.belongsToMany(PaymentMethod, { through: 'user_payment' });
 User.hasMany(Location);
 User.belongsToMany(Timeslots, { through: 'user_timeslot' });
@@ -83,11 +84,11 @@ Wishlist.belongsTo(User);
 Wishlist.belongsToMany(Product, { through: 'wishlist_product' });
 
 Review.belongsTo(User);
-Review.belongsTo(Product) // Comment.belonfsTo(Comment)
+Review.belongsTo(Product); // Comment.belonfsTo(Comment)
 Review.belongsTo(OrderDetail); // review es por compra
 
 Product.belongsTo(User);
-Product.hasMany(Review) // review es por compra,
+Product.hasMany(Review); // review es por compra,
 Product.hasMany(OrderDetail);
 Product.belongsToMany(Category, {
   through: 'product_category',
@@ -99,8 +100,9 @@ Product.belongsToMany(Wishlist, { through: 'wishlist_product' });
 Product.belongsToMany(Brand, { through: 'product_brand' });
 Product.belongsToMany(Type, { through: 'product_type' });
 Product.hasMany(UnitsOnLocation);
+Product.belongsToMany(Promotion, { through: 'product_promotion' });
 
-Location.belongsTo(User)
+Location.belongsTo(User);
 Location.hasMany(UnitsOnLocation);
 Location.hasMany(Timeslots);
 
@@ -127,8 +129,9 @@ SubCategory.belongsToMany(Product, { through: 'product_subcategory' });
 Type.belongsToMany(Product, { through: 'product_type' });
 Brand.belongsToMany(Product, { through: 'product_brand' });
 
-Promotion.belongsToMany(Product, {through: 'product_promotion'});
-Product.belongsToMany(Promotion, {through: 'product_promotion'});
+Newsletter.belongsToMany(User, { through: 'user_newsletter' });
+
+Promotion.belongsToMany(Product, { through: 'product_promotion' });
 
 Timeslots.belongsToMany(User, { through: 'user_timeslot' });
 Timeslots.belongsTo(Location);

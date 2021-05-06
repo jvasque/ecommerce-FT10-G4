@@ -10,46 +10,42 @@ import {
 import '../../scss/components/productsForm/_ProductFormUpdate.scss';
 import swal from 'sweetalert';
 import { makeStyles } from '@material-ui/core/styles';
-import { TextField, CircularProgress } from '@material-ui/core';
+import { TextField, CircularProgress, Button } from '@material-ui/core';
 
-
-const grisPrincipal= "#EFEFEF";
+const grisPrincipal = '#EFEFEF';
 
 const useStyles = makeStyles((theme) => ({
-  
   root: {
     '& > *': {
-      margin: "40px auto",
+      margin: '40px auto',
       width: '80%',
       background: grisPrincipal,
-      color: "black" 
+      color: 'black',
     },
   },
+  button: {
+    margin: '10px',
+    color: 'white',
+    padding: '10px',
+    fontWeight: 'bold',
+  },
   input: {
-    
-    width: "90%",
-    color: "red",
-    marginTop: "15px",
-    marginBottom: "15px"
-    
+    width: '90%',
+    color: 'red',
+    marginTop: '15px',
+    marginBottom: '15px',
   },
   inputDescription: {
-    padding:"0px",
-    width: "95%",
-    marginTop: "15px",
-    marginBottom: "15px"
-    
+    padding: '0px',
+    width: '95%',
+    marginTop: '15px',
+    marginBottom: '15px',
   },
   cancelIcon: {
-    color: "rgb(245, 59, 26)",
+    color: 'rgb(245, 59, 26)',
     backgroundColor: grisPrincipal,
-    cursor: "pointer",
-    borderRadius: "50%" 
-  },
-  button: {
-    margin: theme.spacing(1),
-    width: "90px",
-    marginLeft: "10px"
+    cursor: 'pointer',
+    borderRadius: '50%',
   },
 }));
 
@@ -183,44 +179,47 @@ function Product_form_update(props) {
       <h1>Modificar productos</h1>
       <form className={classes.root} onSubmit={(e) => handleSubmit(e)}>
         <div className="cont-1">
-           <label className="label">Nombre del producto:</label>
-         
-           <TextField 
-          id="outlined-basic" 
-          label= {product[0]?.name || ' Nombre'} 
-          placeholder="Agregue el nuevo nombre del producto..."
-          variant="outlined"
-          name="name"
-          value={input.name} 
-          type="text"
-          onChange={handleChange}
-          className={classes.input}/>
+          <label className="label">Nombre del producto:</label>
 
-           <label className="label">SKU:</label>
-         
-          <TextField 
-          id="outlined-basic" 
-          label={product[0]?.SKU || ' SKU'} 
-          placeholder="Agregue el nuevo SKU del producto..."
-          variant="outlined"
-          name="SKU" 
-          value={input.SKU}
-          onChange={handleChange}
-          className={classes.input}/>
+          <TextField
+            id="outlined-basic"
+            label={product[0]?.name || ' Nombre'}
+            placeholder="Agregue el nuevo nombre del producto..."
+            variant="outlined"
+            name="name"
+            value={input.name}
+            type="text"
+            onChange={handleChange}
+            className={classes.input}
+          />
 
-           <label className="label">Precio por unidad:</label>
-         
-          <TextField 
-          id="outlined-basic" 
-          label={product[0]?.unitPrice || ' Precio...'}
-          placeholder="Agregue el nuevo precio del producto..."
-          variant="outlined"
-          name="price" 
-          value={input.price} 
-          type="number"
-          InputProps={{ inputProps: { min: 0, max: 99999 } }}
-          onChange={handleChange}
-          className={classes.input}/>
+          <label className="label">SKU:</label>
+
+          <TextField
+            id="outlined-basic"
+            label={product[0]?.SKU || ' SKU'}
+            placeholder="Agregue el nuevo SKU del producto..."
+            variant="outlined"
+            name="SKU"
+            value={input.SKU}
+            onChange={handleChange}
+            className={classes.input}
+          />
+
+          <label className="label">Precio por unidad:</label>
+
+          <TextField
+            id="outlined-basic"
+            label={product[0]?.unitPrice || ' Precio...'}
+            placeholder="Agregue el nuevo precio del producto..."
+            variant="outlined"
+            name="price"
+            value={input.price}
+            type="number"
+            InputProps={{ inputProps: { min: 0, max: 99999 } }}
+            onChange={handleChange}
+            className={classes.input}
+          />
 
           <label className="label">Descripción:</label>
           <textarea
@@ -230,7 +229,7 @@ function Product_form_update(props) {
             value={input.description}
             onChange={handleChange}
           />
-          
+
           <label className="label">Imagen:</label>
           {resPic.length > 2 ? (
             <div className="input_file_full">
@@ -263,9 +262,15 @@ function Product_form_update(props) {
                 />
               </div>
             ))}
-            {progress != 100 && <CircularProgress className="circular" variant="determinate" value={progress}/>}
+            {progress != 100 && (
+              <CircularProgress
+                className="circular"
+                variant="determinate"
+                value={progress}
+              />
+            )}
           </div>
-{/* 
+          {/* 
           <TextField 
           id="outlined-basic" 
           label={product[0]?.unitsOnStock || ' Stock...'}
@@ -280,10 +285,16 @@ function Product_form_update(props) {
 
           {modifProduct?.map((x) => (
             <label>
-              {x.name + "  "}
-               <button value={x.id} onClick={(e) => deleteCategory(e)}>
+              {x.name + '  '}
+              <Button
+                className={classes.button}
+                variant="contained"
+                color="primary"
+                value={x.id}
+                onClick={(e) => deleteCategory(e)}
+              >
                 x
-              </button> 
+              </Button>
             </label>
           ))}
           <select onChange={(e) => addCategory(e)}>
@@ -296,12 +307,26 @@ function Product_form_update(props) {
               );
             })}
           </select>
-          <button type="submit">Modificar producto</button>
+          <Button
+            className={classes.button}
+            variant="contained"
+            color="primary"
+            type="submit"
+          >
+            Modificar producto
+          </Button>
         </div>
       </form>
 
       <NavLink to="/user/info">
-        <button onClick={() => dispatch(clearProduct())}>Volver</button>
+        <Button
+          className={classes.button}
+          variant="contained"
+          color="primary"
+          onClick={() => dispatch(clearProduct())}
+        >
+          Volver
+        </Button>
       </NavLink>
     </div>
   );

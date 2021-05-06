@@ -1,0 +1,44 @@
+.settings-container {
+  margin-left: 30px;
+  h2 {
+    color: rgba(0, 0, 0, 0.8);
+    font-family: Proxima Nova, -apple-system, Helvetica Neue, Helvetica, Roboto,
+      Arial, sans-serif;
+  }
+  .user {
+    width: fit-content;
+  }
+
+  .info-container {
+    display: flex;
+    flex-direction: column;
+
+    div {
+      display: flex;
+      text-align: start;
+      align-items: center;
+      margin-left: px;
+      margin-top: 5px;
+    }
+
+    label {
+      margin-right: 20rem;
+      width: 10px;
+    }
+    .save {
+      background-color: var(--color-brand-75);
+      width: 200px;
+      margin: 0 auto;
+      margin-top: 5rem;
+      color: white;
+    }
+    .pass-bu {
+      background-color: var(--color-brand-75);
+      width: 200px;
+      float: left;
+      margin-top: 5rem;
+      color: white;
+      font-weight: 200;
+    }
+  }
+}
