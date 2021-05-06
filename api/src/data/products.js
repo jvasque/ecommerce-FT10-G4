@@ -10,7 +10,7 @@ module.exports = [
       'https://argentina.agrofystatic.com/media/catalog/product/cache/1/image/850x600/0dc2d03fe217f8c83829496872af24a0/g/l/gl_agrofy_piezas_seleccion_punto-35.jpg?usewebp=true',
       'https://argentina.agrofystatic.com/media/catalog/product/cache/1/image/850x600/0dc2d03fe217f8c83829496872af24a0/b/o/bolsas_trigo_arg_algarrobo_300x300.jpg?usewebp=true',
     ],
-    score: 3,
+    score: 2.5,
     unitsOnStock: 70,
     catId: [1, 3],
     orderDetId: [1, 2, 3, 4],
@@ -32,7 +32,7 @@ module.exports = [
       'https://argentina.agrofystatic.com/media/catalog/product/cache/1/image/850x600/0dc2d03fe217f8c83829496872af24a0/b/o/bolsas_trigo_arg_algarrobo_300x300.jpg?usewebp=true',
       'https://www.agrofy.com.co/media/catalog/product/cache/1/image/850x600/0dc2d03fe217f8c83829496872af24a0/8/0/80.png?usewebp=true',
     ],
-    score: 5,
+    score: 2.6,
     unitsOnStock: 2,
     catId: [1],
     orderDetId: [5, 6, 7],
@@ -53,7 +53,7 @@ module.exports = [
     picture: [
       'https://argentina.agrofystatic.com/media/catalog/product/cache/1/image/850x600/0dc2d03fe217f8c83829496872af24a0/m/e/mezcla_granulada_50.jpg?usewebp=true',
     ],
-    score: 1,
+    score: 4,
     unitsOnStock: 30,
     catId: [2],
     orderDetId: [8, 9, 10],
@@ -74,7 +74,7 @@ module.exports = [
     picture: [
       'https://argentina.agrofystatic.com/media/catalog/product/cache/1/image/850x600/0dc2d03fe217f8c83829496872af24a0/f/a/facebook-producto600x400--mantas.jpg?usewebp=true',
     ],
-    score: 2,
+    score: 1.5,
     unitsOnStock: 90,
     catId: [2, 3],
     orderDetId: [11, 12],
@@ -116,7 +116,7 @@ module.exports = [
     picture: [
       'https://argentina.agrofystatic.com/media/catalog/product/cache/1/image/850x600/0dc2d03fe217f8c83829496872af24a0/f/e/fertilizante-razormin-agrofy-0-20200420185815.jpg?usewebp=true',
     ],
-    score: 5,
+    score: 0.01,
     unitsOnStock: 12,
     catId: [1],
     orderDetId: [16, 36, 37, 38],
@@ -136,7 +136,7 @@ module.exports = [
     picture: [
       'https://www.agrofy.com.co/media/catalog/product/cache/1/image/850x600/0dc2d03fe217f8c83829496872af24a0/F/e/Fertilizante-Zeocol-Silix-Menores-granulado-agrofy-0-20201211160154.jpg?usewebp=true',
     ],
-    score: 5,
+    score: 0.01,
     unitsOnStock: 12,
     catId: [2],
     orderDetId: [17, 39, 40, 41],
@@ -156,7 +156,7 @@ module.exports = [
     picture: [
       'https://www.agrofy.com.co/media/catalog/product/cache/1/image/850x600/0dc2d03fe217f8c83829496872af24a0/8/0/80.png?usewebp=true',
     ],
-    score: 5,
+    score: 0.01,
     unitsOnStock: 12,
     catId: [3],
     orderDetId: [18, 42, 43, 44],
@@ -176,7 +176,7 @@ module.exports = [
     picture: [
       'https://www.agrofy.com.co/media/catalog/product/cache/1/image/850x600/0dc2d03fe217f8c83829496872af24a0/8/3/83.png?usewebp=true',
     ],
-    score: 5,
+    score: 0.01,
     unitsOnStock: 12,
     catId: [4],
     orderDetId: [19, 45, 46],
@@ -196,7 +196,7 @@ module.exports = [
     picture: [
       'https://www.agrofy.com.co/media/catalog/product/cache/1/image/850x600/0dc2d03fe217f8c83829496872af24a0/8/6/86.png?usewebp=true',
     ],
-    score: 5,
+    score: 0.01,
     unitsOnStock: 12,
     catId: [1],
     orderDetId: [20, 47, 48],
@@ -216,7 +216,7 @@ module.exports = [
     picture: [
       'https://www.agrofy.com.co/media/catalog/product/cache/1/image/850x600/0dc2d03fe217f8c83829496872af24a0/f/e/fertilizante-nitraverde-Abonamos-S-A-S--agrofy-3-20200612164117.png?usewebp=true',
     ],
-    score: 5,
+    score: 0.01,
     unitsOnStock: 12,
     catId: [2],
     orderDetId: [21, 49, 50],
@@ -236,7 +236,7 @@ module.exports = [
     picture: [
       'https://www.agrofy.com.co/media/catalog/product/cache/1/image/850x600/0dc2d03fe217f8c83829496872af24a0/6/_/6_1.png?usewebp=true',
     ],
-    score: 5,
+    score: 0.01,
     unitsOnStock: 12,
     catId: [3],
     orderDetId: [22, 51, 52],
@@ -256,7 +256,7 @@ module.exports = [
     picture: [
       'https://www.agrofy.com.co/media/catalog/product/cache/1/image/850x600/0dc2d03fe217f8c83829496872af24a0/z/e/zeolita-agr-cola-zeocol-saco-d-Zeocol-agrofy-0-20201117194935.jpg?usewebp=true',
     ],
-    score: 5,
+    score: 0.01,
     unitsOnStock: 12,
     catId: [4],
     orderDetId: [23, 53, 54],
@@ -276,7 +276,7 @@ module.exports = [
     picture: [
       'https://www.agrofy.com.co/media/catalog/product/cache/1/image/850x600/0dc2d03fe217f8c83829496872af24a0/1/1/11_nitrafos_1.png?usewebp=true',
     ],
-    score: 5,
+    score: 0.01,
     unitsOnStock: 12,
     catId: [1],
     orderDetId: [24, 55, 56],
@@ -296,7 +296,7 @@ module.exports = [
     picture: [
       'https://www.agrofy.com.co/media/catalog/product/cache/1/image/850x600/0dc2d03fe217f8c83829496872af24a0/F/e/Fertilizante-Zeocol-Sol-K-granulado-agrofy-0-20201211160144.jpg?usewebp=true',
     ],
-    score: 5,
+    score: 0.01,
     unitsOnStock: 12,
     catId: [2],
     orderDetId: [25, 57, 58],
@@ -316,7 +316,7 @@ module.exports = [
     picture: [
       'https://www.agrofy.com.co/media/catalog/product/cache/1/image/850x600/0dc2d03fe217f8c83829496872af24a0/u/r/urea-con-zeolita-zeocol-zeonit-Zeocol-agrofy-0-20201117163557.jpg?usewebp=true',
     ],
-    score: 5,
+    score: 0.01,
     unitsOnStock: 12,
     catId: [3],
     orderDetId: [26, 59],
@@ -336,7 +336,7 @@ module.exports = [
     picture: [
       'https://www.agrofy.com.co/media/catalog/product/cache/1/image/850x600/0dc2d03fe217f8c83829496872af24a0/F/e/Fertilizante-Zeocol-Sol-MAG-granulado-agrofy-0-20201211160147.jpg?usewebp=true',
     ],
-    score: 5,
+    score: 0.01,
     unitsOnStock: 12,
     catId: [4],
     orderDetId: [27],
@@ -356,7 +356,7 @@ module.exports = [
     picture: [
       'https://www.agrofy.com.co/media/catalog/product/cache/1/image/850x600/0dc2d03fe217f8c83829496872af24a0/F/e/Fertilizante-Arvensis-SPRINTER-K-agrofy-0-20201210180156.jpg?usewebp=true',
     ],
-    score: 5,
+    score: 0.01,
     unitsOnStock: 12,
     catId: [1],
     orderDetId: [28],
@@ -376,7 +376,7 @@ module.exports = [
     picture: [
       'https://www.agrofy.com.co/media/catalog/product/cache/1/image/850x600/0dc2d03fe217f8c83829496872af24a0/F/e/FertilizanteArvensis-Fertimix-ZnMn-agrofy-0-20201210180146.jpg?usewebp=true',
     ],
-    score: 5,
+    score: 0.01,
     unitsOnStock: 12,
     catId: [2],
     orderDetId: [29, 60],
@@ -396,7 +396,7 @@ module.exports = [
     picture: [
       'https://www.agrofy.com.co/media/catalog/product/cache/1/image/850x600/0dc2d03fe217f8c83829496872af24a0/F/e/Fertilizante-Arvensis-FERTIMIX-Mo-agrofy-0-20201209210151.jpg?usewebp=true',
     ],
-    score: 5,
+    score: 0.01,
     unitsOnStock: 12,
     catId: [3],
     orderDetId: [30],
@@ -416,7 +416,7 @@ module.exports = [
     picture: [
       'https://www.agrofy.com.co/media/catalog/product/cache/1/image/850x600/0dc2d03fe217f8c83829496872af24a0/f/e/fertilizante-horti-organic-hum-Distrisumapaz-agrofy-0-20210212024043.jpg?usewebp=true',
     ],
-    score: 5,
+    score: 0.01,
     unitsOnStock: 12,
     catId: [4],
     orderDetId: [31],
@@ -436,7 +436,7 @@ module.exports = [
     picture: [
       'https://www.agrofy.com.co/media/catalog/product/cache/1/image/850x600/0dc2d03fe217f8c83829496872af24a0/F/e/Fertilizante-Zeocol-Sol-Calcio-granulado-agrofy-0-20201211160151.jpg?usewebp=true',
     ],
-    score: 5,
+    score: 0.01,
     unitsOnStock: 12,
     catId: [1],
     orderDetId: [32],
@@ -456,7 +456,7 @@ module.exports = [
     picture: [
       'https://www.agrofy.com.co/media/catalog/product/cache/1/image/850x600/0dc2d03fe217f8c83829496872af24a0/f/e/fertilizante_inorganico_boro_21.jpg?usewebp=true',
     ],
-    score: 5,
+    score: 0.01,
     unitsOnStock: 12,
     catId: [2],
     orderDetId: [33],
@@ -476,7 +476,7 @@ module.exports = [
     picture: [
       'https://www.agrofy.com.co/media/catalog/product/cache/1/image/850x600/0dc2d03fe217f8c83829496872af24a0/F/e/Fertilizante-Arvensis-Maddurador-agrofy-0-20201210180153.png?usewebp=true',
     ],
-    score: 5,
+    score: 0.01,
     unitsOnStock: 12,
     catId: [3],
     orderDetId: [34],
@@ -496,7 +496,7 @@ module.exports = [
     picture: [
       'https://www.agrofy.com.co/media/catalog/product/cache/1/image/850x600/0dc2d03fe217f8c83829496872af24a0/F/e/Fertilizante-Arvensis-FLORADDOR-agrofy-0-20201210180150.png?usewebp=true',
     ],
-    score: 5,
+    score: 0.01,
     unitsOnStock: 12,
     catId: [4],
     orderDetId: [35],
