@@ -16,6 +16,8 @@ import { reset } from '../../redux/iconReducer/iconActions';
 // React components
 import ProductCart from './ProductCart';
 
+import swal from "sweetalert"
+import TimeslotForm from '../Timeslots/TimeslotForm'
 
 function Cart() {
   const products = useSelector((state) => state.cartReducer.cart);
@@ -57,6 +59,7 @@ function Cart() {
           <h1>No hay elementos en el carrito</h1>
         )}
       </div>
+      <TimeslotForm/>
       <div className="deleteAll">
         {products.length !== 0 ? (
           <Button onClick={handleClick}>Eliminar todo</Button>

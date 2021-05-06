@@ -30,6 +30,7 @@ const {
   Product,
   Review,
   SubCategory,
+  Timeslots,
   UnitsOnLocation,
   User,
   Wishlist,
@@ -46,6 +47,7 @@ const orderDetails = require('./src/data/orderDetails');
 const orders = require('./src/data/orders');
 const paymentMethods = require('./src/data/paymentMethods');
 const reviews = require('./src/data/reviews');
+const timeslots = require('./src/data/timeslots');
 const unitsOnLocations = require('./src/data/unitsOnLocations');
 const users = require('./src/data/users');
 const wishlists = require('./src/data/wishlists');
@@ -291,5 +293,24 @@ conn.sync({ force: true }).then(() => {
       await prodStock.addUnitsOnLocations(unitsOnStock);
     }
     console.log('Products and categories pre charged');
+
+    
+    const timeslot = await Timeslots.create({
+      date: "2021-05-04",
+      time: "9",
+      capacity: 0,
+    });
+    
+    await Timeslots.bulkCreate(timeslots);
+
+    const timeUser = await User.findByPk(1);
+    const timeUser2 = await User.findByPk(10);
+    const timeLocation = await Location.findByPk(1);
+
+
+
+    timeslot.setLocation(timeLocation);
+    timeslot.setUsers(timeUser);
+    timeslot.setUsers(timeUser2);
   });
 });

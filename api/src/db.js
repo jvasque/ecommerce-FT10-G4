@@ -58,6 +58,7 @@ const {
   UnitsOnLocation,
   User,
   Wishlist,
+  Timeslots
 } = sequelize.models;
 //console.log(sequelize.models)
 // Aca vendrian las relaciones
@@ -71,6 +72,7 @@ User.hasMany(Wishlist);
 User.belongsToMany(Newsletter, { through: 'user_newsletter' });
 User.belongsToMany(PaymentMethod, { through: 'user_payment' });
 User.hasMany(Location);
+User.belongsToMany(Timeslots, { through: 'user_timeslot' });
 
 PaymentMethod.hasMany(Order);
 PaymentMethod.belongsToMany(User, { through: 'user_payment' });
@@ -102,6 +104,7 @@ Product.belongsToMany(Promotion, { through: 'product_promotion' });
 
 Location.belongsTo(User);
 Location.hasMany(UnitsOnLocation);
+Location.hasMany(Timeslots);
 
 UnitsOnLocation.belongsTo(Location);
 UnitsOnLocation.belongsTo(Product);
@@ -129,6 +132,10 @@ Brand.belongsToMany(Product, { through: 'product_brand' });
 Newsletter.belongsToMany(User, { through: 'user_newsletter' });
 
 Promotion.belongsToMany(Product, { through: 'product_promotion' });
+
+Timeslots.belongsToMany(User, { through: 'user_timeslot' });
+Timeslots.belongsTo(Location);
+
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
