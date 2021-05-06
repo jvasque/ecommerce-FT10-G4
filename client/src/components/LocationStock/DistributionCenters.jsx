@@ -12,6 +12,7 @@ import swal from 'sweetalert';
 import {
   getCenters,
   resetLocation,
+  getAppointments,
 } from '../../redux/locationReducer/locationActions';
 
 const useStyles = makeStyles((theme) => ({
@@ -34,6 +35,7 @@ export default function DistributionCenters() {
   const [modal, setModal] = useState(false);
 
   // REDUX
+  let userId = JSON.parse(localStorage.getItem('user'));
   const dispatch = useDispatch();
   const centersLoaded = useSelector(
     (state) => state.locationReducer.centersLoaded
@@ -48,10 +50,14 @@ export default function DistributionCenters() {
   const centerDeleted = useSelector(
     (state) => state.locationReducer.centerDeleted
   );
+  const appointments = useSelector(
+    (state) => state.locationReducer.appointments
+  );
 
   // USE EFFECTS
   useEffect(() => {
     dispatch(getCenters());
+    dispatch(getAppointments(userId));
   }, []);
 
   useEffect(() => {
@@ -134,6 +140,17 @@ export default function DistributionCenters() {
           {<FormLocation closeModal={handleClose} />}
         </div>
       </Modal>
+      <div className="appointmentBox"></div>
+      <div>
+        <h3>Mis turnos:</h3>
+        {appointments &&
+          appointments.map((appointment) => (
+            <h4>
+              Fecha: {appointment.date} - Hora: {appointment.time} -Lugar:{' '}
+              {appointment.location.address}
+            </h4>
+          ))}
+      </div>
     </div>
   );
 }

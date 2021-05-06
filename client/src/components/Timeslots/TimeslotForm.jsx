@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import DatePicker from 'react-datepicker'
-// import '../../scss/components/LocationStock/_TimeslotForm.scss';
+import '../../scss/components/LocationStock/_TimeslotForm.scss';
 import "react-datepicker/dist/react-datepicker.css";
 import { addDays } from "date-fns";
 import { getTimes, createTimeslot, resetTimeslot } from '../../redux/locationReducer/locationActions';
@@ -98,7 +98,7 @@ function TimeslotForm() {
   }; 
 
   return (
-    <div className="container-form">
+    <div className="container-form" id='timeslots'>
       <div className="cabecera-form">
         <h2>Genera un turno para retirar su producto</h2>
         <div>
