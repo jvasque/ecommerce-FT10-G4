@@ -7,37 +7,37 @@ import { addDays } from "date-fns";
 import { getTimes, createTimeslot, resetTimeslot } from '../../redux/locationReducer/locationActions';
 import swal from 'sweetalert';
 
-function TimeslotForm({ closeModal, center }) {
+function TimeslotForm() {
 
   const dispatch = useDispatch();
-
+  
+  const location = useSelector((state) => state.cartReducer.location);
   const [startDate, setStartDate] = useState(null);
   const [input, setInput] = useState({
     date: '',
     time: '',
     userId: JSON.parse(localStorage.getItem('user')),
-    locationId: 1,//center.id
+    locationId: location,
   });
   const [hours,setHours] = useState(['9','10','11','12','13','14','15','16','17']);
   const unavailableTimeslots = useSelector((state) => state.locationReducer.unavailableTimeslots);
   const createdTimeslot = useSelector((state) => state.locationReducer.createdTimeslot);
-  let array = hours;
-  
-  useEffect(() => {               
-    setHours(['9','10','11','12','13','14','15','16','17']);
+  let hoursArray = [];
+
+  useEffect(() => {                   
+    hoursArray = ['9','10','11','12','13','14','15','16','17'];    
     
-    if (unavailableTimeslots.oneDay && unavailableTimeslots.oneDay.length)
-            
-    array = hours;    
-    
+    if (unavailableTimeslots.oneDay && unavailableTimeslots.oneDay.length)       
     {
       unavailableTimeslots.oneDay.map(timeslot => { 
         
-        array = array.filter((h) => timeslot.time != h);
-        console.log(array);
+        hoursArray = hoursArray.filter((h) => timeslot.time != h);
+        console.log(hoursArray);
       })
-      setHours(array)
     };
+
+    setHours(hoursArray)
+
     return () => {
     }
   }, [unavailableTimeslots.oneDay])
@@ -56,14 +56,25 @@ function TimeslotForm({ closeModal, center }) {
     }
   }, [startDate]);
 
-  useEffect(() => {
-    if (createdTimeslot && !createdTimeslot.error) {    
-    swal(`Se ha creado un turno el día ${createdTimeslot.date} a las ${createdTimeslot.time}:00 hs.`);
-    dispatch(resetTimeslot())
+  useEffect(() => {    
+    if (location) {
+      setInput({
+        ...input,
+        locationId: location,
+      });
     }
     return () => {
     }
-  }, [createdTimeslot])
+  }, [location]);
+
+  // useEffect(() => {
+  //   if (createdTimeslot && !createdTimeslot.error) {    
+  //   swal(`Se ha creado un turno el día ${createdTimeslot.date} a las ${createdTimeslot.time}:00 hs.`);
+  //   dispatch(resetTimeslot())
+  //   }
+  //   return () => {
+  //   }
+  // }, [createdTimeslot])
 
 
   const handleInputChange = function (e) {
@@ -84,7 +95,7 @@ function TimeslotForm({ closeModal, center }) {
     }else{
       swal('Seleccione una fecha')
     }
-  };
+  }; 
 
   return (
     <div className="container-form">
