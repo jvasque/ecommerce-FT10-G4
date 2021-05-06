@@ -10,7 +10,7 @@ import {
 const initialState = {
   cart: [],
   total: 0,
-  location: "",
+  location: 0,
 };
 
 function havePromotion(e){
@@ -79,7 +79,7 @@ export default (state = initialState, action) => {
     case "LOCATION": {
       return {
         ...state,
-        location: action.payload,
+        location: parseInt(action.payload),
       };
     }
 

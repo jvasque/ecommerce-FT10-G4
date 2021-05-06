@@ -11,6 +11,9 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormLabel from '@material-ui/core/FormLabel';
 import { FormControl, Button } from '@material-ui/core';
 import Swal from 'sweetalert2';
+import TimeslotForm from '../Timeslots/TimeslotForm'; 
+import { resetTimeslot } from '../../redux/locationReducer/locationActions';
+import swal from 'sweetalert';              
 
 // styles
 const GreenRadio = withStyles({
@@ -33,10 +36,25 @@ const buttons = {
 // Component
 export const OptionsLocation = ({ onCloseModal }) => {
   const product = useSelector((state) => state.cartReducer.cart);
+  const createdTimeslot = useSelector((state) => state.locationReducer.createdTimeslot);
   const dispatch = useDispatch();
 
   const [value, setValue] = useState();
-  const [centers, setCenters] = useState([]);
+  const [centers, setCenters] = useState([]);  
+
+  useEffect(() => {
+    if (createdTimeslot && !createdTimeslot.error) {    
+    swal(`Se ha creado un turno el día ${createdTimeslot.date} a las ${createdTimeslot.time}:00 hs.`);
+    dispatch(resetTimeslot());
+    setValue('');
+    }
+    if(createdTimeslot && createdTimeslot.error){
+      swal(`Usted ya tiene asignado ese turno.`);
+    }
+    return () => {
+    }
+  }, [createdTimeslot])
+
 
   async function getLocations() {
     let data = await axios.get(`http://localhost:3001/locations`);
@@ -69,22 +87,39 @@ export const OptionsLocation = ({ onCloseModal }) => {
     ]);
   }
 
+
+
   const handleChange = (event) => {
     dispatch({ type: 'LOCATION', payload: event.target.value });
-    setValue(event.target.value);
+    setValue(event.target.value);    
   };
 
   const radioButtons =
     centers.length !== 0 &&
     centers.map((center) => (
+      <div>
       <FormControlLabel
         key={center.id}
         value={center.id}
         checked={center.id.toString() === value}
         label={` ${center.address} - ${center.city} - ${center.province}`}
         control={<GreenRadio />}
-        name={` ${center.address} - ${center.city} - ${center.province}`}
+        name={` ${center.address} - ${center.city} - ${center.province}`}        
       />
+      <div
+        style={
+          value != center.id
+            ? {
+                display: 'none',
+              }
+            : {
+              display: ''
+            }
+        }>
+          <TimeslotForm />
+        </div>
+ 
+      </div>
     ));
 
   useEffect(() => {
@@ -100,6 +135,7 @@ export const OptionsLocation = ({ onCloseModal }) => {
         <RadioGroup aria-label="centros" value={value} onChange={handleChange}>
           {radioButtons}
         </RadioGroup>
+        
         <Button style={buttons} onClick={onCloseModal}>
           Metodo de Pago
         </Button>
