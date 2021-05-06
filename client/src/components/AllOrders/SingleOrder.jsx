@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import axios from "axios";
 import AdminOrderDetail from "./AdminOrderDetail";
 import {
@@ -26,6 +27,8 @@ function SingleOrder({ order, modify }) {
     cost: false,
   });
   //const location = useSelector(state=>state.cartReducer.location)
+  const address = useSelector((state) => state.paymentIdReducer.address);
+  const dataUser = useSelector(state=>state.loginReducer.user)
   let activeToggle = state ? "active" : "inactive";
   const token = localStorage.getItem("token");
 
@@ -95,26 +98,7 @@ function SingleOrder({ order, modify }) {
                 headers: { Authorization: `Bearer ${token}` },
               }
             );
-            const apiData = await axios.get(
-              `https://geocoder.ls.hereapi.com/6.2/geocode.json?apiKey=q25zaLysr0fVTbApPZXE9dwg-PoUlN-n89C5d_o6lhY&searchtext=${order.address}`
-            );
-            let dataRes =
-              apiData?.data?.Response?.View[0]?.Result[0]?.Location
-                ?.DisplayPosition;
-            let address = [dataRes?.Latitude, dataRes?.Longitude];
-            
-
-            await db.collection("GPS").add({
-              location: {
-                longitude: dataRes?.Longitude,
-                latitude: dataRes?.Latitude,
-              },
-              orderId: order.id,
-              address: order.address,
-              distributionCenter: 1,
-              idDriver: 1
-              // distributionCenter: location
-            });
+          
           }
           //window.location.reload();
         });

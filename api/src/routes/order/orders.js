@@ -4,6 +4,7 @@ const deleteOrder = require("./deleteOrder");
 const addOrder = require("./addOrder");
 const allOrders = require("./allOrders");
 const orderStatus = require("./orderStatus");
+const orderByQuery = require("./orderByQuery")
 const router = require("express").Router();
 router.use(bodyParser.json());
 
@@ -11,6 +12,7 @@ router.delete("/user/:id", deleteOrder);
 router.post("/orders/", addOrder);
 router.put("/orders/:id", putOrder);
 router.get("/users/orders", allOrders);
+router.get("/orders/:id", orderByQuery);
 router.put("/:id/state", orderStatus);
 
 module.exports = router;

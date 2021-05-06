@@ -65,6 +65,7 @@ const FormPayment = () => {
       ...input,
       [e.target.name]: e.target.value,
     });
+   
   };
 
   useEffect(() => {
@@ -74,6 +75,7 @@ const FormPayment = () => {
     input.phoneNumber?.length !== 0
       ? setShowPaypal(true)
       : setShowPaypal(false);
+      dispatch(returnAddress(`${input.provincia} ${input.capital} ${input.street} ${input.numberAddr}`))
   }, [showPaypal, input]);
 
   const onSubmit = async (e, value) => {

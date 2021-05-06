@@ -1,3 +1,4 @@
+require('dotenv').config();
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const BearerStrategy = require("passport-http-bearer").Strategy;
@@ -5,6 +6,8 @@ const FacebookStrategy = require("passport-facebook").Strategy;
 const { User } = require("./db.js");
 const jwt = require("jsonwebtoken");
 const sendEmail = require("./routes/auth/sendEmaildoubleAuth");
+const { CLIENT_ID_FB,CLIENT_SECRET_FB, CALLBACK_URL_FB } = process.env;
+
 passport.use(
   new LocalStrategy(
     { usernameField: "email", passwordField: "password", session: false },
@@ -19,8 +22,7 @@ passport.use(
         email: userEmail,
         address,
         phone,
-        photoURL,
-        phone,
+        photoURL,        
         adress,
         type,
         status,

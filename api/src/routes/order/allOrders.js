@@ -6,6 +6,4 @@ module.exports = async (req, res) => {
   const data = await Order.findAll({ where: { state: "cart"/*, email:email*/ } });
   return res.json(data);
 
-  // const data = await Order.findAll({include: {all: true}, where:{id:parseInt(req.params.id)}});
-  // res.json(data);
 };
