@@ -5,6 +5,8 @@ const {
   Product,
   Category,
   Wishlist,
+  UnitsOnLocation,
+  Location,
 } = require("../../db.js");
 const { HandlerEmail } = require("./email/handlerEmail.js");
 const { InfoEmail } = require("./email/InfoEmail.js");
@@ -12,7 +14,8 @@ const { InfoEmail } = require("./email/InfoEmail.js");
 
 
 module.exports = async (req, res) => {
-    const { productId, motive } = req.body;
+  console.log(req.body)
+    const { productId, motive, locationId } = req.body;
   
     try {
       const product = await Product.findOne({
@@ -26,23 +29,39 @@ module.exports = async (req, res) => {
           {
             model: Wishlist,
           },
+          {
+            model: UnitsOnLocation,
+            where: {
+              locationId: locationId
+            }
+          },
         ],
       });
-      
+ 
       if (!product)
-        return res.status(400).json({ message: "Producto no encontrado" });
-      if(product.wishlists.length===0) return res.status(400).json({ message: "Producto no esta en Wishlist" });
+      {
+        return res.json({ message: "Producto no encontrado" });}
+      if(product.wishlists.length===0){
+        console.log("holi")
+        return res.json({ message: "Producto no esta en Wishlist" });}
       const {
         id,
         name,
         unitPrice,
         picture,
-        score,
-        unitsOnStock,
+        // score,
+        // unitsOnStock,
         categories,
         wishlists,
       } = product;
-      const cat = categories.map((c) => c.dataValues.name); //filter categories for send in props to email
+      // const unitsOnStock = 
+      const unitsOnStock = product.dataValues.unitsOnLocations[0].dataValues.unitsOnStock;
+      const locationCode = product.dataValues.unitsOnLocations[0].dataValues.locationId
+     
+      const location = await Location.findByPk(locationCode)
+     const score = location.dataValues.city + ', ' + location.dataValues.province+ ', ' + location.dataValues.country
+     console.log(score) 
+     const cat = categories.map((c) => c.dataValues.name); //filter categories for send in props to email
       //filter&find section xD
       const wish = wishlists.map((w) => w.dataValues.userId);
       const users = await User.findAll({ where: { id: wish } });
