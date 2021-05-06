@@ -73,7 +73,12 @@ export const PostDoubleAuth = (number) => {
         type: ADMIN_LOGIN,
         payload: decode(info.data),
       });
-    } catch (e) {}
+    } catch (e) {
+      dispatch({
+      type: LOG_FAIL,
+       payload:"Su clave secreta es invalida!.",
+      });     
+    }
   };
 };
 

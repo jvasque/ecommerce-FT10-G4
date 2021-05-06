@@ -53,7 +53,7 @@ const generarHTML = (firstName, secretNumber) => {
         </head>
         <body>
         <div class="containergral">
-        <h1>Hola ${firstName}, hemos generado un codigo para que Ud.</h1>
+        <h1>Hola ${firstName}, hemos generado un codigo para Ud.</h1>
         <h4>Ingrese este codigo ${secretNumber}</h4>
         </hr>
         <b>Este enlace dura 24 horas.</b>
