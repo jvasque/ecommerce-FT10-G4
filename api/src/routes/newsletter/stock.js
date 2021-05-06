@@ -40,10 +40,10 @@ module.exports = async (req, res) => {
  
       if (!product)
       {
-        return res.status(400).json({ message: "Producto no encontrado" });}
+        return res.json({ message: "Producto no encontrado" });}
       if(product.wishlists.length===0){
         console.log("holi")
-        return res.status(400).json({ message: "Producto no esta en Wishlist" });}
+        return res.json({ message: "Producto no esta en Wishlist" });}
       const {
         id,
         name,
