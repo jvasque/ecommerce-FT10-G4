@@ -7,7 +7,8 @@ import {
   DELETE_CENTER,
   GET_TIMES,
   CREATE_TIMESLOT,
-  RESET_TIMESLOT
+  RESET_TIMESLOT,
+  GET_APPOINTMENTS,
 } from './locationActions';
 
 const initialState = {
@@ -19,6 +20,8 @@ const initialState = {
   allDays: null,
   oneDay: null,
   createdTimeslot: null,
+  unavailableTimeslots: null,
+  appointments: null,
 };
 
 export default (state = initialState, action) => {
@@ -70,6 +73,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         createdTimeslot: null,
+      };
+    case GET_APPOINTMENTS:
+      return {
+        ...state,
+        appointments: action.payload,
       };
     default:
       return { ...state };

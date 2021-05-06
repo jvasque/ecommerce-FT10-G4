@@ -11,6 +11,7 @@ export const DELETE_CENTER = 'DELETE_CENTER';
 export const GET_TIMES = 'GET_TIMES';
 export const CREATE_TIMESLOT = 'CREATE_TIMESLOT';
 export const RESET_TIMESLOT = 'RESET_TIMESLOT';
+export const GET_APPOINTMENTS = 'GET_APPOINTMENTS';
 
 export function createLocation({ street, city, addressNumber, userId }) {
   return async function (dispatch) {
@@ -211,6 +212,19 @@ export function resetTimeslot() {
   return function (dispatch) {
     dispatch({
       type: RESET_TIMESLOT,
+    });
+  };
+}
+
+export function getAppointments(id) {
+  return async function (dispatch) {
+    let appointments = await axios.get(
+      `http://localhost:3001/users/${id}/timeslots`
+    );
+
+    dispatch({
+      type: GET_APPOINTMENTS,
+      payload: appointments.data,
     });
   };
 }

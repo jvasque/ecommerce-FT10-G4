@@ -1,13 +1,13 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
-import { PostDoubleAuth } from "../../redux/loginReducer/loginActions";
+import { LogFailHandle, PostDoubleAuth } from "../../redux/loginReducer/loginActions";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-
+import Swal from 'sweetalert2';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -60,10 +60,25 @@ const DoubleAuth = () => {
 
   const secretSubmit = (e) => {
     e.preventDefault();
-    // enviar a redux
     dispatch(PostDoubleAuth(secret));
-    
+ 
   };
+
+
+  const login = useSelector(state => state.loginReducer)
+  useEffect(() => {
+    // console.log(login.errorLogin)
+    if (login.errorLogin) {
+      handleClose()
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: login.error,
+        confirmButtonColor: '#378a19',
+      });
+      dispatch(LogFailHandle());
+    }
+  }, [login.errorLogin])
 
   return (
     // <div>

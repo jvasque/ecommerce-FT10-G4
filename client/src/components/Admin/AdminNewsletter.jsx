@@ -10,9 +10,9 @@ const AdminNewsletter = () => {
   const [show, setShow] = useState(false);
   // /getEmail
   const getEmail = async () => {
-    const email = await axios.get(`http://localhost:3001/newsletter/historial`);
-    console.log(email.data)
-    setEmail({ __html: email.data[0].html });
+    const emailHistorial = await axios.get(`http://localhost:3001/newsletter/historial`);
+    console.log(emailHistorial.data)
+    setEmail({ __html: emailHistorial.data[0].html });
     setShow(true);
   };
   useEffect(() => {

@@ -136,13 +136,16 @@ function Product_form_query(props) {
         </Button>
 
         <NavLink to="/admin/product/form/stock">
-          <button
+          <Button
+            className={classes.button}
+            variant="contained"
+            color="primary"
             onClick={(e) => {
               handlerPreventButton(e);
             }}
           >
             Stock
-          </button>
+          </Button>
         </NavLink>
 
         {product[0]?.name &&
