@@ -17,6 +17,9 @@ import { reset } from '../../redux/iconReducer/iconActions';
 import ProductCart from './ProductCart';
 
 
+import TimeslotForm from '../Timeslots/TimeslotForm'
+
+
 function Cart() {
   const products = useSelector((state) => state.cartReducer.cart);
   const history = useHistory()

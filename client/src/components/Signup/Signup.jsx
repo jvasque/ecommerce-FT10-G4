@@ -158,6 +158,7 @@ export default function Signup() {
       }
     }
     test();
+    
   }, [log.isLogin, dispatch]);
 
   useEffect(() => {
@@ -168,6 +169,7 @@ export default function Signup() {
         text: log.error,
         confirmButtonColor: '#378a19',
       });
+      setActivate(true)
       dispatch(LogFailHandle());
     }
   }, [log.errorLogin]);

@@ -23,12 +23,14 @@ module.exports = async (req, res) => {
         const token = jwt.sign(user.toJSON(), SECRET_KEY)
 
         res.send(token); 
-      } else {
-        await user.update({ secretCode: null });
-        await user.update({ secretCodeExpires: null });
+      } 
+      else {
+        // await user.update({ secretCode: null });
+        // await user.update({ secretCodeExpires: null });
         res.status(400).json({ message: "Debe volver a solicitar el codigo" });
       }
-    } else {
+    }
+     else {
       await user.update({ secretCode: null });
       await user.update({ secretCodeExpires: null });
       res.status(400).json({ message: "Debe volver a solicitar el codigo" });

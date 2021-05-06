@@ -33,6 +33,7 @@ import TextField from "@material-ui/core/TextField";
 //action locations
 import { getCenters } from "../../redux/locationReducer/locationActions.js";
 import { getProductName } from "../../redux/reducerProductForms/actionsProductForms";
+import Swal from "sweetalert2";
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -82,7 +83,7 @@ const useStyles = makeStyles((theme) => ({
   modalButton: {
     color: "#fff",
     fontWeight: "bold",
-    margin: '5px 10px'
+    margin: "5px 10px",
   },
   addButton: {
     color: "#fff",
@@ -99,15 +100,14 @@ const useStyles = makeStyles((theme) => ({
       minWidth: 120,
       marginLeft: "200px",
     },
-
   },
-  modalTextField:{
-    width: "100%"
+  modalTextField: {
+    width: "100%",
   },
   h1title: {
     display: "flex",
-    justifyContent: "center"
-  }
+    justifyContent: "center",
+  },
 }));
 
 function Product_form_stock(props) {
@@ -125,7 +125,7 @@ function Product_form_stock(props) {
   const classes = useStyles();
 
   useEffect(() => {
-    dispatch(getProductName(product[0].name));
+    dispatch(getProductName(product[0]?.name));
     dispatch(getCenters());
     if (product[0]?.unitsOnLocations) {
       setLocations(
@@ -151,7 +151,7 @@ function Product_form_stock(props) {
     const res = await axios.put(
       "http://localhost:3001/locations/addproduct/" + addLocationId[0],
       {
-        productId: product[0].id /* unitsOnLocations?.map((e) => e.id) */,
+        productId: product[0]?.id /* unitsOnLocations?.map((e) => e.id) */,
       }
     );
 
@@ -162,7 +162,7 @@ function Product_form_stock(props) {
     }
 
     Promise.all([
-      dispatch(getProductName(product[0].name)),
+      dispatch(getProductName(product[0]?.name)),
       handleToggle(),
       later(1500),
     ]).then((e) => {
@@ -173,7 +173,8 @@ function Product_form_stock(props) {
 
   const addNewStock = async function (event, id) {
     event.preventDefault();
-
+    console.log(product, modifStock, id);
+    handleCloseModal()
     const res = await axios.put(
       "http://localhost:3001/locations/unitsonlocation/" + id,
       {
@@ -184,12 +185,75 @@ function Product_form_stock(props) {
     swal("Producto modificado !").then((e) => {
       Promise.all([
         dispatch(getProductName(product[0].name)),
-        handleToggle(),
+        // handleToggle(),
       ]).then((e) => {
-        window.location.reload();
-        handleToggle();
-      });
+        // ;
+        handleCloseModal()
+        // 
+ 
+    
+
+        
+      })
     });
+
+     // //NEWSLETTER
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: "btn btn-success",
+        cancelButton: "btn btn-danger",
+      },
+      buttonsStyling: true,
+    });
+    // 
+    swalWithBootstrapButtons
+      .fire({
+        title: "Desea enviar una notificación a los usuarios?",
+        text: "Los usuarios seran notificados del nuevo stock!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Si",
+        cancelButtonText: "No",
+        reverseButtons: true,
+        cancelButtonColor: "#378a19",
+        confirmButtonColor: "#378a19",
+      })
+      .then(async (result) => {
+        handleToggle()
+        if (result.isConfirmed) {
+          const info = await axios.post(
+            "http://localhost:3001/newsletter/stock",
+            {
+              productId: product[0].id,
+              motive: "information",
+              locationId: id,
+            }
+            
+          );
+          // handleToggle()
+          window.location.reload()
+          swalWithBootstrapButtons.fire(
+            "Listo!",
+            `${info.data.message}`,
+            "success"
+          );
+        
+        } else if (
+          /* Read more about handling dismissals below */
+          result.dismiss === Swal.DismissReason.cancel
+        ) {
+        
+          swalWithBootstrapButtons.fire(
+            "Cancelado",
+            "No se guardaron los cambios",
+            "error"
+          );
+          window.location.reload()
+        }
+       
+      });
+    ////
+  
   };
 
   const removeProduct = async function (event, locationId, productId) {
@@ -345,7 +409,9 @@ function Product_form_stock(props) {
             >
               <Fade in={openModal}>
                 <div className={classes.paper}>
-                  <h2 id="simple-modal-title" className={classes.h1title}>Elija el nuevo stock</h2>
+                  <h2 id="simple-modal-title" className={classes.h1title}>
+                    Elija el nuevo stock
+                  </h2>
                   <TextField
                     id="outlined-number"
                     label="Nuevo stock"
@@ -360,24 +426,24 @@ function Product_form_stock(props) {
                     variant="outlined"
                   />
                   <div className="modalButtons">
-                  <Button
-                    className={classes.modalButton}
-                    onClick={(ev) =>
-                      addNewStock(ev, locations[positionArr]?.id)
-                    }
-                    variant="contained"
-                    color="primary"
-                  >
-                    Modificar
-                  </Button>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    className={classes.modalButton}
-                    onClick={() => setOpenModal(false)}
-                  >
-                    Cancelar
-                  </Button>
+                    <Button
+                      className={classes.modalButton}
+                      onClick={(ev) =>
+                        addNewStock(ev, locations[positionArr]?.id)
+                      }
+                      variant="contained"
+                      color="primary"
+                    >
+                      Modificar
+                    </Button>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      className={classes.modalButton}
+                      onClick={() => setOpenModal(false)}
+                    >
+                      Cancelar
+                    </Button>
                   </div>
                 </div>
               </Fade>
